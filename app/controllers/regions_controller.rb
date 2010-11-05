@@ -1,4 +1,7 @@
 class RegionsController < ApplicationController
+  in_place_edit_for :name
+  in_place_edit_for :country
+  
   # GET /regions
   # GET /regions.xml
   def index
