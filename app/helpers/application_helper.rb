@@ -42,6 +42,46 @@ module ApplicationHelper
 
     t << I18n.translate(:app_title)
   end
+
+  # in-place collection editor
+  def in_place_collection_editor_field(object, method, collection, options = {})
+    element_tag = options[:tag].nil? ? "span" : options.delete(:tag)
+    element_id = options[:id].nil? ?
+      "#{object.class.name.downcase}-#{method}-#{object.id}" :
+      options.delete(:id)
+
+    callback_url = options[:url].nil? ?
+      url_for({ 
+        :action => "set_#{object.class.name.downcase}_#{method}",
+        :id => object.id }) :
+      options.delete(:url)
+
+    collection_options = {}
+    if collection.is_a?(Hash)
+      collection_options[:collection] = collection.each_pair { |k,v| [k, v] }
+    elsif collection.is_a?(Array)
+      collection_options[:collection] = collection
+    elsif collection.is_a?(String)
+      collection_options[:loadCollectionURL] = collection
+    end
+
+    element = content_tag element_tag, h(object.send method), 
+      { :id => element_id, :class => 'in_place_collection_editor_field' }.
+      merge!(options.delete(:element_options) || {})
+
+    ipe = javascript_tag do
+      js = ''
+      js << "new Ajax.InPlaceCollectionEditor("
+      js << element_id.to_json
+      js << ', '
+      js << callback_url.to_json
+      js << ', '
+      js << collection_options.merge!(options).to_json
+      js << ");"
+    end
+
+    element + ipe
+  end
 end
 
 class ActiveRecord::Base

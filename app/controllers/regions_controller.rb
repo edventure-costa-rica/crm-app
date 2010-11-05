@@ -1,19 +1,13 @@
 class RegionsController < ApplicationController
-  in_place_edit_for :name
-  in_place_edit_for :country
+  # install callbacks for in-place editor
+  in_place_edit_for :region, :name
+  in_place_edit_for :region, :country
 
-  # define all countries as a list
-  @countries = [
-    'Costa Rica',
-    'Panama',
-    'Nicaragua',
-    'Guatemala',
-    'Honduras'
-  ]
-
-  # class method reader
-  class << self
-    attr_reader :countries
+  # list countries for in-place collection editor
+  def countries_list
+    respond_to do |format|
+      format.json { render :json => @countries }
+    end
   end
 
   # GET /regions
