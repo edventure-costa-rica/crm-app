@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :regions
+
   # clients have trips and reservations, sort of
   map.resources :clients do |client|
       client.resources :reservations, :only => [ :show, :index ]
