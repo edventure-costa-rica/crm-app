@@ -1,7 +1,7 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   def hnl(text)
-    h(text).gsub(/\n\r?/, "<br/>\n")
+    h(text).gsub(/\r?\n/, "<br/>\n")
   end
 
   def re_f(which)
