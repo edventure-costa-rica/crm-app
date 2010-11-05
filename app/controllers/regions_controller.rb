@@ -1,7 +1,21 @@
 class RegionsController < ApplicationController
   in_place_edit_for :name
   in_place_edit_for :country
-  
+
+  # define all countries as a list
+  @countries = [
+    'Costa Rica',
+    'Panama',
+    'Nicaragua',
+    'Guatemala',
+    'Honduras'
+  ]
+
+  # class method reader
+  class << self
+    attr_reader :countries
+  end
+
   # GET /regions
   # GET /regions.xml
   def index
