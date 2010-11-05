@@ -42,7 +42,21 @@ module ApplicationHelper
 
     t << I18n.translate(:app_title)
   end
+end
 
+class ActiveRecord::Base
+  # treat empty strings as nil
+  before_validation :convert_blanks_to_nil
+
+protected
+  def convert_blanks_to_nil
+    @attributes.each do |key, value|
+      self[key] = nil if value.blank?
+    end
+  end
+end
+
+class ActionView::Base
   # in-place collection editor
   def in_place_collection_editor_field(object, method, collection, options = {})
     element_tag = options[:tag].nil? ? "span" : options.delete(:tag)
@@ -51,7 +65,7 @@ module ApplicationHelper
       options.delete(:id)
 
     callback_url = options[:url].nil? ?
-      url_for({ 
+      url_for({
         :action => "set_#{object.class.name.downcase}_#{method}",
         :id => object.id }) :
       options.delete(:url)
@@ -65,7 +79,7 @@ module ApplicationHelper
       collection_options[:loadCollectionURL] = collection
     end
 
-    element = content_tag element_tag, h(object.send method), 
+    element = content_tag element_tag, h(object.send method),
       { :id => element_id, :class => 'in_place_collection_editor_field' }.
       merge!(options.delete(:element_options) || {})
 
@@ -81,17 +95,5 @@ module ApplicationHelper
     end
 
     element + ipe
-  end
-end
-
-class ActiveRecord::Base
-  # treat empty strings as nil
-  before_validation :convert_blanks_to_nil
-
-protected
-  def convert_blanks_to_nil
-    @attributes.each do |key, value|
-      self[key] = nil if value.blank?
-    end
   end
 end
