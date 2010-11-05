@@ -1,0 +1,40 @@
+<h1><%=
+  if @upcoming
+    t '.upcoming'
+  elsif @client 
+    t '.title_client', :for => @client
+  else
+    t '.title'
+  end
+%></h1>
+
+<table>
+  <tr>
+  <% unless @client %>
+    <th><%=tr_f :client %></th>
+  <% end %>
+    <th><%=tr_f :registration_id %></th>
+    <th><%=tr_f :arrival %></th>
+    <th><%=tr_f :departure %></th>
+    <th><%=tr_f :total_people %></th>
+  </tr>
+
+<% @trips.each do |trip| %>
+  <tr>
+  <% unless @client %>
+    <td><%=h trip.client.family_name %></td>
+  <% end %>
+    <td><%=h trip.registration_id %></td>
+    <td><%=h l trip.arrival.to_date %></td>
+    <td><%=h l trip.departure.to_date %></td>
+    <td><%=h trip.total_people %></td>
+    <td><%= link_to t(:show), [trip.client, trip] %> |
+        <%= link_to t(:edit), edit_client_trip_path(trip.client, trip) %> |
+        <%= link_to t(:delete), [trip.client, trip], :confirm => t(:confirm), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to t('.new'), new_client_trip_path(@client) unless @client.nil? %>

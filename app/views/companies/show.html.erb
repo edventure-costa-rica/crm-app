@@ -1,0 +1,65 @@
+<h1><%=h @company %></h1>
+
+<p>
+  <b><%= co_f :id %>:</b>
+  <%=h @company.id %>
+</p>
+
+<p>
+  <b><%= co_f :name %>:</b>
+  <%=h @company.name %>
+</p>
+
+<p>
+  <b><%= co_f :kind %>:</b>
+  <%=co_f h @company.kind %>
+</p>
+
+<p>
+  <b><%= co_f :address %>:</b>
+  <%=hnl @company.address %>
+</p>
+
+<p>
+  <b><%= co_f :city %>:</b>
+  <%=h @company.city %>
+</p>
+
+<p>
+  <b><%= co_f :country %>:</b>
+  <%=h @company.country %>
+</p>
+
+<p>
+  <b><%= co_f :contact_name %>:</b>
+  <%=h @company.contact_name %>
+</p>
+
+<p>
+  <b><%= co_f :email %>:</b>
+  <code><%= mail_to @company.email %></code>
+</p>
+
+<p>
+  <b><%= co_f :website %>:</b>
+  <code><%= @company.website? ? link_to(@company.website, @company.website) : '' %></code>
+</p>
+
+<p>
+  <b><%= co_f :main_phone %>:</b>
+  <%=h @company.main_phone %>
+</p>
+
+<p>
+  <b><%= co_f :mobile_phone %>:</b>
+  <%=h @company.mobile_phone %>
+</p>
+
+<p>
+  <b><%= co_f :notes %>:</b>
+  <%=hnl @company.notes %>
+</p>
+
+<%= link_to t(:edit), edit_company_path(@company) %> |
+<%= link_to t('.list_comp'), companies_path %> |
+<%= link_to t('.show_res'), company_reservations_path(@company) %>

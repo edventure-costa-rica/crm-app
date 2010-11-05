@@ -1,0 +1,61 @@
+<% form_for([@client, @trip, @reservation]) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :trip_id %><br />
+    <%= f.hidden_field :trip_id %>
+    <b><%= @trip %></b>
+  </p>
+
+  <p>
+    <%= f.label :client %><br />
+    <b><%= @client %></b>
+  </p>
+
+  <p>
+    <%= f.label :company %><br />
+    <%= f.select :company_id, Company.all.
+          sort { |a,b| a.to_s <=> b.to_s }.
+          map  { |c| ["#{c.name} / #{c.city} / #{c.country}", c.id] }
+    %>
+  </p>
+  <p>
+    <%= f.label :reservation_id %><br />
+    <%= f.text_field :reservation_id %>
+  </p>
+  <p>
+    <%= f.label :arrival %><br />
+    <%= f.datetime_select :arrival %>
+  </p>
+  <p>
+    <%= f.label :pickup_location %><br />
+    <%= f.text_field :pickup_location %>
+  </p>
+  <p>
+    <%= f.label :departure %><br />
+    <%= f.datetime_select :departure %>
+  </p>
+  <p>
+    <%= f.label :dropoff_location %><br />
+    <%= f.text_field :dropoff_location %>
+  </p>
+  <p>
+    <%= f.label :net_price %><br />
+    <%= f.text_field :net_price %>
+  </p>
+  <p>
+    <%= f.label :price %><br />
+    <%= f.text_field :price %>
+  </p>
+  <p>
+    <%= f.label :services %><br />
+    <%= f.text_area :services, :rows => 3 %>
+  </p>
+  <p>
+    <%= f.label :notes %><br />
+    <%= f.text_area :notes %>
+  </p>
+  <p>
+    <%= f.submit submit_text %>
+  </p>
+<% end %>

@@ -1,0 +1,10 @@
+\.orig$
+\.orig\..*$
+\.chg\..*$
+\.rej$
+\.conflict\~$
+^db/.*\.sqlite3$
+^log/
+^vendor/
+^nbproject/
+^doc/

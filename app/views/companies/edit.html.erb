@@ -1,0 +1,7 @@
+<h1><%= t '.title' %></h1>
+
+<%= render :partial => @company, :locals => { :submit_text => t(:submit_update) } %>
+
+<%= link_to t(:show), @company %> |
+<%= link_to t('.list_comp'), companies_path %> |
+<%= link_to t('.show_res'), company_reservations_path(@company) %>

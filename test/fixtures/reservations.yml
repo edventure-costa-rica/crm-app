@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  arrival: 2010-08-25 12:52:02
+  departure: 2010-08-25 12:52:02
+  dropoff_location: MyString
+  pickup_location: MyString
+  services: MyText
+  notes: MyText
+
+two:
+  arrival: 2010-08-25 12:52:02
+  departure: 2010-08-25 12:52:02
+  dropoff_location: MyString
+  pickup_location: MyString
+  services: MyText
+  notes: MyText

@@ -1,0 +1,43 @@
+<h1><%=h @client %></h1>
+
+<p>
+  <b><%= cl_f :id %>:</b>
+  <%=h @client.id %>
+</p>
+
+<p>
+  <b><%= cl_f :family_name %>:</b>
+  <%=h @client.family_name %>
+</p>
+
+<p>
+  <b><%= cl_f :contact_name %>:</b>
+  <%=h @client.contact_name %>
+</p>
+
+<p>
+  <b><%= cl_f :nationality %>:</b>
+  <%=h @client.nationality %>
+</p>
+
+<p>
+  <b><%= cl_f :email %>:</b>
+  <%= mail_to @client.email %>
+</p>
+
+<p>
+  <b><%= cl_f :phone %>:</b>
+  <%=h @client.phone %>
+</p>
+
+<p>
+  <b><%= cl_f :notes %>:</b>
+  <%=hnl @client.notes %>
+</p>
+
+
+<%= link_to t(:edit), edit_client_path(@client) %> |
+<%= link_to t('.list'), clients_path %> |
+<%= link_to t('.list_trip'), client_trips_path(@client) %> |
+<%= link_to(t('.current'), client_trip_path(@client, @trip)) + " | " if @trip %>
+<%= link_to t('.new'), new_client_trip_path(@client) %>

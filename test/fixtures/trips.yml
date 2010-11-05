@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  arrival: 2010-08-25 12:42:54
+  departure: 2010-08-25 12:42:54
+  total_people: 1
+  children: 1
+  disabled: 1
+  notes: MyText
+
+two:
+  arrival: 2010-08-25 12:42:54
+  departure: 2010-08-25 12:42:54
+  total_people: 1
+  children: 1
+  disabled: 1
+  notes: MyText

@@ -1,0 +1,19 @@
+<h1><%= t :app_title %></h1>
+
+<b><%= t '.lang' %>:</b>
+<ul>
+  <li><%= link_to 'Español', root_path({ :lc => :es }) %></li>
+  <li><%= link_to 'English', root_path({ :lc => :en }) %></li>
+</ul>
+
+<b><%= t '.list_trips' %>:</b>
+<ul>
+  <li><%= link_to t('.upcoming'), upcoming_trips_path %></li>
+  <li><%= link_to t('.trips'), trips_path %></li>
+</ul>
+
+<b><%= t '.misc' %>:</b>
+<ul>
+  <li><%= link_to t('.clients'), clients_path %></li>
+  <li><%= link_to t('.companies'), companies_path %></li>
+</ul>

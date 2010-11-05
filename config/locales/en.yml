@@ -1,0 +1,131 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  time:
+    formats:
+      list: "%e-%m-%Y %l:%M%p"
+
+  invalid_email: is not a valid e-mail address
+  arrival_precedes_departure: must come after arrival
+
+  submit_update: Update
+  submit_create: Create
+
+  app_title: Edventure Trip Database
+
+  index: Index
+  new: Create
+  show: Show
+  edit: Edit
+  delete: Delete
+  confirm: Are you sure?
+
+  # Views
+  layouts:
+    application:
+      upcoming: Upcoming
+      home: Home
+    reservations:
+      title: Reservations
+    companies:
+      title: Companies
+    trips:
+      title: Trips
+    clients:
+      title: Families
+  home:
+    index:
+      lang: Choose a Language
+      list_trips: List Trips
+      upcoming: Upcoming Trips
+      trips: All Trips
+      misc: Contacts
+      clients: List Families and Clients
+      companies: List Hotels and Tour Operators
+  reservations:
+    edit:
+      title: Edit Reservation
+      list_trip: List Reservations for this Trip
+    show:
+      list_trip: List Reservations for this Trip
+    new:
+      title: Create Reservation
+    index:
+      title: Listing reservations for {{for}}
+      desc: Showing all reservations for trip {{link}}.
+      new: New Reservation
+      date: Date
+      date_time: Date & Time
+  trips:
+    index:
+      upcoming: Listing upcoming trips
+      title: Listing all trips
+      title_client: Listing trips for {{for}}
+      new: New Trip
+    show:
+      child: child
+      children: children
+      disabled: disabled
+      disableds: disabled
+      list_res: List Reservations for this Trip
+      list_trip: List Trips for this Family
+    new:
+      title: New Trip
+      list_res: List Reservations for this Trip
+      list_trip: List Trips for this Family
+    edit:
+      title: Edit Trip
+      list_res: List Reservations for this Trip
+      list_trip: List Trips for this Family
+  clients:
+    index:
+      title: Listing Families
+      new: Add New Family
+    show:
+      list: List Families
+      list_trip: List Trips for this Family
+      current: Current Trip
+      new: New Trip for this Family
+    edit:
+      title: Edit Family
+      list: List Families
+    new:
+      title: New Family
+      list: List Families
+  companies:
+    index:
+      title: Listing Companies
+      new: New Company
+    show:
+      list_comp: List Companies
+      show_res: Show Reservations for this Company
+    edit:
+      title: Edit Company
+      list_comp: List Companies
+      show_res: Show Reservations for this Company
+    new:
+      title: New Company
+      list_comp: List Companies
+
+  # Models
+  activerecord:
+    models:
+      reservation:
+        one: Reservation
+        other: Reservations
+      trip:
+        one: Trip
+        other: Trips
+      client:
+        one: Family
+        other: Families
+      company:
+        one: Company
+        other: Companies
+    attributes:
+      reservation:
+        reservation_id: Reservation Code
+        price: Rack Price
+      trip:
+        registration_id: Registration Code

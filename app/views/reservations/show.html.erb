@@ -1,0 +1,64 @@
+<p>
+  <b><%=re_f :trip_id %>:</b>
+  <%= link_to @reservation.trip, [@reservation.client, @reservation.trip] %>
+</p>
+
+<p>
+  <b><%=re_f :client %>:</b>
+  <%= link_to @reservation.client, @reservation.client %>
+</p>
+
+<p>
+  <b><%=re_f :company %>:</b>
+  <%= link_to @reservation.company, @reservation.company %>
+</p>
+
+<p>
+  <b><%=re_f :reservation_id %>:</b>
+  <%=h @reservation.reservation_id %>
+</p>
+
+<p>
+  <b><%=re_f :arrival %>:</b>
+  <%=h l @reservation.arrival, :format => :long %>
+</p>
+
+<p>
+  <b><%=re_f :pickup_location %>:</b>
+  <%=hnl @reservation.pickup_location %>
+</p>
+
+<p>
+  <b><%=re_f :departure %>:</b>
+  <%=h l @reservation.departure, :format => :long %>
+</p>
+
+<p>
+  <b><%=re_f :dropoff_location %>:</b>
+  <%=hnl @reservation.dropoff_location %>
+</p>
+
+<p>
+  <b><%=re_f :services %>:</b>
+  <%=hnl @reservation.services %>
+</p>
+
+<p>
+  <b><%=re_f :price %>:</b>
+  <%=h sprintf '$%0.2f', @reservation.price unless @reservation.price.nil? %>
+</p>
+
+<p>
+  <b><%=re_f :net_price %>:</b>
+  <%=h sprintf '$%0.2f', @reservation.net_price unless @reservation.net_price.nil? %>
+</p>
+
+<p>
+  <b><%=re_f :notes %>:</b>
+  <%=hnl @reservation.notes %>
+</p>
+
+
+<%= link_to t(:edit), edit_client_trip_reservation_path(@reservation.client, @reservation.trip, @reservation) %> |
+<%= link_to t('.list_trip'), client_trip_reservations_path(@reservation.client, @reservation.trip) %> |
+<%= link_to 'Voucher', voucher_client_trip_reservation_path(@reservation.client, @reservation.trip, @reservation) %>

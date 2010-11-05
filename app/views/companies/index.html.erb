@@ -1,0 +1,36 @@
+<h1><%= t '.title' %></h1>
+
+<table>
+  <tr>
+    <th><%= co_f :id %></th>
+    <th><%= co_f :name %></th>
+    <th><%= co_f :city %></th>
+    <th><%= co_f :country %></th>
+    <th><%= co_f :contact_name %></th>
+    <th><%= co_f :phone %></th>
+    <th><%= co_f :email %></th>
+  </tr>
+
+<% @companies.each do |company| %>
+  <tr>
+    <td><%=h company.id %></td>
+    <td><%=h company.name %></td>
+    <td><%=h company.city %></td>
+    <td><%=h company.country %></td>
+    <td><%=h company.contact_name %></td>
+    <td><%=
+      h [company.main_phone, company.mobile_phone].
+        select { |phone| not phone.blank? }.
+        join ', '
+    %></td>
+    <td><%= mail_to company.email %></td>
+    <td><%= link_to t(:show), company %> |
+        <%= link_to t(:edit), edit_company_path(company) %>
+        <%# link_to t(:delete), company, :confirm => t(:confirm), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to t('.new'), new_company_path %>

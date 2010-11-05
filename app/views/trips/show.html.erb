@@ -1,0 +1,41 @@
+<h2><%= Trip.human_name + " #{@trip}" %></h2>
+
+<p><b><%= tr_f :client %>:</b>
+  <%= link_to @trip.client, @trip.client %>
+</p>
+
+<p>
+  <b><%= tr_f :arrival %>:</b>
+  <%=h l @trip.arrival, :format => :long %>
+</p>
+
+<p>
+  <b><%= tr_f :departure %>:</b>
+  <%=h l @trip.departure, :format => :long %>
+</p>
+
+<p>
+  <b><%= tr_f :total_people %>:</b>
+  <%=h @trip.total_people %>
+
+  <% if @trip.num_children > 0 or @trip.num_disabled > 0 then %>
+  (<%= special = []
+       special.push "<b>#{@trip.num_children}</b> #{t '.child'}" if @trip.num_children == 1
+       special.push "<b>#{@trip.num_children}</b> #{t '.children'}" if @trip.num_children > 1
+       special.push "<b>#{@trip.num_disabled}</b> #{t '.disabled'}" if @trip.num_disabled == 1
+       special.push "<b>#{@trip.num_disabled}</b> #{t '.disableds'}" if @trip.num_disabled > 1
+
+       special.to_sentence
+  %>)
+  <% end %>
+</p>
+
+<p>
+  <b><%= tr_f :notes %>:</b><br/>
+  <%=hnl @trip.notes %>
+</p>
+
+
+<%= link_to t(:edit), edit_client_trip_path(@client, @trip) %> |
+<%= link_to t('.list_trip'), client_trips_path(@client) %> |
+<%= link_to t('.list_res'), client_trip_reservations_path(@client, @trip) %>

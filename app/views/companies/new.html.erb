@@ -1,0 +1,5 @@
+<h1><%= t '.title' %></h1>
+
+<%= render :partial => @company, :locals => { :submit_text => t(:submit_create) } %>
+
+<%= link_to t('.list_comp'), companies_path %>

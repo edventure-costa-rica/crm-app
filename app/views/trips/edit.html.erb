@@ -1,0 +1,7 @@
+<h1><%=t '.title' %></h1>
+
+<%= render :partial => @trip, :locals => { :submit_text => t(:submit_update) } %>
+
+<%= link_to t(:show), client_trip_path(@client, @trip) %> |
+<%= link_to t('.list_trip'), client_trips_path(@client) %> |
+<%= link_to t('.list_res'), client_trip_reservations_path(@client, @trip) %>

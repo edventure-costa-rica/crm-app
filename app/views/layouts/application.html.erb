@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title><%= title %></title>
+  <%= stylesheet_link_tag 'scaffold' %>
+  <%= stylesheet_link_tag 'edventure' %>
+  <%= javascript_include_tag :defaults %>
+</head>
+<body>
+
+  <div id="masthead">
+    <%= image_tag('title_ed_home.png') %>
+  </div>
+
+  <div id="links">
+    <%= link_to t('.home'), root_path %> |
+    <%= link_to t('activerecord.models.company', :count => 0), companies_path %> |
+    <%= link_to t('activerecord.models.client', :count => 0), clients_path %> |
+    <%= link_to t('activerecord.models.trip', :count => 0), trips_path %>
+   (<%= link_to t('.upcoming'), upcoming_trips_path %>)
+  </div>
+
+  <div id="content">
+    <p id="notice" style="color: green"><%= notice %></p>
+
+    <%= yield %>
+  </div>
+
+</body>
+</html>

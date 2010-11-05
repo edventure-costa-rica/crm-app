@@ -1,0 +1,30 @@
+<h1><%= t '.title' %></h1>
+
+<table>
+  <tr>
+    <th><%= cl_f :id %></th>
+    <th><%= cl_f :family_name %></th>
+    <th><%= cl_f :contact_name %></th>
+    <th><%= cl_f :nationality %></th>
+    <th><%= cl_f :phone %></th>
+    <th><%= cl_f :email %></th>
+  </tr>
+
+<% @clients.each do |client| %>
+  <tr>
+    <td><%=h client.id %></td>
+    <td><%=h client.family_name %></td>
+    <td><%=h client.contact_name %></td>
+    <td><%=h client.nationality %></td>
+    <td><%=h client.phone %></td>
+    <td><%= mail_to client.email %></td>
+    <td><%= link_to t(:show), client %> |
+        <%= link_to t(:edit), edit_client_path(client) %>
+        <%# link_to t(:delete), client, :confirm => t(:confirm), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to t('.new'), new_client_path %>
