@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101105191700) do
+ActiveRecord::Schema.define(:version => 20101105212837) do
 
   create_table "clients", :force => true do |t|
     t.string   "nationality"
@@ -55,6 +55,13 @@ ActiveRecord::Schema.define(:version => 20101105191700) do
     t.string   "bank_client_account"
     t.string   "bank_govt_id"
     t.string   "bank_govt_id_type"
+  end
+
+  create_table "regions", :force => true do |t|
+    t.string   "name"
+    t.string   "country"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "reservations", :force => true do |t|
