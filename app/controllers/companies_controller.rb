@@ -2,7 +2,9 @@ class CompaniesController < ApplicationController
   # GET /companies
   # GET /companies.xml
   def index
-    @companies = Company.all :order => 'name, country'
+    @companies = Company.all :order =>
+      'regions.country, regions.name, city, companies.name',
+      :include => :region
 
     respond_to do |format|
       format.html # index.html.erb
