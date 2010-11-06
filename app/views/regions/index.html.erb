@@ -9,9 +9,9 @@
 
 <% @regions.each do |region| %>
   <tr>
-    <td><%=in_place_editor_field region.name %></td>
+    <td><%=in_place_editor_field region, :name %></td>
     <td><%=in_place_collection_editor_field region, :country, Region.countries %></td>
-    <td><%= link_to 'Destroy', region, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy', region, :confirm => t(:confirm), :method => :delete %></td>
   </tr>
 <% end %>
 </table>

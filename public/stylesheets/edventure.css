@@ -49,3 +49,9 @@ input[type=text], textarea {
   border: 1px solid #381603;
   width: 300px;
 }
+
+form.inplaceeditor-form {
+  border: none;
+  padding: 0;
+  margin: 0 5px 0 5px;
+}

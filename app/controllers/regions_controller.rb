@@ -21,27 +21,6 @@ class RegionsController < ApplicationController
     end
   end
 
-  # GET /regions/1
-  # GET /regions/1.xml
-  def show
-    @region = Region.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @region }
-    end
-  end
-
-  # GET /regions/new
-  # GET /regions/new.xml
-  def new
-    @region = Region.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @region }
-    end
-  end
 
   # GET /regions/1/edit
   def edit
