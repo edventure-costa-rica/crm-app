@@ -1,4 +1,6 @@
 class Region < ActiveRecord::Base
+  has_many :companies
+
   # define all countries as a list
   @countries = [
     'Costa Rica',
@@ -11,6 +13,10 @@ class Region < ActiveRecord::Base
   # class method reader
   class << self
     attr_reader :countries
+
+    def ordered
+      self.all :order => 'country, name'
+    end
   end
 
   validates_presence_of :name
