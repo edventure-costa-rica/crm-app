@@ -21,12 +21,6 @@ class RegionsController < ApplicationController
     end
   end
 
-
-  # GET /regions/1/edit
-  def edit
-    @region = Region.find(params[:id])
-  end
-
   # POST /regions
   # POST /regions.xml
   def create
@@ -34,11 +28,23 @@ class RegionsController < ApplicationController
 
     respond_to do |format|
       if @region.save
-        format.html { redirect_to(@region, :notice => 'Region was successfully created.') }
-        format.xml  { render :xml => @region, :status => :created, :location => @region }
+        if request.xhr?
+          format.html { render :partial => 'show', :locals => { :region => @region } }
+        else
+          format.html { redirect_to(@region, :notice => 'Region was successfully created.') }
+          format.xml  { render :xml => @region, :status => :created, :location => @region }
+        end
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @region.errors, :status => :unprocessable_entity }
+        if request.xhr?
+          format.html do
+            render :update, :status => 999 do |js|
+              js.alert @region.errors.full_messages.join("\n")
+            end
+          end
+        else
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @region.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end

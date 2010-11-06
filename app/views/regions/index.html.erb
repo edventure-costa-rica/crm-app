@@ -1,21 +1,30 @@
 <h1>Listing regions</h1>
+<p><%= t '.edit_explanation' %></p>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Country</th>
-    <th></th>
-  </tr>
-
+<ul id="region-list">
 <% @regions.each do |region| %>
-  <tr>
-    <td><%=in_place_editor_field region, :name %></td>
-    <td><%=in_place_collection_editor_field region, :country, Region.countries %></td>
-    <td><%= link_to 'Destroy', region, :confirm => t(:confirm), :method => :delete %></td>
-  </tr>
+  <%= render :partial => 'show', :locals => { :region => region } %>
 <% end %>
-</table>
+</ul>
 
 <br />
 
-<%= link_to 'New region', new_region_path %>
+<% remote_form_for Region.new,
+    :update => { :success => 'region-list' },
+    :success => "$('region-form').reset()",
+    :html => { :id => 'region-form' },
+    :position => :bottom \
+  do |f| %>
+
+  <p>
+    <%= f.label :name %>:
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.label :country %>:
+    <%= f.select :country, Region.countries %>
+  </p>
+
+  <%= f.submit :submit %>
+<% end %>
