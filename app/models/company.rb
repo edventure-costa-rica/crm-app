@@ -17,6 +17,10 @@ class Company < ActiveRecord::Base
 
   before_save :proper_website_url
 
+  def country
+    region.country unless region.nil?
+  end
+
   def to_s
     new_record? ?
       Company.human_name :
