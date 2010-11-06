@@ -1,6 +1,7 @@
 class Trip < ActiveRecord::Base
   belongs_to :client
-  has_many :reservations, :dependent => :delete_all
+  has_many :reservations, :dependent => :delete_all,
+    :order => 'arrival ASC, departure ASC'
 
   before_save :generate_default_values
 
