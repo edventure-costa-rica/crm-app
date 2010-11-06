@@ -12,11 +12,60 @@
     <b><%= @client %></b>
   </p>
 
+  <% javascript_tag do -%>
+  function getData(region_id) {
+    <%= remote_function(
+          :url  => companies_path({ :format => :js }),
+          :with => "'region_id='+region_id",
+          :method => :get
+        )
+    %>
+  }
+
+  function loadData(data) {
+    var select = $('company-select');
+
+    // clear
+    while (select.length > 0) select.remove(0);
+
+    // add
+    if (data.length > 0) {
+      select.enable();
+
+      for (var i = 0; i < data.length; i++) {
+        select.insert(
+          new Element('option', { value: data[i].value }).
+            update(data[i].label)
+        );
+      }
+    }
+
+    // no data
+    else {
+      select.disable();
+      alert(<%= t('.empty_region').to_json %>);
+    }
+  }
+  <% end %>
+
+  <p>
+    <%= f.label :region %><br />
+    <b><%=select :reservation, :region_id,
+            Region.ordered.map { |r| [r.name, r.id] },
+            { :prompt => t('.select_region') },
+            { :id => 'region-select',
+              :onchange => 'getData(this.value)'
+            }
+    %></b>
+  </p>
+
   <p>
     <%= f.label :company %><br />
-    <%= f.select :company_id, Company.all.
-          sort { |a,b| a.to_s <=> b.to_s }.
-          map  { |c| ["#{c.name} / #{c.city} / #{c.country}", c.id] }
+    <%= f.select :company_id, 
+          Company.all_in_region( @reservation.region_id ).
+            map { |c| [ c.name, c.id ] },
+          { :prompt => t('.select_region') },
+          { :id => 'company-select' }
     %>
   </p>
   <p>
