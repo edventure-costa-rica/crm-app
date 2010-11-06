@@ -86,7 +86,7 @@ class ActionView::Base
 
     element = content_tag element_tag, h(object.send method),
       { :id => element_id, :class => 'in_place_collection_editor_field' }.
-      merge!(options.delete(:element_options) || {})
+      merge!(options.delete(:html) || {})
 
     ipe = javascript_tag do
       js = ''
@@ -127,7 +127,7 @@ class ActionView::Base
 
     element = content_tag element_tag, h(object.send method),
       { :id => element_id, :class => 'in_place_collection_editor_field' }.
-      merge!(options.delete(:element_options) || {})
+      merge!(options.delete(:html) || {})
 
     ipe = javascript_tag do
       js = ''
