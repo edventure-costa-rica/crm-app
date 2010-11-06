@@ -9,7 +9,9 @@
 
 <br />
 
+<a name="new"></a>
 <h3><%= t '.new' %></h3>
+
 <% remote_form_for Region.new,
     :update => { :success => 'region-list' },
     :success => "$('region-form').reset()",
