@@ -13,7 +13,7 @@ class RegionsController < ApplicationController
   # GET /regions
   # GET /regions.xml
   def index
-    @regions = Region.all
+    @regions = Region.ordered
 
     respond_to do |format|
       format.html # index.html.erb
