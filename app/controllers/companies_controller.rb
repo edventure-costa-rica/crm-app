@@ -2,13 +2,26 @@ class CompaniesController < ApplicationController
   # GET /companies
   # GET /companies.xml
   def index
+    query = []
+    binds = []
+    if params.has_key? :region_id
+      query << 'regions.id = ?'
+      binds << params[:region_id]
+    end
+    if params.has_key? :q
+      query << 'companies.name LIKE ?'
+      binds << "#{params[:q]}%"
+    end
+
     @companies = Company.all :order =>
       'regions.country, regions.name, city, companies.name',
-      :include => :region
+      :include => :region,
+      :conditions => [ query.join(' AND ') ].concat(binds)
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @companies }
+      format.xml  { render :xml  => @companies }
+      format.json { render :json => @companies.to_json }
     end
   end
 
