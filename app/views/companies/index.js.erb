@@ -1,4 +1,6 @@
-window.company_data = <%= @companies.
+var company_data = <%= @companies.
   map { |c| { :label => c.name, :value => c.id } }.
   to_json
 %>;
+
+autocomplete(company_data);
