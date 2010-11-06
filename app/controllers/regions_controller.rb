@@ -21,6 +21,15 @@ class RegionsController < ApplicationController
     end
   end
 
+  def show
+    @region = Region.find param[:id]
+
+    respond_to do |format|
+      format.xml { render :xml => @region }
+      format.js  { render :js  => @region.to_json }
+    end
+  end
+
   # POST /regions
   # POST /regions.xml
   def create
