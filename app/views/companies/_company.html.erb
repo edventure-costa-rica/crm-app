@@ -7,41 +7,12 @@
   </p>
   <p>
     <%= f.label :kind %><br />
-    <%= f.select :kind, [
-          [ co_f(:hotel),       'hotel' ],
-          [ co_f(:auto),        'auto' ],
-          [ co_f(:tour),        'tour' ],
-          [ co_f(:other_kind),  'other']
-        ]
-    %>
+    <%= f.select :kind, Company.kinds.
+          map { |k| [ co_f(k), k.to_s ] } %>
   </p>
   <p>
     <%= f.label :address %><br />
     <%= f.text_area :address, :rows => 3 %>
-  </p>
-  <p>
-    <%= f.label :city %><br />
-    <%= f.text_field :city %>
-  </p>
-  <p>
-    <%= f.label :country %><br />
-    <%= f.text_field :country %>
-  </p>
-  <p>
-    <%= f.label :contact_name %><br />
-    <%= f.text_field :contact_name %>
-  </p>
-  <p>
-    <%= f.label :main_phone %><br />
-    <%= f.text_field :main_phone %>
-  </p>
-  <p>
-    <%= f.label :mobile_phone %><br />
-    <%= f.text_field :mobile_phone %>
-  </p>
-  <p>
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
   </p>
   <p>
     <%= f.label :website %><br />
