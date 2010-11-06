@@ -4,10 +4,10 @@ class Company < ActiveRecord::Base
   end
 
   @kinds = [
-    :hotel,
-    :transport,
-    :tour,
-    :other
+    'hotel',
+    'transport',
+    'tour',
+    'other'
   ]
 
   validates_inclusion_of :kind, :in => Company.kinds
