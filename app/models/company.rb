@@ -1,6 +1,18 @@
 class Company < ActiveRecord::Base
   class << self
     attr_reader :kinds
+
+    def all_in_region(region_id)
+      Company.all :conditions => { :region_id => region_id },
+        :order => 'regions.country, regions.name, city, companies.name',
+        :include => :region
+    end
+
+    def all_for_kind(kind)
+      Company.all :conditions => { :kind => kind },
+        :order => 'regions.country, regions.name, city, companies.name',
+        :include => :region
+    end
   end
 
   @kinds = [
