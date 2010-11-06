@@ -31,6 +31,16 @@
 </p>
 
 <p>
+  <b><%=h t :created_at %>:</b>
+  <%=h l @client.created_at.to_date %>
+</p>
+
+<p>
+  <b><%=h t :updated_at %>:</b>
+  <%=h l @client.updated_at.to_date %>
+</p>
+
+<p>
   <b><%= cl_f :notes %>:</b>
   <%=hnl @client.notes %>
 </p>
