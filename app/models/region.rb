@@ -13,4 +13,7 @@ class Region < ActiveRecord::Base
     attr_reader :countries
   end
 
+  validates_presence_of :name
+  validates_inclusion_of :country, :in => @countries
+
 end
