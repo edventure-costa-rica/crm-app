@@ -11,6 +11,10 @@ class Reservation < ActiveRecord::Base
     company.region unless company.nil?
   end
 
+  def region_id
+    company.region.id unless company.nil?
+  end
+
   validate do |res|
     res.send :arrival_precedes_departure
     res.send :within_trip_dates
