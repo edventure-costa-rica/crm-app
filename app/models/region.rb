@@ -24,6 +24,10 @@ class Region < ActiveRecord::Base
   validates_inclusion_of :country, :in => @countries
 
   def to_s
-    name
+    if name == country
+      name
+    else
+      "#{name}, #{country}"
+    end
   end
 end
