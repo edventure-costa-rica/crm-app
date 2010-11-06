@@ -16,7 +16,7 @@ class RegionsController < ApplicationController
     @regions = Region.ordered
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { render :layout => 'minimal' }
       format.xml  { render :xml => @regions }
     end
   end
