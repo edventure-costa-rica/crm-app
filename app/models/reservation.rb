@@ -7,9 +7,13 @@ class Reservation < ActiveRecord::Base
   validates_associated :trip, :company
   validates_numericality_of :price, :allow_nil => true
 
+  def region
+    company.region unless company.nil?
+  end
+
   validate do |res|
-    res.arrival_precedes_departure
-    res.within_trip_dates
+    res.send :arrival_precedes_departure
+    res.send :within_trip_dates
   end
 
   def to_s
@@ -53,12 +57,12 @@ private
 
   def within_trip_dates
     errors.add :arrival, I18n.t(:arrival_before_trip) unless
-      self.arrival >= self.trip.arrival
+      self.arrival >= self.trip.arrival.to_date
     errors.add :arrival, I18n.t(:arrival_after_trip) unless
-      self.arrival <= self.trip.departure
+      self.arrival <= self.trip.departure.to_date
     errors.add :arrival, I18n.t(:departure_before_trip) unless
-      self.departure >= self.trip.arrival
+      self.departure >= self.trip.arrival.to_date
     errors.add :arrival, I18n.t(:departure_after_trip) unless
-      self.departure <= self.trip.departure
+      self.departure <= self.trip.departure.to_date
   end
 end
