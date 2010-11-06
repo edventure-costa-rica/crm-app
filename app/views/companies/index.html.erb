@@ -5,25 +5,17 @@
     <th><%= co_f :id %></th>
     <th><%= co_f :name %></th>
     <th><%= co_f :city %></th>
-    <th><%= co_f :country %></th>
-    <th><%= co_f :contact_name %></th>
-    <th><%= co_f :phone %></th>
-    <th><%= co_f :email %></th>
+    <th><%= co_f :region %></th>
+    <th><%= co_f :website %></th>
   </tr>
 
 <% @companies.each do |company| %>
   <tr>
-    <td><%=h company.id %></td>
+    <td><em>#<%=h company.id %> </em></td>
     <td><%=h company.name %></td>
     <td><%=h company.city %></td>
-    <td><%=h company.country %></td>
-    <td><%=h company.contact_name %></td>
-    <td><%=
-      h [company.main_phone, company.mobile_phone].
-        select { |phone| not phone.blank? }.
-        join ', '
-    %></td>
-    <td><%= mail_to company.email %></td>
+    <td><%=h company.region %></td>
+    <td><%= link_to company.website, company.website unless company.website.nil? %></td>
     <td><%= link_to t(:show), company %> |
         <%= link_to t(:edit), edit_company_path(company) %>
         <%# link_to t(:delete), company, :confirm => t(:confirm), :method => :delete %></td>
