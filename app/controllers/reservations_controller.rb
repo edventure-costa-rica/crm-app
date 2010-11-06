@@ -44,10 +44,9 @@ class ReservationsController < ApplicationController
   # GET /reservations/new
   # GET /reservations/new.xml
   def new
-    @reservation = Reservation.new
-    #@reservation.company = Company.find(params[:company]) if params[:company]
     @client = Client.find(params[:client_id])
-    @reservation.trip = @trip = Trip.find(params[:trip_id])
+    @trip = Trip.find(params[:trip_id])
+    @reservation = Reservation.new :trip => @trip
 
     respond_to do |format|
       format.html # new.html.erb
