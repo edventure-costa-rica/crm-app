@@ -12,6 +12,7 @@ class Company < ActiveRecord::Base
 
   has_many :reservations
   belongs_to :region
+  has_one :country, :through => :region
 
   validates_inclusion_of :kind, :in => Company.kinds
 
