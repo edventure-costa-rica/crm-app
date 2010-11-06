@@ -26,33 +26,23 @@
 </p>
 
 <p>
-  <b><%= co_f :country %>:</b>
-  <%=h @company.country %>
-</p>
-
-<p>
-  <b><%= co_f :contact_name %>:</b>
-  <%=h @company.contact_name %>
-</p>
-
-<p>
-  <b><%= co_f :email %>:</b>
-  <code><%= mail_to @company.email %></code>
+  <b><%= co_f :region %>:</b>
+  <%=h @company.region %>
 </p>
 
 <p>
   <b><%= co_f :website %>:</b>
-  <code><%= @company.website? ? link_to(@company.website, @company.website) : '' %></code>
+  <code><%= link_to @company.website, @company.website if @company.website? %></code>
 </p>
 
 <p>
-  <b><%= co_f :main_phone %>:</b>
-  <%=h @company.main_phone %>
+  <b><%=h t :created_at %>:</b>
+  <%=h l @company.created_at.to_date %>
 </p>
 
 <p>
-  <b><%= co_f :mobile_phone %>:</b>
-  <%=h @company.mobile_phone %>
+  <b><%=h t :updated_at %>:</b>
+  <%=h l @company.updated_at.to_date %>
 </p>
 
 <p>
