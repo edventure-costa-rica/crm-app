@@ -15,7 +15,7 @@
 <% remote_form_for Region.new,
     :update => { :success => 'region-list' },
     :success => "$('region-form').reset(); " +
-      "if (parent) parent.location.reload()",
+      "if (opener) opener.location.reload()",
     :html => { :id => 'region-form' },
     :position => :bottom \
   do |f| %>
