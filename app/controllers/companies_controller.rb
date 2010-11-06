@@ -20,8 +20,8 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
+      format.js   # index.js.erb
       format.xml  { render :xml  => @companies }
-      format.json { render :json => @companies.to_json }
     end
   end
 
