@@ -8,11 +8,20 @@
   <p>
     <%= f.label :kind %><br />
     <%= f.select :kind, Company.kinds.
-          map { |k| [ co_f(k), k.to_s ] } %>
+          map { |k| [ co_f(k), k ] } %>
   </p>
   <p>
     <%= f.label :address %><br />
     <%= f.text_area :address, :rows => 3 %>
+  </p>
+  <p>
+    <%= f.label :city %><br />
+    <%= f.text_field :city %>
+  </p>
+  <p>
+    <%= f.label :region %><br />
+    <%= f.select :region_id, Region.ordered.
+          map { |r| [ r.to_s, r.id ] } %>
   </p>
   <p>
     <%= f.label :website %><br />
