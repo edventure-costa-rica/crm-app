@@ -52,8 +52,9 @@
     <%= f.label :region %><br />
     <b><%=select :reservation, :region_id,
             Region.ordered.map { |r| [r.name, r.id] },
-            { :prompt => t('.select_region') },
-            { :id => 'region-select',
+            { :prompt   => t('.select_region') },
+            { :id       => 'region-select',
+              :name     => '',
               :onchange => 'getData(this.value)'
             }
     %></b>
