@@ -1,4 +1,4 @@
-<h1>Listing regions</h1>
+<h1><%= t '.title' %></h1>
 <p><%= t '.edit_explanation' %></p>
 
 <ul id="region-list">
@@ -9,6 +9,7 @@
 
 <br />
 
+<h3><%= t '.new' %></h3>
 <% remote_form_for Region.new,
     :update => { :success => 'region-list' },
     :success => "$('region-form').reset()",
