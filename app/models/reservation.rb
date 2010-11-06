@@ -7,14 +7,6 @@ class Reservation < ActiveRecord::Base
   validates_associated :trip, :company
   validates_numericality_of :price, :allow_nil => true
 
-  def region
-    company.region unless company.nil?
-  end
-
-  def region_id
-    company.region.id unless company.nil?
-  end
-
   validate do |res|
     res.send :arrival_precedes_departure
     res.send :within_trip_dates
@@ -25,6 +17,14 @@ class Reservation < ActiveRecord::Base
 
     company.name + " / " +
       I18n.localize(arrival.to_date, :format => :short)
+  end
+
+  def region
+    company.region unless company.nil?
+  end
+
+  def region_id
+    company.region.id unless company.nil?
   end
 
   def city
