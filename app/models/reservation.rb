@@ -69,4 +69,17 @@ private
     errors.add :arrival, I18n.t(:departure_after_trip) unless
       self.departure <= self.trip.departure.to_date
   end
+
+public
+  def after_initialize
+    if new_record? and not trip.nil?
+      # use the last reservation (or trip) for default arrival
+      self.arrival ||= trip.reservations.empty? ?
+        trip.arrival : trip.reservations.last.departure
+
+      # use the arrival date for this departure if its the first
+      self.departure ||= trip.reservations.empty? ?
+        trip.arrival : trip.reservations.last.departure
+    end
+  end
 end
