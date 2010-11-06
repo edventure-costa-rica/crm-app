@@ -22,6 +22,18 @@
     <%= f.label :region %><br />
     <%= f.select :region_id, Region.ordered.
           map { |r| [ r.to_s, r.id ] } %>
+    <% javascript_tag do -%>
+      var h = <%= @popup_h = 500 %>;
+      var w = <%= @popup_w = 600 %>;
+      var l = parseInt((screen.availWidth/2) - (w/2));
+      var t = parseInt((screen.availHeight/2) - (h/2));
+    <%- end %>
+    <%= link_to t('.edit_regions'), regions_path,
+          :popup => [ 'regions',
+            "height=#{@popup_h},width=#{@popup_w}," +
+            "screenX='+l+',screenY='+t+'"
+          ]
+    %>
   </p>
   <p>
     <%= f.label :website %><br />
