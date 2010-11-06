@@ -10,15 +10,18 @@ class Company < ActiveRecord::Base
     :other
   ]
 
+  validates_inclusion_of :kind, :in => Company.kinds
+
   has_many :reservations
   belongs_to :region
-  has_one :country, :through => :region
-
-  validates_inclusion_of :kind, :in => Company.kinds
 
   before_save :proper_website_url
 
-  def to_s; new_record? ? Company.human_name : "#{name} / #{region}"; end
+  def to_s
+    new_record? ?
+      Company.human_name :
+      "#{name} / #{region}"
+  end
 
   def proper_website_url
     return unless self.website?
