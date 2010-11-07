@@ -68,9 +68,9 @@ private
       self.arrival >= self.trip.arrival.to_date
     errors.add :arrival, I18n.t(:arrival_after_trip) unless
       self.arrival <= self.trip.departure.to_date
-    errors.add :arrival, I18n.t(:departure_before_trip) unless
+    errors.add :departure, I18n.t(:departure_before_trip) unless
       self.departure >= self.trip.arrival.to_date
-    errors.add :arrival, I18n.t(:departure_after_trip) unless
+    errors.add :departure, I18n.t(:departure_after_trip) unless
       self.departure <= self.trip.departure.to_date
   end
 
