@@ -93,10 +93,12 @@
   <%= check_box_tag nil, nil, @reservation.paid, :disabled => true %>
 </p>
 
+<% unless @reservation.paid_date.nil? %>
 <p>
   <b><%=re_f :paid_date %>:</b>
   <%=h l @reservation.paid_date %>
 </p>
+<% end %>
 
 <p>
   <b><%=h re_f :created_at %>:</b>
