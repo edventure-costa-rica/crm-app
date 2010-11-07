@@ -78,6 +78,14 @@
     <%= f.text_field :reservation_id %>
   </p>
   <p>
+    <%= f.check_box :confirmed %>
+    <%= f.label :confirmed %>
+  </p>
+  <p>
+    <%= f.label :confirmation_no %><br />
+    <%= f.text_field :confirmation_no %>
+  </p>
+  <p>
     <%= f.label :arrival %><br />
     <%= f.date_select :arrival %>
   </p>
@@ -110,8 +118,8 @@
     <%= f.text_field :price %>
   </p>
   <p>
-    <%= f.label :paid %><br />
     <%= f.check_box :paid %>
+    <%= f.label :paid %>
   </p>
   <p>
     <%= f.label :paid_date %><br />
