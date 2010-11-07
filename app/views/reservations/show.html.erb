@@ -1,6 +1,10 @@
 <p>
   <b><%=re_f :trip_id %>:</b>
-  <%= link_to @reservation.trip, [@reservation.client, @reservation.trip] %>
+  <%= link_to @reservation.trip, [@reservation.client, @reservation.trip] %> <br/>
+  <%= h l @trip.arrival.to_date %> &dash;
+  <%= h l @trip.departure.to_date %><br/>
+  <%= t '.trip_duration' %>:
+  <em><%= @trip.nights %></em>
 </p>
 
 <p>
