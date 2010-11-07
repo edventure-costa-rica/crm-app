@@ -31,6 +31,10 @@ class Reservation < ActiveRecord::Base
     self.company.city if self.company
   end
 
+  def nights
+    (departure - arrival).to_i
+  end
+
   def arrival_date
     I18n.localize arrival.to_date, :format => :voucher
   end
