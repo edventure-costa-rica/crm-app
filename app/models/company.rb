@@ -39,6 +39,12 @@ class Company < ActiveRecord::Base
       "#{name} / #{region}"
   end
 
+  @kinds.each do |k|
+    define_method "#{k}?" do
+      self.kind == k
+    end
+  end
+
   def proper_website_url
     return unless self.website?
 
