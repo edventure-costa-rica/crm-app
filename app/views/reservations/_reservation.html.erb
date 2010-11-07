@@ -79,7 +79,11 @@
   </p>
   <p>
     <%= f.label :arrival %><br />
-    <%= f.datetime_select :arrival %>
+    <%= f.date_select :arrival %>
+  </p>
+  <p>
+    <%= f.label :arrival_time %><br />
+    <%= f.text_field :arrival_time %>
   </p>
   <p>
     <%= f.label :pickup_location %><br />
@@ -87,7 +91,11 @@
   </p>
   <p>
     <%= f.label :departure %><br />
-    <%= f.datetime_select :departure %>
+    <%= f.date_select :departure %>
+  </p>
+  <p>
+    <%= f.label :departure_time %><br />
+    <%= f.text_field :departure_time %>
   </p>
   <p>
     <%= f.label :dropoff_location %><br />
