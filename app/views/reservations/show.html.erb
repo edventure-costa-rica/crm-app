@@ -89,6 +89,16 @@
 </p>
 
 <p>
+  <b><%= re_f :paid %></b>:
+  <%= check_box_tag nil, nil, @reservation.paid, :disabled => true %>
+</p>
+
+<p>
+  <b><%=re_f :paid_date %>:</b>
+  <%=h l @reservation.paid_date %>
+</p>
+
+<p>
   <b><%=h re_f :created_at %>:</b>
   <%=h l @client.created_at.to_date %>
 </p>
