@@ -4,7 +4,11 @@
   <p>
     <%= f.label :trip_id %><br />
     <%= f.hidden_field :trip_id %>
-    <b><%= @trip %></b>
+    <b><%= @trip %></b><br/>
+    <%= t '.trip_duration' %>:
+    <em><%= @trip.nights %></em><br/>
+    <%= h l @trip.arrival.to_date %> &ndash;
+    <%= h l @trip.departure.to_date %>
   </p>
 
   <p>
