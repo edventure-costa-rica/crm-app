@@ -23,6 +23,16 @@
 </p>
 
 <p>
+  <b><%= re_f :confirmed %></b>:
+  <%= check_box_tag nil, nil, @reservation.confirmed, :disabled => true %>
+</p>
+
+<p>
+  <b><%=re_f :confirmation_no %>:</b>
+  <%=h @reservation.confirmation_no %>
+</p>
+
+<p>
   <b><%=re_f :arrival %>:</b>
   <%=h l @reservation.arrival, :format => :long %>
 </p>
