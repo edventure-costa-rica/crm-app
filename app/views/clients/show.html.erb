@@ -6,13 +6,19 @@
 </p>
 
 <p>
+  <b><%= cl_f :contact_name %>:</b>
+  <%=h @client.contact_title %>
+  <%=h @client.contact_name %>
+</p>
+
+<p>
   <b><%= cl_f :family_name %>:</b>
   <%=h @client.family_name %>
 </p>
 
 <p>
-  <b><%= cl_f :contact_name %>:</b>
-  <%=h @client.contact_name %>
+  <b><%= cl_f :contact_gender %>:</b>
+  <%=h t @client.contact_gender %>
 </p>
 
 <p>
@@ -31,12 +37,12 @@
 </p>
 
 <p>
-  <b><%=h t :created_at %>:</b>
+  <b><%=h cl_f :created_at %>:</b>
   <%=h l @client.created_at.to_date %>
 </p>
 
 <p>
-  <b><%=h t :updated_at %>:</b>
+  <b><%=h cl_f :updated_at %>:</b>
   <%=h l @client.updated_at.to_date %>
 </p>
 
