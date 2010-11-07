@@ -5,6 +5,9 @@ en:
   time:
     formats:
       list: "%e-%m-%Y %l:%M%p"
+  date:
+    formats:
+      voucher: "%d - %B - %Y"
 
   invalid_email: is not a valid e-mail address
   arrival_precedes_departure: must come after arrival
