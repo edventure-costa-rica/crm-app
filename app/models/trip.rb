@@ -11,6 +11,10 @@ class Trip < ActiveRecord::Base
 
   def to_s; new_record? ? Trip.human_name : self.registration_id; end
 
+  def nights
+    (departure - arrival).to_i
+  end
+
 protected
   def generate_default_values
     self.num_children = 0 if self.num_children.nil?
