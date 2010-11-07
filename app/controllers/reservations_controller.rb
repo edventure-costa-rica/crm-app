@@ -34,6 +34,8 @@ class ReservationsController < ApplicationController
   # GET /reservations/1.xml
   def show
     @reservation = Reservation.find(params[:id])
+    @client = @reservation.client
+    @trip = @reservation.trip
 
     respond_to do |format|
       format.html # show.html.erb
