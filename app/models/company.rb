@@ -23,6 +23,7 @@ class Company < ActiveRecord::Base
   ]
 
   validates_inclusion_of :kind, :in => Company.kinds
+  validates_presence_of :name
 
   has_many :reservations
   belongs_to :region
