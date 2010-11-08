@@ -55,3 +55,20 @@ form.inplaceeditor-form {
   padding: 0;
   margin: 0 5px 0 5px;
 }
+
+.tab {
+  width: 500px;
+  border: 2px solid #F0E881;
+  padding: 5px;
+}
+
+.tab-button {
+  padding: 3px 10px 3px 10px;
+  margin-right: 5px;
+  background-color: #d4cd72;
+}
+
+.tab-button-selected {
+  background-color: #F0E881;
+  font-weight: bold;
+}

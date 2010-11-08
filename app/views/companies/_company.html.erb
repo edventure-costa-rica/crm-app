@@ -1,49 +1,87 @@
+<script type="text/javascript">//<![CDATA[
+  function switchTab(ev) {
+    var button = ev ? ev.findElement('a') : this;
+    var tab = $(button.id.sub(/^tab-button-/, 'tab-'));
+
+    // select the button
+    $$('.tab-button').invoke('removeClassName', 'tab-button-selected');
+    button.addClassName('tab-button-selected');
+
+    // show the tab
+    $$('.tab').invoke('hide');
+    tab.show();
+  }
+
+  document.observe('dom:loaded', function() {
+    $$('.tab-button').invoke('observe', 'click', switchTab).
+                      invoke('show');
+    switchTab.apply($$('.tab-button')[0], null);
+  });
+//]]></script>
 <% form_for(@company) do |f| %>
   <%= f.error_messages %>
 
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :kind %><br />
-    <%= f.select :kind, Company.kinds.
-          map { |k| [ co_f(k), k ] } %>
-  </p>
-  <p>
-    <%= f.label :address %><br />
-    <%= f.text_area :address, :rows => 3 %>
-  </p>
-  <p>
-    <%= f.label :city %><br />
-    <%= f.text_field :city %>
-  </p>
-  <p>
-    <%= f.label :region %><br />
-    <%= f.select :region_id, Region.ordered.
-          map { |r| [ r.to_s, r.id ] } %>
-    <% javascript_tag do -%>
-      var h = <%= @popup_h = 500 %>;
-      var w = <%= @popup_w = 600 %>;
-      var l = parseInt((screen.availWidth/2) - (w/2));
-      var t = parseInt((screen.availHeight/2) - (h/2));
-    <%- end %>
-    <%= link_to t('.edit_regions'), regions_path,
-          :popup => [ 'regions',
-            "height=#{@popup_h},width=#{@popup_w}," +
-            "screenX='+l+',screenY='+t+'"
-          ]
-    %>
-  </p>
-  <p>
-    <%= f.label :website %><br />
-    <%= f.text_field :website %>
-  </p>
-  <p>
-    <%= f.label :notes %><br />
-    <%= f.text_area :notes %>
-  </p>
-  <p>
-    <%= f.submit submit_text %>
-  </p>
+<div id="tabs">
+  <a href="#" class="tab-button" id="tab-button-general"
+     style="display:none"><%= t '.general_tab' %></a>
+  <a href="#" class="tab-button" id="tab-button-contact"
+     style="display:none"><%= t '.contact_tab' %></a>
+
+  <div id="tab-general" class="tab">
+    <p>
+      <%= f.label :name %><br />
+      <%= f.text_field :name %>
+    </p>
+    <p>
+      <%= f.label :kind %><br />
+      <%= f.select :kind, Company.kinds.
+            map { |k| [ co_f(k), k ] } %>
+    </p>
+    <p>
+      <%= f.label :address %><br />
+      <%= f.text_area :address, :rows => 3 %>
+    </p>
+    <p>
+      <%= f.label :city %><br />
+      <%= f.text_field :city %>
+    </p>
+    <p>
+      <%= f.label :region %><br />
+      <%= f.select :region_id, Region.ordered.
+            map { |r| [ r.to_s, r.id ] } %>
+      <% javascript_tag do -%>
+        var h = <%= @popup_h = 500 %>;
+        var w = <%= @popup_w = 600 %>;
+        var l = parseInt((screen.availWidth/2) - (w/2));
+        var t = parseInt((screen.availHeight/2) - (h/2));
+      <%- end %>
+      <%= link_to t('.edit_regions'), regions_path,
+            :popup => [ 'regions',
+              "height=#{@popup_h},width=#{@popup_w}," +
+              "screenX='+l+',screenY='+t+'"
+            ]
+      %>
+    </p>
+    <p>
+      <%= f.label :website %><br />
+      <%= f.text_field :website %>
+    </p>
+    <p>
+      <%= f.label :notes %><br />
+      <%= f.text_area :notes %>
+    </p>
+  </div>
+
+
+  <div id="tab-contact" class="tab">
+
+  </div>
+
+</div> <!-- tabs -->
+
+<p>
+  <%= f.submit submit_text %>
+</p>
+
+
 <% end %>
