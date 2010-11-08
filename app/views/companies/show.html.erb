@@ -1,54 +1,61 @@
 <h1><%=h @company %></h1>
 
-<p>
-  <b><%= co_f :id %>:</b>
-  <%=h @company.id %>
-</p>
+<%= javascript_include_tag 'tabs' %>
+<div id="tabs">
 
-<p>
-  <b><%= co_f :name %>:</b>
-  <%=h @company.name %>
-</p>
+  <div id="tab-general" class="tab">
+    <p>
+      <b><%= co_f :id %>:</b>
+      <%=h @company.id %>
+    </p>
 
-<p>
-  <b><%= co_f :kind %>:</b>
-  <%=co_f h @company.kind %>
-</p>
+    <p>
+      <b><%= co_f :name %>:</b>
+      <%=h @company.name %>
+    </p>
 
-<p>
-  <b><%= co_f :address %>:</b>
-  <%=hnl @company.address %>
-</p>
+    <p>
+      <b><%= co_f :website %>:</b>
+      <code><%= link_to @company.website, @company.website if @company.website? %></code>
+    </p>
 
-<p>
-  <b><%= co_f :city %>:</b>
-  <%=h @company.city %>
-</p>
+    <p>
+      <b><%= co_f :kind %>:</b>
+      <%=co_f h @company.kind %>
+    </p>
 
-<p>
-  <b><%= co_f :region %>:</b>
-  <%=h @company.region %>
-</p>
+    <p>
+      <b><%= co_f :address %>:</b>
+      <%=hnl @company.address %>
+    </p>
 
-<p>
-  <b><%= co_f :website %>:</b>
-  <code><%= link_to @company.website, @company.website if @company.website? %></code>
-</p>
+    <p>
+      <b><%= co_f :city %>:</b>
+      <%=h @company.city %>
+    </p>
 
-<p>
-  <b><%=h t :created_at %>:</b>
-  <%=h l @company.created_at.to_date %>
-</p>
+    <p>
+      <b><%= co_f :region %>:</b>
+      <%=h @company.region %>
+    </p>
 
-<p>
-  <b><%=h t :updated_at %>:</b>
-  <%=h l @company.updated_at.to_date %>
-</p>
+    <p>
+      <b><%=h t :created_at %>:</b>
+      <%=h l @company.created_at.to_date %>
+    </p>
 
-<p>
-  <b><%= co_f :notes %>:</b>
-  <%=hnl @company.notes %>
-</p>
+    <p>
+      <b><%=h t :updated_at %>:</b>
+      <%=h l @company.updated_at.to_date %>
+    </p>
+
+    <p>
+      <b><%= co_f :notes %>:</b>
+      <%=hnl @company.notes %>
+    </p>
+  </div> <!-- general -->
+
+</div> <!-- tabs -->
 
 <%= link_to t(:edit), edit_company_path(@company) %> |
 <%= link_to t('.list_comp'), companies_path %> |
