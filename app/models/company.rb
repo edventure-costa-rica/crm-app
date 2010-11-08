@@ -1,6 +1,6 @@
 class Company < ActiveRecord::Base
   class << self
-    attr_reader :kinds
+    attr_reader :kinds, :govt_id_types
 
     def all_in_region(region_id)
       Company.all :conditions => { :region_id => region_id },
@@ -20,6 +20,12 @@ class Company < ActiveRecord::Base
     'transport',
     'tour',
     'other'
+  ]
+
+  @govt_id_types = [
+    'cédula_física',
+    'cédula_jurídica',
+    'pasaporte'
   ]
 
   validates_inclusion_of :kind, :in => Company.kinds

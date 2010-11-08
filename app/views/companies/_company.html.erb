@@ -7,6 +7,8 @@
      style="display:none"><%= t '.general_tab' %></a>
   <a href="#" class="tab-button" id="tab-button-contact"
      style="display:none"><%= t '.contact_tab' %></a>
+  <a href="#" class="tab-button" id="tab-button-bank"
+     style="display:none"><%= t '.bank_tab' %></a>
 
   <div id="tab-general" class="tab">
     <p>
@@ -56,8 +58,101 @@
 
   <div id="tab-contact" class="tab">
 
+    <h3><%= t '.contact_general' %></h3>
+    <p>
+      <%= f.label :contact_general_name %><br />
+      <%= f.text_field :contact_general_name %>
+    </p>
+    <p>
+      <%= f.label :contact_general_phone %><br />
+      <%= f.text_field :contact_general_phone %>
+    </p>
+    <p>
+      <%= f.label :contact_general_mobile %><br />
+      <%= f.text_field :contact_general_mobile %>
+    </p>
+    <p>
+      <%= f.label :contact_general_email %><br />
+      <%= f.text_field :contact_general_email %>
+    </p>
+
+    <h3><%= t '.contact_admin' %></h3>
+    <p>
+      <%= f.label :contact_admin_name %><br />
+      <%= f.text_field :contact_admin_name %>
+    </p>
+    <p>
+      <%= f.label :contact_admin_phone %><br />
+      <%= f.text_field :contact_admin_phone %>
+    </p>
+    <p>
+      <%= f.label :contact_admin_mobile %><br />
+      <%= f.text_field :contact_admin_mobile %>
+    </p>
+    <p>
+      <%= f.label :contact_admin_email %><br />
+      <%= f.text_field :contact_admin_email %>
+    </p>
+
+    <h3><%= t '.contact_reservation' %></h3>
+    <p>
+      <%= f.label :contact_reservation_name %><br />
+      <%= f.text_field :contact_reservation_name %>
+    </p>
+    <p>
+      <%= f.label :contact_reservation_phone %><br />
+      <%= f.text_field :contact_reservation_phone %>
+    </p>
+    <p>
+      <%= f.label :contact_reservation_mobile %><br />
+      <%= f.text_field :contact_reservation_mobile %>
+    </p>
+    <p>
+      <%= f.label :contact_reservation_email %><br />
+      <%= f.text_field :contact_reservation_email %>
+    </p>
   </div>
 
+  <div id="tab-bank" class="tab">
+    <p>
+      <%= f.label :bank_beneficiary %><br />
+      <%= f.text_field :bank_beneficiary %>
+    </p>
+    <p>
+      <%= f.label :bank_govt_id %><br />
+      <%= f.text_field :bank_govt_id %>
+      <%= f.select :bank_govt_id_type,
+            Company.govt_id_types.
+            map { |t| [ co_f(t), t ] },
+            { :prompt => true }
+      %>
+    </p>
+
+    <p>
+      <%= f.label :bank_name %><br />
+      <%= f.text_field :bank_name %>
+    </p>
+    <p>
+      <%= f.label :bank_account %><br />
+      <%= f.text_field :bank_account %>
+    </p>
+    <p>
+      <%= f.label :bank_client_account %><br />
+      <%= f.text_field :bank_client_account %>
+    </p>
+    <p>
+      <%= f.label :bank_aba %><br />
+      <%= f.text_field :bank_aba %>
+    </p>
+    <p>
+      <%= f.label :bank_swift %><br />
+      <%= f.text_field :bank_swift %>
+    </p>
+    <p>
+      <%= f.label :bank_address %><br />
+      <%= f.text_area :bank_address, :rows => 3 %>
+    </p>
+  </div>
 </div> <!-- tabs -->
 
 <p>
