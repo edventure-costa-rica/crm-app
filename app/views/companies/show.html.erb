@@ -4,6 +4,10 @@
 <div id="tabs">
   <a href="#" class="tab-button" id="tab-button-general"
      style="display:none"><%= t '.general_tab' %></a>
+  <a href="#" class="tab-button" id="tab-button-contact"
+     style="display:none"><%= t '.contact_tab' %></a>
+  <a href="#" class="tab-button" id="tab-button-bank"
+     style="display:none"><%= t '.bank_tab' %></a>
 
   <div id="tab-general" class="tab">
     <p>
@@ -42,12 +46,12 @@
     </p>
 
     <p>
-      <b><%=h t :created_at %>:</b>
+      <b><%= co_f :created_at %>:</b>
       <%=h l @company.created_at.to_date %>
     </p>
 
     <p>
-      <b><%=h t :updated_at %>:</b>
+      <b><%= co_f :updated_at %>:</b>
       <%=h l @company.updated_at.to_date %>
     </p>
 
@@ -56,6 +60,26 @@
       <%=hnl @company.notes %>
     </p>
   </div> <!-- general -->
+
+  <div class="tab" id="tab-contact">
+
+  </div> <!-- contact -->
+
+  <div class="tab" id="tab-bank">
+    <table style="padding:5px">
+      <% [:bank_name,:bank_address,:bank_aba,:bank_swift,:bank_account,
+          :bank_beneficiary,:bank_client_account].each do |attr| %>
+      <tr>
+        <td style="text-align: left"><%= co_f attr %></td>
+        <td style="text-align: right"><%= h @company.send attr %></td>
+      </tr>
+      <% end %>
+      <tr>
+        <td style="text-align: left"><%= h @company.bank_govt_id_type %></td>
+        <td style="text-align: right"><%= h @company.bank_govt_id %></td>
+      </tr>
+    </table>
+  </div> <!-- bank -->
 
 </div> <!-- tabs -->
 
