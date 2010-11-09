@@ -21,6 +21,8 @@ class Trip < ActiveRecord::Base
   validates_numericality_of :num_children, :num_disabled,
     :allow_nil => true
 
+  validates_numericality_of :payment_pct, :only_integer => true
+
   validates_inclusion_of :status, :in => Trip.statuses
 
   def to_s; new_record? ? Trip.human_name : self.registration_id; end
@@ -39,6 +41,7 @@ protected
   def generate_default_values
     self.num_children = 0 if self.num_children.nil?
     self.num_disabled = 0 if self.num_disabled.nil?
+    self.payment_pct  = 0 if self.payment_pct.nil?
 
     unless self.registration_id
       reg = 'F' + self.client.family_name[0,1].upcase + 'X'
