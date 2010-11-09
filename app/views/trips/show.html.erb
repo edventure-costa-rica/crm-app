@@ -36,18 +36,13 @@
 </p>
 
 <p>
-  <b><%= tr_f :reservation_count %>:</b>
-  <%=h @trip.reservations.count %>
-</p>
-
-<p>
-  <b><%= tr_f :rack_price %>:</b>
+  <b><%= tr_f :total_rack_price %>:</b>
   <%= h number_to_currency @trip.reservations.to_a.
         sum { |r| r.price.to_f } %>
 </p>
 
 <p>
-  <b><%= tr_f :net_price %>:</b>
+  <b><%= tr_f :total_net_price %>:</b>
   <%= h number_to_currency @trip.reservations.to_a.
         sum { |r| r.net_price.to_f } %>
 </p>
