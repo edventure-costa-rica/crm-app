@@ -4,6 +4,13 @@
   <p><%=f.label :client %>: <%= link_to @client.family_name, @client %></p>
 
   <p>
+    <%= f.label :status %><br />
+    <%= f.select :status, Trip.statuses.
+          map { |s| [ tr_f(s), s ] },
+          { :prompt => true }
+    %>
+  </p>
+  <p>
     <%= f.label :arrival %><br />
     <%= f.datetime_select :arrival %>
   </p>
@@ -22,13 +29,6 @@
   <p>
     <%= f.label :num_disabled %><br />
     <%= f.text_field :num_disabled %>
-  </p>
-  <p>
-    <%= f.label :status %><br />
-    <%= f.select :status, Trip.statuses.
-          map { |s| [ tr_f(s), s ] },
-          { :prompt => true }
-    %>
   </p>
   <p>
     <%= f.label :payment_pct %><br />
