@@ -37,7 +37,7 @@
 
 <p>
   <b><%= tr_f :payment_pct %></b>
-  <%=h "#{@trip.payment_pct}%" %>
+  <%=h number_to_percentage @trip.payment_pct %>
 </p>
 
 <p>

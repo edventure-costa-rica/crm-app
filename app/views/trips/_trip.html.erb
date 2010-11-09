@@ -33,7 +33,7 @@
     <%= f.label :payment_pct %>
     <%= f.select :payment_pct,
           [ 0, 15, 50, 85, 100 ].
-          map { |pct| [ "#{pct}%", pct ] },
+          map { |pct| [ number_to_percentage(pct), pct ] },
           { :prompt => true }
     %>
   </p>
