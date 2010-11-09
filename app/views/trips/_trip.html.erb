@@ -31,7 +31,7 @@
     <%= f.text_field :num_disabled %>
   </p>
   <p>
-    <%= f.label :payment_pct %><br />
+    <%= f.label :payment_pct %>:
     <%= f.select :payment_pct,
           [ 0, 15, 50, 85, 100 ].
           map { |pct| [ "#{pct}%", pct ] },
