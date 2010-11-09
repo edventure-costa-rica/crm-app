@@ -5,6 +5,11 @@
 </p>
 
 <p>
+  <b><%= tr_f :status %>:</b>
+  <em><%=h tr_f @trip.status %></em>
+</p>
+
+<p>
   <b><%= tr_f :arrival %>:</b>
   <%=h l @trip.arrival, :format => :long %>
 </p>
@@ -28,6 +33,16 @@
        special.to_sentence
   %>)
   <% end %>
+</p>
+
+<p>
+  <b><%= tr_f :payment_pct %></b>
+  <%=h "#{@trip.payment_pct}%" %>
+</p>
+
+<p>
+  <b><%= tr_f :payment_details %>:</b>
+  <%=hnl @trip.payment_details %>
 </p>
 
 <p>
