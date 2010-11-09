@@ -21,7 +21,8 @@ class Trip < ActiveRecord::Base
   validates_numericality_of :num_children, :num_disabled,
     :allow_nil => true
 
-  validates_numericality_of :payment_pct, :only_integer => true
+  validates_numericality_of :payment_pct, 
+    :only_integer => true, :allow_nil => true
 
   validates_inclusion_of :status, :in => Trip.statuses
 
