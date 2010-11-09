@@ -4,10 +4,9 @@
   <p><%=f.label :client %>: <%= link_to @client.family_name, @client %></p>
 
   <p>
-    <%= f.label :status %><br />
+    <%= f.label :status %>:
     <%= f.select :status, Trip.statuses.
-          map { |s| [ tr_f(s), s ] },
-          { :prompt => true }
+          map { |s| [ tr_f(s), s ] }
     %>
   </p>
   <p>
