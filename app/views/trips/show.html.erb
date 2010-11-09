@@ -36,6 +36,21 @@
 </p>
 
 <p>
+  <b><%= tr_f :reservation_count %>:</b>
+  <%=h @trip.reservations.count %>
+</p>
+
+<p>
+  <b><%= tr_f :rack_price %>:</b>
+  <%=h number_to_currency @trip.reservations.sum { |r| r.price } %>
+</p>
+
+<p>
+  <b><%= tr_f :net_price %>:</b>
+  <%=h number_to_currency @trip.reservations.sum { |r| r.net_price } %>
+</p>
+
+<p>
   <b><%= tr_f :payment_pct %></b>
   <%=h number_to_percentage @trip.payment_pct %>
 </p>
