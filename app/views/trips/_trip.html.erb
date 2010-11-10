@@ -11,11 +11,17 @@
   </p>
   <p>
     <%= f.label :arrival %><br />
-    <%= f.datetime_select :arrival %>
+    <%= f.datetime_select :arrival,
+          :include_blank => true,
+          :start_year    => Time.now.year
+    %>
   </p>
   <p>
     <%= f.label :departure %><br />
-    <%= f.datetime_select :departure %>
+    <%= f.datetime_select :departure,
+          :include_blank => true,
+          :start_year    => Time.now.year
+    %>
   </p>
   <p>
     <%= f.label :total_people %><br />
@@ -33,7 +39,7 @@
     <%= f.label :payment_pct %>
     <%= f.select :payment_pct,
           [ 0, 15, 50, 85, 100 ].
-          map { |pct| [ number_to_percentage(pct), pct ] },
+          map { |pct| [ number_to_percentage(pct, :precision => 0), pct ] },
           { :prompt => true }
     %>
   </p>
