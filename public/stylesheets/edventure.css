@@ -22,7 +22,7 @@ body {
   text-align: center;
 }
 
-table {
+table.styled {
   width: 100%;
   background-color: #FFFBC0;
   border: 2px solid #F0E881;
