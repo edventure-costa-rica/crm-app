@@ -20,6 +20,10 @@ module ApplicationHelper
     Trip.human_attribute_name which
   end
 
+  def pe_f(which)
+    Person.human_attribute_name which
+  end
+
   def title
     model, obj = if controller.class == TripsController
       [Trip, @trip]

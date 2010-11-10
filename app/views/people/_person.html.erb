@@ -1,28 +1,40 @@
-<h1>Editing person</h1>
+<% form_for(person) do |f| %>
+<%= f.error_messages %>
 
-<% form_for(@person) do |f| %>
-  <%= f.error_messages %>
+<table>
+  <tr>
+    <th style="text-align: left"><%= f.label :full_name %></th>
+    <th style="text-align: left"><%= f.label :dob %></th>
+  </tr>
 
-  <p>
-    <%= f.label :full_name %><br />
-    <%= f.text_field :full_name %>
-  </p>
-  <p>
-    <%= f.label :passport_number %><br />
-    <%= f.text_field :passport_number %>
-  </p>
-  <p>
-    <%= f.label :passport_country %><br />
-    <%= f.text_field :passport_country %>
-  </p>
-  <p>
-    <%= f.label :dob %><br />
-    <%= f.date_select :dob %>
-  </p>
-  <p>
-    <%= f.submit 'Update' %>
-  </p>
+  <tr>
+    <td><%= f.text_field :full_name %></td>
+    <td><%= f.date_select :dob, 
+              :prompt     => true,
+              :start_year => Time.now.year - 100,
+              :end_year   => Time.now.year
+        %></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th style="text-align: left"><%= f.label :passport_number %></th>
+    <th style="text-align: left"><%= f.label :passport_country %></th>
+  </tr>
+
+  <tr>
+    <td><%= f.text_field :passport_number,
+              :style => 'width: inherit',
+              :size  => 12
+        %></td>
+    <td><%= f.text_field :passport_country,
+              :default => person.trip.nil? ? 
+                nil : person.trip.client.nationality
+        %></td>
+  </tr>
+</table>
+
+<%= f.submit if defined? show_submit and show_submit %>
+
 <% end %>
-
-<%= link_to 'Show', @person %> |
-<%= link_to 'Back', people_path %>
