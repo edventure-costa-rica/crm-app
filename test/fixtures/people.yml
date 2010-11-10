@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  full_name: MyString
+  passport_number: MyString
+  passport_country: MyString
+  dob: 2010-11-10
+
+two:
+  full_name: MyString
+  passport_number: MyString
+  passport_country: MyString
+  dob: 2010-11-10

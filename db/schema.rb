@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101110195105) do
+ActiveRecord::Schema.define(:version => 20101110195851) do
 
   create_table "clients", :force => true do |t|
     t.string   "nationality"
@@ -59,6 +59,16 @@ ActiveRecord::Schema.define(:version => 20101110195105) do
     t.boolean  "all_inclusive"
     t.boolean  "includes_transport"
     t.boolean  "includes_tour"
+  end
+
+  create_table "people", :force => true do |t|
+    t.string   "full_name"
+    t.string   "passport_number"
+    t.string   "passport_country"
+    t.date     "dob"
+    t.integer  "trip_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "regions", :force => true do |t|

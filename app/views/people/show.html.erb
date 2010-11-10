@@ -1,0 +1,23 @@
+<p>
+  <b>Full name:</b>
+  <%=h @person.full_name %>
+</p>
+
+<p>
+  <b>Passport number:</b>
+  <%=h @person.passport_number %>
+</p>
+
+<p>
+  <b>Passport country:</b>
+  <%=h @person.passport_country %>
+</p>
+
+<p>
+  <b>Dob:</b>
+  <%=h @person.dob %>
+</p>
+
+
+<%= link_to 'Edit', edit_person_path(@person) %> |
+<%= link_to 'Back', people_path %>
