@@ -2,7 +2,7 @@ class PeopleController < ApplicationController
   # GET /people
   # GET /people.xml
   def index
-    @people = Person.all
+    @people = Person.find_all_by_trip_id params[:trip_id]
 
     respond_to do |format|
       format.html # index.html.erb
@@ -24,7 +24,7 @@ class PeopleController < ApplicationController
   # GET /people/new
   # GET /people/new.xml
   def new
-    @person = Person.new
+    @person = Person.new :trip_id => params[:trip_id]
 
     respond_to do |format|
       format.html # new.html.erb
