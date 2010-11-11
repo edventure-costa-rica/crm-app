@@ -1,7 +1,7 @@
 <% form_for(@client) do |f| %>
   <%= f.error_messages %>
 
-  <table style="border: none; background:transparent;width: inherit">
+  <table>
     <tr>
       <td style="text-align:left"><%= f.label :contact_title %></td>
       <td style="text-align:left"><%= f.label :contact_name %></td>
@@ -18,6 +18,10 @@
   <p>
     <%= f.label :family_name %><br />
     <%= f.text_field :family_name %>
+  </p>
+  <p>
+    <%= f.label :contact_address %><br />
+    <%= f.text_area :contact_address, :rows => 3 %>
   </p>
   <p>
     <%= f.label :nationality %><br />
