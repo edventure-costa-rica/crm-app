@@ -37,4 +37,11 @@
 
 <%= f.submit %>
 
+<%= button_to_remote t(:cancel),
+      :url => person_path(@person),
+      :method => :get,
+      :update => "person_#{@person.id}" \
+    unless @person.full_name.nil?
+%>
+
 <% end %>
