@@ -1,4 +1,5 @@
-<p style="cursor: pointer" ondblclick="<%= remote_function(
+<p style="cursor: pointer" 
+   ondblclick="<%= remote_function(
       :url => edit_person_path(@person),
       :method => :get,
       :update => "person_#{@person.id}"
@@ -9,4 +10,8 @@
   <b><%= pe_f :passport %></b>:
   <%=h @person.passport %>
   <em>(<%=h @person.country %>)</em>
+  
+  <br/>
+
+  <small><em><%= t '.edit_instruction' %></em></small>
 </p>
