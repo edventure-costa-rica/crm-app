@@ -1,26 +1,18 @@
-<h1>Listing people</h1>
+<h1><%= t '.title', :for => @trip %></h1>
 
-<table class="styled">
-  <tr>
-    <th>Full name</th>
-    <th>Passport number</th>
-    <th>Passport country</th>
-    <th>Dob</th>
-  </tr>
+<ol>
 
-<% @people.each do |person| %>
-  <tr>
-    <td><%=h person.full_name %></td>
-    <td><%=h person.passport_number %></td>
-    <td><%=h person.passport_country %></td>
-    <td><%=h person.dob %></td>
-    <td><%= link_to 'Show', person %></td>
-    <td><%= link_to 'Edit', edit_person_path(person) %></td>
-    <td><%= link_to 'Destroy', person, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+<% @trip.people.each do |person|
+    @person = person %>
+  <li style="margin-top: 15px">
+  <% div_for person, :class => :person do
+      if person.full_name.nil? %>
+    <%= render :partial => person %>
+<%    else -%>
+    <%= render :partial => 'show' %>
+<%    end
+    end %>
+  </li>
 <% end %>
-</table>
 
-<br />
-
-<%= link_to 'New person', new_person_path %>
+</ol>

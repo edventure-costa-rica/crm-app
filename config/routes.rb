@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :people
+  map.resources :people, :except => [:new, :create, :destroy]
 
   map.resources :regions, 
     :only => [ :index, :create, :update, :destroy ] \

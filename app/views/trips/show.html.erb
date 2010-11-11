@@ -65,4 +65,5 @@
 
 <%= link_to t(:edit), edit_client_trip_path(@client, @trip) %> |
 <%= link_to t('.list_trip'), client_trips_path(@client) %> |
-<%= link_to t('.list_res'), client_trip_reservations_path(@client, @trip) %>
+<%= link_to t('.list_res'), client_trip_reservations_path(@client, @trip) %> |
+<%= link_to t('.list_people'), people_path({ :trip_id => @trip.id }) %>

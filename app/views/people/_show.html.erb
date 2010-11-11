@@ -1,6 +1,12 @@
-<b><%= pe_f :full_name %></b>: <%=h person.full_name %><br/>
-<b><%= pe_f :dob %></b>: <%=h l person.dob %><br/>
+<p style="cursor: pointer" ondblclick="<%= remote_function(
+      :url => edit_person_path(@person),
+      :method => :get,
+      :update => "person_#{@person.id}"
+  )%>">
+  <b><%= pe_f :full_name %></b>: <%=h @person.full_name %><br/>
+  <b><%= pe_f :dob %></b>: <%=h l @person.dob unless @person.dob.nil? %><br/>
 
-<b><%= pe_f :passport_number %></b>:
-<%=h person.passport_number %>
-<em>(<%=h person.passport_country %>)</em>
+  <b><%= pe_f :passport %></b>:
+  <%=h @person.passport %>
+  <em>(<%=h @person.country %>)</em>
+</p>

@@ -2,7 +2,9 @@ class PeopleController < ApplicationController
   # GET /people
   # GET /people.xml
   def index
+    return redirect_to :controller => :home unless params.has_key?(:trip_id)
     @people = Person.find_all_by_trip_id params[:trip_id]
+    @trip = Trip.find params[:trip_id]
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,20 +16,10 @@ class PeopleController < ApplicationController
   # GET /people/1.xml
   def show
     @person = Person.find(params[:id])
+    @trip = @person.trip
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @person }
-    end
-  end
-
-  # GET /people/new
-  # GET /people/new.xml
-  def new
-    @person = Person.new :trip_id => params[:trip_id]
-
-    respond_to do |format|
-      format.html # new.html.erb
+      format.html { render :partial => 'show' }
       format.xml  { render :xml => @person }
     end
   end
@@ -35,21 +27,10 @@ class PeopleController < ApplicationController
   # GET /people/1/edit
   def edit
     @person = Person.find(params[:id])
-  end
-
-  # POST /people
-  # POST /people.xml
-  def create
-    @person = Person.new(params[:person])
+    @trip = @person.trip
 
     respond_to do |format|
-      if @person.save
-        format.html { redirect_to(@person, :notice => 'Person was successfully created.') }
-        format.xml  { render :xml => @person, :status => :created, :location => @person }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @person.errors, :status => :unprocessable_entity }
-      end
+      format.html { render :partial => @person }
     end
   end
 
@@ -60,24 +41,11 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
       if @person.update_attributes(params[:person])
-        format.html { redirect_to(@person, :notice => 'Person was successfully updated.') }
-        format.xml  { head :ok }
+        format.html { render :partial => 'show' }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @person.errors, :status => :unprocessable_entity }
+        format.html { render :partial => @person }
       end
     end
   end
 
-  # DELETE /people/1
-  # DELETE /people/1.xml
-  def destroy
-    @person = Person.find(params[:id])
-    @person.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(people_url) }
-      format.xml  { head :ok }
-    end
-  end
 end
