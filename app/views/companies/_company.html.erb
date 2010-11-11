@@ -16,9 +16,26 @@
       <%= f.text_field :name %>
     </p>
     <p>
+      <%= f.label :package %><br/>
+      <%= f.text_field :package %>
+    </p>
+    <p>
       <%= f.label :kind %><br />
       <%= f.select :kind, Company.kinds.
-            map { |k| [ co_f(k), k ] } %>
+            map { |k| [ co_f(k), k ] }, {}, { :onchange =>
+              '$("hotel-options")[this.value=="hotel"?"show":"hide"]()' }
+      %>
+    </p>
+    <p id="hotel-options" style="<%=
+          'display:none' unless @company.kind == 'hotel' %>">
+      <%= f.check_box :all_inclusive %>
+      <%= f.label :all_inclusive %><br/>
+
+      <%= f.check_box :includes_transport %>
+      <%= f.label :includes_transport %><br/>
+
+      <%= f.check_box :includes_tour %>
+      <%= f.label :includes_tour %><br/>
     </p>
     <p>
       <%= f.label :website %><br />

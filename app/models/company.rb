@@ -62,4 +62,10 @@ class Company < ActiveRecord::Base
 
     self.website = "http://#{website}" unless website =~ /^https?:/
   end
+
+  def after_initialize
+    if new_record?
+      self.kind ||= Company.kinds[0]
+    end
+  end
 end
