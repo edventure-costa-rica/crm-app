@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101111204607) do
+ActiveRecord::Schema.define(:version => 20101111213828) do
 
   create_table "clients", :force => true do |t|
     t.string   "nationality"
@@ -114,6 +114,9 @@ ActiveRecord::Schema.define(:version => 20101111204607) do
     t.string   "status"
     t.integer  "payment_pct"
     t.text     "payment_details"
+    t.string   "arrival_flight"
+    t.string   "departure_flight"
+    t.date     "confirmation_date"
   end
 
 end
