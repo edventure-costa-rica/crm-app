@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101110195851) do
+ActiveRecord::Schema.define(:version => 20101111204607) do
 
   create_table "clients", :force => true do |t|
     t.string   "nationality"
@@ -63,8 +63,8 @@ ActiveRecord::Schema.define(:version => 20101110195851) do
 
   create_table "people", :force => true do |t|
     t.string   "full_name"
-    t.string   "passport_number"
-    t.string   "passport_country"
+    t.string   "passport"
+    t.string   "country"
     t.date     "dob"
     t.integer  "trip_id"
     t.datetime "created_at"
