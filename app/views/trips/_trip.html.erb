@@ -4,12 +4,22 @@
   <p><%=f.label :client %>: <%= link_to @client.family_name, @client %></p>
 
   <p>
+  <p>
     <%= f.label :status %>
     <%= f.select :status, Trip.statuses.
-          map { |s| [ tr_f(s), s ] }
+          map { |s| [ tr_f(s), s ] }, {}, { :onchange =>
+            '$("confirm-date")[this.value=="confirmed"?"show":"hide"]()' }
     %>
   </p>
-  <p>
+  <p id="confirm-date" style="<%=
+        'display:none' unless @trip.status == 'confirmed' %>">
+    <%= f.label :confirmation_date %><br/>
+    <%= f.date_select :confirmation_date,
+          :include_blank => true,
+          :start_year => Time.now.year - 1,
+          :end_year => Time.now.year + 1
+    %>
+  </p>
     <%= f.label :arrival %><br />
     <%= f.datetime_select :arrival,
           :include_blank => true,
