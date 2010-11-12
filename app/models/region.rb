@@ -19,13 +19,12 @@ class Region < ActiveRecord::Base
     end
   end
 
-  validates_presence_of :name
-  validates_uniqueness_of :name
+  validates_uniqueness_of :name, :scope => :country
   validates_inclusion_of :country, :in => @countries
 
   def to_s
-    if name == country
-      name
+    if name.nil?
+      country
     else
       "#{name}, #{country}"
     end
