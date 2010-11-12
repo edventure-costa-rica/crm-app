@@ -9,6 +9,13 @@
   <em><%=h tr_f @trip.status %></em>
 </p>
 
+<% if @trip.status == 'confirmed' %>
+<p>
+  <b><%= tr_f :confirmation_date %>:</b>
+  <%=h l @trip.confirmation_date if @trip.confirmation_date %>
+</p>
+<% end %>
+
 <p>
   <b><%= tr_f :arrival %>:</b>
   <%=h l @trip.arrival, :format => :long %>
@@ -64,6 +71,5 @@
 
 
 <%= link_to t(:edit), edit_client_trip_path(@client, @trip) %> |
-<%= link_to t('.list_trip'), client_trips_path(@client) %> |
 <%= link_to t('.list_res'), client_trip_reservations_path(@client, @trip) %> |
 <%= link_to t('.list_people'), people_path({ :trip_id => @trip.id }) %>
