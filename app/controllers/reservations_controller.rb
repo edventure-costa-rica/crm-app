@@ -178,6 +178,6 @@ class ReservationsController < ApplicationController
   def pays
     @reservations = Reservation.find :all,
       :conditions => { :trip_id => params[:trip_id] },
-      :order      => 'arrival ASC'
+      :order      => 'paid_date ASC, arrival ASC'
   end
 end
