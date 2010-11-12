@@ -173,11 +173,15 @@ class ReservationsController < ApplicationController
 
   def pay
     @reservation = Reservation.find params[:id]
+
+    render :layout => 'print'
   end
 
   def pays
     @reservations = Reservation.find :all,
       :conditions => { :trip_id => params[:trip_id] },
       :order      => 'paid_date ASC, arrival ASC'
+
+    render :layout => 'print'
   end
 end
