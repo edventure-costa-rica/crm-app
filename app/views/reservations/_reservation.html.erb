@@ -20,7 +20,7 @@
   function getData(region_id) {
     <%= remote_function(
           :url  => companies_path({ :format => :js }),
-          :with => "'region_id='+region_id",
+          :with => "'region_id='+region_id+'&kind=#{@kind}'",
           :method => :get
         )
     %>
@@ -55,7 +55,7 @@
   <p>
     <%= f.label :region %><br />
     <b><%=select :reservation, :region_id,
-            Region.ordered.map { |r| [r.name, r.id] },
+            Region.ordered.map { |r| [r, r.id] },
             { :prompt   => t('.select_region') },
             { :id       => 'region-select',
               :name     => '',
@@ -65,10 +65,9 @@
   </p>
 
   <p>
-    <%= f.label :company %><br />
-    <%= f.select :company_id, 
-          Company.all_in_region( @reservation.region_id ).
-            map { |c| [ c.name, c.id ] },
+    <%= f.label :company %> <%= "(#{co_f @kind})" if @kind %><br />
+    <%= f.select :company_id, @companies.
+          map { |c| [ c.name, c.id ] },
           { :prompt => t('.select_region') },
           { :id => 'company-select' }
     %>
