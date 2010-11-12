@@ -24,7 +24,8 @@
 
 <p>
   <b><%= re_f :confirmed %></b>:
-  <%= check_box_tag nil, nil, @reservation.confirmed, :disabled => true %>
+  <%= check_box_tag nil, nil, @reservation.confirmed, 
+        :disabled => true, :style => 'vertical-align:top' %>
 </p>
 
 <p>
@@ -90,7 +91,8 @@
 
 <p>
   <b><%= re_f :paid %></b>:
-  <%= check_box_tag nil, nil, @reservation.paid, :disabled => true %>
+  <%= check_box_tag nil, nil, @reservation.paid, 
+        :disabled => true, :style => 'vertical-align:top' %>
 </p>
 
 <% unless @reservation.paid_date.nil? %>
@@ -115,7 +117,4 @@
   <%=hnl @reservation.notes %>
 </p>
 
-
-<%= link_to t(:edit), edit_client_trip_reservation_path(@reservation.client, @reservation.trip, @reservation) %> |
-<%= link_to t('.list_trip'), client_trip_reservations_path(@reservation.client, @reservation.trip) %> |
-<%= link_to 'Voucher', voucher_client_trip_reservation_path(@reservation.client, @reservation.trip, @reservation) %>
+<%= render :partial => 'links' if @client and @trip %>

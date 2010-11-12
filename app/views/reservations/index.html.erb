@@ -45,7 +45,4 @@
 
 <br />
 
-<% if @client and @trip then %>
-  <%= link_to t('.new'), new_client_trip_reservation_path(@client, @trip) %> |
-  <%= link_to 'Vouchers', vouchers_client_trip_reservations_path(@client, @trip) %>
-<% end %>
+<%= render :partial => 'links' if @client and @trip %>
