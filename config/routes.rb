@@ -14,8 +14,8 @@ ActionController::Routing::Routes.draw do |map|
       # trips have reservations, really
       client.resources :trips do |trip|
         trip.resources :reservations, 
-          :collection => { :vouchers => :get },
-          :member     => { :voucher  => :get }
+          :collection => { :vouchers => :get, :pays => :get },
+          :member     => { :voucher  => :get, :pay  => :get }
       end
   end
 

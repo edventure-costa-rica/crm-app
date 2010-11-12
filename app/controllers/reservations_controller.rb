@@ -170,4 +170,14 @@ class ReservationsController < ApplicationController
       end
     end
   end
+
+  def pay
+    @reservation = Reservation.find params[:id]
+  end
+
+  def pays
+    @reservations = Reservation.find :all,
+      :conditions => { :trip_id => params[:trip_id] },
+      :order      => 'arrival ASC'
+  end
 end
