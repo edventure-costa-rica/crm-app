@@ -12,7 +12,7 @@
 
 <% @clients.each do |client| %>
   <tr>
-    <td><%=h client.id %></td>
+    <td><em>#<%=h client.id %></em></td>
     <td><%=h client.family_name %></td>
     <td><%=h client.contact_name %></td>
     <td><%=h client.nationality %></td>
