@@ -50,6 +50,17 @@ class ReservationsController < ApplicationController
     @trip = Trip.find(params[:trip_id])
     @reservation = Reservation.new :trip => @trip
 
+    if params[:kind]
+      @kind = Company.kinds.include?(params[:kind].downcase) ?
+        params[:kind].downcase : nil
+      @companies = Company.find_all_by_kind_and_region_id @kind, 
+        Region.first.id, :order => 'companies.name'
+    else
+      @kind = nil
+      @companies = Company.find_all_by_region_id Region.first.id,
+        :order => 'companies.name'
+    end
+
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @reservation }
@@ -61,6 +72,17 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.find(params[:id])
     @client = Client.find(params[:client_id])
     @trip = Trip.find(params[:trip_id])
+
+    if params[:kind]
+      @kind = Company.kinds.include?(params[:kind].downcase) ?
+        params[:kind].downcase : nil
+      @companies = Company.find_all_by_kind_and_region_id @kind,
+        Region.first.id, :order => 'companies.name'
+    else
+      @kind = nil
+      @companies = Company.find_all_by_region_id Region.first.id,
+        :order => 'companies.name'
+    end
 
   end
 
