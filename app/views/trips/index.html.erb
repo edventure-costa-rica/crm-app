@@ -10,10 +10,10 @@
 
 <table class="styled">
   <tr>
+    <th><%=tr_f :registration_id %></th>
   <% unless @client %>
     <th><%=tr_f :client %></th>
   <% end %>
-    <th><%=tr_f :registration_id %></th>
     <th><%=tr_f :arrival %></th>
     <th><%=tr_f :departure %></th>
     <th><%=tr_f :total_people %></th>
@@ -21,10 +21,10 @@
 
 <% @trips.each do |trip| %>
   <tr>
+    <td><%=h trip.registration_id %></td>
   <% unless @client %>
     <td><%=h trip.client.family_name %></td>
   <% end %>
-    <td><%=h trip.registration_id %></td>
     <td><%=h l trip.arrival.to_date %></td>
     <td><%=h l trip.departure.to_date %></td>
     <td><%=h trip.total_people %></td>
