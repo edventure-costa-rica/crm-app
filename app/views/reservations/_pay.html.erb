@@ -3,7 +3,7 @@
   <!-- reservation details -->
   <tr>
     <td style="text-align: left"><b><%=h re_f :paid_date %></b></td>
-    <td style="text-align: right"><b><%=h pay.paid_date %></b></td>
+    <td style="text-align: right"><b><%=h l pay.paid_date if pay.paid_date %></b></td>
   </tr>
   <tr>
     <td style="text-align: left"><%=h t '.provider' %></td>
@@ -33,3 +33,5 @@
     <td style="text-align: right"><%= h pay.company.bank_govt_id %></td>
   </tr>
 </table>
+
+<br/>
