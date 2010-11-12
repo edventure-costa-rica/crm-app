@@ -1,3 +1,12 @@
+<%=
+Company.kinds.map do |kind|
+  link_to t('.new', :for => kind),
+    new_client_trip_reservation_path(@client, @trip, :kind => kind)
+end.join " |\n"
+%>
+
+<br/>
+
 <% if @reservation %>
   <%= link_to t(:edit), edit_client_trip_reservation_path(@client, @trip, @reservation) %> |
   <%= link_to t('.list_trip'), client_trip_reservations_path(@client, @trip) %> |
@@ -7,11 +16,3 @@
   <%= link_to 'Vouchers', vouchers_client_trip_reservations_path(@client, @trip, @reservation) %> |
   <%= link_to t('.pays'), pays_client_trip_reservations_path(@client, @trip) %>
 <% end %>
-
-<br/>
-<%=
-Company.kinds.map do |kind|
-  link_to t('.new', :for => kind),
-    new_client_trip_reservation_path(@client, @trip, :kind => kind)
-end.join " |\n"
-%>
