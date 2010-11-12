@@ -5,3 +5,20 @@
 #   
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Major.create(:name => 'Daley', :city => cities.first)
+
+# single-region countries
+['Nicaragua', 'Guatemala', 'Honduras'].each do |r|
+  Region.create :country => r
+end
+
+# panama
+['Panama City', 'Pacific', 'Carribean', 'Boquete'].each do |r|
+  Region.create :name => r, :country => 'Panama'
+end
+
+# costa rica
+['San José', 'Central Costa Rica', 'North Costa Rica', 'North Pacific',
+ 'South Pacific', 'Carribean', 'Tortuguero', 'Sarapiqui', 'Arenal', 'Monteverde'].
+each do |r|
+  Region.create :name => r, :country => 'Costa Rica'
+end
