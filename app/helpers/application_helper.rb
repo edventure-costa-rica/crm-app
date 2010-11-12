@@ -68,6 +68,8 @@ class ActionView::Base
     :loadingText    => I18n.t(:loading),
     :savingText     => I18n.t(:saving),
     :clickToEditText=> I18n.t(:click_to_edit),
+    :highlightColor => '',
+    :highlightEndColor => '',
     :onFailure      => 'function(t){ }'
   }
 
@@ -92,6 +94,15 @@ class ActionView::Base
       { :id => element_id, :class => 'in_place_collection_editor_field' }.
       merge!(options.delete(:html) || {})
 
+    # external control is an edit icon by default
+    if options[:externalControl] === true or not options.has_key? :externalControl
+      external = image_tag 'edit.gif', :id => "#{element_id}_external",
+        :style => 'vertical-align: middle'
+      options[:externalControl] = "#{element_id}_external"
+    elsif options[:externalControl] === false
+      external = ''
+    end
+
     ipe = javascript_tag do
       js = ''
       js << "new Ajax.InPlaceEditor("
@@ -103,7 +114,7 @@ class ActionView::Base
       js << ");"
     end
 
-    element + ipe
+    element + external + ipe
   end
 
   # in-place collection editor
@@ -133,6 +144,15 @@ class ActionView::Base
       { :id => element_id, :class => 'in_place_collection_editor_field' }.
       merge!(options.delete(:html) || {})
 
+    # external control is an edit icon by default
+    if options[:externalControl] === true or not options.has_key? :externalControl
+      external = image_tag 'edit.gif', :id => "#{element_id}_external",
+        :style => 'vertical-align: middle'
+      options[:externalControl] = "#{element_id}_external"
+    elsif options[:externalControl] === false
+      external = ''
+    end
+
     ipe = javascript_tag do
       js = ''
       js << "new Ajax.InPlaceCollectionEditor("
@@ -144,6 +164,6 @@ class ActionView::Base
       js << ");"
     end
 
-    element + ipe
+    element + external  + ipe
   end
 end
