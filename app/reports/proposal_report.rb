@@ -7,6 +7,7 @@ class ProposalReport < OpenDocumentReport
     @trip = trip
     @client = @trip.client
     @reservations = @trip.reservations.to_a
+    @people = @trip.people.to_a
 
     # list of countries visited
     @countries = @reservations.collect { |res| res.company.region.country }
