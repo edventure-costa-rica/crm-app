@@ -34,6 +34,14 @@ class Trip < ActiveRecord::Base
     (departure.to_date - arrival.to_date).to_i
   end
 
+  def arrival_date
+    arrival.to_date
+  end
+
+  def departure_date
+    departure.to_date
+  end
+
   @statuses.each do |s|
     define_method "#{s}?" do
       self.status == s
