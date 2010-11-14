@@ -8,7 +8,8 @@ class OpenDocumentReport < Serenity::Template
   def initialize(template = self.class.template_filename, output = nil)
     if output.nil?
       # create a temporary file to use as output
-      @output_tmp = Tempfile.new File.basename(template, '.odt'), 'tmp'
+      File.mkpath 'tmp/reports'
+      @output_tmp = Tempfile.new File.basename(template, '.odt'), 'tmp/reports'
       @output_tmp.close
       @output = @output_tmp.path
     else
