@@ -2,8 +2,10 @@
 require 'serenity'
 
 class OpenDocumentReport < Serenity::Template
-  def initialize(template, output = nil)
-    
+  class << self; attr_reader :template_filename; end
+  @template_filename = nil
+
+  def initialize(template = self.class.template_filename, output = nil)
     if output.nil?
       # create a temporary file to use as output
       @output_tmp = Tempfile.new File.basename(template, '.odt')
