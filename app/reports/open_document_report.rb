@@ -2,8 +2,6 @@
 require 'serenity'
 
 class OpenDocumentReport < Serenity::Template
-  include I18n
-
   class << self; attr_reader :template_filename; end
   @template_filename = nil
 
