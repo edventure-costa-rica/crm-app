@@ -109,4 +109,18 @@ class TripsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  def proposal
+    @trip = Trip.find params[:id]
+    report = ProposalReport.new(@trip)
+    report.render
+
+    respond_to do |format|
+      format.odt do
+        send_file report.to_s,
+          :filename => "Proposal-#{@trip}.odt",
+          :type     => :odt
+      end
+    end
+  end
 end
