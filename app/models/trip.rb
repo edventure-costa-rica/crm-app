@@ -40,6 +40,14 @@ class Trip < ActiveRecord::Base
     end
   end
 
+  def children?
+    num_children > 0
+  end
+
+  def disabled?
+    num_disabled > 0
+  end
+
 protected
   def generate_default_values
     self.num_children = 0 if self.num_children.nil?
