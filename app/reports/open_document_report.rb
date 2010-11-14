@@ -16,6 +16,10 @@ class OpenDocumentReport < Serenity::Template
     super(template, @output)
   end
 
+  def render
+    self.process binding
+  end
+
   # as a string, use the output filename
   def to_s
     @output
@@ -23,7 +27,7 @@ class OpenDocumentReport < Serenity::Template
 
   # this will render and return the output .odt as a string
   def to_odt
-    self.process binding
+    render
     IO.read @output
   end
 end
