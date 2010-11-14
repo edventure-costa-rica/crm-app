@@ -126,6 +126,12 @@ en:
       company:
         one: Company
         other: Companies
+      region:
+        one: Region
+        other: Regions
+      person:
+        one: Person
+        other: People
     attributes:
       reservation:
         reservation_id: Reservation Code
