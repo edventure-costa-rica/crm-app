@@ -19,6 +19,10 @@ ActionController::Routing::Routes.draw do |map|
       end
   end
 
+  # ajax needs the id parameter sent in the query string
+  map.ajax_company '/companies/show',
+    :controller => 'companies', :action => 'show', :format => 'js'
+
   # companies also have reservations
   map.resources :companies do |company|
     company.resources :reservations, :only => [ :index ]
