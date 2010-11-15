@@ -56,6 +56,14 @@ class Trip < ActiveRecord::Base
     num_disabled > 0
   end
 
+  def total_rack_price
+    reservations.to_a.sum { |r| r.price.to_f }
+  end
+
+  def total_net_price
+    reservations.to_a.sum { |r| r.net_price.to_f }
+  end
+
 protected
   def generate_default_values
     self.num_children = 0 if self.num_children.nil?
