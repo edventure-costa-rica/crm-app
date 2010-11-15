@@ -30,6 +30,25 @@
       <%=co_f h @company.kind %>
     </p>
 
+    <p id="hotel-options" style="<%=
+          'display:none' unless @company.kind == 'hotel' %>">
+      <b><%= h co_f :package_length %></b>:
+      <%= @company.package_length %>
+      <%= h t '.nights' %><br/>
+
+      <b><%= co_f :all_inclusive %></b>:
+      <%= check_box_tag nil, nil, @company.all_inclusive,
+            :disabled => true, :style => 'vertical-align:top' %>
+
+      <b><%= co_f :includes_transport %></b>:
+      <%= check_box_tag nil, nil, @company.includes_transport,
+            :disabled => true, :style => 'vertical-align:top' %>
+
+      <b><%= co_f :includes_tour %></b>:
+      <%= check_box_tag nil, nil, @company.includes_tour,
+            :disabled => true, :style => 'vertical-align:top' %>
+
+    </p>
     <p>
       <b><%= co_f :address %>:</b>
       <%=hnl @company.address %>
