@@ -27,11 +27,19 @@
     %>
   </p>
   <p>
+    <%= f.label :arrival_flight %><br/>
+    <%= f.text_field :arrival_flight %>
+  </p>
+  <p>
     <%= f.label :departure %><br />
     <%= f.datetime_select :departure,
           :include_blank => true,
           :start_year    => Time.now.year
     %>
+  </p>
+  <p>
+    <%= f.label :departure_flight %><br/>
+    <%= f.text_field :departure_flight %>
   </p>
   <p>
     <%= f.label :total_people %><br />
