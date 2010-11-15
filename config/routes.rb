@@ -27,7 +27,8 @@ ActionController::Routing::Routes.draw do |map|
   # show trips on their own, plus a list of upcoming trips
   map.resources :trips, :only => [ :show, :index ],
                         :collection => { :upcoming => :get },
-                        :member     => { :proposal => :get }
+                        :member     => { :proposal     => :get,
+                                         :confirmation => :get }
 
   # The priority is based upon order of creation: first created -> highest priority.
 
