@@ -54,12 +54,6 @@ class Reservation < ActiveRecord::Base
       join "\n"
   end
 
-  Company.kinds.each do |k|
-    define_method "#{k}?" do
-      self.company.send "#{k}?" unless self.company.nil?
-    end
-  end
-
 private
   def arrival_precedes_departure
     errors.add :departure, I18n.t(:arrival_precedes_departure) unless
