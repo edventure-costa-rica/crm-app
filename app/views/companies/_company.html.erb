@@ -28,6 +28,9 @@
     </p>
     <p id="hotel-options" style="<%=
           'display:none' unless @company.kind == 'hotel' %>">
+      <%= f.label :package_length %><br/>
+      <%= f.text_field :package_length %><br/>
+
       <%= f.check_box :all_inclusive %>
       <%= f.label :all_inclusive %><br/>
 
