@@ -22,8 +22,18 @@
 </p>
 
 <p>
+  <b><%= tr_f :arrival_flight %>:</b>
+  <%=h @trip.arrival_flight %>
+</p>
+
+<p>
   <b><%= tr_f :departure %>:</b>
   <%=h l @trip.departure, :format => :long %>
+</p>
+
+<p>
+  <b><%= tr_f :departure_flight %>:</b>
+  <%=h @trip.departure_flight %>
 </p>
 
 <p>
