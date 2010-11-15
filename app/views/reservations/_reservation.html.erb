@@ -26,6 +26,16 @@
     %>
   }
 
+  function getCompany(company_id) {
+    <%= remote_function(
+          :method  => :get,
+          :success => 'loadCompany(request)',
+          :with    => "'id='+company_id",
+          :url     => ajax_company_path
+        )
+    %>
+  }
+
   function loadData(data) {
     var select = $('company-select');
 
@@ -50,6 +60,18 @@
       alert(<%= t('.empty_region').to_json %>);
     }
   }
+
+  function loadCompany(data) {
+    var company = eval(data);
+
+    if (company.kind == 'hotel') {
+      $('package-length-container').show();
+      $('package-length').update(company.package_length);
+    }
+    else {
+      $('package-length-container').hide();
+    }
+  }
   <% end %>
 
   <p>
@@ -68,8 +90,9 @@
     <%= f.label :company %> <%= "(#{co_f @kind})" if @kind %><br />
     <%= f.select :company_id, @companies.
           map { |c| [ c.name, c.id ] },
-          { :prompt => t('.select_region') },
-          { :id => 'company-select' }
+          { :prompt   => t('.select_region') },
+          { :id       => 'company-select',
+            :onchange => 'getCompany(this.value)' }
     %>
   </p>
   <p>
@@ -83,6 +106,16 @@
   <p>
     <%= f.label :confirmation_no %><br />
     <%= f.text_field :confirmation_no %>
+  </p>
+  <p id="package-length-container"
+     style="<%= 'display:none' unless
+                  @reservation.company and
+                  @reservation.company.hotel?
+            %>">
+    <%= co_f :package_length %>:
+    <em id="package-length"><%= 
+      @reservation.company.package_length if @reservation.company
+    %></em>
   </p>
   <p>
     <%= f.label :arrival %><br />
