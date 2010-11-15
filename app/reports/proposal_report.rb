@@ -17,6 +17,10 @@ class ProposalReport < OpenDocumentReport
     @inclauto = @reservations.select { |res| res.company.includes_transport }
     @incltour = @reservations.select { |res| res.company.includes_tour }
 
+    # some helpers for specific reservation types
+    @cars   = @reservations.select { |res| res.company.transport? }
+    @hotels = @reservations.select { |res| res.company.hotel? }
+
     super()
   end
 
