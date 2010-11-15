@@ -44,14 +44,12 @@
 
 <p>
   <b><%= tr_f :total_rack_price %>:</b>
-  <%= h number_to_currency @trip.reservations.to_a.
-        sum { |r| r.price.to_f } %>
+  <%= h number_to_currency @trip.total_rack_price %>
 </p>
 
 <p>
   <b><%= tr_f :total_net_price %>:</b>
-  <%= h number_to_currency @trip.reservations.to_a.
-        sum { |r| r.net_price.to_f } %>
+  <%= h number_to_currency @trip.total_net_price %>
 </p>
 
 <p>
