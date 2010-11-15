@@ -61,8 +61,9 @@
     }
   }
 
-  function loadCompany(data) {
-    var company = eval(data);
+  function loadCompany(xhr) {
+    var data = eval('(' + xhr.responseText + ')');
+    var company = data.company;
 
     if (company.kind == 'hotel') {
       $('package-length-container').show();
@@ -143,11 +144,13 @@
   </p>
   <p>
     <%= f.label :net_price %><br />
-    <%= f.text_field :net_price %>
+    <%= f.text_field :net_price, :value =>
+          number_with_precision(@reservation.net_price, :precision => 2) %>
   </p>
   <p>
     <%= f.label :price %><br />
-    <%= f.text_field :price %>
+    <%= f.text_field :price, :value =>
+          number_with_precision(@reservation.price, :precision => 2) %>
   </p>
   <p>
     <%= f.check_box :paid %>
