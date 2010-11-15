@@ -32,7 +32,8 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @company }
+      format.js   { render :text => @company.to_json }
+      format.xml  { render :xml  => @company }
     end
   end
 
