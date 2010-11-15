@@ -3,6 +3,7 @@ class Reservation < ActiveRecord::Base
   belongs_to :trip
 
   has_one :client, :through => :trip
+  has_one :region, :through => :company
 
   validates_associated :trip, :company
   validates_numericality_of :price, :allow_nil => true
