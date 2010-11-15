@@ -36,4 +36,9 @@ class OpenDocumentReport < Serenity::Template
     render
     IO.read @output
   end
+
+  # alias for number_to_currency
+  def ntc(*args)
+    self.number_to_currency *args
+  end
 end
