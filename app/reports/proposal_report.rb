@@ -3,6 +3,9 @@
 class ProposalReport < OpenDocumentReport
   @template_filename = 'contrib/proposal-template.odt'
 
+  include ActionView::Helpers::NumberHelper
+  include ActionView::Helpers::TranslationHelper
+
   def initialize(trip)
     @trip = trip
     @client = @trip.client
