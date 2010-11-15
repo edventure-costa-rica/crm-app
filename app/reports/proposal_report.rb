@@ -11,7 +11,7 @@ class ProposalReport < OpenDocumentReport
 
     # list of countries visited
     @countries = @reservations.collect { |res| res.company.region.country }
-    @countries.uniq!
+    @countries = @countries.uniq.to_sentence
 
     super()
   end
