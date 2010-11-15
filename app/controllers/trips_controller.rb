@@ -123,4 +123,21 @@ class TripsController < ApplicationController
       end
     end
   end
+
+  def confirmation
+    @trip = Trip.find params[:id]
+    report = ConfirmationReport.new(@trip)
+    report.render
+
+    respond_to do |format|
+      format.odt do
+        send_file report.to_s,
+          :filename => "Confirmation-#{@trip}.odt",
+          :type     => :odt
+      end
+    end
+  end
+
+
+
 end
