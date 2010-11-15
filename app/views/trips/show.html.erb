@@ -72,4 +72,4 @@
 <%= link_to t('.list_res'), client_trip_reservations_path(@client, @trip) %> |
 <%= link_to t('.list_people'), people_path({ :trip_id => @trip.id }) %> |
 <%= link_to t('.proposal'),  proposal_trip_path(@trip) if @trip.status == 'pending' %>
-<%= link_to t('.proposal'),  confirmation_trip_path(@trip) if @trip.status == 'confirmed' %>
+<%= link_to t('.confirmation'),  confirmation_trip_path(@trip) if @trip.status == 'confirmed' %>
