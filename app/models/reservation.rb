@@ -20,10 +20,6 @@ class Reservation < ActiveRecord::Base
       I18n.localize(arrival.to_date, :format => :short)
   end
 
-  def region
-    company.region unless company.nil?
-  end
-
   def region_id
     company.region.id unless company.nil?
   end
