@@ -32,11 +32,11 @@ class Reservation < ActiveRecord::Base
     (departure - arrival).to_i
   end
 
-  def arrival_date
+  def arrival_date_str
     I18n.localize arrival.to_date, :format => :voucher
   end
 
-  def departure_date
+  def departure_date_str
     I18n.localize departure.to_date, :format => :voucher
   end
 
