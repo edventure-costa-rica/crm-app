@@ -108,16 +108,6 @@
     <%= f.label :confirmation_no %><br />
     <%= f.text_field :confirmation_no %>
   </p>
-  <p id="package-length-container"
-     style="<%= 'display:none' unless
-                  @reservation.company and
-                  @reservation.company.hotel?
-            %>">
-    <%= co_f :package_length %>:
-    <em id="package-length"><%= 
-      @reservation.company.package_length if @reservation.company
-    %></em>
-  </p>
   <p>
     <%= f.label :arrival %><br />
     <%= f.date_select :arrival %>
@@ -133,6 +123,16 @@
   <p>
     <%= f.label :departure %><br />
     <%= f.date_select :departure %>
+  </p>
+  <p id="package-length-container"
+     style="<%= 'display:none' unless
+                  @reservation.company and
+                  @reservation.company.hotel?
+            %>">
+    <%= co_f :package_length %>:
+    <em id="package-length"><%=
+      @reservation.company.package_length if @reservation.company
+    %></em>
   </p>
   <p>
     <%= f.label :departure_time %><br />
