@@ -13,6 +13,10 @@ class ProposalReport < OpenDocumentReport
     @countries = @reservations.collect { |res| res.company.region.country }
     @countries = @countries.uniq.to_sentence
 
+    @inclusive = @reservations.select { |res| res.company.all_inclusive }
+    @inclauto = @reservations.select { |res| res.company.includes_transport }
+    @incltour = @reservations.select { |res| res.company.includes_tour }
+
     super()
   end
 
