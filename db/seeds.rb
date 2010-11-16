@@ -53,7 +53,6 @@ require 'csv'
 ['Costa Rica', 'Panama', 'Nicaragua', 'Honduras', 'Guatemala'].each do |c|
   id = c.gsub(/\s/, '').downcase
   @regions[id] = Region.find_by_country c, :first
-  puts "Country '#{id}' using region #{@regions[id]}"
 end
 
 @row = 0
@@ -88,4 +87,4 @@ CSV.open 'contrib/hotels.csv', 'r' do |row|
   end
 end
 
-puts "Created #{@rows} hotels"
+puts "Created #{@row} hotels"
