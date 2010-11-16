@@ -108,8 +108,8 @@
 
   <div class="tab" id="tab-bank">
     <table style="padding:5px; width: 100%">
-      <% [:bank_name,:bank_address,:bank_aba,:bank_swift,:bank_account,
-          :bank_beneficiary,:bank_client_account].each do |attr| %>
+      <% [:bank_provider,:bank_name,:bank_address,:bank_aba,:bank_swift,
+          :bank_account,:bank_beneficiary,:bank_client_account].each do |attr| %>
       <tr>
         <td style="text-align: left"><%= co_f attr %></td>
         <td style="text-align: right"><%= h @company.send attr %></td>
