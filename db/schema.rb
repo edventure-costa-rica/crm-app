@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101115212239) do
+ActiveRecord::Schema.define(:version => 20101116030147) do
 
   create_table "clients", :force => true do |t|
     t.string   "nationality"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(:version => 20101115212239) do
     t.boolean  "includes_tour"
     t.string   "package"
     t.integer  "package_length"
+    t.string   "bank_provider"
   end
 
   create_table "people", :force => true do |t|
