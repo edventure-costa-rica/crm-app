@@ -55,8 +55,11 @@ require 'csv'
   @regions[id] = Region.find_by_country c, :first
 end
 
+csv = 'contrib/hotels.csv'
+puts "Reading hotels from spreadsheet '#{csv}'"
+
 @row = 0
-CSV.open 'contrib/hotels.csv', 'r' do |row|
+CSV.open csv, 'r' do |row|
   @row += 1
 
   # two lines of headers... brilliant
@@ -72,7 +75,14 @@ CSV.open 'contrib/hotels.csv', 'r' do |row|
   end
 
   attribs = { :kind => 'hotel', :region => @regions[country] }
+  attribs[:bank_govt_id_type] = Company.govt_id_types[0]
   @fields.each_pair { |field, column| attribs[field] = row[column] }
+
+  # i knew it, i'm surrounded by assholes
+  if attribs[:website] =~ /@/
+    attribs[:website], attribs[:contact_general_email] =
+      attribs.values_at(:contact_general_email,:website)
+  end
 
   # i don't really understand why she lists hotels with no name
   if attribs[:name] !~ /[A-Za-z]/
@@ -88,3 +98,4 @@ CSV.open 'contrib/hotels.csv', 'r' do |row|
 end
 
 puts "Created #{@row} hotels"
+
