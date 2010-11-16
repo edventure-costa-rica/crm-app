@@ -22,3 +22,10 @@ end
 each do |r|
   Region.create :name => r, :country => 'Costa Rica'
 end
+
+
+# import from the hotel CSV
+require 'csv'
+CSV.open 'contrib/hotels.csv', 'r' do |row|
+  # ...
+end
