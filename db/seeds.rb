@@ -97,5 +97,5 @@ CSV.open csv, 'r' do |row|
   end
 end
 
-puts "Created #{@row} hotels"
+puts "Processed #{@row} lines"
 
