@@ -27,6 +27,7 @@ en:
   female: Female
   true: 'Yes'
   false: 'No'
+  cancel: Cancel
 
   # Views
   layouts:
@@ -85,6 +86,9 @@ en:
       disableds: disabled
       list_res: List Reservations for this Trip
       list_trip: List Trips for this Family
+      list_people: Edit People on this Trip
+      proposal: Download Proposal Document
+      confirmation: Download Confirmation Document
     new:
       title: New Trip
       list_res: List Reservations for this Trip
@@ -93,6 +97,13 @@ en:
       title: Edit Trip
       list_res: List Reservations for this Trip
       list_trip: List Trips for this Family
+      list_people: Edit People on this Trip
+  people:
+    index:
+      title: List People on Trip {{for}}
+      show_trip: Show this Trip
+    show:
+      edit_instruction: Double click to edit
   clients:
     index:
       title: Listing Families
