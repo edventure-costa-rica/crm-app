@@ -14,6 +14,7 @@
   <% unless @client %>
     <th><%=tr_f :client %></th>
   <% end %>
+    <th><%=tr_f :status %></th>
     <th><%=tr_f :arrival %></th>
     <th><%=tr_f :departure %></th>
     <th><%=tr_f :total_people %></th>
@@ -25,6 +26,7 @@
   <% unless @client %>
     <td><%=h trip.client.family_name %></td>
   <% end %>
+    <td><%=h co_f trip.status %></td>
     <td><%=h l trip.arrival.to_date %></td>
     <td><%=h l trip.departure.to_date %></td>
     <td><%=h trip.total_people %></td>
