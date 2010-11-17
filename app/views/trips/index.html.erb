@@ -20,7 +20,7 @@
   </tr>
 
 <% @trips.each do |trip| %>
-  <tr>
+  <tr class="<%= cycle 'even', 'odd' %>">
     <td><%=h trip.registration_id %></td>
   <% unless @client %>
     <td><%=h trip.client.family_name %></td>
