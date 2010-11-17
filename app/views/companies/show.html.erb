@@ -96,7 +96,7 @@
         <%= h phone  %><br/>
       <% end %>
       <% unless mobile.blank? -%>
-        <%= h mobile %> <em>(<%= t '.mobile' %>)</em><br/>
+        <%= h mobile %> <em>(<%= co_f "contact_#{kind}_mobile" %>)</em><br/>
       <% end %>
       <% unless email.blank? -%>
         <%= mail_to email %>
