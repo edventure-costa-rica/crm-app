@@ -73,6 +73,16 @@
 </p>
 
 <p>
+  <b><%=h re_f :created_at %>:</b>
+  <%=h l @client.created_at.to_date %>
+</p>
+
+<p>
+  <b><%=h re_f :updated_at %>:</b>
+  <%=h l @client.updated_at.to_date %>
+</p>
+
+<p>
   <b><%= tr_f :notes %>:</b><br/>
   <%=hnl @trip.notes %>
 </p>
