@@ -23,6 +23,10 @@ en:
   edit: Edit
   delete: Delete
   confirm: Are you sure?
+  male: Male
+  female: Female
+  true: 'Yes'
+  false: 'No'
 
   # Views
   layouts:
@@ -51,7 +55,7 @@ en:
       title: Edit Reservation
       list_trip: List Reservations for this Trip
     show:
-      list_trip: List Reservations for this Trip
+      trip_duration: Trip Duration (nights)
     new:
       title: Create Reservation
     index:
@@ -60,6 +64,14 @@ en:
       new: New Reservation
       date: Date
       date_time: Date & Time
+    links:
+      list_trip: List Reservations for this Trip
+      new: Create Reservation for {{for}}
+      pays: Payment Details for All Reservations
+      pay: Payment Details for this Reservation
+    reservation:
+      empty_region: There are no companies listed for this region
+      trip_duration: Trip Duration (nights)
   trips:
     index:
       upcoming: Listing upcoming trips
@@ -147,6 +159,10 @@ en:
         arrival_flight: Arrival Flight Number
         departure_flight: Departure Flight Number
       company:
+        hotel: Hotel
+        transport: Transportation
+        tour: Tour
+        other: Other
         package_length: Number of nights in this package
         bank_govt_id: Government ID
         bank_govt_id_type: ID Type
