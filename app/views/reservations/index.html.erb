@@ -20,7 +20,7 @@
   </tr>
 
 <% @reservations.each do |reservation| %>
-  <tr>
+  <tr class="<%= cycle 'even', 'odd' %>">
     <td>
       <%= if @client then 
             h l reservation.arrival, :format => :short
