@@ -77,6 +77,11 @@ class ActionView::Base
     attr_accessor :default_ipe_options
   end
 
+  # get the current url
+  def current_url(params = {})
+    url_for :overwrite_params => params
+  end
+
   # in-place text editor
   def in_place_editor_field(object, method, options = {})
     element_tag = options[:tag].nil? ? "span" : options.delete(:tag)

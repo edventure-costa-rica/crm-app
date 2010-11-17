@@ -12,8 +12,8 @@
 </head>
 <body>
   <div style="position: absolute; right: 5px; top: 5px;">
-    <%= link_to_unless_current 'Español', { :lc => :es } %> |
-    <%= link_to_unless_current 'English', { :lc => :en } %>
+    <%= link_to_unless_current 'Español', current_url( :lc => :es ) %> |
+    <%= link_to_unless_current 'English', current_url( :lc => :en ) %>
   </div>
 
   <div id="masthead">
