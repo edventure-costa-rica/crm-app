@@ -12,8 +12,7 @@ class Trip < ActiveRecord::Base
   belongs_to :client
   has_many :people, :order => 'created_at ASC'
   has_many :reservations, :dependent => :delete_all,
-    :order => 'arrival ASC, departure ASC',
-    :include => [:company, :region]
+    :order => 'arrival ASC, departure ASC'
 
   before_save :generate_default_values
   after_save :maintain_people_size
