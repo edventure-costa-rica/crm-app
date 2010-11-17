@@ -13,6 +13,8 @@
 <% else %>
     <th><%=h co_f :city %></th>
     <th><%=h re_f :company %></th>
+    <th><%=h re_f :confirmed %></th>
+    <th><%=h re_f :paid %></th>
 <% end %>
     <th><%=h re_f :services %></th>
   </tr>
@@ -32,6 +34,8 @@
 <% else %>
     <td><%=h reservation.city %></td>
     <td><%=h reservation.company && reservation.company.name %></td>
+    <td><%=h reservation.confirmed ? t(:true) : t(:false) %></td>
+    <td><%=h reservation.paid ? t(:true) : t(:false) %></td>
 <% end %>
     <td><%=hnl reservation.services.nil? ? '' : reservation.services[0,50] + (reservation.services.length > 50 ? '...' : '') %></td>
     <td><%= link_to t(:show), [reservation.client, reservation.trip, reservation] %> |
