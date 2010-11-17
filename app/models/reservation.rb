@@ -54,6 +54,13 @@ class Reservation < ActiveRecord::Base
       join "\n"
   end
 
+  # currency values accept (and drop) dollar signs
+  [:net_price,:price].each do |attr|
+    define_method "#{attr}=" do |value|
+      write_attribute attr, value.sub(/^\s*\$\s*/, '')
+    end
+  end
+
 private
   def arrival_precedes_departure
     errors.add :departure, I18n.t(:arrival_precedes_departure) unless
