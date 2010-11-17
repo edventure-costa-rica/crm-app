@@ -4,7 +4,7 @@
   <tr>
     <th><%= co_f :id %></th>
     <th><%= co_f :name %></th>
-    <th><%= co_f :city %></th>
+    <th><%= co_f :kind %></th>
     <th><%= co_f :region %></th>
     <th><%= co_f :package %></th>
   </tr>
@@ -13,7 +13,7 @@
   <tr class="<%= cycle('even', 'odd') %>">
     <td><em>#<%=h company.id %> </em></td>
     <td><%=h company.name %></td>
-    <td><%=h company.city %></td>
+    <td><%=h co_f company.kind %></td>
     <td><%=h company.region %></td>
     <td><%=h company.package %></td>
     <td><%= link_to t(:show), company %> |
