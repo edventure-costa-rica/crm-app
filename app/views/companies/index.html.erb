@@ -10,7 +10,7 @@
   </tr>
 
 <% @companies.each do |company| %>
-  <tr>
+  <tr class="<%= cycle('even', 'odd') %>">
     <td><em>#<%=h company.id %> </em></td>
     <td><%=h company.name %></td>
     <td><%=h company.city %></td>
