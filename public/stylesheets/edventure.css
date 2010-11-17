@@ -26,6 +26,7 @@ table.styled {
   width: 100%;
   background-color: #FFFBC0;
   border: 2px solid #F0E881;
+  border-spacing: 0;
 }
 
 table.grid {
@@ -48,6 +49,11 @@ th {
 td {
   text-align: center;
   vertical-align: top;
+  padding: 5px;
+}
+
+tr.even {
+  background-color: #F0E881;
 }
 
 form {
