@@ -126,6 +126,13 @@ en:
     show:
       list_comp: List Companies
       show_res: Show Reservations for this Company
+      general_tab: General
+      contact_tab: Contact
+      bank_tab: Banking
+      edit_regions: Edit Region List
+      contact_general: General Contact
+      contact_admin: Administrative Contact
+      contact_reservation: Reservations Contact
     edit:
       title: Edit Company
       list_comp: List Companies
@@ -133,6 +140,14 @@ en:
     new:
       title: New Company
       list_comp: List Companies
+    company:
+      general_tab: General
+      contact_tab: Contact
+      bank_tab: Banking
+      edit_regions: Edit Region List
+      contact_general: General Contact
+      contact_admin: Administrative Contact
+      contact_reservation: Reservations Contact
 
   # Models
   activerecord:
