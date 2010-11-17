@@ -49,6 +49,9 @@ th {
 td {
   text-align: center;
   vertical-align: top;
+}
+
+table.styled td {
   padding: 5px;
 }
 
