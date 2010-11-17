@@ -136,5 +136,46 @@ en:
       reservation:
         reservation_id: Reservation Code
         price: Rack Price
+        confirmation_no: Confirmation Number
+        paid_date: Payment Date
+        arrival: Arrival Date
+        departure: Departure Date
       trip:
         registration_id: Registration Code
+        status: Confirmation Status
+        payment_pct: Payment Percentage
+        arrival_flight: Arrival Flight Number
+        departure_flight: Departure Flight Number
+      company:
+        package_length: Number of nights in this package
+        bank_govt_id: Government ID
+        bank_govt_id_type: ID Type
+        bank_provider: Provider
+        bank_name: Bank Name
+        bank_aba: ABA Routing
+        bank_swift: SWIFT
+        bank_account: Account No.
+        bank_beneficiary: Beneficiary
+        bank_client_account: Client Account No.
+        contact_general_name: Name
+        contact_general_phone: Phone
+        contact_general_mobile: Mobile Phone
+        contact_general_email: E-mail
+        contact_admin_name: Name
+        contact_admin_phone: Phone
+        contact_admin_mobile: Mobile Phone
+        contact_admin_email: E-mail
+        contact_reservation_name: Name
+        contact_reservation_phone: Phone
+        contact_reservation_mobile: Mobile Phone
+        contact_reservation_email: E-mail
+        cédula_física: Cedula Fisica
+        cédula_jurídica: Cedula Juridica
+        pasaporte: Passport
+      client:
+        contact_title: Title
+        contact_gender: Gender
+        contact_address: Mailing Address
+      person:
+        dob: Date of Birth
+
