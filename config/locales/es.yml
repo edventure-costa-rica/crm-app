@@ -232,6 +232,11 @@ es:
   edit: Modificar
   delete: Eliminar
   confirm: ¿Estás seguro?
+  male: Masculino
+  female: Femenino
+  true: 'Sí'
+  false: 'No'
+  cancel: Cancelar
 
   # Views
   layouts:
