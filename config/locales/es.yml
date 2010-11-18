@@ -164,6 +164,9 @@ es:
         notes: Observaciones
         created_at: Hora de creación
         updated_at: Hora de actualización
+        contact_title: Título
+        contact_gender: Sexo
+        contact_address: Dirección Postal
       company:
         name: Nombre
         address: Dirección
