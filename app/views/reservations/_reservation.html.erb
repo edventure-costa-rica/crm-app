@@ -79,7 +79,7 @@
     <%= f.label :region %><br />
     <b><%=select :reservation, :region_id,
             Region.ordered.map { |r| [r, r.id] },
-            { :prompt   => t('.select_region') },
+            { :prompt   => true },
             { :id       => 'region-select',
               :name     => '',
               :onchange => 'getData(this.value)'
@@ -91,7 +91,7 @@
     <%= f.label :company %> <%= "(#{co_f @kind})" if @kind %><br />
     <%= f.select :company_id, @companies.
           map { |c| [ c.name, c.id ] },
-          { :prompt   => t('.select_region') },
+          { :prompt   => true },
           { :id       => 'company-select',
             :onchange => 'getCompany(this.value)' }
     %>
