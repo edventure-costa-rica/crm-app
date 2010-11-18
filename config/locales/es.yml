@@ -337,6 +337,8 @@ es:
       new: Crear una Reservación
       date: Fecha
       date_time: Fecha y Hora
+    reservation:
+      trip_duration: Noches del Viaje
     links:
       pays: Tablas de los Pagos
       pay: Tabla del Pago

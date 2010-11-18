@@ -33,8 +33,7 @@
     <p id="hotel-options" style="<%=
           'display:none' unless @company.kind == 'hotel' %>">
       <b><%= h co_f :package_length %></b>:
-      <%= @company.package_length %>
-      <%= h t '.nights' %><br/>
+      <%= @company.package_length %><br/>
 
       <b><%= co_f :all_inclusive %></b>:
       <%= check_box_tag nil, nil, @company.all_inclusive,
