@@ -210,6 +210,7 @@ es:
         bank_aba: ABA
         bank_swift: SWIFT
         bank_address: Dirección
+        package_length: Noches del Paquete
       reservation:
         client: Familia
         company: Compañía
@@ -226,6 +227,13 @@ es:
         reservation_id: Codigo de la Reservación
         price: Precio (Rack)
         net_price: Precio (Neto)
+        region: Región
+        confirmed: Confirmado
+        confirmation_no: N° de la Confirmación
+        arrival_time: Hora de Entrada
+        departure_time: Hora de Salida
+        paid: Cancelado
+        paid_date: Fecha de la Cancelación
       trip:
         registration_id: Codigo del Registro
         arrival: Llegada
@@ -242,8 +250,8 @@ es:
         confirmed: Confirmado
         canceled: Denegado
         confirmation_date: Fecha de Confirmación
-        arrival_flight: N° de Vuelo Llegado
-        departure_flight: N° de Vuelo Salido
+        arrival_flight: N° de Vuelo de Llegada
+        departure_flight: N° de Vuelo de Salida
         payment_pct: Porcentaje de la Cancelación
         payment_details: Detalles de la Cancelación
 
