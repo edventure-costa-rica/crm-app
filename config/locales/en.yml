@@ -73,6 +73,9 @@ en:
     reservation:
       empty_region: There are no companies listed for this region
       trip_duration: Trip Duration (nights)
+    pay:
+      amount: Amount
+      reference: In Reference to
   trips:
     index:
       upcoming: Listing upcoming trips
@@ -194,6 +197,7 @@ en:
         bank_govt_id_type: ID Type
         bank_provider: Provider
         bank_name: Bank Name
+        bank_address: Bank Physical Address
         bank_aba: ABA Routing
         bank_swift: SWIFT
         bank_account: Account No.
