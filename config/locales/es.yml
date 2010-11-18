@@ -237,6 +237,15 @@ es:
         notes: Observaciones
         created_at: Hora de creación
         updated_at: Hora de actualización
+        status: Estado de Confirmación
+        pending: Pendiente
+        confirmed: Confirmado
+        canceled: Denegado
+        confirmation_date: Fecha de Confirmación
+        arrival_flight: N° de Vuelo Llegado
+        departure_flight: N° de Vuelo Salido
+        payment_pct: Porcentaje de la Cancelación
+        payment_details: Detalles de la Cancelación
 
 
 # Used in array.to_sentence.
