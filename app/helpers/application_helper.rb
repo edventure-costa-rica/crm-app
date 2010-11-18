@@ -36,7 +36,7 @@ module ApplicationHelper
     elsif controller.class == RegionsController
       [Region, nil]
     elsif controller.class == PeopleController
-      [Person, nil]
+      [Person, @trip]
     end
 
     t = ''
