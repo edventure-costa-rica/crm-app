@@ -211,6 +211,9 @@ es:
         bank_swift: SWIFT
         bank_address: Dirección
         package_length: Noches del Paquete
+        all_inclusive: Todo Incluido
+        includes_transport: Transporte Incluido
+        includes_tour: Tour Incluido
       reservation:
         client: Familia
         company: Compañía
@@ -339,6 +342,7 @@ es:
       date_time: Fecha y Hora
     reservation:
       trip_duration: Noches del Viaje
+      empty_region: No hay compañías en este región.
     links:
       pays: Tablas de los Pagos
       pay: Tabla del Pago
@@ -394,6 +398,12 @@ es:
     show:
       list_comp: Listar las Compañías
       show_res: Ver las Reservaciones de la Compañía
+      general_tab: General
+      contact_tab: Contacto
+      bank_tab: Banco
+      contact_general: Contacto General
+      contact_admin: Contacto Administrativo
+      contact_reservation: Contacto de los Reservaciones
     edit:
       title: Modificar la Compañía
       list_comp: Listar las Compañías
@@ -401,6 +411,14 @@ es:
     new:
       title: Agregar una Compañía
       list_comp: Listar las Compañías
+    company:
+      edit_regions: Modificar la Lista de Regiones
+      general_tab: General
+      contact_tab: Contacto
+      bank_tab: Banco
+      contact_general: Contacto General
+      contact_admin: Contacto Administrativo
+      contact_reservation: Contacto de los Reservaciones
   people:
     index:
       title: Lista de Personas del Viaje {{for}}
