@@ -17,6 +17,9 @@ en:
 
   app_title: Edventure Trip Database
 
+  ok: OK
+  saving: Saving
+  click_to_edit: Click to edit
   index: Index
   new: Create
   show: Show
@@ -153,6 +156,11 @@ en:
       contact_general: General Contact
       contact_admin: Administrative Contact
       contact_reservation: Reservations Contact
+  regions:
+    index:
+      title: Listing Regions
+      edit_explanation: Click on an icon to edit the name or country.
+      new: Create Region
 
   # Models
   activerecord:

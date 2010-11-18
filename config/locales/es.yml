@@ -262,6 +262,9 @@ es:
         dob: Fecha de Nacimiento
         passport: N° de Pasaporte
         country: País
+      region:
+        name: Nombre
+        country: País
 
 
 # Used in array.to_sentence.
@@ -289,6 +292,9 @@ es:
   submit_update: Actualizar
   submit_create: Crear
 
+  ok: OK
+  saving: Guardando
+  click_to_edit: Haga clic para modificar
   index: Índice
   new: Crear
   show: Ver
@@ -425,3 +431,8 @@ es:
       show_trip: Ver el Viaje
     show:
       edit_instruction: Haga doble clic para modificar
+  regions:
+    index:
+      title: Listando Regiones
+      edit_explanation: Haga clic en el icono para modificar el nombre ó el país.
+      new: Crear Región
