@@ -1,6 +1,6 @@
 <%=
 Company.kinds.map do |kind|
-  link_to t('.new', :for => kind),
+  link_to t('.new', :for => co_f(kind)),
     new_client_trip_reservation_path(@client, @trip, :kind => kind)
 end.join " |\n"
 %>
