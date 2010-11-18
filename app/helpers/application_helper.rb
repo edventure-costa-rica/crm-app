@@ -61,21 +61,7 @@ protected
 end
 
 class ActionView::Base
-  @default_ipe_options = {
-    :cancelControl  => :button,
-    :okText         => I18n.t(:ok),
-    :cancelText     => I18n.t(:cancel),
-    :loadingText    => I18n.t(:loading),
-    :savingText     => I18n.t(:saving),
-    :clickToEditText=> I18n.t(:click_to_edit),
-    :highlightColor => '',
-    :highlightEndColor => '',
-    :onFailure      => 'function(t){ }'
-  }
-
-  class << self
-    attr_accessor :default_ipe_options
-  end
+  @default_ipe_options = nil
 
   # get the current url
   def current_url(params = {})
@@ -171,4 +157,21 @@ class ActionView::Base
 
     element + external  + ipe
   end
+
+private
+  # generate at runtime to use the proper locale
+  def self.default_ipe_options
+    @default_ipe_options ||= {
+      :cancelControl  => :button,
+      :okText         => I18n.t(:ok),
+      :cancelText     => I18n.t(:cancel),
+      :loadingText    => I18n.t(:loading),
+      :savingText     => I18n.t(:saving),
+      :clickToEditText=> I18n.t(:click_to_edit),
+      :highlightColor => '',
+      :highlightEndColor => '',
+      :onFailure      => 'function(t){ }'
+    }
+  end
+
 end
