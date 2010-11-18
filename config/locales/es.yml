@@ -178,6 +178,35 @@ es:
         main_phone: Teléfono Principal
         mobile_phone: Teléfono Móvil o Celular
         website: Sitio de Web
+        kind: Categoría
+        region: Región
+        package: Paquete
+        hotel: Hotel
+        transport: Transporte
+        tour: Tour
+        other: Otra
+        contact_general_name: Nombre
+        contact_general_phone: Teléfono
+        contact_general_mobile: Celular
+        contact_general_email: Correo Electronico
+        contact_admin_name: Nombre
+        contact_admin_phone: Teléfono
+        contact_admin_mobile: Celular
+        contact_admin_email: Correo Electronico
+        contact_reservation_name: Nombre
+        contact_reservation_phone: Teléfono
+        contact_reservation_mobile: Celular
+        contact_reservation_email: Correo Electronico
+        bank_provider: Proveedor
+        bank_beneficiary: Beneficiario
+        bank_govt_id: Identificación
+        bank_govt_id_type: Clase de Id.
+        bank_name: Nombre del Banco
+        bank_account: Número de Cuenta
+        bank_client_account: Número de Cuenta Cliente
+        bank_aba: ABA
+        bank_swift: SWIFT
+        bank_address: Dirección
       reservation:
         client: Familia
         company: Compañía
