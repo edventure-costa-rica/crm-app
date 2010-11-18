@@ -42,6 +42,8 @@ en:
       title: Trips
     clients:
       title: Families
+    people:
+      title: People
   home:
     index:
       lang: Choose a Language

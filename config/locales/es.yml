@@ -254,6 +254,11 @@ es:
         departure_flight: N° de Vuelo de Salida
         payment_pct: Porcentaje de la Cancelación
         payment_details: Detalles de la Cancelación
+      person:
+        full_name: Nombre Completo
+        dob: Fecha de Nacimiento
+        passport: N° de Pasaporte
+        country: País
 
 
 # Used in array.to_sentence.
@@ -306,6 +311,8 @@ es:
       title: Viajes
     clients:
       title: Familias
+    people:
+      title: Personas
   home:
     index:
       lang: Seleccionar el Idioma
@@ -321,6 +328,7 @@ es:
       list_trip: Listar las Reservaciones del Viaje
     show:
       list_trip: Listar las Reservaciones del Viaje
+      trip_duration: Noches del Viaje
     new:
       title: Crear una Reservación
     index:
@@ -329,6 +337,14 @@ es:
       new: Crear una Reservación
       date: Fecha
       date_time: Fecha y Hora
+    links:
+      pays: Tablas de los Pagos
+      pay: Tabla del Pago
+      new: Crear una Reservación de {{for}}
+      list_trip: Listar las Reservaciones del Viaje
+    pay:
+      amount: Monto
+      reference: Referencia/Detalle
   trips:
     index:
       upcoming: Listando los Próximos Viajes
@@ -342,6 +358,9 @@ es:
       disableds: discapacitados
       list_res: Listar las Reservaciones del Viaje
       list_trip: Listar los Viajes de la Familia
+      list_people: Listar las Personas del Viaje
+      confirmation: Descargar el Documento de la Confirmación
+      proposal: Descargar el Documento del Propuesto
     new:
       title: Crear un Viaje
       list_res: Listar las Reservaciones del Viaje
@@ -350,6 +369,7 @@ es:
       title: Modificar el Viaje
       list_res: Listar las Reservaciones del Viaje
       list_trip: Listar los Viajes de la Familia
+      list_people: Listar las Personas del Viaje
   clients:
     index:
       title: Listando las Familias
@@ -379,3 +399,9 @@ es:
     new:
       title: Agregar una Compañía
       list_comp: Listar las Compañías
+  people:
+    index:
+      title: Lista de Personas del Viaje {{for}}
+      show_trip: Ver el Viaje
+    show:
+      edit_instruction: Haga doble clic para modificar
