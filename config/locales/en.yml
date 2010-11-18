@@ -215,8 +215,8 @@ en:
         contact_reservation_phone: Phone
         contact_reservation_mobile: Mobile Phone
         contact_reservation_email: E-mail
-        cédula_física: Cedula Fisica
-        cédula_jurídica: Cedula Juridica
+        cédula_física: Personal ID
+        cédula_jurídica: Company ID
         pasaporte: Passport
       client:
         contact_title: Title
