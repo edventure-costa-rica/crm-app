@@ -33,6 +33,10 @@ module ApplicationHelper
       [Reservation, @client]
     elsif controller.class == CompaniesController
       [Company, @company]
+    elsif controller.class == RegionsController
+      [Region, nil]
+    elsif controller.class == PeopleController
+      [Person, nil]
     end
 
     t = ''
