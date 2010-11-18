@@ -373,7 +373,7 @@ es:
       list_trip: Listar los Viajes de la Familia
       list_people: Listar las Personas del Viaje
       confirmation: Descargar el Documento de la Confirmación
-      proposal: Descargar el Documento del Propuesto
+      proposal: Descargar el Documento del Propuesta
     new:
       title: Crear un Viaje
       list_res: Listar las Reservaciones del Viaje
