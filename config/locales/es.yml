@@ -147,6 +147,12 @@ es:
       trip:
         one: Viaje
         other: Viajes
+      region:
+        one: Región
+        other: Regiones
+      person:
+        one: Persona
+        other: Personas
 
     attributes:
       client:
