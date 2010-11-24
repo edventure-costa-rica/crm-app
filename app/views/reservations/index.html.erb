@@ -6,7 +6,8 @@
 
 <table class="styled">
   <tr>
-    <th><%=h t '.date' %></th>
+    <th><%=h re_f :arrival %></th>
+    <th><%=h re_f :departure %></th>
 <% unless @client %>
     <th><%=h re_f :client %></th>
     <th><%=h re_f :trip_id %></th>
@@ -26,6 +27,13 @@
             h l reservation.arrival, :format => :short
           else
             h l reservation.arrival, :format => :long
+          end %>
+    </td>
+    <td>
+      <%= if @client then
+            h l reservation.departure, :format => :short
+          else
+            h l reservation.departure, :format => :long
           end %>
     </td>
 <% unless @client %>
