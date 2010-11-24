@@ -85,7 +85,7 @@ class ActionView::Base
         :id => object.id }) :
       options.delete(:url)
 
-    element = content_tag element_tag, h(object.send method),
+    element = content_tag element_tag, h(object.send(method).to_s),
       { :id => element_id, :class => 'in_place_collection_editor_field' }.
       merge!(options.delete(:html) || {})
 
@@ -135,7 +135,7 @@ class ActionView::Base
       options[:loadCollectionURL] = collection
     end
 
-    element = content_tag element_tag, h(object.send method),
+    element = content_tag element_tag, h(object.send(method).to_s),
       { :id => element_id, :class => 'in_place_collection_editor_field' }.
       merge!(options.delete(:html) || {})
 
@@ -177,5 +177,4 @@ private
       :onFailure      => 'function(t){ }'
     }
   end
-
 end
