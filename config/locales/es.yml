@@ -359,6 +359,8 @@ es:
       pay: Tabla del Pago
       new: Crear una Reservación de {{for}}
       list_trip: Listar las Reservaciones del Viaje
+      next: La Reservación Siguente
+      previous: La Reservación Anterior
     pay:
       amount: Monto
       reference: Referencia/Detalle

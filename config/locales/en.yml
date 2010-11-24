@@ -80,6 +80,8 @@ en:
       new: Create Reservation for {{for}}
       pays: Payment Details for All Reservations
       pay: Payment Details for this Reservation
+      next: Next Reservation
+      previous: Previous Reservation
     reservation:
       empty_region: There are no companies listed for this region
       trip_duration: Trip Duration (nights)
