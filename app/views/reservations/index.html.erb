@@ -41,7 +41,7 @@
     <td><%=h reservation.trip %></td>
 <% else %>
     <td><%=h reservation.city %></td>
-    <td><%=h reservation.company && reservation.company.name %></td>
+    <td><%=h reservation.company.name %></td>
     <td><%=h reservation.confirmed ? t(:true) : t(:false) %></td>
     <td><%=h reservation.paid ? t(:true) : t(:false) %></td>
 <% end %>
