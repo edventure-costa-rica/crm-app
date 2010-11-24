@@ -17,6 +17,8 @@ class Trip < ActiveRecord::Base
   before_save :generate_default_values
   after_save :maintain_people_size
 
+  validates_presence_of :arrival, :departure
+
   validates_numericality_of :total_people,
     :greater_than => 0, :only_integer => true
   
@@ -71,7 +73,7 @@ protected
     self.payment_pct  = 0 if self.payment_pct.nil?
 
     unless self.registration_id
-      reg = 'F' + self.client.family_name[0,1].upcase + 'X'
+      reg = 'F' + self.client.family_name[0,3].upcase
       reg += format '%02d%02d%04d',
         self.arrival.day,
         self.arrival.month,
