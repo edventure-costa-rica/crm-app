@@ -287,6 +287,10 @@ es:
   # Models
   invalid_email: es inválido (ejemplo "user@host.com")
   arrival_precedes_departure: debe ocurrir después de la entrada
+  arrival_before_trip: debe ocurrir después de la llegada del Viaje
+  arrival_after_trip: debe ocurrir antes de la salida del Viaje
+  departure_before_trip: debe ocurrir después de la llegada del Viaje
+  departure_after_trip: debe ocurrir antes de la salida del Viaje
 
   # Views
   submit_update: Actualizar
