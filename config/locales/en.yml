@@ -11,6 +11,10 @@ en:
 
   invalid_email: is not a valid e-mail address
   arrival_precedes_departure: must come after arrival
+  arrival_before_trip: must come after the Trip arrival date
+  arrival_after_trip: must come before the Trip departure date
+  departure_before_trip: must come after the Trip arrival date
+  departure_after_trip: must come before the Trip departure date
 
   submit_update: Update
   submit_create: Create
