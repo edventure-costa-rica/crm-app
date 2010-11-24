@@ -5,6 +5,7 @@ class Reservation < ActiveRecord::Base
   has_one :client, :through => :trip
   has_one :region, :through => :company
 
+  validates_presence_of :company
   validates_associated :trip, :company
   validates_numericality_of :price, :allow_nil => true
 
