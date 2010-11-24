@@ -14,6 +14,20 @@ class Reservation < ActiveRecord::Base
     res.send :within_trip_dates
   end
 
+  def next_on_trip
+    return unless trip
+
+    trip.reservations.find :first, :order => 'arrival ASC', :conditions =>
+      [ 'arrival > ?', self.arrival ]
+  end
+
+  def prev_on_trip
+    return unless trip
+
+    trip.reservations.find :first, :order => 'arrival ASC', :conditions =>
+      [ 'arrival < ?', self.arrival ]
+  end
+
   def to_s
     return Reservation.human_name if new_record?
 
