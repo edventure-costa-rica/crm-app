@@ -77,10 +77,10 @@ class ReservationsController < ApplicationController
       @kind = Company.kinds.include?(params[:kind].downcase) ?
         params[:kind].downcase : nil
       @companies = Company.find_all_by_kind_and_region_id @kind,
-        Region.first.id, :order => 'companies.name'
+        @reservation.company.region.id, :order => 'companies.name'
     else
       @kind = nil
-      @companies = Company.find_all_by_region_id Region.first.id,
+      @companies = Company.find_all_by_region_id @reservation.company.region.id,
         :order => 'companies.name'
     end
 
@@ -98,6 +98,7 @@ class ReservationsController < ApplicationController
         format.html { redirect_to([@client, @trip, @reservation], :notice => 'Reservation was successfully created.') }
         format.xml  { render :xml => @reservation, :status => :created, :location => @reservation }
       else
+        @companies = []
         format.html { render :action => "new" }
         format.xml  { render :xml => @reservation.errors, :status => :unprocessable_entity }
       end
@@ -116,6 +117,7 @@ class ReservationsController < ApplicationController
         format.html { redirect_to([@client, @trip, @reservation], :notice => 'Reservation was successfully updated.') }
         format.xml  { head :ok }
       else
+        @companies = []
         format.html { render :action => "edit" }
         format.xml  { render :xml => @reservation.errors, :status => :unprocessable_entity }
       end
