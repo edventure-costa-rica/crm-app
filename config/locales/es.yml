@@ -308,8 +308,8 @@ es:
   confirm: ¿Estás seguro?
   male: Masculino
   female: Femenino
-  yes: 'Sí'
-  no: 'No'
+  true: 'Sí'
+  false: 'No'
   cancel: Cancelar
 
   # Views

@@ -33,8 +33,8 @@ en:
   confirm: Are you sure?
   male: Male
   female: Female
-  yes: 'Yes'
-  no: 'No'
+  true: 'Yes'
+  false: 'No'
   cancel: Cancel
 
   # Views
