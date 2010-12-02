@@ -1,4 +1,8 @@
 class ReservationsController < ApplicationController
+  # methods for inline editing on the index page
+  in_place_edit_for :reservation, :confirmed
+  in_place_edit_for :reservation, :paid
+
   # GET /reservations
   # GET /reservations.xml
   def index
