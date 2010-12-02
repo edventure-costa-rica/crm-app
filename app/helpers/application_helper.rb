@@ -113,7 +113,7 @@ class ActionView::Base
   end
 
   # in-place collection editor
-  def in_place_collection_editor_field(object, method, collection, options = {})
+  def in_place_collection_editor_field(object, method, collection = nil, options = {})
     element_tag = options[:tag].nil? ? "span" : options.delete(:tag)
     element_id = options[:id].nil? ?
       "#{object.class.name.downcase.gsub '::', '_'}-#{method}-#{object.id}" :
@@ -133,6 +133,11 @@ class ActionView::Base
       options[:collection] = collection
     elsif collection.is_a?(String)
       options[:loadCollectionURL] = collection
+    elsif collection.nil?
+      options[:loadCollectionURL] = url_for({
+        :action => "get_#{object.class.name.downcase}_#{method}_collection",
+        :id => object.id
+      })
     end
 
     element = content_tag element_tag, h(object.send(method).to_s),
