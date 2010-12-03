@@ -141,11 +141,19 @@ class ActionView::Base
     elsif collection.is_a?(String)
       options[:loadCollectionURL] = collection
     elsif collection.nil?
-      options[:loadCollectionURL] = url_for({
-        :action => "get_#{object.class.name.downcase}_#{method}_collection",
-        :controller => field_controller.controller_name,
-        :id => object.id
-      })
+      # specifically defined inline as false
+      if options.has_key?(:inline) and not options[:inline]
+        options[:loadCollectionURL] = url_for({
+          :action => "get_#{object.class.name.downcase}_#{method}_collection",
+          :controller => field_controller.controller_name,
+          :id => object.id
+        })
+
+      # normally, just put the collection inline (its faster)
+      else
+        collection_method = "_#{object.class.name.downcase}_#{method}_collection_assoc"
+        options[:collection] = field_controller.send collection_method
+      end
     end
 
     # set 'value' key to the raw attribute value
