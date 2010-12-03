@@ -68,20 +68,17 @@ protected
       # define the collection list method
       model = model.to_s.camelcase.constantize
       model_method_name = model.to_s.downcase.gsub '::', '_'
-      collection_method = "get_#{model_method_name}_#{attribute}_collection"
-      logger.debug "Creating collection method #{collection_method}"
-      
-      define_method collection_method do
-        unless block.nil?
-          collection ||= block.call(model, attribute)
-        end
+
+      # XXX this is a bit of a hack, using the controller to store the collection
+      collection_as_assoc = "_#{model_method_name}_#{attribute}_collection_assoc"
+      define_method collection_as_assoc do
+        collection ||= block.call(model, attribute) unless block.nil?
 
         if collection.is_a?(Hash)
-          render :json => collection.to_a
+          return collection.to_a
 
         elsif collection.is_a?(Array)
-          # ensure array is [[key,value], ...]
-          render :json => collection.map do |e|
+          return collection.map do |e|
             if e.is_a?(Array) && e.size == 2
               e
             else
@@ -90,8 +87,18 @@ protected
           end
 
         else
-          render :status => 999,
-            :text => "Invalid collection #{collection}"
+          raise "Invalid collection #{collection}"
+        end
+      end
+
+      collection_method = "get_#{model_method_name}_#{attribute}_collection"
+      logger.debug "Creating collection method #{collection_method}"
+      
+      define_method collection_method do
+        begin
+          render :json => self.send(collection_as_assoc)
+        rescue ex
+          render :status => 999, :text => ex.to_s
         end
       end
 
@@ -104,23 +111,13 @@ protected
         @item = model.find params[:id]
         @item.send "#{attribute}=", params[:value]
 
-        # get collection
-        unless block.nil?
-          collection ||= block.call(model, attribute)
-        end
-
-        # convert to hash for lookup
-        if collection.is_a?(Array)
-          collection = Hash[*collection.flatten]
-          collection.keys.each { |key| collection[key.to_s] = collection[key] }
-        end
+        # use collection as a hash to ease lookups
+        collection_hash = Hash[self.send(collection_as_assoc)]
 
         # saved OK
         if @item.save
-          attr_str = @item.send(attribute).to_s
-
           # lookup value in collection
-          render :text => CGI::escapeHTML(collection[attr_str] || attr_str)
+          render :text => CGI::escapeHTML(collection_hash[@item.send attribute])
 
         # save failed
         else
@@ -130,11 +127,9 @@ protected
               model.method_defined? :query_cache
             @item.reload
 
-            # lookup value in collection
-            attr_str = @item.send(attribute).to_s
-
-            # replace the element with the original value
-            js.replace_html params[:editorId], collection[attr_str] || attr_str
+            # replace the element with the original value (from collection)
+            js.replace_html params[:editorId], 
+              collection_hash[@item.send attribute]
 
             # finally, notify of errors
             js.alert(@item.errors.full_messages.join "\n")
