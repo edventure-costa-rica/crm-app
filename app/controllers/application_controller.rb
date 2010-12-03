@@ -117,7 +117,14 @@ protected
         # saved OK
         if @item.save
           # lookup value in collection
-          render :text => CGI::escapeHTML(collection_hash[@item.send attribute])
+          render :update do |js|
+            editor_id = params[:editorId]
+            attr_val = @item.send attribute
+
+            js[editor_id]['editor']['options'].value = attr_val
+            js.replace_html editor_id, collection_hash[attr_val]
+          end
+          #:text => CGI::escapeHTML(collection_hash[@item.send attribute])
 
         # save failed
         else
