@@ -1,7 +1,14 @@
 class ReservationsController < ApplicationController
   # methods for inline editing on the index page
-  in_place_edit_for :reservation, :confirmed
-  in_place_edit_for :reservation, :paid
+  in_place_edit_for :reservation, :confirmed do
+    [ [true,  I18n.t(:true)],
+      [false, I18n.t(:false)] ]
+  end
+
+  in_place_collection_edit_for :reservation, :paid do
+    [ [true,  I18n.t(:true)],
+      [false, I18n.t(:false)] ]
+  end
 
   # GET /reservations
   # GET /reservations.xml
