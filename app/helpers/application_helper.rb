@@ -128,6 +128,10 @@ class ActionView::Base
         :id => object.id }) :
       options.delete(:url)
 
+    # let the response do the work, don't rely on Ajax.Updater
+    options[:htmlResponse] = false
+    options[:ajaxOptions] = { :method => :post }
+
     options = self.class.default_ipe_options.merge(options)
 
     if collection.is_a?(Hash)
@@ -171,7 +175,7 @@ class ActionView::Base
     end
 
     ipe = javascript_tag do
-      js = ''
+      js = "$(#{element_id.to_json}).editor = "
       js << "new Ajax.InPlaceCollectionEditor("
       js << element_id.to_json
       js << ', '
