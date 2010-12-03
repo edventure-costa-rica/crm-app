@@ -124,7 +124,7 @@ class ActionView::Base
     callback_url = options[:url].nil? ?
       url_for({
         :action => "set_#{object.class.name.downcase}_#{method}",
-        :controller => field_controller,
+        :controller => field_controller.controller_name,
         :id => object.id }) :
       options.delete(:url)
 
@@ -139,7 +139,7 @@ class ActionView::Base
     elsif collection.nil?
       options[:loadCollectionURL] = url_for({
         :action => "get_#{object.class.name.downcase}_#{method}_collection",
-        :controller => field_controller,
+        :controller => field_controller.controller_name,
         :id => object.id
       })
     end
