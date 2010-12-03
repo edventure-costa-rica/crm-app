@@ -71,6 +71,8 @@ protected
 
       # XXX this is a bit of a hack, using the controller to store the collection
       collection_as_assoc = "_#{model_method_name}_#{attribute}_collection_assoc"
+      logger.debug "Creating collection definition #{collection_as_assoc}"
+
       define_method collection_as_assoc do
         collection ||= block.call(model, attribute) unless block.nil?
 
