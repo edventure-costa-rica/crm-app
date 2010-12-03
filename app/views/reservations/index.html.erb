@@ -42,8 +42,8 @@
 <% else %>
     <td><%=h reservation.city %></td>
     <td><%=h reservation.company.name %></td>
-    <td><%=h reservation.confirmed ? t(:true) : t(:false) %></td>
-    <td><%=h reservation.paid ? t(:true) : t(:false) %></td>
+    <td><%= in_place_collection_editor_field reservation, :confirmed %></td>
+    <td><%= in_place_collection_editor_field reservation, :paid %></td>
 <% end %>
     <td><%=hnl reservation.services.nil? ? '' : reservation.services[0,50] + (reservation.services.length > 50 ? '...' : '') %></td>
     <td><%= link_to t(:show), [reservation.client, reservation.trip, reservation] %> |
