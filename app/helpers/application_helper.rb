@@ -119,13 +119,16 @@ class ActionView::Base
       "#{object.class.name.downcase.gsub '::', '_'}-#{method}-#{object.id}" :
       options.delete(:id)
 
+    field_controller = options.delete(:controller) || controller
+
     callback_url = options[:url].nil? ?
       url_for({
         :action => "set_#{object.class.name.downcase}_#{method}",
+        :controller => field_controller,
         :id => object.id }) :
       options.delete(:url)
 
-    options.merge!(self.class.default_ipe_options)
+    options = self.class.default_ipe_options.merge(options)
 
     if collection.is_a?(Hash)
       options[:collection] = collection.each_pair { |k,v| [k, v] }
@@ -136,11 +139,25 @@ class ActionView::Base
     elsif collection.nil?
       options[:loadCollectionURL] = url_for({
         :action => "get_#{object.class.name.downcase}_#{method}_collection",
+        :controller => field_controller,
         :id => object.id
       })
     end
 
-    element = content_tag element_tag, h(object.send(method).to_s),
+    # set 'value' key to the raw attribute value
+    options[:value] = object.send(method) unless
+      options.has_key? :value
+
+    # get the display value via a collection lookup
+    unless options.has_key? :display
+      # XXX get the collection from the controller.
+      collection_method = "_#{object.class.name.downcase}_#{method}_collection_assoc"
+      collection_hash = Hash[field_controller.send collection_method]
+
+      options[:display] = collection_hash[options[:value]]
+    end
+
+    element = content_tag element_tag, h(options.delete(:display)),
       { :id => element_id, :class => 'in_place_collection_editor_field' }.
       merge!(options.delete(:html) || {})
 
