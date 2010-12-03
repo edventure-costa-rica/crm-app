@@ -124,7 +124,6 @@ protected
             js[editor_id]['editor']['options'].value = attr_val
             js.replace_html editor_id, collection_hash[attr_val]
           end
-          #:text => CGI::escapeHTML(collection_hash[@item.send attribute])
 
         # save failed
         else
