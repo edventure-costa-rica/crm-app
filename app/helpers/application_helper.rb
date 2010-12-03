@@ -142,7 +142,7 @@ class ActionView::Base
       options[:loadCollectionURL] = collection
     elsif collection.nil?
       # specifically defined inline as false
-      if options.has_key?(:inline) and not options[:inline]
+      if options.has_key?(:inline) and not options.delete(:inline)
         options[:loadCollectionURL] = url_for({
           :action => "get_#{object.class.name.downcase}_#{method}_collection",
           :controller => field_controller.controller_name,
