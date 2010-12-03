@@ -176,7 +176,7 @@ class ActionView::Base
     # external control is an edit icon by default
     if options[:externalControl] === true or not options.has_key? :externalControl
       external = image_tag 'edit.gif', :id => "#{element_id}_external",
-        :style => 'vertical-align: middle'
+        :style => 'vertical-align: top'
       options[:externalControl] = "#{element_id}_external"
     elsif options[:externalControl] === false
       external = ''
