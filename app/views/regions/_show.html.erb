@@ -1,6 +1,6 @@
 
   <li><%=in_place_editor_field region, :name %> &ndash;
-      <%=in_place_collection_editor_field region, :country, Region.countries %>
+      <%=in_place_collection_editor_field region, :country %>
       (<%= region.companies.count %>)
       <%= link_to t(:delete), region,
            :confirm => t(:confirm), :method => :delete %>

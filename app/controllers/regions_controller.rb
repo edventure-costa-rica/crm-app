@@ -1,7 +1,7 @@
 class RegionsController < ApplicationController
   # install callbacks for in-place editor
   in_place_edit_for :region, :name
-  in_place_edit_for :region, :country
+  in_place_collection_edit_for :region, :country, Region.countries
 
   # list countries for in-place collection editor
   def countries_list
