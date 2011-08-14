@@ -8,7 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   # clients have trips and reservations, sort of
-  map.resources :clients do |client|
+  map.resources :clients, :member => { :remove => :get } do |client|
       client.resources :reservations, :only => [ :show, :index ]
 
       # trips have reservations, really

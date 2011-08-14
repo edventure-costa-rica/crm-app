@@ -312,6 +312,9 @@ es:
   false: 'No'
   cancel: Cancelar
 
+  remove_client: Eliminara esta familia, y ademas todos sus viajes alistado abajo.
+  reservation: reservaciones
+
   # Views
   layouts:
     application:
@@ -404,6 +407,8 @@ es:
     new:
       title: Agregar una Familia
       list: Listar las Familias
+    remove:
+      title: Eliminar la Familia
   companies:
     index:
       title: Listando las Compañías

@@ -19,8 +19,8 @@
     <td><%=h client.phone %></td>
     <td><%= mail_to client.email %></td>
     <td><%= link_to t(:show), client %> |
-        <%= link_to t(:edit), edit_client_path(client) %>
-        <%# link_to t(:delete), client, :confirm => t(:confirm), :method => :delete %></td>
+        <%= link_to t(:edit), edit_client_path(client) %> |
+        <%= link_to t(:delete), remove_client_path(client) %></td>
   </tr>
 <% end %>
 </table>

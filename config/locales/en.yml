@@ -37,6 +37,9 @@ en:
   false: 'No'
   cancel: Cancel
 
+  remove_client: This will permanently remove the family, and any trips listed below.
+  reservation: reservations
+
   # Views
   layouts:
     application:
@@ -134,6 +137,8 @@ en:
     new:
       title: New Family
       list: List Families
+    remove:
+      title: Delete Family
   companies:
     index:
       title: Listing Companies

@@ -72,12 +72,20 @@ class ClientsController < ApplicationController
     end
   end
 
+  def remove
+    @client = Client.find(params[:id])
+    
+    respond_to do |format|
+      format.html { render :action => "remove" }
+    end
+  end
+
   # DELETE /clients/1
   # DELETE /clients/1.xml
   def destroy
     @client = Client.find(params[:id])
     @client.destroy
-
+    
     respond_to do |format|
       format.html { redirect_to(clients_url) }
       format.xml  { head :ok }

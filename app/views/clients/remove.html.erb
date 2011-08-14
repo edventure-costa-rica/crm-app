@@ -1,0 +1,21 @@
+<h1><%= t '.title' %></h1>
+
+<p><%= t :remove_client %></p>
+
+<h3><%= @client %></h3>
+
+<ul>
+<% @client.trips.each do |trip| %>
+  <li><%= trip %><br/>
+  <%= l trip.arrival, :format => :long %> &mdash;
+  <%= l trip.departure, :format => :long %><br/>
+  <%= trip.reservations.count %> <%= t :reservation %>
+  </li>
+<% end %>
+</ul>
+
+<br />
+
+<%= link_to t(:delete), @client, :confirm => t(:confirm), :method => :delete %> |
+<%= link_to t(:cancel), clients_path %>
+
