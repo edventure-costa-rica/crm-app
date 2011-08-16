@@ -1,5 +1,6 @@
-
-<table class="styled grid" style="padding: 5px; width: 500px; margin:auto">
+<% overdue = pay.paid_date < Date.today and not pay.paid %>
+<table class="styled grid" style="padding: 5px; width: 500px; margin:auto; <%=
+"border: 5px solid red; " if overdue %>">
   <!-- reservation details -->
   <tr>
     <td style="text-align: left"><b><%=h re_f :paid_date %></b></td>
@@ -24,9 +25,18 @@
     <td style="text-align: right"><%= h pay.company.send attr %></td>
   </tr>
 <% end %>
+<% begin %>
   <tr>
     <td style="text-align: left"><%= h co_f pay.company.bank_govt_id_type %></td>
     <td style="text-align: right"><%= h pay.company.bank_govt_id %></td>
+  </tr>
+<% rescue %>
+<% end %>
+  <tr>
+    <td colspan="2" style="text-align: right">
+      <%= link_to t(:edit) + " " + pay.to_s,
+            edit_client_trip_reservation_path(pay.trip.client, pay.trip, pay) %>
+    </td>
   </tr>
 </table>
 

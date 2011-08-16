@@ -7,6 +7,16 @@ ActionController::Routing::Routes.draw do |map|
     region.resources :companies, :only => :index
   end
 
+  # weekly payment schedule lives inside 
+  # the reservations controller
+  map.weekly_payments '/payments/week', 
+    :controller => 'reservations', 
+    :action     => 'weekly_payments'
+  map.yearly_payments '/payments/:year',
+    :controller => 'reservations', 
+    :action     => 'yearly_payments',
+    :defaults   => { :year => 2011 }
+
   # clients have trips and reservations, sort of
   map.resources :clients, :member => { :remove => :get } do |client|
       client.resources :reservations, :only => [ :show, :index ]

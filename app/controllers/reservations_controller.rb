@@ -197,4 +197,24 @@ class ReservationsController < ApplicationController
 
     render :layout => 'print'
   end
+
+  def weekly_payments
+    # next sunday 
+    @week_ending = Date.today
+    @week_ending += 1 while (@week_ending.wday != 0)
+    @week_ending += 7.days
+
+    @reservations = Reservation.find :all,
+      :conditions => ['NOT paid AND paid_date <= ?', @week_ending],
+      :order      => 'paid_date ASC'
+
+    respond_to do |format|
+      format.html { render :layout => 'print', :action => 'pays' }
+    end
+  end
+
+  # TODO
+  def yearly_payments
+  end
+
 end

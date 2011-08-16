@@ -6,6 +6,12 @@
   <li><%= link_to 'English', root_path({ :lc => :en }) %></li>
 </ul>
 
+<b><%= t '.list_payments' %>:</b>
+<ul>
+  <li><%= link_to t('.weekly_payment'), weekly_payments_path %></li>
+  <li><%= link_to t('.yearly_payment'), yearly_payments_path %></li>
+</ul>
+
 <b><%= t '.list_trips' %>:</b>
 <ul>
   <li><%= link_to t('.upcoming'), upcoming_trips_path %></li>
