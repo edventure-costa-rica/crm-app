@@ -221,6 +221,7 @@ es:
         company_id: Id. de la Compañía
         arrival: Entrada
         departure: Salida
+        num_people: Cuantas Personas
         dropoff_location: Lugar de Drop Off
         pickup_location: Lugar de Pick Up
         services: Servicios
@@ -339,6 +340,8 @@ es:
       misc: Contactos
       clients: Familias y Clientes
       companies: Compañías de Hoteles y Tours
+      weekly_payment: Cotas que Vencen esta Semana
+      yearly_payment: Todos los Pagos Realizados este Año
   reservations:
     edit:
       title: Modificar la Reservación
@@ -367,6 +370,14 @@ es:
     pay:
       amount: Monto
       reference: Referencia/Detalle
+    yearly_payments:
+      title: Pagos Realizados
+      week: Semana
+      from: De
+      to: A
+      total: Total
+      next_year: Proximo
+      last_year: Anterior
   trips:
     index:
       upcoming: Listando los Próximos Viajes

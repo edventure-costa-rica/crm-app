@@ -215,6 +215,25 @@ class ReservationsController < ApplicationController
 
   # TODO
   def yearly_payments
+    if params[:year].nil? then 
+      @year = Date.today.year 
+    else 
+      @year = params[:year].to_i
+    end
+
+    @weeks = []
+    (1..52).each do |week|
+      data = { :week => week }
+      data[:week_start] = Date.commercial(@year, week, 1)
+      data[:week_end] = Date.commercial(@year, week, 7)
+      cond = { 
+        :paid      => true,
+        :paid_date => data[:week_start] .. data[:week_end]
+      }
+      data[:net_price] = Reservation.sum :net_price, :conditions => cond
+      data[:price] = Reservation.sum :price, :conditions => cond
+      @weeks << data
+    end
   end
 
 end

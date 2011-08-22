@@ -93,6 +93,14 @@ en:
     pay:
       amount: Amount
       reference: In Reference to
+    yearly_payments:
+      title: Yearly Payments
+      week: "Week #"
+      from: From
+      to: To
+      total: Total
+      next_year: Next Year
+      last_year: Last Year
   trips:
     index:
       upcoming: Listing upcoming trips

@@ -15,7 +15,7 @@ ActionController::Routing::Routes.draw do |map|
   map.yearly_payments '/payments/:year',
     :controller => 'reservations', 
     :action     => 'yearly_payments',
-    :defaults   => { :year => 2011 }
+    :defaults   => { :year => nil }
 
   # clients have trips and reservations, sort of
   map.resources :clients, :member => { :remove => :get } do |client|

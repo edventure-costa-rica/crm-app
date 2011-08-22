@@ -1,0 +1,35 @@
+<h1><%= t '.title' %> <%= @year %></h1>
+
+<p>
+<%= link_to t('.last_year'), yearly_payments_path(:year => @year-1) %> |
+<%= link_to t('.next_year'), yearly_payments_path(:year => @year+1) %>
+</p>
+
+<table style="margin:auto">
+  <tr>
+    <th><%= t '.week' %></th>
+    <th><%= t '.from' %></th>
+    <th><%= t '.to' %></th>
+    <th><%= re_f :price %></th>
+    <th><%= re_f :net_price %></th>
+  </tr>
+  <tr>
+    <td colspan="3"><%= t '.total' %></td>
+    <td style="text-align:right"><%= number_to_currency @weeks.collect { |w| w[:price] }.sum %></td>
+    <td style="text-align:right"><%= number_to_currency @weeks.collect { |w| w[:net_price] }.sum %></td>
+  </tr>
+<% @weeks.each do |week| %>
+  <tr>
+    <td><%= week[:week] %>.</td>
+    <td><%= h l week[:week_start], :format => :short %></td>
+    <td><%= h l week[:week_end], :format => :short %></td>
+    <td style="text-align:right"><%= number_to_currency week[:price] %></td>
+    <td style="text-align:right"><%= number_to_currency week[:net_price] %></td>
+  </tr>
+<% end %>
+  <tr>
+    <td colspan="3"><%= t '.total' %></td>
+    <td style="text-align:right"><%= number_to_currency @weeks.collect { |w| w[:price] }.sum %></td>
+    <td style="text-align:right"><%= number_to_currency @weeks.collect { |w| w[:net_price] }.sum %></td>
+  </tr>
+</table>
