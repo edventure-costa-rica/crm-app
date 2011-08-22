@@ -315,6 +315,8 @@ es:
 
   remove_client: Eliminara esta familia, y ademas todos sus viajes alistado abajo.
   reservation: reservaciones
+  weekly_payments: Cotas de la Semana
+  yearly_payments: Pagos Anuales
 
   # Views
   layouts:

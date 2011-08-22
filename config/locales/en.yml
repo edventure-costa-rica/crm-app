@@ -39,6 +39,8 @@ en:
 
   remove_client: This will permanently remove the family, and any trips listed below.
   reservation: reservations
+  weekly_payments: Weekly Payments
+  yearly_payments: Yearly Payments
 
   # Views
   layouts:
