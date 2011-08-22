@@ -64,6 +64,8 @@ en:
       misc: Contacts
       clients: List Families and Clients
       companies: List Hotels and Tour Operators
+      weekly_payment: Payments Due This Week
+      yearly_payment: All Payments This Year
   reservations:
     edit:
       title: Edit Reservation
@@ -203,6 +205,7 @@ en:
         paid_date: Payment Date
         arrival: Arrival Date
         departure: Departure Date
+        num_people: Number of People
       trip:
         registration_id: Registration Code
         status: Confirmation Status

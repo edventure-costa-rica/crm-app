@@ -26,7 +26,7 @@ class VoucherReport < Prawn::Document
           :height   => 5.28.mm,
           :left     => 10.97.mm,
           :bottom   => 93.07.mm,
-          :source   => [:trip, :total_people],
+          :source   => [:num_people],
         },
         { :width    => 76.40.mm,
           :height   => 5.28.mm,

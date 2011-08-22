@@ -96,6 +96,9 @@ private
 public
   def after_initialize
     if new_record? and not trip.nil?
+      # fill in number of people from trip size
+      self.num_people ||= trip.total_people
+
       # use the last reservation (or trip) for default arrival
       self.arrival ||= trip.reservations.empty? ?
         trip.arrival : trip.reservations.last.departure

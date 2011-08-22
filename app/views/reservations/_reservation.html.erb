@@ -143,6 +143,10 @@
     <%= f.text_field :dropoff_location %>
   </p>
   <p>
+    <%= f.label :num_people %><br />
+    <%= f.text_field :num_people %>
+  </p>
+  <p>
     <%= f.label :net_price %><br />
     <%= f.text_field :net_price, :value =>
           number_with_precision(@reservation.net_price, :precision => 2) %>
