@@ -10,7 +10,7 @@ class VoucherReport < Prawn::Document
           :bottom   => 66.04.mm,
           :source   => [:client, :family_name],
         },
-        { :width    => 17.19.mm,
+        { :width    => 25.19.mm,
           :height   => 5.28.mm,
           :left     => 50.48.mm,
           :bottom   => 80.67.mm,
