@@ -344,6 +344,7 @@ es:
       companies: Compañías de Hoteles y Tours
       weekly_payment: Cotas que Vencen esta Semana
       yearly_payment: Todos los Pagos Realizados este Año
+      list_payments: Listas de los Pagos
   reservations:
     edit:
       title: Modificar la Reservación

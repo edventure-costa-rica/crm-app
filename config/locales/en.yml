@@ -68,6 +68,7 @@ en:
       companies: List Hotels and Tour Operators
       weekly_payment: Payments Due This Week
       yearly_payment: All Payments This Year
+      list_payments: List Payments
   reservations:
     edit:
       title: Edit Reservation
