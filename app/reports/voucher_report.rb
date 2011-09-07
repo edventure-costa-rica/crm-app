@@ -4,9 +4,9 @@ class VoucherReport < Prawn::Document
     @@voucher = "#{RAILS_ROOT}/voucher.jpg"
 
     @@fields = [
-        { :width    => 59.52.mm,
+        { :width    => 50.52.mm,
           :height   => 8.33.mm,
-          :left     => 9.75.mm,
+          :left     => 19.75.mm,
           :bottom   => 66.04.mm,
           :source   => [:client, :family_name],
         },
@@ -60,7 +60,7 @@ class VoucherReport < Prawn::Document
         },
         { :width    => 37.80.mm,
           :height   => 5.28.mm,
-          :left     => 89.61.mm,
+          :left     => 95.61.mm,
           :bottom   => 136.96.mm,
           :source   => [:departure_date_str],
         },
