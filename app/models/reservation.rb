@@ -76,7 +76,6 @@ class Reservation < ActiveRecord::Base
     end
   end
 
-private
   def arrival_precedes_departure
     errors.add :departure, I18n.t(:arrival_precedes_departure) unless
       self.departure >= self.arrival
@@ -93,7 +92,6 @@ private
       self.departure <= self.trip.departure.to_date
   end
 
-public
   def after_initialize
     if new_record? and not trip.nil?
       # fill in number of people from trip size
