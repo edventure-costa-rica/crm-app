@@ -1,10 +1,31 @@
 # Be sure to restart your server when you modify this file
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.3.8' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.18' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
+
+if RUBY_VERSION >= '2.0.0'
+  module Gem
+    def self.source_index
+      sources
+    end
+
+    def self.cache
+      sources
+    end
+
+    SourceIndex = Specification
+
+    class SourceList
+      # If you want vendor gems, this is where to start writing code.
+      def search(*args); []; end
+      def each(&block); end
+      include Enumerable
+    end
+  end
+end
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
@@ -19,10 +40,11 @@ Rails::Initializer.run do |config|
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
-  config.gem "pdf-reader", :lib => "pdf/reader"
-  config.gem "Ascii85", :lib => "ascii85"
 
-  config.load_paths << "#{RAILS_ROOT}/vendor/prawn/lib"
+  #config.gem "pdf-reader", :lib => "pdf/reader"
+  #config.gem "Ascii85", :lib => "ascii85"
+
+  #config.load_paths << "#{RAILS_ROOT}/vendor/prawn/lib"
   config.load_paths << "#{RAILS_ROOT}/app/reports"
 
   # Only load the plugins named here, in the order given (default is alphabetical).
