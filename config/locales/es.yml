@@ -309,8 +309,8 @@ es:
   confirm: ¿Estás seguro?
   male: Masculino
   female: Femenino
-  true: 'Sí'
-  false: 'No'
+  "true": 'Sí'
+  "false": 'No'
   cancel: Cancelar
 
   remove_client: Eliminara esta familia, y ademas todos sus viajes alistado abajo.

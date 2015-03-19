@@ -99,3 +99,6 @@ end
 
 puts "Processed #{@row} lines"
 
+csv = 'contrib/clients.csv'
+puts "Reading clients from spreadsheet '#{csv}'"
+

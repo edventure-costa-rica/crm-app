@@ -33,8 +33,8 @@ en:
   confirm: Are you sure?
   male: Male
   female: Female
-  true: 'Yes'
-  false: 'No'
+  "true": 'Yes'
+  "false": 'No'
   cancel: Cancel
 
   remove_client: This will permanently remove the family, and any trips listed below.

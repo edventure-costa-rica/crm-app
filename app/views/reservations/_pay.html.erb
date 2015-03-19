@@ -1,4 +1,4 @@
-<% overdue = pay.paid_date < Date.today and not pay.paid %>
+<% overdue = (not pay.paid_date.nil?) and (pay.paid_date < Date.today) and not pay.paid %>
 <table class="styled grid" style="padding: 5px; width: 500px; margin:auto; <%=
 "border: 5px solid red; " if overdue %>">
   <!-- reservation details -->

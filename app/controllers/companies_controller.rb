@@ -13,8 +13,7 @@ class CompaniesController < ApplicationController
       binds << "#{params[:q]}%"
     end
 
-    @companies = Company.all :order =>
-      'regions.country, regions.name, kind, companies.name',
+    @companies = Company.all :order => 'companies.name',
       :include => :region,
       :conditions => [ query.join(' AND ') ].concat(binds)
 

@@ -17,7 +17,8 @@
     <td><%=h company.region %></td>
     <td><%=h company.package %></td>
     <td><%= link_to t(:show), company %> |
-        <%= link_to t(:edit), edit_company_path(company) %></td>
+        <%= link_to t(:edit), edit_company_path(company) %> |
+        <%= link_to t(:delete), company, :confirm => t(:confirm), :method => :delete %>
   </tr>
 <% end %>
 </table>

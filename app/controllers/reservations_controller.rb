@@ -205,7 +205,9 @@ class ReservationsController < ApplicationController
     @week_ending += 7.days
 
     @reservations = Reservation.find :all,
-      :conditions => ['NOT paid AND paid_date <= ?', @week_ending],
+      :include    => [:trip],
+      :conditions => ['NOT paid AND paid_date <= ? AND ' + 
+                      'trip_id IS NOT NULL AND trips.departure >= ?', @week_ending, Date.today],
       :order      => 'paid_date ASC'
 
     respond_to do |format|
@@ -213,7 +215,6 @@ class ReservationsController < ApplicationController
     end
   end
 
-  # TODO
   def yearly_payments
     if params[:year].nil? then 
       @year = Date.today.year 
