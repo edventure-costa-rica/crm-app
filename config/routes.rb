@@ -44,6 +44,11 @@ ActionController::Routing::Routes.draw do |map|
                         :member     => { :proposal     => :get,
                                          :confirmation => :get }
 
+  map.day_calendar 'calendar/day', controller: :calendar, action: :day
+  map.week_calendar 'calendar/week', controller: :calendar, action: :week
+  map.month_calendar 'calendar/month', controller: :calendar, action: :month
+  map.year_calendar 'calendar/year', controller: :calendar, action: :year
+
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
