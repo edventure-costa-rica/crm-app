@@ -20,3 +20,21 @@ if Rails::VERSION::MAJOR == 2 && RUBY_VERSION >= '2.0.0'
     end
   end
 end
+
+# @see http://stackoverflow.com/questions/25035094/rails-legacy-app-and-ruby-2-error-can-not-load-translations-from-the-file-type
+# this one is for yaml translations
+if Rails::VERSION::MAJOR == 2 && RUBY_VERSION >= '2.0.0'
+  module I18n
+    module Backend
+      module Base
+        def load_file(filename)
+          type = File.extname(filename).tr('.', '').downcase
+          # As a fix added second argument as true to respond_to? method
+          raise UnknownFileType.new(type, filename) unless respond_to?(:"load_#{type}", true)
+          data = send(:"load_#{type}", filename) # TODO raise a meaningful exception if this does not yield a Hash
+          data.each { |locale, d| store_translations(locale, d) }
+        end
+      end
+    end
+  end
+end
