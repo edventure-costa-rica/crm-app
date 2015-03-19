@@ -1,9 +1,19 @@
 class TripsController < ApplicationController
+  INDEX_PAGE_INTERVAL = 90
+
   # GET /trips
   # GET /trips.xml
   def index
+    @page = params[:page].to_i
+    conditions = ['arrival >= ?', Date.today - ((@page + 1) * INDEX_PAGE_INTERVAL).days]
+
+    if @page > 0
+      conditions.first << ' AND arrival < ?'
+      conditions.push(Date.today - (@page * INDEX_PAGE_INTERVAL).days)
+    end
+
     if params[:client_id].nil? then
-      @trips = Trip.all :order => 'arrival DESC'
+      @trips = Trip.all :order => 'arrival DESC', conditions: conditions
     else
       @trips = Trip.find :all, :order => 'arrival DESC',
         :conditions => [ 'client_id = ?', params[:client_id] ]

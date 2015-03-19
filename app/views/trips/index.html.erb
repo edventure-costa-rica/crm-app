@@ -8,6 +8,14 @@
   end
 %></h1>
 
+<% unless defined? @client %>
+  <p><%= t '.page' %>:
+    <%= link_to t(:earlier), trips_url(page: @page + 1) %>
+    <%= link_to t(:later), trips_url(page: @page - 1) if @page >= 1 %>
+    <%= link_to t(:latest), trips_url(page: 0) if @page >= 1 %>
+  </p>
+<% end %>
+
 <table class="styled">
   <tr>
     <th><%=tr_f :registration_id %></th>
