@@ -296,6 +296,9 @@ es:
   departure_before_trip: debe ocurrir después de la llegada del Viaje
   departure_after_trip: debe ocurrir antes de la salida del Viaje
 
+  earlier: anterior
+  later: posterior
+
   # Views
   submit_update: Actualizar
   submit_create: Crear
@@ -390,6 +393,7 @@ es:
       title: Viajes
       title_client: Viajes de {{for}}
       new: Crear un Viaje
+      page: "Ver los Viajes"
     show:
       child: niño
       children: niños
@@ -465,3 +469,4 @@ es:
       title: Listando Regiones
       edit_explanation: Haga clic en el icono para modificar el nombre ó el país.
       new: Crear Región
+  latest: mas reciente

@@ -16,6 +16,9 @@ en:
   departure_before_trip: must come after the Trip arrival date
   departure_after_trip: must come before the Trip departure date
 
+  later: Later
+  earlier: Earlier
+
   submit_update: Update
   submit_create: Create
 
@@ -110,6 +113,7 @@ en:
       title: Listing all trips
       title_client: Listing trips for {{for}}
       new: New Trip
+      page: See Trips
     show:
       child: child
       children: children
@@ -261,3 +265,4 @@ en:
       person:
         dob: Date of Birth
 
+  latest: "Latest"
