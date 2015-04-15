@@ -37,6 +37,8 @@ module ApplicationHelper
       [Region, nil]
     elsif controller.class == PeopleController
       [Person, @trip]
+    elsif controller.class == CalendarController
+      [Reservation, l(@date.to_date, format: :calendar)]
     end
 
     t = ''
