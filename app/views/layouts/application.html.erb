@@ -24,6 +24,7 @@
     <%= link_to_unless_current t('.home'), root_path %> |
     <%= link_to_unless_current t('activerecord.models.company', :count => 0), companies_path %> |
     <%= link_to_unless_current t('activerecord.models.client', :count => 0), clients_path %> |
+    <%= link_to_unless_current t('calendar.month.today'), month_calendar_path %> |
     <%= link_to_unless_current t('activerecord.models.trip', :count => 0), trips_path %>
    (<%= link_to_unless_current t('.upcoming'), upcoming_trips_path %>)
   </div>
