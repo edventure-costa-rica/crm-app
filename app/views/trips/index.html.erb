@@ -35,8 +35,8 @@
     <td><%=h trip.client.family_name %></td>
   <% end %>
     <td><%=h tr_f trip.status %></td>
-    <td><%=h l trip.arrival.to_date %></td>
-    <td><%=h l trip.departure.to_date %></td>
+    <td><%=link_to l(trip.arrival.to_date), day_calendar_url(date: trip.arrival.to_date) %></td>
+    <td><%=link_to l(trip.departure.to_date), day_calendar_url(date: trip.departure.to_date) %></td>
     <td><%=h trip.total_people %></td>
     <td><%= link_to t(:show), [trip.client, trip] %> |
         <%= link_to t(:edit), edit_client_trip_path(trip.client, trip) %> |
