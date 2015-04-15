@@ -286,3 +286,9 @@ en:
       title: "Weekly Calendar for"
       today: "This Week"
     date: "Date"
+    month:
+      title: Monthly Calendar for
+      today: "This Month"
+    year:
+      title: "Yearly Calendar for"
+      today: "This Year"

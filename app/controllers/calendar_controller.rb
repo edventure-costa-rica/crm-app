@@ -26,9 +26,23 @@ class CalendarController < ApplicationController
   end
 
   def month
+    range_start = @date.beginning_of_month.to_date
+    range_end = @date.end_of_month.to_date
+
+    find_entries(range_start, range_end)
+
+    @date = range_start
+    @range = range_start .. range_end
   end
 
   def year
+    range_start = @date.beginning_of_year.to_date
+    range_end = @date.end_of_year.to_date
+
+    find_entries(range_start, range_end)
+
+    @date = range_start
+    @range = range_start .. range_end
   end
 
   def set_date

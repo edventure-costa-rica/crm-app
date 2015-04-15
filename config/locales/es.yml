@@ -489,3 +489,9 @@ es:
       title: "Calendario Semanal de"
       today: "Esta Semana"
     date: Fecha
+    month:
+      title: Calendario Mensual de
+      today: "Este Mes"
+    year:
+      title: "Calendario Anual de"
+      today: "Este Año"

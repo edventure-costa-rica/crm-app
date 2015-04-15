@@ -1,0 +1,15 @@
+<h1><%= t '.title' %> <%= l @date, format: :calendar_long %></h1>
+
+<p align="center">
+  <%= link_to t('calendar.before'), month_calendar_url(date: @date - 1.month) %> |
+  <%= link_to t('.today'), month_calendar_url(date: Date.today) %> |
+  <%= link_to t('calendar.after'), month_calendar_url(date: @date + 1.month) %>
+</p>
+
+<%= render partial: 'entries' %>
+
+<p align="center">
+  <%= link_to t('calendar.before'), month_calendar_url(date: @date - 1.month) %> |
+  <%= link_to t('.today'), month_calendar_url(date: Date.today) %> |
+  <%= link_to t('calendar.after'), month_calendar_url(date: @date + 1.month) %>
+</p>
