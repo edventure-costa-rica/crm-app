@@ -46,10 +46,15 @@
     <td><%= in_place_collection_editor_field reservation, :paid %></td>
 <% end %>
     <td><%=hnl reservation.services.nil? ? '' : reservation.services[0,50] + (reservation.services.length > 50 ? '...' : '') %></td>
-    <td><%= link_to t(:show), [reservation.client, reservation.trip, reservation] %> |
+
+<% if reservation.client.nil? %>
+  <td></td>
+<% else %>
+    <td><%= link_to t(:show), client_trip_reservation_url(reservation.client, reservation.trip, reservation) %> |
         <%= link_to t(:edit), edit_client_trip_reservation_path(reservation.client, reservation.trip, reservation) %> |
-        <%= link_to t(:delete), [reservation.client, reservation.trip, reservation], :confirm => t(:confirm), :method => :delete %>
+        <%= link_to t(:delete), client_trip_reservation_url(reservation.client, reservation.trip, reservation), :confirm => t(:confirm), :method => :delete %>
     </td>
+<% end %>
   </tr>
 <% end %>
 </table>
