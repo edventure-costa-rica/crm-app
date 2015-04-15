@@ -1,0 +1,76 @@
+<h1><%= t '.title' %> <%= l @date, format: :calendar_long %></h1>
+
+<p align="center">
+  <%= link_to t('calendar.before'), day_calendar_url(date: @date - 1.day) %> |
+  <%= link_to t('calendar.today'), day_calendar_url(date: Date.today) %> |
+  <%= link_to t('calendar.after'), day_calendar_url(date: @date + 1.day) %>
+</p>
+
+<h4><%= t 'calendar.trips' %></h4>
+
+<% if @arrival.empty? and @departure.empty? %>
+  <p><em><%= t 'calendar.empty' %></em></p>
+<% else %>
+
+  <% unless @arrival.empty? %>
+    <table class="styled">
+      <tr class="<%= cycle('even', 'odd') %>">
+        <th><%= tr_f :client %></th>
+        <th><%= tr_f :arrival_flight %></th>
+      </tr>
+
+      <% @arrival.each do |trip| %>
+        <tr class="<%= cycle('even', 'odd') %>">
+          <td><%= link_to trip.client, client_trip_url(trip.client, trip) %></td>
+          <td><%= trip.arrival_flight %></td>
+        </tr>
+      <% end %>
+  <% end %>
+
+  <% unless @departure.empty? %>
+    <tr class="<%= cycle('even', 'odd') %>">
+      <th><%= tr_f :client %></th>
+      <th><%= tr_f :departure_flight %></th>
+    </tr>
+
+    <% @departure.each do |trip| %>
+      <tr class="<%= cycle('even', 'odd') %>">
+        <td><%= link_to trip.client, client_trip_url(trip.client, trip) %></td>
+        <td><%= trip.departure_flight %></td>
+      </tr>
+    <% end %>
+  <% end %>
+  </table>
+
+<% end %>
+
+<h4><%= t 'activerecord.models.reservation.other' %></h4>
+
+<% if @reservations.empty? %>
+  <p><em><%= t 'calendar.empty' %></em></p>
+<% else %>
+
+  <table class="styled">
+    <tr>
+      <th><%= re_f :client %></th>
+      <th><%= co_f :kind %></th>
+      <th><%= re_f :company %></th>
+      <th>more stuff</th>
+    </tr>
+
+  <% @reservations.each do |res| %>
+      <tr class="<%= cycle('even', 'odd') %>">
+        <td><%= link_to res.client, client_reservation_url(res.client, res) %></td>
+        <td><%= co_f res.company.kind %></td>
+        <td><%= link_to res.company.name, company_url(res.company) %></td>
+        <td></td>
+      </tr>
+  <% end %>
+  </table>
+<% end %>
+
+<p align="center">
+  <%= link_to t('calendar.before'), day_calendar_url(date: @date - 1.day) %> |
+  <%= link_to t('calendar.today'), day_calendar_url(date: Date.today) %> |
+  <%= link_to t('calendar.after'), day_calendar_url(date: @date + 1.day) %>
+</p>

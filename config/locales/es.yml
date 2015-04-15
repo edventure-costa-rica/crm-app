@@ -52,6 +52,8 @@ es:
       default: "%d/%m/%Y"
       long: "%A, %d de %B de %Y"
       voucher: "%d - %B - %Y"
+      calendar: "%d de %b"
+      calendar_long: "%A, %d de %b, %Y"
   time:
     formats:
       short: "%e de %b a las %l:%M%p"
@@ -319,6 +321,11 @@ es:
   "false": 'No'
   cancel: Cancelar
 
+  day: El día de
+  week: La semana de
+  month: El mes de
+  year: El año de
+
   remove_client: Eliminara esta familia, y ademas todos sus viajes alistado abajo.
   reservation: reservaciones
   weekly_payments: Cotas de la Semana
@@ -470,3 +477,11 @@ es:
       edit_explanation: Haga clic en el icono para modificar el nombre ó el país.
       new: Crear Región
   latest: mas reciente
+  calendar:
+    before: "&laquo; Anterior"
+    today: "Hoy"
+    after: "Posterior &raquo;"
+    day:
+      title: "Calendario Diario de"
+    empty: "No hay datos en este rango"
+    trips: "Llegadas y Salidas"

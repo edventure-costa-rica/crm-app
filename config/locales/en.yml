@@ -8,6 +8,8 @@ en:
   date:
     formats:
       voucher: "%d - %B - %Y"
+      calendar: "%B %d"
+      calendar_long: "%A, %B %d, %Y"
 
   invalid_email: is not a valid e-mail address
   arrival_precedes_departure: must come after arrival
@@ -39,6 +41,11 @@ en:
   "true": 'Yes'
   "false": 'No'
   cancel: Cancel
+
+  day: Day of
+  week: Week of
+  month: Month of
+  year: Year of
 
   remove_client: This will permanently remove the family, and any trips listed below.
   reservation: reservations
@@ -214,6 +221,7 @@ en:
         other: People
     attributes:
       reservation:
+        client: Family
         reservation_id: Reservation Code
         price: Rack Price
         confirmation_no: Confirmation Number
@@ -266,3 +274,11 @@ en:
         dob: Date of Birth
 
   latest: "Latest"
+  calendar:
+    before: "&laquo; Earlier"
+    today: "Today"
+    after: "Later &raquo;"
+    day:
+      title: "Daily Calendar for"
+    empty: "No data in this range"
+    trips: "Trip Arrivals and Departures"
