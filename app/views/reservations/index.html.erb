@@ -41,7 +41,7 @@
     <td><%=h reservation.trip %></td>
 <% else %>
     <td><%=h reservation.city %></td>
-    <td><%=h reservation.company.name %></td>
+    <td><%=h reservation.company.name %> (<%= co_f reservation.company.kind %>)</td>
     <td><%= in_place_collection_editor_field reservation, :confirmed %></td>
     <td><%= in_place_collection_editor_field reservation, :paid %></td>
 <% end %>
