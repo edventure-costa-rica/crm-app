@@ -1,0 +1,15 @@
+<h1><%= t '.title' %> <%= l @date, format: :calendar_long %></h1>
+
+<p align="center">
+  <%= link_to t('calendar.before'), week_calendar_url(date: @date - 1.week) %> |
+  <%= link_to t('.today'), week_calendar_url(date: Date.today) %> |
+  <%= link_to t('calendar.after'), week_calendar_url(date: @date + 1.week) %>
+</p>
+
+<%= render partial: 'entries' %>
+
+<p align="center">
+  <%= link_to t('calendar.before'), week_calendar_url(date: @date - 1.week) %> |
+  <%= link_to t('.today'), week_calendar_url(date: Date.today) %> |
+  <%= link_to t('calendar.after'), week_calendar_url(date: @date + 1.week) %>
+</p>

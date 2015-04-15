@@ -485,3 +485,7 @@ es:
       title: "Calendario Diario de"
     empty: "No hay datos en este rango"
     trips: "Llegadas y Salidas"
+    week:
+      title: "Calendario Semanal de"
+      today: "Esta Semana"
+    date: Fecha

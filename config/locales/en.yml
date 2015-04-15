@@ -282,3 +282,7 @@ en:
       title: "Daily Calendar for"
     empty: "No data in this range"
     trips: "Trip Arrivals and Departures"
+    week:
+      title: "Weekly Calendar for"
+      today: "This Week"
+    date: "Date"

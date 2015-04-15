@@ -1,0 +1,47 @@
+
+<% if all_entries.empty? %>
+  <p><em><%= t 'calendar.empty' %></em></p>
+<% else %>
+
+  <table class="styled">
+    <tr>
+      <th><%= t 'calendar.date' %></th>
+      <th><%= re_f :client %></th>
+      <th><%= co_f :kind %></th>
+      <th><%= re_f :company %></th>
+    </tr>
+
+    <% @range.each do |day| %>
+      <% entries = entries_for_date(day) %>
+
+      <% if entries.empty? %>
+        <tr class="<%= cycle('even', 'odd') %>">
+          <td><%= l day, format: :calendar %></td>
+          <td colspan="3"><em><%= t 'calendar.empty' %></em></td>
+        </tr>
+      <% end %>
+
+      <% entries.each do |entry| %>
+        <tr class="<%= cycle('even', 'odd') %>">
+          <td><%= link_to l(day, format: :calendar), day_calendar_url(date: day) %></td>
+          <% if entry.is_a? Reservation %>
+            <td><%= link_to entry.client, client_url(entry.client) %></td>
+            <td><%= link_to co_f(entry.company.kind), client_reservation_url(entry.client, entry) %></td>
+            <td><%= link_to entry.company.name, company_url(entry.company) %></td>
+          <% else %>
+            <td><%= link_to entry.client, client_url(entry.client) %></td>
+            <td><%= link_to tr_f(trip_arrival_departure entry), client_trip_url(entry.client, entry) %></td>
+            <td><%= trip_flight entry %></td>
+          <% end %>
+        </tr>
+      <% end %>
+
+      <% if day != @range.last %>
+        <tr class="<%= cycle('even','odd') %>">
+          <td colspan="4" align="center">&ndash;</td>
+        </tr>
+      <% end %>
+    <% end %>
+
+  </table>
+<% end %>

@@ -8,7 +8,7 @@ class CalendarController < ApplicationController
       conditions: ['reservations.arrival = ? OR reservations.departure = ?', @date, @date],
       joins: [:company, :trip],
       include: [:company, :trip],
-      order: 'trips.id ASC, companies.kind ASC, reservations.arrival ASC, reservations.departure ASC'
+      order: 'reservations.arrival ASC, reservations.departure ASC, trips.id ASC, companies.kind ASC'
     )
 
     @arrival = Trip.all(conditions: ['DATE(arrival) = ?', @date], order: :arrival)
@@ -16,6 +16,13 @@ class CalendarController < ApplicationController
   end
 
   def week
+    range_start = @date.beginning_of_week.to_date
+    range_end = @date.end_of_week.to_date
+
+    find_entries(range_start, range_end)
+
+    @date = range_start
+    @range = range_start .. range_end
   end
 
   def month
@@ -30,6 +37,29 @@ class CalendarController < ApplicationController
     else
       @date = Date.today
     end
+  end
+
+  def find_entries(range_start, range_end)
+    @reservations = Reservation.all(
+      conditions: [
+        '(reservations.arrival >= ? AND reservations.arrival <= ?) OR ' +
+          '(reservations.departure >= ? AND reservations.departure <= ?)',
+        range_start, range_end, range_start, range_end
+      ],
+      joins: [:company, :trip],
+      include: [:company, :trip],
+      order: 'reservations.arrival ASC, reservations.departure ASC, trips.id ASC, companies.kind ASC'
+    )
+
+    @arrival = Trip.all(
+      conditions: ['DATE(arrival) >= ? AND DATE(arrival) <= ?', range_start, range_end],
+      order: :arrival
+    )
+
+    @departure = Trip.all(
+      conditions: ['DATE(departure) >= ? AND DATE(departure) <= ?', range_start, range_end],
+      order: :departure
+    )
   end
 
 end
