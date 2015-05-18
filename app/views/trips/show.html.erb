@@ -27,6 +27,12 @@
 </p>
 
 <p>
+  <b>Hotel:</b>
+
+  <%= h @trip.reservations.first %>
+</p>
+
+<p>
   <b><%= tr_f :departure %>:</b>
   <%=h l @trip.departure, :format => :long %>
 </p>

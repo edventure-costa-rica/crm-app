@@ -12,6 +12,12 @@
   <li><%= link_to t('.yearly_payment'), yearly_payments_path %></li>
 </ul>
 
+<b><%= t 'calendars' %>:</b>
+<ul>
+  <li><%= link_to t('calendar.week.today'), week_calendar_path %></li>
+  <li><%= link_to t('calendar.month.today'), month_calendar_path %></li>
+</ul>
+
 <b><%= t '.list_trips' %>:</b>
 <ul>
   <li><%= link_to t('.upcoming'), upcoming_trips_path %></li>
