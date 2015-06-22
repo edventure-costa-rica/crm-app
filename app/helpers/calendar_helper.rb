@@ -5,7 +5,7 @@ module CalendarHelper
 
   def entries_for_date(date=@date)
     entries =
-      @reservations.select { |res| res.arrival.to_date == date or res.departure.to_date == date } +
+      @reservations.select { |res| res.arrival.to_date >= date and res.departure.to_date <= date } +
         @departure.select { |trip| trip.departure.to_date == date } +
         @arrival.select { |trip| trip.arrival.to_date == date }
 
