@@ -25,9 +25,15 @@
         <tr class="<%= cycle('even', 'odd') %>">
           <td><%= link_to l(day, format: :calendar), day_calendar_url(date: day) %></td>
           <% if entry.is_a? Reservation %>
-            <td><%= link_to entry.client, client_url(entry.client) %></td>
-            <td><%= link_to co_f(entry.company.kind), client_reservation_url(entry.client, entry) %></td>
-            <td><%= link_to entry.company.name, company_url(entry.company) %></td>
+            <% if entry.company.nil? %>
+              <td><%= link_to entry.client, client_url(entry.client) %></td>
+              <td><em><%= link_to 'unset', edit_client_trip_reservation_url(entry.client, entry.trip, entry) %></em></td>
+              <td><em>unset</em></td>
+            <% else %>
+              <td><%= link_to entry.client, client_url(entry.client) %></td>
+              <td><%= link_to co_f(entry.company.kind), client_reservation_url(entry.client, entry) %></td>
+              <td><%= link_to entry.company.name, company_url(entry.company) %></td>
+            <% end %>
           <% else %>
             <td><%= link_to entry.client, client_url(entry.client) %></td>
             <td><%= link_to tr_f(trip_arrival_departure entry, day), client_trip_url(entry.client, entry) %></td>
