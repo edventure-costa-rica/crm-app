@@ -496,3 +496,5 @@ es:
       title: "Calendario Anual de"
       today: "Este Año"
   calendars: "Calendarios"
+  departure: "Salida"
+  arrival: "Llegada"

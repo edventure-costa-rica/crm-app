@@ -31,7 +31,14 @@
               <td><em>unset</em></td>
             <% else %>
               <td><%= link_to entry.client, client_url(entry.client) %></td>
-              <td><%= link_to co_f(entry.company.kind), client_reservation_url(entry.client, entry) %></td>
+              <td>
+                <%= link_to co_f(entry.company.kind), client_reservation_url(entry.client, entry) %>
+                <% if entry.company.hotel? and entry.departure.to_date == day %>
+                    <small><em><%= t(:departure) %></em></small>
+                <% elsif entry.company.hotel? and entry.arrival.to_date == day %>
+                    <small><em><%= t(:arrival) %></em></small>
+                <% end %>
+              </td>
               <td><%= link_to entry.company.name, company_url(entry.company) %></td>
             <% end %>
           <% else %>
