@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 
   # make sure all links include a locale param
   def default_url_options(options={})
-    { :lc => I18n.locale, host: 'tripdb.edventure.ha.cr' }
+    { :lc => I18n.locale }
   end
 
   # use the locale param to actually set the proper value
