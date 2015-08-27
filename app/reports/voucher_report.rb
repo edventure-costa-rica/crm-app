@@ -52,13 +52,13 @@ class VoucherReport < Prawn::Document
           :bottom   => 120.29.mm,
           :source   => [:services],
         },
-        { :width    => 37.80.mm,
+        { :width    => 35.80.mm,
           :height   => 5.28.mm,
           :left     => 28.04.mm,
           :bottom   => 137.16.mm,
           :source   => [:arrival_date_str],
         },
-        { :width    => 37.80.mm,
+        { :width    => 35.80.mm,
           :height   => 5.28.mm,
           :left     => 95.61.mm,
           :bottom   => 136.96.mm,
@@ -82,6 +82,20 @@ class VoucherReport < Prawn::Document
           :bottom   => 175.36.mm,
           :source   => [:notes],
         },
+        {
+          :width    => 30.0.mm,
+          :height   => 15.5.mm,
+          :left     => 4.96.mm,
+          :bottom   => 192.5.mm,
+          :source   => proc { Date.today.iso8601 }
+        },
+        {
+          :width    => 30.0.mm,
+          :height   => 15.5.mm,
+          :left     => 50.96.mm,
+          :bottom   => 192.5.mm,
+          :source   => proc { "Maite Salinas" }
+        }
     ]
     
     def self.new(options={})
@@ -111,8 +125,12 @@ class VoucherReport < Prawn::Document
 
         # main fields
         @@fields.each do |field|
-            str = reservation
-            field[:source].each { |m| str = str.send m }
+          str =
+            if field[:source].respond_to? :call
+              field[:source].call(reservation)
+            else
+              field[:source].reduce(reservation) { |str, m| str.send m }
+            end
 
             text_box str.to_s,
                 :width      => field[:width],
