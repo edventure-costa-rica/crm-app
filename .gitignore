@@ -1,3 +1,7 @@
 .idea
 db/*sqlite3
 log
+.powenv
+.powrc
+.rvmrc
+**/node_modules
