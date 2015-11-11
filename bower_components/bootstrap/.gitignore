@@ -1,1 +1,4 @@
 node_modules/
+docs
+_config.yml
+_gh_pages/
