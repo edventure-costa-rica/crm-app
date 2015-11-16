@@ -8,9 +8,9 @@
 
   <title><%= title %></title>
 
-  <%= stylesheet_link_tag 'bower/bootstrap/dist/css/bootstrap.min' %>
-  <%= stylesheet_link_tag 'bower/bootstrap/dist/css/bootstrap-theme.min' %>
-  <%= stylesheet_link_tag 'edventure' %>
+  <%= stylesheet_link_tag 'bower/bootstrap/dist/css/bootstrap' %>
+  <%# stylesheet_link_tag 'bower/bootstrap/dist/css/bootstrap-theme.min' %>
+  <%# stylesheet_link_tag 'edventure' %>
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
@@ -20,6 +20,44 @@
 </head>
 
 <body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="#" class="navbar-brand">Edventure</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><%= link_to_unless_current t('.home'), root_path %></li>
+        <li><%= link_to_unless_current t('activerecord.models.company', :count => 0), companies_path %></li>
+        <li><%= link_to_unless_current t('activerecord.models.client', :count => 0), clients_path %></li>
+        <li><%= link_to_unless_current t('calendar.month.today'), month_calendar_path %></li>
+        <li><%= link_to_unless_current t('activerecord.models.trip', :count => 0), trips_path %></li>
+        <li><%= link_to_unless_current t('.upcoming'), upcoming_trips_path %></li>
+      </ul>
+
+      <div class="btn-group navbar-btn navbar-right">
+        <button type="button" data-toggle="dropdown" class="btn btn-info dropdown-toggle">
+          Language <span class="caret"></span>
+        </button>
+
+        <ul class="dropdown-menu">
+          <li><%= link_to_unless_current 'Español', current_url( :lc => :es ) %></li>
+          <li><%= link_to_unless_current 'English', current_url( :lc => :en ) %></li>
+        </ul>
+      </div><!-- .btn-group -->
+    </div><!-- #navbar-collapse -->
+
+  </div>
+</nav>
+
+
   <div style="position: absolute; right: 5px; top: 5px;">
     <%= link_to_unless_current 'Español', current_url( :lc => :es ) %> |
     <%= link_to_unless_current 'English', current_url( :lc => :en ) %>
