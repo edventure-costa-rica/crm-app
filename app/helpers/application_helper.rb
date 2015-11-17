@@ -1,5 +1,16 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+
+  def item_link_with_active(name, options = {}, html_options = {})
+    tag = html_options.fetch(:item_tag, :li)
+    active = html_options.fetch(:active_class, :active)
+    item_options = current_page?(options) ? {class: active} : {}
+
+    content_tag(tag, item_options) do
+      link_to(name, options, html_options)
+    end
+  end
+
   def hnl(text)
     h(text).gsub(/\r?\n/, "<br/>\n")
   end
