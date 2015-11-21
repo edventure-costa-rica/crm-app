@@ -1,13 +1,28 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
-  def item_link_with_active(name, options = {}, html_options = {})
-    tag = html_options.fetch(:item_tag, :li)
-    active = html_options.fetch(:active_class, :active)
-    item_options = current_page?(options) ? {class: active} : {}
+  def item_link_with_active(*args, &blk)
+    if block_given?
+      contents = capture(&blk)
+      link_options = args.shift || {}
+      options = args.shift || {}
+    else
+      contents = args.shift || ''
+      link_options = args.shift || {}
+      options = args.shift || {}
+    end
 
-    content_tag(tag, item_options) do
-      link_to(name, options, html_options)
+    tag = options.fetch(:item_tag, :li)
+    active = options.fetch(:active_class, :active)
+    item_options = current_page?(link_options) ? {class: active} : {}
+
+    link_contents = link_to(contents, link_options)
+    tag_contents = content_tag(tag, link_contents, item_options)
+
+    if block_given?
+      concat(tag_contents)
+    else
+      tag_contents
     end
   end
 
