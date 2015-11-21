@@ -49,6 +49,8 @@ ActionController::Routing::Routes.draw do |map|
   map.month_calendar 'calendar/month', controller: :calendar, action: :month
   map.year_calendar 'calendar/year', controller: :calendar, action: :year
 
+  map.home 'home', controller: :home, action: :index
+
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
@@ -90,6 +92,6 @@ ActionController::Routing::Routes.draw do |map|
   # consider removing or commenting them out if you're using named routes and resources.
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
-  
+
   map.root :controller => :home, action: :redirect
 end
