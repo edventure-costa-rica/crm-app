@@ -1,12 +1,13 @@
 <h1><%= t '.title' %></h1>
 
-<table class="styled">
+<table class="table">
   <tr>
     <th><%= co_f :id %></th>
     <th><%= co_f :name %></th>
     <th><%= co_f :kind %></th>
     <th><%= co_f :region %></th>
     <th><%= co_f :package %></th>
+    <th></th>
   </tr>
 
 <% @companies.each do |company| %>
