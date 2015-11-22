@@ -453,7 +453,7 @@ es:
     edit:
       title: Modificar la Compañía
       list_comp: Listar las Compañías
-      show_res: Ver las Reservaciones de la Compañía
+      show_res: Reservaciones
     new:
       title: Agregar una Compañía
       list_comp: Listar las Compañías

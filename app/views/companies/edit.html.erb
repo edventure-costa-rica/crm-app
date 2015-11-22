@@ -1,8 +1,29 @@
-<h1><%= t '.title' %></h1>
-
-<%= render :partial => @company, :locals => { :submit_text => t(:submit_update) } %>
-
-<div class="btn-group">
-  <%= link_to t('.show_res'), company_reservations_path(@company), class: 'btn btn-default' %>
-  <%= link_to t(:delete), @company, :confirm => t(:confirm), :method => :delete, class: 'btn btn-danger' %>
+<div class="row">
+  <div class="col-xs-12">
+    <h1><%= t '.title' %></h1>
+  </div>
 </div>
+
+<div class="row visible-xs margin-bottom-1">
+  <div class="col-xs-12">
+    <div class="btn-group">
+      <%= link_to t('.show_res'), company_reservations_path(@company), class: 'btn btn-default' %>
+      <%= link_to t(:show), company_path(@company), class: 'btn btn-default' %>
+      <%= link_to t(:delete), @company, :confirm => t(:confirm), :method => :delete, class: 'btn btn-danger' %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-10">
+    <%= render :partial => @company, :locals => { :submit_text => t(:submit_update) } %>
+  </div>
+  <div class="col-xs-12 hidden-xs col-sm-2">
+    <div class="btn-group-vertical">
+      <%= link_to t('.show_res'), company_reservations_path(@company), class: 'btn btn-default' %>
+      <%= link_to t(:show), company_path(@company), class: 'btn btn-default' %>
+      <%= link_to t(:delete), @company, :confirm => t(:confirm), :method => :delete, class: 'btn btn-danger' %>
+    </div>
+  </div>
+</div>
+

@@ -180,7 +180,7 @@ en:
     edit:
       title: Edit Company
       list_comp: List Companies
-      show_res: Show Reservations for this Company
+      show_res: Reservations
     new:
       title: New Company
       list_comp: List Companies
