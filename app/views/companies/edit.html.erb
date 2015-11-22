@@ -2,6 +2,7 @@
 
 <%= render :partial => @company, :locals => { :submit_text => t(:submit_update) } %>
 
-<%= link_to t(:show), @company %> |
-<%= link_to t('.list_comp'), companies_path %> |
-<%= link_to t('.show_res'), company_reservations_path(@company) %>
+<div class="btn-group">
+  <%= link_to t('.show_res'), company_reservations_path(@company), class: 'btn btn-default' %>
+  <%= link_to t(:delete), @company, :confirm => t(:confirm), :method => :delete, class: 'btn btn-danger' %>
+</div>
