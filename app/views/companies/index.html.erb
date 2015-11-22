@@ -1,29 +1,60 @@
+
+<div class="row">
+
+</div>
+<div class="btn-group">
+  <a class="btn btn-default" href="<%= companies_path(kind: :hotel) %>">
+    <i class="glyphicon glyphicon-bed"></i>
+    Hotel
+  </a>
+  <a class="btn btn-default" href="<%= companies_path(kind: :transport) %>">
+    <i class="glyphicon glyphicon-plane"></i>
+    Transport
+  </a>
+  <a class="btn btn-default" href="<%= companies_path(kind: :tour) %>">
+    <i class="glyphicon glyphicon-briefcase"></i>
+    Tour
+  </a>
+  <a class="btn btn-default" href="<%= new_company_path %>">
+    <i class="glyphicon glyphicon-plus-sign"></i>
+    New Company
+  </a>
+</div>
+
 <h1><%= t '.title' %></h1>
 
-<table class="table">
+
+<table class="table table-striped table-condensed">
   <tr>
-    <th><%= co_f :id %></th>
+    <th></th>
     <th><%= co_f :name %></th>
-    <th><%= co_f :kind %></th>
     <th><%= co_f :region %></th>
-    <th><%= co_f :package %></th>
     <th></th>
   </tr>
 
 <% @companies.each do |company| %>
   <tr class="<%= cycle('even', 'odd') %>">
-    <td><em>#<%=h company.id %> </em></td>
-    <td><%=h company.name %></td>
-    <td><%=h co_f company.kind %></td>
+    <td>
+      <span title="<%=h co_f company.kind %>">
+      <% if company.kind == 'hotel' %>
+        <i class="glyphicon glyphicon-bed"></i>
+      <% elsif company.kind == 'transport' %>
+        <i class="glyphicon glyphicon-plane"></i>
+      <% elsif company.kind == 'tour' %>
+        <i class="glyphicon glyphicon-briefcase"></i>
+      <% else %>
+        <i class="glyphicon glyphicon-question-sign"></i>
+      <% end %>
+      </span>
+    </td>
+    <td><%=link_to company.name, company %></td>
     <td><%=h company.region %></td>
-    <td><%=h company.package %></td>
-    <td><%= link_to t(:show), company %> |
-        <%= link_to t(:edit), edit_company_path(company) %> |
-        <%= link_to t(:delete), company, :confirm => t(:confirm), :method => :delete %>
+    <td>
+        <%= link_to t(:edit), edit_company_path(company), class: 'btn btn-xs btn-primary' %>
+    </td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to t('.new'), new_company_path %>
