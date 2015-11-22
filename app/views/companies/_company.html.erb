@@ -99,60 +99,63 @@
 
 
   <div id="contact" class="tab-pane">
+    <h4><%= t '.contact_general' %></h4>
 
-    <h3><%= t '.contact_general' %></h3>
-    <p>
-      <%= f.label :contact_general_name %><br />
-      <%= f.text_field :contact_general_name %>
-    </p>
-    <p>
-      <%= f.label :contact_general_phone %><br />
-      <%= f.text_field :contact_general_phone %>
-    </p>
-    <p>
-      <%= f.label :contact_general_mobile %><br />
-      <%= f.text_field :contact_general_mobile %>
-    </p>
-    <p>
-      <%= f.label :contact_general_email %><br />
-      <%= f.text_field :contact_general_email %>
-    </p>
+    <div class="form-group">
+      <%= f.label :contact_general_name %>
+      <%= f.text_field :contact_general_name, class: 'form-control' %>
+    </div>
 
-    <h3><%= t '.contact_admin' %></h3>
-    <p>
+    <div class="form-group">
+      <%= f.label :contact_general_phone %>
+      <%= f.text_field :contact_general_phone, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :contact_general_mobile %>
+      <%= f.text_field :contact_general_mobile, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :contact_general_email %>
+      <%= f.text_field :contact_general_email, class: 'form-control' %>
+    </div>
+
+    <h4><%= t '.contact_admin' %></h4>
+    <div class="form-group">
       <%= f.label :contact_admin_name %><br />
-      <%= f.text_field :contact_admin_name %>
-    </p>
-    <p>
+      <%= f.text_field :contact_admin_name, class: 'form-control' %>
+    </div>
+    <div class="form-group">
       <%= f.label :contact_admin_phone %><br />
-      <%= f.text_field :contact_admin_phone %>
-    </p>
-    <p>
+      <%= f.text_field :contact_admin_phone, class: 'form-control' %>
+    </div>
+    <div class="form-group">
       <%= f.label :contact_admin_mobile %><br />
-      <%= f.text_field :contact_admin_mobile %>
-    </p>
-    <p>
+      <%= f.text_field :contact_admin_mobile, class: 'form-control' %>
+    </div>
+    <div class="form-group">
       <%= f.label :contact_admin_email %><br />
-      <%= f.text_field :contact_admin_email %>
-    </p>
+      <%= f.text_field :contact_admin_email, class: 'form-control' %>
+    </div>
 
-    <h3><%= t '.contact_reservation' %></h3>
-    <p>
+    <h4><%= t '.contact_reservation' %></h4>
+    <div class="form-group">
       <%= f.label :contact_reservation_name %><br />
-      <%= f.text_field :contact_reservation_name %>
-    </p>
-    <p>
+      <%= f.text_field :contact_reservation_name, class: 'form-control' %>
+    </div>
+    <div class="form-group">
       <%= f.label :contact_reservation_phone %><br />
-      <%= f.text_field :contact_reservation_phone %>
-    </p>
-    <p>
+      <%= f.text_field :contact_reservation_phone, class: 'form-control' %>
+    </div>
+    <div class="form-group">
       <%= f.label :contact_reservation_mobile %><br />
-      <%= f.text_field :contact_reservation_mobile %>
-    </p>
-    <p>
+      <%= f.text_field :contact_reservation_mobile, class: 'form-control' %>
+    </div>
+    <div class="form-group">
       <%= f.label :contact_reservation_email %><br />
-      <%= f.text_field :contact_reservation_email %>
-    </p>
+      <%= f.text_field :contact_reservation_email, class: 'form-control' %>
+    </div>
   </div> <!-- contact -->
 
   <div id="bank" class="tab-pane">
