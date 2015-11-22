@@ -12,6 +12,10 @@ class CompaniesController < ApplicationController
       query << 'companies.name LIKE ?'
       binds << "#{params[:q]}%"
     end
+    if params.has_key? :kind
+      query << 'companies.kind = ?'
+      binds << params[:kind].to_s
+    end
 
     @companies = Company.all :order => 'companies.name',
       :include => :region,
