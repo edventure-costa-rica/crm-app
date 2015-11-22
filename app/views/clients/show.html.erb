@@ -1,9 +1,17 @@
-<h1><%=h @client %></h1>
+<div class="row">
+  <div class="col-xs-12 text-center">
+    <div class="btn-group">
 
-<p>
-  <b><%= cl_f :id %>:</b>
-  <%=h @client.id %>
-</p>
+      <%= link_to t('.list_trip'), client_trips_path(@client), class: 'btn btn-default' %>
+      <%= link_to(t('.current'), client_trip_path(@client, @trip), class: 'btn btn-default') if @trip %>
+      <%= link_to t('.new'), new_client_trip_path(@client), class: 'btn btn-default' %>
+      <%= link_to t(:edit), edit_client_path(@client), class: 'btn btn-primary' %>
+
+    </div>
+  </div>
+</div>
+
+<h1><%=h @client %></h1>
 
 <p>
   <b><%= cl_f :contact_name %>:</b>
@@ -51,9 +59,3 @@
   <%=hnl @client.notes %>
 </p>
 
-
-<%= link_to t(:edit), edit_client_path(@client) %> |
-<%= link_to t('.list'), clients_path %> |
-<%= link_to t('.list_trip'), client_trips_path(@client) %> |
-<%= link_to(t('.current'), client_trip_path(@client, @trip)) + " | " if @trip %>
-<%= link_to t('.new'), new_client_trip_path(@client) %>
