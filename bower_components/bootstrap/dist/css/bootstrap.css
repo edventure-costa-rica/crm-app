@@ -4757,7 +4757,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   padding: 8px 15px;
   margin-bottom: 20px;
   list-style: none;
-  background-color: #dbcb90;
+  background-color: #ffebcb;
   border-radius: 4px;
 }
 .breadcrumb > li {
@@ -5510,7 +5510,7 @@ button.list-group-item-danger.active:focus {
 }
 .panel {
   margin-bottom: 20px;
-  background-color: #dbcb90;
+  background-color: #ffebcb;
   border: 1px solid transparent;
   border-radius: 4px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
@@ -5543,7 +5543,7 @@ button.list-group-item-danger.active:focus {
 }
 .panel-footer {
   padding: 10px 15px;
-  background-color: #ede5c8;
+  background-color: #fff5e5;
   border-top: 1px solid #93803b;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
@@ -5748,14 +5748,14 @@ button.list-group-item-danger.active:focus {
 }
 .panel-default > .panel-heading {
   color: #76631d;
-  background-color: #ede5c8;
+  background-color: #fff5e5;
   border-color: #93803b;
 }
 .panel-default > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #93803b;
 }
 .panel-default > .panel-heading .badge {
-  color: #ede5c8;
+  color: #fff5e5;
   background-color: #76631d;
 }
 .panel-default > .panel-footer + .panel-collapse > .panel-body {
