@@ -1,6 +1,8 @@
-<h1><%=t '.title' %></h1>
+<div class="row margin-bottom-1">
+  <div class="col-xs-12">
+    <h1><%=t '.title' %></h1>
 
-<%= render :partial => @client, :locals => { :submit_text => t(:submit_update) } %>
+    <%= render :partial => @client, :locals => { :submit_text => t(:submit_update) } %>
+  </div>
 
-<%= link_to t(:show), @client %> |
-<%= link_to t('.list'), clients_path %>
+</div>
