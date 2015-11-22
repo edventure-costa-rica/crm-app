@@ -443,7 +443,7 @@ es:
       new: Agregar una Compañía
     show:
       list_comp: Listar las Compañías
-      show_res: Ver las Reservaciones de la Compañía
+      show_res: Ver Reservaciones
       general_tab: General
       contact_tab: Contacto
       bank_tab: Banco

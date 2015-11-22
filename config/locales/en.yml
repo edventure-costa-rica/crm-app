@@ -169,7 +169,7 @@ en:
       new: New Company
     show:
       list_comp: List Companies
-      show_res: Show Reservations for this Company
+      show_res: List Reservations
       general_tab: General
       contact_tab: Contact
       bank_tab: Banking
