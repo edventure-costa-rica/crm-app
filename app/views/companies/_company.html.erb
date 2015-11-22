@@ -159,48 +159,52 @@
   </div> <!-- contact -->
 
   <div id="bank" class="tab-pane">
-    <p>
-      <%= f.label :bank_provider %><br />
-      <%= f.text_field :bank_provider %>
-    </p>
-    <p>
-      <%= f.label :bank_beneficiary %><br />
-      <%= f.text_field :bank_beneficiary %>
-    </p>
-    <p>
-      <%= f.label :bank_govt_id %><br />
-      <%= f.text_field :bank_govt_id %>
+    <div class="form-group">
+      <%= f.label :bank_govt_id %>
+      <%= f.text_field :bank_govt_id, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :bank_govt_id_type %>
       <%= f.select :bank_govt_id_type,
-            Company.govt_id_types.
-            map { |t| [ co_f(t), t ] },
-            { :prompt => true }
+                   Company.govt_id_types.
+                       map { |t| [ co_f(t), t ] },
+                   { :prompt => true },
+                   { :class => 'form-control' }
       %>
-    </p>
+    </div>
+    <div class="form-group">
+      <%= f.label :bank_provider %><br />
+      <%= f.text_field :bank_provider, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :bank_beneficiary %><br />
+      <%= f.text_field :bank_beneficiary, class: 'form-control' %>
+    </div>
 
-    <p>
+    <div class="form-group">
       <%= f.label :bank_name %><br />
-      <%= f.text_field :bank_name %>
-    </p>
-    <p>
+      <%= f.text_field :bank_name, class: 'form-control' %>
+    </div>
+    <div class="form-group">
       <%= f.label :bank_account %><br />
-      <%= f.text_field :bank_account %>
-    </p>
-    <p>
+      <%= f.text_field :bank_account, class: 'form-control' %>
+    </div>
+    <div class="form-group">
       <%= f.label :bank_client_account %><br />
-      <%= f.text_field :bank_client_account %>
-    </p>
-    <p>
+      <%= f.text_field :bank_client_account, class: 'form-control' %>
+    </div>
+    <div class="form-group">
       <%= f.label :bank_aba %><br />
-      <%= f.text_field :bank_aba %>
-    </p>
-    <p>
+      <%= f.text_field :bank_aba, class: 'form-control' %>
+    </div>
+    <div class="form-group">
       <%= f.label :bank_swift %><br />
-      <%= f.text_field :bank_swift %>
-    </p>
-    <p>
+      <%= f.text_field :bank_swift, class: 'form-control' %>
+    </div>
+    <div class="form-group">
       <%= f.label :bank_address %><br />
-      <%= f.text_area :bank_address, :rows => 3 %>
-    </p>
+      <%= f.text_area :bank_address, :rows => 3, class: 'form-control' %>
+    </div>
   </div> <!-- bank -->
 
 </div> <!-- tabs -->
