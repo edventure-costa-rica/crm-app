@@ -1,5 +1,7 @@
-<h1><%= t '.title' %></h1>
+<div class="row">
+  <div class="col-xs-12">
+    <h1><%= t '.title' %></h1>
 
-<%= render :partial => @company, :locals => { :submit_text => t(:submit_create) } %>
-
-<%= link_to t('.list_comp'), companies_path %>
+    <%= render :partial => @company, :locals => { :submit_text => t(:submit_create) } %>
+  </div>
+</div>
