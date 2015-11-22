@@ -1,82 +1,104 @@
 <%= javascript_include_tag 'tabs' %>
-<% form_for(@company) do |f| %>
+<% form_for(@company, html: {class: 'form'}) do |f| %>
   <%= f.error_messages %>
 
-<div id="tabs">
-  <a href="#" class="tab-button" id="tab-button-general"
-     style="display:none"><%= t '.general_tab' %></a>
-  <a href="#" class="tab-button" id="tab-button-contact"
-     style="display:none"><%= t '.contact_tab' %></a>
-  <a href="#" class="tab-button" id="tab-button-bank"
-     style="display:none"><%= t '.bank_tab' %></a>
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#general" data-toggle="tab"><%= t '.general_tab' %></a></li>
+    <li><a href="#location" data-toggle="tab">Location</a></li>
+    <li><a href="#contact" data-toggle="tab"><%= t '.contact_tab' %></a></li>
+    <li><a href="#bank" data-toggle="tab"><%= t '.bank_tab' %></a></li>
+  </ul>
 
-  <div id="tab-general" class="tab">
-    <p>
-      <%= f.label :name %><br />
-      <%= f.text_field :name %>
-    </p>
-    <p>
-      <%= f.label :package %><br/>
-      <%= f.text_field :package %>
-    </p>
-    <p>
-      <%= f.label :kind %><br />
+<div class="tab-content">
+  <div class="tab-pane active" id="general">
+    <div class="form-group">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :package %>
+      <%= f.text_field :package, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :kind %>
       <%= f.select :kind, Company.kinds.
-            map { |k| [ co_f(k), k ] }, {}, { :onchange =>
-              '$("hotel-options")[this.value=="hotel"?"show":"hide"]()' }
+            map { |k| [ co_f(k), k ] }, {},
+                   class: 'form-control',
+                   onchange: '$("#hotel-options")[this.value=="hotel"?"show":"hide"]()'
       %>
-    </p>
-    <p id="hotel-options" style="<%=
-          'display:none' unless @company.kind == 'hotel' %>">
-      <%= f.label :package_length %><br/>
-      <%= f.text_field :package_length %><br/>
+    </div>
 
-      <%= f.check_box :all_inclusive %>
-      <%= f.label :all_inclusive %><br/>
+    <div id="hotel-options" style="<%= 'display:none' unless @company.kind == 'hotel' %>">
+      <div class="form-group">
+        <%= f.label :package_length %>
+        <%= f.text_field :package_length, class: 'form-control' %>
+      </div>
 
-      <%= f.check_box :includes_transport %>
-      <%= f.label :includes_transport %><br/>
+      <div class="checkbox">
+        <label>
+          <%= f.check_box :all_inclusive %>
+          <%= co_f :all_inclusive %>
+        </label>
+      </div>
 
-      <%= f.check_box :includes_tour %>
-      <%= f.label :includes_tour %><br/>
-    </p>
-    <p>
-      <%= f.label :website %><br />
-      <%= f.text_field :website %>
-    </p>
-    <p>
-      <%= f.label :address %><br />
-      <%= f.text_area :address, :rows => 3 %>
-    </p>
-    <p>
-      <%= f.label :city %><br />
-      <%= f.text_field :city %>
-    </p>
-    <p>
-      <%= f.label :region %><br />
+      <div class="checkbox">
+        <label>
+          <%= f.check_box :includes_transport %>
+          <%= co_f :includes_transport %><br/>
+        </label>
+      </div>
+
+      <div class="checkbox">
+        <label>
+          <%= f.check_box :includes_tour %>
+          <%= co_f :includes_tour %><br/>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :website %>
+      <%= f.text_field :website, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :notes %>
+      <%= f.text_area :notes, rows: 3, class: 'form-control' %>
+    </div>
+  </div> <!-- general -->
+
+  <div id="location" class="tab-pane">
+    <div class="form-group">
+      <%= f.label :address %>
+      <%= f.text_area :address, :rows => 3, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :city %>
+      <%= f.text_field :city, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :region %>
       <%= f.select :region_id, Region.ordered.
-            map { |r| [ r.to_s, r.id ] } %>
+                               map { |r| [ r.to_s, r.id ] }, {}, class: 'form-control' %>
       <% javascript_tag do -%>
         var h = <%= @popup_h = 500 %>;
         var w = <%= @popup_w = 600 %>;
         var l = parseInt((screen.availWidth/2) - (w/2));
         var t = parseInt((screen.availHeight/2) - (h/2));
       <%- end %>
-      <%= link_to t('.edit_regions'), regions_path,
-            :popup => [ 'regions',
-              "height=#{@popup_h},width=#{@popup_w}," +
-              "screenX='+l+',screenY='+t+'"
-            ]
-      %>
-    </p>
-    <p>
-      <%= f.label :notes %><br />
-      <%= f.text_area :notes %>
-    </p>
-  </div> <!-- general -->
+      <p class="help-text text-right">
+        <%= link_to t('.edit_regions'), regions_path,
+                    :popup => [ 'regions',
+                                "height=#{@popup_h},width=#{@popup_w}," +
+                                  "screenX='+l+',screenY='+t+'"
+                    ]
+        %>
+      </p>
+    </div>
+  </div>
 
 
-  <div id="tab-contact" class="tab">
+  <div id="contact" class="tab-pane">
 
     <h3><%= t '.contact_general' %></h3>
     <p>
@@ -133,7 +155,7 @@
     </p>
   </div> <!-- contact -->
 
-  <div id="tab-bank" class="tab">
+  <div id="bank" class="tab-pane">
     <p>
       <%= f.label :bank_provider %><br />
       <%= f.text_field :bank_provider %>
@@ -181,7 +203,7 @@
 </div> <!-- tabs -->
 
 <p>
-  <%= f.submit submit_text %>
+  <%= f.submit submit_text, class: 'btn btn-primary' %>
 </p>
 
 
