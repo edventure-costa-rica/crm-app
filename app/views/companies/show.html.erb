@@ -39,7 +39,7 @@
       <%=h @company.name %>
     </p>
 
-    <% if @company.website?  %>
+    <% unless @company.website.nil? %>
     <p>
       <b><%= co_f :website %>:</b>
         <code><%= link_to @company.website, @company.website %></code>
