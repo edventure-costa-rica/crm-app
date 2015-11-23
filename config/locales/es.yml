@@ -254,7 +254,7 @@ es:
         notes: Observaciones
         created_at: Hora de creación
         updated_at: Hora de actualización
-        status: Estado de Confirmación
+        status: Estado
         pending: Pendiente
         confirmed: Confirmado
         canceled: Denegado

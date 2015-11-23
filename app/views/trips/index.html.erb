@@ -1,50 +1,65 @@
-<h1><%=
-  if @upcoming
-    t '.upcoming'
-  elsif @client 
-    t '.title_client', :for => @client
-  else
-    t '.title'
-  end
-%></h1>
-
-<% if defined? @page %>
-  <p><%= t '.page' %>:
-    <%= link_to t(:earlier), trips_url(page: @page + 1) %>
-    <%= link_to t(:later), trips_url(page: @page - 1) if @page >= 1 %>
-    <%= link_to t(:latest), trips_url(page: 0) if @page >= 1 %>
-  </p>
+<% if @client %>
+<ol class="breadcrumb">
+  <li><%= link_to t('activerecord.models.trip.other'), trips_path %></li>
+  <li class="active"><%= @client %></li>
+</ol>
 <% end %>
 
-<table class="styled">
-  <tr>
-    <th><%=tr_f :registration_id %></th>
-  <% unless @client %>
-    <th><%=tr_f :client %></th>
-  <% end %>
-    <th><%=tr_f :status %></th>
-    <th><%=tr_f :arrival %></th>
-    <th><%=tr_f :departure %></th>
-    <th><%=tr_f :total_people %></th>
-  </tr>
+<div class="row">
+  <div class="col-xs-12">
+    <h1>
+      <%= if @upcoming then t '.upcoming' else t '.title' end %>
+      <% if @client %><small><%= @client %></small><% end %>
+    </h1>
+  </div>
+</div>
 
-<% @trips.each do |trip| %>
-  <tr class="<%= cycle 'even', 'odd' %>">
-    <td><%=h trip.registration_id %></td>
-  <% unless @client %>
-    <td><%=h trip.client.family_name %></td>
-  <% end %>
-    <td><%=h tr_f trip.status %></td>
-    <td><%=link_to l(trip.arrival.to_date), day_calendar_url(date: trip.arrival.to_date) %></td>
-    <td><%=link_to l(trip.departure.to_date), day_calendar_url(date: trip.departure.to_date) %></td>
-    <td><%=h trip.total_people %></td>
-    <td><%= link_to t(:show), [trip.client, trip] %> |
-        <%= link_to t(:edit), edit_client_trip_path(trip.client, trip) %> |
-        <%= link_to t(:delete), [trip.client, trip], :confirm => t(:confirm), :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+<div class="row">
+  <div class="col-xs-12">
 
-<br />
+    <table class="table table-striped table-condensed">
+      <tr>
+        <th><%=tr_f :registration_id %></th>
+        <% unless @client %>
+          <th><%=tr_f :client %></th>
+        <% end %>
+        <th><%=tr_f :status %></th>
+        <th><%=tr_f :arrival %></th>
+        <th><%=tr_f :departure %></th>
+        <th></th>
+      </tr>
+
+      <% @trips.each do |trip| %>
+        <tr class="<%= cycle 'even', 'odd' %>">
+          <td><%= link_to trip.registration_id, client_trip_path(trip.client, trip) %></td>
+          <% unless @client %>
+            <td><%=h trip.client.family_name %></td>
+          <% end %>
+          <td><%=h tr_f trip.status %></td>
+          <td>
+            <% link_to day_calendar_url(date: trip.arrival.to_date) do %>
+              <i class="glyphicon glyphicon-calendar hidden-xs hidden-sm"></i>
+              <%= l(trip.arrival.to_date) %>
+            <% end %>
+          </td>
+          <td>
+            <% link_to day_calendar_url(date: trip.departure.to_date) do %>
+              <i class="glyphicon glyphicon-calendar hidden-xs hidden-sm"></i>
+              <%= l(trip.departure.to_date) %>
+            <% end %>
+          </td>
+          <td>
+            <div class="btn-group">
+              <%= link_to t(:edit), edit_client_trip_path(trip.client, trip), class: 'btn btn-xs btn-primary' %>
+              <%= link_to t(:delete), client_trip_path(trip.client, trip), :confirm => t(:confirm),
+                          :method => :delete, class: 'btn btn-xs btn-danger' %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+
+  </div>
+</div>
 
 <%= link_to t('.new'), new_client_trip_path(@client) unless @client.nil? %>

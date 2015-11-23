@@ -117,7 +117,7 @@ en:
   trips:
     index:
       upcoming: Listing upcoming trips
-      title: Listing all trips
+      title: Listing trips
       title_client: Listing trips for {{for}}
       new: New Trip
       page: See Trips
@@ -231,7 +231,7 @@ en:
         num_people: Number of People
       trip:
         registration_id: Registration Code
-        status: Confirmation Status
+        status: Status
         payment_pct: Payment Percentage
         arrival_flight: Arrival Flight Number
         departure_flight: Departure Flight Number
