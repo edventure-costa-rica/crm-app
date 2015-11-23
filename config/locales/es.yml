@@ -368,7 +368,7 @@ es:
     new:
       title: Crear una Reservación
     index:
-      title: Las reservaciones de {{for}}
+      title: Las reservaciones
       desc: Estás viendo todas las reservaciones del viaje {{link}}.
       new: Crear una Reservación
       date: Fecha

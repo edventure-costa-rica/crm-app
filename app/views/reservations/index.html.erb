@@ -1,4 +1,7 @@
-<h1><%=t '.title', :for => @client ? @client : @company %></h1>
+<h1>
+  <%=t '.title' %>
+  <small><%= @client || @company.name %></small>
+</h1>
 
 <% if @trip then %>
 <p><%=t '.desc', :link => link_to(@trip, [@trip.client, @trip]) %></p>
