@@ -1,3 +1,21 @@
+<div class="row">
+  <div class="col-xs-12 text-center">
+    <div class="btn-group">
+
+      <% link_to client_trip_reservations_path(@client, @trip), class: 'btn btn-default' do %>
+        <i class="glyphicon glyphicon-tags"></i>
+        <%= t('.list_res') %>
+      <% end %>
+
+      <% link_to edit_client_trip_path(@client, @trip), class: 'btn btn-primary' do %>
+        <i class="glyphicon glyphicon-pencil"></i>
+        <%= t :edit %>
+      <% end %>
+
+    </div>
+  </div>
+</div>
+
 <h2><%= Trip.human_name + " #{@trip}" %></h2>
 
 <p><b><%= tr_f :client %>:</b>
@@ -92,10 +110,3 @@
   <b><%= tr_f :notes %>:</b><br/>
   <%=hnl @trip.notes %>
 </p>
-
-
-<%= link_to t(:edit), edit_client_trip_path(@client, @trip) %> |
-<%= link_to t('.list_res'), client_trip_reservations_path(@client, @trip) %> |
-<%= link_to t('.list_people'), people_path({ :trip_id => @trip.id }) %> |
-<%= link_to t('.proposal'),  proposal_trip_path(@trip) if @trip.status == 'pending' %>
-<%= link_to t('.confirmation'),  confirmation_trip_path(@trip) if @trip.status == 'confirmed' %>

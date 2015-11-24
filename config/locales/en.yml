@@ -126,7 +126,7 @@ en:
       children: children
       disabled: disabled
       disableds: disabled
-      list_res: List Reservations for this Trip
+      list_res: List Reservations
       list_trip: List Trips for this Family
       list_people: Edit People on this Trip
       proposal: Download Proposal Document
