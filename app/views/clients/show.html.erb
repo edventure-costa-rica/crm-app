@@ -2,10 +2,20 @@
   <div class="col-xs-12 text-center">
     <div class="btn-group">
 
-      <%= link_to t('.list_trip'), client_trips_path(@client), class: 'btn btn-default' %>
-      <%= link_to(t('.current'), client_trip_path(@client, @trip), class: 'btn btn-default') if @trip %>
-      <%= link_to t('.new'), new_client_trip_path(@client), class: 'btn btn-default' %>
-      <%= link_to t(:edit), edit_client_path(@client), class: 'btn btn-primary' %>
+      <% link_to client_trips_path(@client), class: 'btn btn-default' do %>
+        <i class="glyphicon glyphicon-plane"></i>
+        <%= t('.list_trip') %>
+      <% end %>
+
+      <% link_to new_client_trip_path(@client), class: 'btn btn-default' do %>
+        <i class="glyphicon glyphicon-plus-sign"></i>
+        <%= t('.new') %>
+      <% end %>
+
+      <% link_to edit_client_path(@client), class: 'btn btn-primary' do %>
+        <i class="glyphicon glyphicon-pencil"></i>
+        <%= t(:edit) %>
+      <% end %>
 
     </div>
   </div>
