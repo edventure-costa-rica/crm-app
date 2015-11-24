@@ -13,6 +13,7 @@
 
 <table class="table table-striped table-condensed">
   <tr>
+    <th></th>
     <th><%= cl_f :family_name %></th>
     <th><%= cl_f :contact_name %></th>
     <th><%= cl_f :email %></th>
@@ -21,6 +22,7 @@
 
 <% @clients.each do |client| %>
   <tr class="<%= cycle 'even', 'odd' %>">
+    <td><i class="glyphicon glyphicon-user"></i></td>
     <td>
       <%= link_to client.family_name, client %>
     </td>
