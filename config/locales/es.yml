@@ -312,6 +312,7 @@ es:
   index: Índice
   new: Crear
   show: Ver
+  details: Detalles
   edit: Modificar
   delete: Eliminar
   confirm: ¿Estás seguro?

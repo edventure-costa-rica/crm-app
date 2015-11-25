@@ -1,3 +1,5 @@
+<%= render :partial => 'links' if @client and @trip %>
+
 <h1>
   <%=t '.title' %>
   <small><%= @client || @company.name %></small>
@@ -7,7 +9,7 @@
 <p><%=t '.desc', :link => link_to(@trip, [@trip.client, @trip]) %></p>
 <% end %>
 
-<table class="styled">
+<table class="table table-condensed table-striped">
   <tr>
     <th><%=h re_f :arrival %></th>
     <th><%=h re_f :departure %></th>
@@ -21,6 +23,7 @@
     <th><%=h re_f :paid %></th>
 <% end %>
     <th><%=h re_f :services %></th>
+    <th></th>
   </tr>
 
 <% @reservations.each do |reservation| %>
@@ -53,15 +56,14 @@
 <% if reservation.client.nil? %>
   <td></td>
 <% else %>
-    <td><%= link_to t(:show), client_trip_reservation_url(reservation.client, reservation.trip, reservation) %> |
-        <%= link_to t(:edit), edit_client_trip_reservation_path(reservation.client, reservation.trip, reservation) %> |
-        <%= link_to t(:delete), client_trip_reservation_url(reservation.client, reservation.trip, reservation), :confirm => t(:confirm), :method => :delete %>
+    <td>
+      <div class="btn-group">
+        <%= link_to t(:details), client_trip_reservation_url(reservation.client, reservation.trip, reservation), class: 'btn btn-xs btn-info' %>
+        <%= link_to t(:edit), edit_client_trip_reservation_path(reservation.client, reservation.trip, reservation), class: 'btn btn-xs btn-primary' %>
+        <%= link_to t(:delete), client_trip_reservation_url(reservation.client, reservation.trip, reservation), :confirm => t(:confirm), :method => :delete, class: 'btn btn-xs btn-danger' %>
+      </div>
     </td>
 <% end %>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= render :partial => 'links' if @client and @trip %>

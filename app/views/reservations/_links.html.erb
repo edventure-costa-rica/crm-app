@@ -1,9 +1,43 @@
-<%=
-Company.kinds.map do |kind|
-  link_to t('.new', :for => co_f(kind)),
-    new_client_trip_reservation_path(@client, @trip, :kind => kind)
-end.join " |\n"
-%>
+
+<div class="row">
+  <div class="col-xs-12 text-center">
+    <div class="btn-group">
+      <div class="btn-group">
+        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+          <i class="glyphicon glyphicon-plus-sign"></i>
+          <%= t '.new' %> <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <% link_to new_client_trip_reservation_path(@client, @trip, :kind => :hotel) do %>
+              <i class="glyphicon glyphicon-bed"></i>
+              <%= co_f(:hotel) %>
+            <% end %>
+          </li>
+
+          <li>
+            <% link_to new_client_trip_reservation_path(@client, @trip, :kind => :hotel) do %>
+              <i class="glyphicon glyphicon-road"></i>
+              <%= co_f(:transport) %>
+            <% end %>
+          </li>
+
+          <li>
+            <% link_to new_client_trip_reservation_path(@client, @trip, :kind => :hotel) do %>
+              <i class="glyphicon glyphicon-sunglasses"></i>
+              <%= co_f(:tour) %>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+
+      <%= link_to 'Vouchers', vouchers_client_trip_reservations_path(@client, @trip, @reservation), class: 'btn btn-default' %>
+      <%= link_to t('.pays'), pays_client_trip_reservations_path(@client, @trip), class: 'btn btn-default' %>
+
+    </div>
+  </div>
+</div>
+
 
 <br/>
 
@@ -17,7 +51,4 @@ end.join " |\n"
         client_trip_reservation_path(@client, @trip, @reservation.prev_on_trip) %> |
   <%= link_to_unless @reservation.next_on_trip.nil?, t('.next'),
         client_trip_reservation_path(@client, @trip, @reservation.next_on_trip) %>
-<% else %>
-  <%= link_to 'Vouchers', vouchers_client_trip_reservations_path(@client, @trip, @reservation) %> |
-  <%= link_to t('.pays'), pays_client_trip_reservations_path(@client, @trip) %>
 <% end %>

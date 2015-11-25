@@ -33,6 +33,7 @@ en:
   index: Index
   new: Create
   show: Show
+  details: Details
   edit: Edit
   delete: Delete
   confirm: Are you sure?
@@ -95,7 +96,7 @@ en:
       date_time: Date & Time
     links:
       list_trip: List Reservations for this Trip
-      new: Create Reservation for {{for}}
+      new: New Reservation
       pays: Payment Details for All Reservations
       pay: Payment Details for this Reservation
       next: Next Reservation
