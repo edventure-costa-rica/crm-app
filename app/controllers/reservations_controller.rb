@@ -74,12 +74,10 @@ class ReservationsController < ApplicationController
     if params[:kind]
       @kind = Company.kinds.include?(params[:kind].downcase) ?
         params[:kind].downcase : nil
-      @companies = Company.find_all_by_kind_and_region_id @kind,
-        @reservation.company.region.id, :order => 'companies.name'
+      @companies = Company.find_all_by_kind @kind, :order => 'companies.name'
     else
       @kind = nil
-      @companies = Company.find_all_by_region_id @reservation.company.region.id,
-        :order => 'companies.name'
+      @companies = Company.all :order => 'companies.name'
     end
 
   end
