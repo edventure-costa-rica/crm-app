@@ -1,15 +1,4 @@
 class ReservationsController < ApplicationController
-  # methods for inline editing on the index page
-  in_place_collection_edit_for :reservation, :confirmed do
-    [ [true,  I18n.t(:true)],
-      [false, I18n.t(:false)] ]
-  end
-
-  in_place_collection_edit_for :reservation, :paid do
-    [ [true,  I18n.t(:true)],
-      [false, I18n.t(:false)] ]
-  end
-
   # GET /reservations
   # GET /reservations.xml
   def index
@@ -64,12 +53,10 @@ class ReservationsController < ApplicationController
     if params[:kind]
       @kind = Company.kinds.include?(params[:kind].downcase) ?
         params[:kind].downcase : nil
-      @companies = Company.find_all_by_kind_and_region_id @kind, 
-        Region.first.id, :order => 'companies.name'
+      @companies = Company.find_all_by_kind @kind, :order => 'companies.name'
     else
       @kind = nil
-      @companies = Company.find_all_by_region_id Region.first.id,
-        :order => 'companies.name'
+      @companies = Company.all :order => 'companies.name'
     end
 
     respond_to do |format|
