@@ -227,8 +227,8 @@ en:
         price: Rack Price
         confirmation_no: Confirmation Number
         paid_date: Payment Date
-        arrival: Arrival Date
-        departure: Departure Date
+        arrival: Arrival
+        departure: Departure
         num_people: Number of People
       trip:
         registration_id: Registration Code
