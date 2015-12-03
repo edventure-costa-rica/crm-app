@@ -272,6 +272,17 @@ module ActionView::Helpers
     end
   end
 
+  module FormHelper
+    def input_field(object_name, method, options = {})
+      type = options.delete(:type) || "text"
+      InstanceTag.new(object_name, method, self, options.delete(:object)).to_input_field_tag(type, options)
+    end
+
+    def number_field(object_name, method, options = {})
+      input_field(object_name, method, options.merge(type: 'number'))
+    end
+  end
+
   class FormBuilder
     def select_year(method, options = {}, html_options = {})
       @template.select_year(@object_name, method, objectify_options(options), html_options)
@@ -283,6 +294,15 @@ module ActionView::Helpers
 
     def select_day(method, options = {}, html_options = {})
       @template.select_day(@object_name, method, objectify_options(options), html_options)
+    end
+
+    def pax_field(method, options = {})
+      @template.text_field(@object_name, method, objectify_options(
+          options.merge(placeholder: 'pax/children/disabled')))
+    end
+
+    def number_field(method, options = {})
+      @template.number_field(@object_name, method, objectify_options(options))
     end
   end
 end
