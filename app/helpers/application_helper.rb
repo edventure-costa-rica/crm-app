@@ -276,5 +276,13 @@ module ActionView::Helpers
     def select_year(method, options = {}, html_options = {})
       @template.select_year(@object_name, method, objectify_options(options), html_options)
     end
+
+    def select_month(method, options = {}, html_options = {})
+      @template.select_month(@object_name, method, objectify_options(options), html_options)
+    end
+
+    def select_day(method, options = {}, html_options = {})
+      @template.select_day(@object_name, method, objectify_options(options), html_options)
+    end
   end
 end
