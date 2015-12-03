@@ -7,3 +7,9 @@ a:focus { outline: none }
 .margin-bottom-1 {
   margin-bottom: 1em;
 }
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
