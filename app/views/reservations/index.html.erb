@@ -17,7 +17,6 @@
     <th><%=h re_f :client %></th>
     <th><%=h re_f :trip_id %></th>
 <% else %>
-    <th><%=h co_f :city %></th>
     <th><%=h re_f :company %></th>
     <th><%=h re_f :confirmed %></th>
     <th><%=h re_f :paid %></th>
@@ -27,15 +26,16 @@
   </tr>
 
 <% @reservations.each do |reservation| %>
+  <% company = reservation.company %>
   <tr class="<%= cycle 'even', 'odd' %>">
-    <td>
+    <td class="col-xs-1">
       <%= if @client then 
             h l reservation.arrival, :format => :short
           else
             h l reservation.arrival, :format => :long
           end %>
     </td>
-    <td>
+    <td class="col-xs-1">
       <%= if @client then
             h l reservation.departure, :format => :short
           else
@@ -46,17 +46,31 @@
     <td><%=h reservation.client %></td>
     <td><%=h reservation.trip %></td>
 <% else %>
-    <td><%=h reservation.city %></td>
-    <td><%=h reservation.company.name %> (<%= co_f reservation.company.kind %>)</td>
-    <td><%= in_place_collection_editor_field reservation, :confirmed %></td>
-    <td><%= in_place_collection_editor_field reservation, :paid %></td>
-<% end %>
-    <td><%=hnl reservation.services.nil? ? '' : reservation.services[0,50] + (reservation.services.length > 50 ? '...' : '') %></td>
+    <td class="col-xs-2 col-sm-3">
+      <% if company.kind == 'hotel' %>
+        <i class="glyphicon glyphicon-bed" title="<%= co_f company.kind %>"></i>
+      <% elsif company.kind == 'transport' %>
+        <i class="glyphicon glyphicon-road" title="<%= co_f company.kind %>"></i>
+      <% elsif company.kind == 'tour' %>
+        <i class="glyphicon glyphicon-sunglasses" title="<%= co_f company.kind %>"></i>
+      <% else %>
+        <i class="glyphicon glyphicon-question-sign" title="<%= co_f company.kind %>"></i>
+      <% end %>
 
+      <%=h reservation.company.name %>
+      <em><small><%=h company.city %></small></em>
+    </td>
+
+    <td><%=reservation.confirmed ? t(:true) : t(:false) %></td>
+    <td><%=reservation.paid ? t(:true) : t(:false) %></td>
+<% end %>
+    <td class="col-xs-3 col-sm-4" title="<%= reservation.services.to_s %>">
+      <%=hnl truncate reservation.services.to_s, length: 40 %>
+    </td>
 <% if reservation.client.nil? %>
   <td></td>
 <% else %>
-    <td>
+    <td class="col-xs-3 col-md-2">
       <div class="btn-group">
         <%= link_to t(:details), client_trip_reservation_url(reservation.client, reservation.trip, reservation), class: 'btn btn-xs btn-info' %>
         <%= link_to t(:edit), edit_client_trip_reservation_path(reservation.client, reservation.trip, reservation), class: 'btn btn-xs btn-primary' %>
