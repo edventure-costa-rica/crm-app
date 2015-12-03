@@ -281,6 +281,15 @@ module ActionView::Helpers
     def number_field(object_name, method, options = {})
       input_field(object_name, method, options.merge(type: 'number'))
     end
+
+    def reset_button(value = "Reset", options = {})
+      if value.is_a? Hash
+        options = value
+        value = "Reset"
+      end
+
+      tag :input, { value: value, type: :reset }.merge(options)
+    end
   end
 
   class FormBuilder
