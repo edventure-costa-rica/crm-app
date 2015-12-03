@@ -240,3 +240,41 @@ private
     }
   end
 end
+
+
+module ActionView::Helpers
+
+  class InstanceTag
+    def to_select_year_tag(options = {}, html_options = {})
+      datetime_selector(options, html_options).select_year.html_safe
+    end
+
+    def to_select_month_tag(options = {}, html_options = {})
+      datetime_selector(options, html_options).select_month.html_safe
+    end
+
+    def to_select_day_tag(options = {}, html_options = {})
+      datetime_selector(options, html_options).select_day.html_safe
+    end
+  end
+
+  module DateHelper
+    def select_year(object_name, method, options = {}, html_options = {})
+      InstanceTag.new(object_name, method, self, options.delete(:object)).to_select_year_tag(options, html_options)
+    end
+
+    def select_month(object_name, method, options = {}, html_options = {})
+      InstanceTag.new(object_name, method, self, options.delete(:object)).to_select_month_tag(options, html_options)
+    end
+
+    def select_day(object_name, method, options = {}, html_options = {})
+      InstanceTag.new(object_name, method, self, options.delete(:object)).to_select_day_tag(options, html_options)
+    end
+  end
+
+  class FormBuilder
+    def select_year(method, options = {}, html_options = {})
+      @template.select_year(@object_name, method, objectify_options(options), html_options)
+    end
+  end
+end
