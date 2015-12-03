@@ -1,178 +1,179 @@
-<% form_for([@client, @trip, @reservation]) do |f| %>
+<% form_for([@client, @trip, @reservation], html: {class: 'form'}) do |f| %>
   <%= f.error_messages %>
 
-  <p>
+
+  <div class="form-group">
     <%= f.label :trip_id %><br />
-    <%= f.hidden_field :trip_id %>
-    <b><%= @trip %></b><br/>
-    <%= h l @trip.arrival.to_date %> &ndash;
-    <%= h l @trip.departure.to_date %><br/>
-    <%= t '.trip_duration' %>:
-    <em><%= @trip.nights %></em>
-  </p>
 
-  <p>
+    <p class="form-control-static">
+      <i class="glyphicon glyphicon-plane"></i>
+      <%= link_to @trip, client_trip_path(@client, @trip) %>
+      <br/>
+
+      <%= f.hidden_field :trip_id %>
+      <%= h l @trip.arrival.to_date, format: :long %> &ndash;
+      <%= h l @trip.departure.to_date, format: :long %><br/>
+    </p>
+  </div>
+
+  <div class="form-group">
     <%= f.label :client %><br />
-    <b><%= @client %></b>
-  </p>
+    <p class="form-control-static">
+      <i class="glyphicon glyphicon-user"></i>
+      <%= link_to @client, @client %>
+      <br>
+      <%= @trip.total_people %> pax /
+      <%= @trip.num_children %> children /
+      <%= @trip.num_disabled %> disabled
+    </p>
+  </div>
 
-  <% javascript_tag do -%>
-  function getData(region_id) {
-    <%= remote_function(
-          :url  => companies_path({ :format => :js }),
-          :with => "'region_id='+region_id+'&kind=#{@kind}'",
-          :method => :get
-        )
-    %>
-  }
+  <div class="form-group">
+    <% company_label = capture do %>
+      <% case @kind when 'hotel' %>
+        <i class="glyphicon glyphicon-bed" title="<%= co_f @kind %>"></i>
+      <% when 'transport' %>
+        <i class="glyphicon glyphicon-road" title="<%= co_f @kind %>"></i>
+      <% when 'tour' %>
+        <i class="glyphicon glyphicon-sunglasses" title="<%= co_f @kind %>"></i>
+      <% when nil %>
+      <% else %>
+        <i class="glyphicon glyphicon-question-sign" title="<%= co_f @kind %>"></i>
+      <% end %>
+      <%= co_f @kind %>
+    <% end %>
+    <%= f.label :company_id, company_label %>
+    <br/>
 
-  function getCompany(company_id) {
-    <%= remote_function(
-          :method  => :get,
-          :success => 'loadCompany(request)',
-          :with    => "'id='+company_id",
-          :url     => ajax_company_path
-        )
-    %>
-  }
+    <%= f.select :company_id, @companies.map { |c| [ c.name, c.id ] },
+                 { :prompt => true }, class: 'form-control' %>
+  </div>
 
-  function loadData(data) {
-    var select = $('company-select');
-
-    // clear
-    while (select.length > 0) select.remove(0);
-
-    // add
-    if (data.length > 0) {
-      select.enable();
-
-      for (var i = 0; i < data.length; i++) {
-        select.insert(
-          new Element('option', { value: data[i].value }).
-            update(data[i].label)
-        );
-      }
-    }
-
-    // no data
-    else {
-      select.disable();
-      alert(<%= t('.empty_region').to_json %>);
-    }
-  }
-
-  function loadCompany(xhr) {
-    var data = eval('(' + xhr.responseText + ')');
-    var company = data.company;
-
-    if (company.kind == 'hotel') {
-      $('package-length-container').show();
-      $('package-length').update(company.package_length);
-    }
-    else {
-      $('package-length-container').hide();
-    }
-  }
-  <% end %>
-
-  <p>
-    <%= f.label :region %><br />
-    <b><%=select :reservation, :region_id,
-            Region.ordered.map { |r| [r, r.id] },
-            { :prompt   => true },
-            { :id       => 'region-select',
-              :name     => '',
-              :onchange => 'getData(this.value)'
-            }
-    %></b>
-  </p>
-
-  <p>
-    <%= f.label :company %> <%= "(#{co_f @kind})" if @kind %><br />
-    <%= f.select :company_id, @companies.
-          map { |c| [ c.name, c.id ] },
-          { :prompt   => true },
-          { :id       => 'company-select',
-            :onchange => 'getCompany(this.value)' }
-    %>
-  </p>
-  <p>
+  <div class="form-group">
     <%= f.label :reservation_id %><br />
-    <%= f.text_field :reservation_id %>
-  </p>
-  <p>
-    <%= f.check_box :confirmed %>
-    <%= f.label :confirmed %>
-  </p>
-  <p>
+    <%= f.text_field :reservation_id, class: 'form-control' %>
+  </div>
+
+  <div class="checkbox">
+    <% checkbox = capture do %>
+      <%= f.check_box :confirmed %>
+      <%= re_f :confirmed %>
+    <% end %>
+
+    <%= f.label :confirmed, checkbox %>
+  </div>
+
+  <div class="form-group" id="toggle_confirm">
     <%= f.label :confirmation_no %><br />
-    <%= f.text_field :confirmation_no %>
-  </p>
-  <p>
+    <%= f.text_field :confirmation_no, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :arrival %><br />
-    <%= f.date_select :arrival %>
-  </p>
-  <p>
+    <div class="row">
+      <div class="col-xs-4">
+        <%= f.select_year :arrival, {}, class: 'form-control' %>
+      </div>
+      <div class="col-xs-5">
+        <%= f.select_month :arrival, {}, class: 'form-control' %>
+      </div>
+      <div class="col-xs-3">
+        <%= f.select_day :arrival, {}, class: 'form-control' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
     <%= f.label :arrival_time %><br />
-    <%= f.text_field :arrival_time %>
-  </p>
-  <p>
+    <%= f.text_field :arrival_time, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :pickup_location %><br />
-    <%= f.text_field :pickup_location %>
-  </p>
-  <p>
+    <%= f.text_field :pickup_location, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :departure %><br />
-    <%= f.date_select :departure %>
-  </p>
-  <p id="package-length-container"
-     style="<%= 'display:none' unless
-                  @reservation.company and
-                  @reservation.company.hotel?
-            %>">
-    <%= co_f :package_length %>:
-    <em id="package-length"><%=
-      @reservation.company.package_length if @reservation.company
-    %></em>
-  </p>
-  <p>
+    <div class="row">
+      <div class="col-xs-4">
+        <%= f.select_year :departure, {}, class: 'form-control' %>
+      </div>
+      <div class="col-xs-5">
+        <%= f.select_month :departure, {}, class: 'form-control' %>
+      </div>
+      <div class="col-xs-3">
+        <%= f.select_day :departure, {}, class: 'form-control' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
     <%= f.label :departure_time %><br />
-    <%= f.text_field :departure_time %>
-  </p>
-  <p>
+    <%= f.text_field :departure_time, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :dropoff_location %><br />
-    <%= f.text_field :dropoff_location %>
-  </p>
-  <p>
+    <%= f.text_field :dropoff_location, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :num_people %><br />
-    <%= f.text_field :num_people %>
-  </p>
-  <p>
+    <%= f.number_field :num_people, class: 'form-control', min: 1, step: 1 %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :net_price %><br />
-    <%= f.text_field :net_price, :value =>
-          number_with_precision(@reservation.net_price, :precision => 2) %>
-  </p>
-  <p>
+    <% net_price = number_with_precision(@reservation.net_price, :precision => 2) %>
+    <%= f.number_field :net_price, class: 'form-control',
+                       step: 0.01, value: net_price %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :price %><br />
-    <%= f.text_field :price, :value =>
-          number_with_precision(@reservation.price, :precision => 2) %>
-  </p>
-  <p>
-    <%= f.check_box :paid %>
-    <%= f.label :paid %>
-  </p>
-  <p>
+    <% rack_price = number_with_precision(@reservation.price, :precision => 2) %>
+    <%= f.number_field :price, class: 'form-control',
+                       step: 0.01, value: rack_price %>
+  </div>
+
+  <div class="form-group">
+    <% paid_label = capture do %>
+      <%= f.check_box :paid %>
+      <%= re_f :paid %>
+    <% end %>
+
+    <%= f.label :paid, paid_label %>
+  </div>
+
+  <div class="form-group" id="toggle_paid">
     <%= f.label :paid_date %><br />
-    <%= f.date_select :paid_date, :include_blank => true %>
-  </p>
-  <p>
+
+    <div class="row">
+      <div class="col-xs-4">
+        <%= f.select_year :paid_date, {include_blank: true}, class: 'form-control' %>
+      </div>
+      <div class="col-xs-5">
+        <%= f.select_month :paid_date, {include_blank: true}, class: 'form-control' %>
+      </div>
+      <div class="col-xs-3">
+        <%= f.select_day :paid_date, {include_blank: true}, class: 'form-control' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
     <%= f.label :services %><br />
-    <%= f.text_area :services, :rows => 3 %>
-  </p>
-  <p>
+    <%= f.text_area :services, :rows => 3, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :notes %><br />
-    <%= f.text_area :notes %>
-  </p>
+    <%= f.text_area :notes, rows: 3, class: 'form-control' %>
+  </div>
+
   <p>
-    <%= f.submit submit_text %>
+    <%= f.submit submit_text, class: 'btn btn-primary' %>
+    <%= reset_button class: 'btn btn-danger' %>
   </p>
 <% end %>
