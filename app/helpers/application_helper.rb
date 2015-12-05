@@ -315,3 +315,11 @@ module ActionView::Helpers
     end
   end
 end
+
+
+class String
+  def escape_like(quote_char = '\\')
+    q = Regexp.quote(quote_char)
+    self.gsub(/[#{q}%_]/) { |c| q + c }
+  end
+end
