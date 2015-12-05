@@ -17,6 +17,8 @@ ActionController::Routing::Routes.draw do |map|
     :action     => 'yearly_payments',
     :defaults   => { :year => nil }
 
+  map.search_clients 'clients/search', controller: :clients, action: :search
+
   # clients have trips and reservations, sort of
   map.resources :clients, :member => { :remove => :get } do |client|
       client.resources :reservations, :only => [ :show, :index ]
