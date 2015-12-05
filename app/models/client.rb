@@ -17,7 +17,7 @@ class Client < ActiveRecord::Base
       end
     end
 
-  def self.search(query)
+  def self.search(query, options = {})
     condition = [
       "family_name LIKE ? ESCAPE '\\' OR
        contact_name LIKE ? ESCAPE '\\' OR
@@ -26,6 +26,6 @@ class Client < ActiveRecord::Base
     condition << query.escape_like + '%'
     condition << '%' + query.escape_like + '%'
 
-    all(conditions: condition)
+    all(options.merge(conditions: condition))
   end
 end

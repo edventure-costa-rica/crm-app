@@ -95,7 +95,7 @@ class ClientsController < ApplicationController
   def search
     query = params[:q].to_s
 
-    results = Client.search(query).map do |c|
+    results = Client.search(query, order: 'updated_at DESC').map do |c|
        { id: c.id,
          family: c.family_name,
          contact: c.contact_name,
