@@ -13,3 +13,7 @@ a:focus { outline: none }
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+#client-results {
+  display: none
+}

@@ -95,15 +95,7 @@ class ClientsController < ApplicationController
   def search
     query = params[:q].to_s
 
-    condition = [
-      "family_name LIKE ? ESCAPE '\\' OR
-       contact_name LIKE ? ESCAPE '\\' OR
-       email LIKE ? ESCAPE '\\'"]
-    condition << query.escape_like + '%'
-    condition << query.escape_like + '%'
-    condition << '%' + query.escape_like + '%'
-
-    results = Client.all(conditions: condition).map do |c|
+    results = Client.search(query).map do |c|
        { id: c.id,
          family: c.family_name,
          contact: c.contact_name,
