@@ -16,4 +16,16 @@ class Client < ActiveRecord::Base
         'Los ' + self.family_name
       end
     end
+
+  def self.search(query)
+    condition = [
+      "family_name LIKE ? ESCAPE '\\' OR
+       contact_name LIKE ? ESCAPE '\\' OR
+       email LIKE ? ESCAPE '\\'"]
+    condition << query.escape_like + '%'
+    condition << query.escape_like + '%'
+    condition << '%' + query.escape_like + '%'
+
+    all(conditions: condition)
+  end
 end
