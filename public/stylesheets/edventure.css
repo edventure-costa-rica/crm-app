@@ -17,3 +17,7 @@ a:focus { outline: none }
 #client-results {
   display: none
 }
+
+input[type=search] {
+  border-radius: 1.5em;
+}
