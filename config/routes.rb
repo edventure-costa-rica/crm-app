@@ -24,10 +24,8 @@ ActionController::Routing::Routes.draw do |map|
   map.workflow_create_trip 'workflow/:client_id/trip', method: :post, controller: :workflow, action: :create_trip
   map.workflow_reservations  'workflow/res/:trip_id', controller: :workflow, action: :reservations
 
-  map.search_clients 'clients/search', controller: :clients, action: :search
-
   # clients have trips and reservations, sort of
-  map.resources :clients, :member => { :remove => :get } do |client|
+  map.resources :clients, member: {remove: :get}, collection: {search: :get} do |client|
       client.resources :reservations, :only => [ :show, :index ]
 
       # trips have reservations, really
@@ -49,9 +47,11 @@ ActionController::Routing::Routes.draw do |map|
 
   # show trips on their own, plus a list of upcoming trips
   map.resources :trips, #:only => [ :show, :index ],
-                        :collection => { :upcoming => :get },
+                        :collection => {upcoming: :get, pending: :get},
                         :member     => { :proposal     => :get,
                                          :confirmation => :get }
+
+  map.resources :reservations, collection: {unpaid: :get, paid: :get}
 
   map.day_calendar 'calendar/day', controller: :calendar, action: :day
   map.week_calendar 'calendar/week', controller: :calendar, action: :week
