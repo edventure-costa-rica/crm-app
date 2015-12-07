@@ -313,6 +313,10 @@ module ActionView::Helpers
     def number_field(method, options = {})
       @template.number_field(@object_name, method, objectify_options(options))
     end
+
+    def input_field(method, options = {})
+      @template.input_field(@object_name, method, objectify_options(options))
+    end
   end
 end
 

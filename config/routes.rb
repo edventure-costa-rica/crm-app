@@ -19,7 +19,10 @@ ActionController::Routing::Routes.draw do |map|
 
 
   map.workflow_client 'workflow/client', controller: :workflow, action: :client
-  map.workflow_trip  'workflow/:client_id', controller: :workflow, action: :trip
+  map.workflow_trips  'workflow/:client_id', controller: :workflow, action: :trips
+  map.workflow_new_trip 'workflow/:client_id/trip', controller: :workflow, action: :new_trip
+  map.workflow_create_trip 'workflow/:client_id/trip', method: :post, controller: :workflow, action: :create_trip
+  map.workflow_reservations  'workflow/res/:trip_id', controller: :workflow, action: :reservations
 
   map.search_clients 'clients/search', controller: :clients, action: :search
 
@@ -45,7 +48,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   # show trips on their own, plus a list of upcoming trips
-  map.resources :trips, :only => [ :show, :index ],
+  map.resources :trips, #:only => [ :show, :index ],
                         :collection => { :upcoming => :get },
                         :member     => { :proposal     => :get,
                                          :confirmation => :get }

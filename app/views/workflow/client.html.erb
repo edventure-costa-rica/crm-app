@@ -1,53 +1,43 @@
-<h1>Search for a Client</h1>
+<% active_search = ! @search.empty? %>
+<ul class="nav nav-tabs">
+  <li class="<%= 'active' unless active_search %>"><a href="#recent" data-toggle="tab">Recent</a></li>
+  <li class="<%= 'active' if active_search %>"><a href="#search" data-toggle="tab">Search</a></li>
+  <li><a href="#add" data-toggle="tab">New</a></li>
+</ul>
 
-<p>You can search by family name, contact name, or email address.</p>
-
-<form class="form form-horizontal"
-      id="workflow_client"
-      action="<%=h workflow_client_url %>">
-  <div class="form-group">
-    <label class="col-sm-2 hidden-xs control-label" for="q">
-      Search
-    </label>
-
-    <div class="col-xs-8">
-      <input type="text" class="form-control" name="q" id="q"
-             autofocus="on" autocomplete="off"
-             value="<%= h @search %>"
-             data-search-url="<%=h search_clients_url %>"
-             placeholder="Family, Contact, or E-mail">
-    </div>
-
-    <div class="col-xs-4 col-sm-2">
-      <button class="btn btn-block btn-primary">
-        <i class="glyphicon glyphicon-search"></i>
-        <span class="hidden-xs">Search</span>
-      </button>
-    </div>
+<div class="tab-content">
+  <div class="tab-pane <%= 'active' unless active_search %>" id="recent">
+    <%= render partial: 'clients/recent' %>
   </div>
-</form>
 
-<table class="table table-condensed table-striped" id="client-results">
-  <tr>
-    <th><%= cl_f :contact_name %></th>
-    <th><%= cl_f :family_name %></th>
-    <th><%= cl_f :email %></th>
-    <th></th>
-  </tr>
+  <div class="tab-pane <%= 'active' if active_search %>" id="search">
+    <%= render partial: 'clients/search' %>
+  </div>
 
-  <% if defined? @results %>
-    <% @results.each do |client| %>
-      <tr>
-        <td><%= client.contact_name %></td>
-        <td><%= client.family_name %></td>
-        <td><%= client.email %></td>
-        <td>
-          <% link_to workflow_trip_url(client), class: 'btn btn-default btn-xs' do %>
-            <i class="glyphicon glyphicon-arrow-right"></i>
-            <span class="hidden-xs">Next</span>
-          <% end %>
-        </td>
-      </tr>
+  <div class="tab-pane" id="add">
+
+    <h1>Add a New Client</h1>
+
+    <p>Create a new client by entering the name and email address.</p>
+
+    <% form_for(@client, html: {class: 'form'}) do |f| %>
+      <div class="form-group">
+        <%= f.label :family_name %>
+        <%= f.text_field :family_name, class: 'form-control', required: true %>
+      </div>
+      <div class="form-group">
+        <%= f.label :email %>
+        <%= f.input_field :email, type: :email, class: 'form-control', required: true %>
+      </div>
+
+      <div class="form-group text-right">
+        <button class="btn btn-primary" type="submit">
+          <i class="glyphicon glyphicon-plus-sign"></i>
+          New
+        </button>
+      </div>
     <% end %>
-  <% end %>
-</table>
+
+  </div>
+
+</div>

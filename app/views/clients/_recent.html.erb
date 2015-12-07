@@ -1,0 +1,25 @@
+
+<h2>Recent Clients</h2>
+
+<table class="table table-condensed table-striped">
+  <tr>
+    <th><%= cl_f :contact_name %></th>
+    <th><%= cl_f :family_name %></th>
+    <th><%= cl_f :email %></th>
+    <th></th>
+  </tr>
+
+  <% @recent.each do |client| %>
+    <tr>
+      <td><%= client.contact_name %></td>
+      <td><%= client.family_name %></td>
+      <td><%= client.email %></td>
+      <td>
+        <% link_to workflow_trips_url(client), class: 'btn btn-default btn-xs' do %>
+          <i class="glyphicon glyphicon-arrow-right"></i>
+          <span class="hidden-xs">Next</span>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
