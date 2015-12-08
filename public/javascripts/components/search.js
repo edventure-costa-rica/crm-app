@@ -2,14 +2,20 @@ var _ = require('lodash');
 
 var Search = React.createClass({
   getInitialState: function() {
-    return {query: '', results: []}
+    return {query: '', results: [], loading: false}
   },
 
   handleQueryChange: function(ev) {
     var sanitized = String(ev.target.value).trim();
-    this.setState({query: sanitized});
 
-    this.performSearch();
+    if (sanitized) {
+      this.setState({query: sanitized, loading: true});
+      this.performSearch();
+    }
+
+    else {
+      this.setState(this.getInitialState());
+    }
   },
 
   performSearch: _.debounce(function performSearch() {
@@ -18,7 +24,7 @@ var Search = React.createClass({
       data: {q: this.state.query},
       success: function(results) {
         if (this.isMounted()) {
-          this.setState({results: results, query: this.state.query});
+          this.setState({loading: false, results: results});
         }
 
       }.bind(this)
@@ -26,6 +32,13 @@ var Search = React.createClass({
   }),
 
   render: function() {
+    console.log('Search', this.state);
+
+    var content = (
+        <SearchResults data={this.state.results}
+                       loading={this.state.loading} />
+    );
+
     return (
         <form action={this.props.url} className="navbar-form navbar-left">
           <div className="form-group">
@@ -40,7 +53,7 @@ var Search = React.createClass({
                    placeholder="Search Clients" />
 
           </div>
-          <SearchResults data={this.state.results} />
+          {this.state.query.length ? content : '' }
         </form>
     )
   }
@@ -48,17 +61,30 @@ var Search = React.createClass({
 
 var SearchResults = React.createClass({
   render: function () {
+    var content;
+    console.log('SearchResults', this.props);
+
+    if (this.props.loading) {
+      content = <SearchLoading />
+    }
+
+    else if (this.props.data.length) {
+      content = _.map(this.props.data, function (result) {
+        return <SearchResult url={result.url}
+                             name={result.name}
+                             phone={result.phone}
+                             email={result.email}/>
+
+      })
+    }
+
+    else {
+      content = <SearchNoResults />
+    }
+
     return (
         <div id="search-results" className="list-group">
-          {
-              _.map(this.props.data, function (result) {
-                return <SearchResult url={result.url}
-                                     name={result.name}
-                                     phone={result.phone}
-                                     email={result.email}/>
-
-              })
-          }
+          {content}
         </div>
     )
   }
@@ -67,6 +93,7 @@ var SearchResults = React.createClass({
 var SearchResult = React.createClass({
   render: function () {
     var email, phone, br = <br/>;
+    console.log('SearchResult', this.props);
 
     if (this.props.email) {
       email = (
@@ -93,6 +120,41 @@ var SearchResult = React.createClass({
             {email} {email && phone ? br : ''} {phone}
           </p>
         </a>
+    )
+  }
+});
+
+var SearchNoResults = React.createClass({
+  render: function() {
+    console.log('SearchNoResults');
+    return (
+        <div className="list-group-item">
+          <h4 className="list-group-item-heading">
+            <i className="glyphicon glyphicon-ban-circle"/>
+            &nbsp; No Results
+          </h4>
+          <p className="list-group-item-text">
+            Try changing your search criteria
+          </p>
+        </div>
+    )
+  }
+});
+
+var SearchLoading = React.createClass({
+  render: function() {
+    console.log('SearchLoading');
+    return (
+        <div className="list-group-item">
+          <h4 className="list-group-item-heading">
+            <i className="glyphicon glyphicon-refresh spin"/>
+            &nbsp; Loading...
+          </h4>
+
+          <p className="list-group-item-text">
+            Please wait
+          </p>
+        </div>
     )
   }
 });
