@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 var Search = React.createClass({
   getInitialState: function() {
     return {query: '', results: []}
@@ -10,11 +12,7 @@ var Search = React.createClass({
     this.performSearch();
   },
 
-  componentDidMount: function() {
-    this.performSearch = debounce(this.performSearch.bind(this));
-  },
-
-  performSearch: function () {
+  performSearch: _.debounce(function performSearch() {
     $.ajax({
       url: this.props.url,
       data: {q: this.state.query},
@@ -25,7 +23,7 @@ var Search = React.createClass({
 
       }.bind(this)
     })
-  },
+  }),
 
   render: function() {
     return (
@@ -50,18 +48,17 @@ var Search = React.createClass({
 
 var SearchResults = React.createClass({
   render: function () {
-    var searchResultData = this.props.data.map(function (result) {
-      return (
-          <SearchResult url={result.url}
-                        name={result.name}
-                        phone={result.phone}
-                        email={result.email} />
-      )
-    });
-
     return (
         <div id="search-results" className="list-group">
-          {searchResultData}
+          {
+              _.map(this.props.data, function (result) {
+                return <SearchResult url={result.url}
+                                     name={result.name}
+                                     phone={result.phone}
+                                     email={result.email}/>
+
+              })
+          }
         </div>
     )
   }
@@ -100,10 +97,5 @@ var SearchResult = React.createClass({
   }
 });
 
-$(function() {
-  var $mount = $('#mount-search');
-  ReactDOM.render(
-      <Search url={$mount.data('url')} />,
-      $mount.get(0)
-  );
-});
+
+module.exports = Search;

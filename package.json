@@ -1,0 +1,25 @@
+{
+  "name": "tripdb",
+  "version": "1.0.0",
+  "description": "Edventure TripDB",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@code.do.fu.cr:tripdb"
+  },
+  "author": "Josh Leder <josh@ha.cr>",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "babel-preset-react": "^6.3.13",
+    "babelify": "^7.2.0",
+    "reactify": "^1.1.1"
+  },
+  "dependencies": {
+    "lodash": "^3.10.1"
+  }
+}
