@@ -60,12 +60,7 @@
         <% end %>
       </ul>
 
-      <form action="<%= search_clients_url %>" class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <label for="q" class="sr-only">Search</label>
-          <input type="search" name="q" id="q" class="form-control" placeholder="Search">
-        </div>
-      </form>
+      <div id="mount-search" data-url="<%= h search_clients_url %>"></div>
 
     </div><!-- #navbar-collapse -->
 
@@ -84,6 +79,11 @@
 
   <%= javascript_include_tag 'bower/jquery/dist/jquery.min' %>
   <%= javascript_include_tag 'bower/bootstrap/dist/js/bootstrap.min' %>
+  <%= javascript_include_tag 'bower/react/react' %>
+  <%= javascript_include_tag 'bower/react/react-dom' %>
+  <%= javascript_include_tag 'bower/babel-browser/browser' %>
   <%= javascript_include_tag 'application' %>
+  <%= javascript_include_tag 'jsx/application', {'type' => 'text/babel'} %>
+
 </body>
 </html>

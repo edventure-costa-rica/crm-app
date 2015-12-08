@@ -21,3 +21,16 @@ a:focus { outline: none }
 input[type=search] {
   border-radius: 1.5em;
 }
+
+#mount-search {
+  position: relative;
+}
+
+#search-results {
+  position: absolute;
+  top: 3em;
+
+  width: 20em;
+  max-height: 30em;
+  overflow-y: auto;
+}

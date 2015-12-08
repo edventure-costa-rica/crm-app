@@ -243,6 +243,23 @@ end
 
 
 module ActionView::Helpers
+  module AssetTagHelper
+    def babel_src_tag(*sources)
+      options =
+        if sources.last.is_a? Hash
+          sources.pop
+        else
+          Hash.new
+        end
+
+      sources.map do |source|
+        content_tag("script", "", {
+          "type" => 'text/babel',
+          "src" => path_to_javascript(source)
+        }.merge(options.stringify_keys))
+      end.join
+    end
+  end
 
   class InstanceTag
     def to_select_year_tag(options = {}, html_options = {})

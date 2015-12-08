@@ -19,6 +19,9 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "~3.3.5"
+    "bootstrap": "~3.3.5",
+    "react": "~0.14.3",
+    "babel-browser": "*",
+    "underscore": "~1.8.3"
   }
 }
