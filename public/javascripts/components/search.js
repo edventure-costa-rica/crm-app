@@ -31,6 +31,10 @@ var Search = React.createClass({
     })
   }),
 
+  hideSearch: function() {
+    this.setState({query: ''})
+  },
+
   render: function() {
     console.log('Search', this.state);
 
@@ -40,16 +44,18 @@ var Search = React.createClass({
     );
 
     return (
-        <form action={this.props.url} className="navbar-form navbar-left">
+        <form action={this.props.url}
+              onSubmit={function(e) { e.preventDefault() }}
+              className="navbar-form navbar-left">
           <div className="form-group">
             <label htmlFor="search-query" className="sr-only">Search</label>
             <input type="search" name="q"
                    value={this.state.query}
                    onChange={this.handleQueryChange}
+                   onBlur={this.hideSearch}
                    id="search-query"
                    className="form-control"
                    autoComplete="off"
-                   autoFocus={true}
                    placeholder="Search Clients" />
 
           </div>
