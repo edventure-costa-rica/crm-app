@@ -30,6 +30,12 @@ class Trip < ActiveRecord::Base
 
   validates_inclusion_of :status, :in => Trip.statuses
 
+  @statuses.each do |status|
+    define_method(status + '?') do
+      self.status == status
+    end
+  end
+
   def to_s; new_record? ? Trip.human_name : self.registration_id; end
 
   def nights
