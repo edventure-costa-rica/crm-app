@@ -1,31 +1,45 @@
 <h1><%= t :app_title %></h1>
 
-<b><%= t '.lang' %>:</b>
-<ul>
-  <li><%= link_to 'Español', root_path({ :lc => :es }) %></li>
-  <li><%= link_to 'English', root_path({ :lc => :en }) %></li>
-</ul>
+<h3>Recent Changes</h3>
 
-<b><%= t '.list_payments' %>:</b>
-<ul>
-  <li><%= link_to t('.weekly_payment'), weekly_payments_path %></li>
-  <li><%= link_to t('.yearly_payment'), yearly_payments_path %></li>
-</ul>
+<table class="table table-condensed table-striped">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th class="hidden-xs">E-mail</th>
+    <th class="hidden-xs">Dates</th>
+  </tr>
 
-<b><%= t 'calendars' %>:</b>
-<ul>
-  <li><%= link_to t('calendar.week.today'), week_calendar_path %></li>
-  <li><%= link_to t('calendar.month.today'), month_calendar_path %></li>
-</ul>
+  <% @recent.each do |trip| %>
+  <tr>
+    <td class="col-xs-6 col-sm-3">
+      <span title="<%= trip.status.capitalize %>">
+        <% if trip.pending? %>
+          <i class="glyphicon glyphicon-hourglass"></i>
+          <%= link_to trip.to_s, pending_trip_reservations_url(trip) %>
+        <% elsif trip.confirmed? %>
+          <i class="glyphicon glyphicon-tag"></i>
+          <%= link_to trip.to_s, confirmed_trip_reservations_url(trip) %>
+        <% else %>
+          <i class="glyphicon glyphicon-remove"></i>
+          <%= trip.to_s %>
+        <% end %>
+      </span>
+    </td>
 
-<b><%= t '.list_trips' %>:</b>
-<ul>
-  <li><%= link_to t('.upcoming'), upcoming_trips_path %></li>
-  <li><%= link_to t('.trips'), trips_path %></li>
-</ul>
+    <td class="col-xs-6 col-sm-3">
+      <%= trip.client.to_s %>
+    </td>
 
-<b><%= t '.misc' %>:</b>
-<ul>
-  <li><%= link_to t('.clients'), clients_path %></li>
-  <li><%= link_to t('.companies'), companies_path %></li>
-</ul>
+    <td class="hidden-xs col-sm-3">
+      <i class="glyphicon glyphicon-envelope"></i>
+      <%= link_to trip.client.email, ['mailto', trip.client.email].join(':') %>
+    </td>
+
+    <td class="hidden-xs col-sm-3">
+      <%= l trip.arrival.to_date, format: :short %> &ndash;
+      <%= l trip.departure.to_date, format: :short %>
+    </td>
+  </tr>
+  <% end %>
+</table>
