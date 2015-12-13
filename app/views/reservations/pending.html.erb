@@ -1,0 +1,50 @@
+<ol class="breadcrumb">
+  <li><%= link_to t('activerecord.models.trip.other'), trips_path %></li>
+  <li><%= link_to @trip, edit_trip_url(@trip) %></li>
+  <li class="active">Pending</li>
+</ol>
+
+<%= render partial: 'trips/quick' %>
+
+<%= render partial: 'reservations/new' %>
+
+<h1>Pending Reservations</h1>
+
+<table class="table table-condensed table-striped">
+  <tr>
+    <th>Pax</th>
+    <th>Services</th>
+    <th>Company</th>
+    <th>Net Price</th>
+    <th>Rack Price</th>
+    <th>Pick Up</th>
+    <th>Drop Off</th>
+    <th>Actions</th>
+  </tr>
+
+  <% @reservations.each do |res| %>
+    <tr>
+      <td><%= res.pax %></td>
+      <td><%= res.services %></td>
+      <td><%= res.company.name %></td>
+      <td><%= res.net_price %></td>
+      <td><%= res.price %></td>
+      <td><%= res.pickup %></td>
+      <td><%= res.dropoff %></td>
+      <td>
+        <% link_to email_reservation_url(res), class: 'btn btn-primary btn-xs' do %>
+          <i class="glyphicon glyphicon-envelope"></i>
+          Send Confirmation
+        <% end %>
+        <% link_to reservation_url(res), method: :delete,
+                   confirm: 'Really delete this reservation?',
+                   class: 'btn btn-danger btn-xs' do %>
+          <i class="glyphicon glyphicon-trash"></i>
+          Delete
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= javascript_include_tag companies_url(format: :js) %>
