@@ -55,6 +55,26 @@ class Reservation < ActiveRecord::Base
     I18n.localize departure.to_date, :format => :voucher
   end
 
+  def pax
+    num_people
+  end
+
+  def pickup
+    date = arrival ? I18n.localize(arrival.to_date, format: :short) : nil
+    time = arrival_time
+    place = pickup_location
+
+    [date, time, place].compact.join(' ')
+  end
+
+  def dropoff
+    date = departure ? I18n.localize(departure.to_date, format: :short) : nil
+    time = departure_time
+    place = dropoff_location
+
+    [date, time, place].compact.join(' ')
+  end
+
   def arrival_place_and_time
     [ pickup_location, arrival_time ].
       select { |e| not e.nil? }.
