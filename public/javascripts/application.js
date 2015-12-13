@@ -30,4 +30,14 @@ $(function () {
       React.createElement(components.Search, {url: searchUrl}),
       $mountSearch.get(0)
   );
+
+  var $newReservations = $('#new-reservations');
+  if ($newReservations.length) {
+    ReactDOM.render(
+        React.createElement(components.Reservations.Hotel,
+            {action: $newReservations.data('action-url')}),
+        $newReservations.find('#new-res-hotel').get(0)
+    )
+  }
+
 });
