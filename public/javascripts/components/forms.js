@@ -121,6 +121,8 @@ var PaxField = React.createClass({
   },
 
   render: function() {
+    var events = _.pick(this.props, 'onBlur onFocus onChange'.split(' '));
+
     return (
       <div className="form-group">
         <label htmlFor={this.props.id}>
@@ -132,7 +134,7 @@ var PaxField = React.createClass({
             <i className="glyphicon glyphicon-user" />
           </div>
 
-          <input type="text" className="form-control"
+          <input type="text" className="form-control" {...events}
                  placeholder="pax/children/disabled"
                  required={Boolean(this.props.required)}
                  valueLink={this.props.value}
@@ -149,6 +151,8 @@ var TransferField = React.createClass({
   displayName: 'TransferField',
 
   render: function() {
+    var events = _.pick(this.props, 'onBlur onFocus onChange'.split(' '));
+
     return (
       <div className="form-group">
         <label htmlFor={this.props.id}>
@@ -160,7 +164,7 @@ var TransferField = React.createClass({
             <i className="glyphicon glyphicon-transfer" />
           </div>
 
-          <input type="text" className="form-control"
+          <input type="text" className="form-control" {...events}
                  placeholder="date, time, and location"
                  required={Boolean(this.props.required)}
                  valueLink={this.props.value}
@@ -180,6 +184,8 @@ var PriceField = React.createClass({
     var range = _.pick(this.props, ['min', 'max', 'step']);
     range.min = range.min || 0;
 
+    var events = _.pick(this.props, 'onBlur onFocus onChange'.split(' '));
+
     return (
       <div className="form-group">
         <label htmlFor={this.props.id}>
@@ -191,7 +197,7 @@ var PriceField = React.createClass({
             <i className="glyphicon glyphicon-usd" />
           </div>
 
-          <input type="number" className="form-control"
+          <input type="number" className="form-control" {...events}
                  required={Boolean(this.props.required)}
                  defaultValue={this.props.defaultValue}
                  valueLink={this.props.value} {...range}
