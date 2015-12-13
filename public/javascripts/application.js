@@ -34,10 +34,20 @@ $(function () {
   var $newReservations = $('#new-reservations');
   if ($newReservations.length) {
     ReactDOM.render(
-        React.createElement(components.Reservations.Hotel,
-            {action: $newReservations.data('action-url')}),
+        React.createElement(components.Reservations.Form,
+            {kind: 'hotel', action: $newReservations.data('action-url')}),
         $newReservations.find('#new-res-hotel').get(0)
-    )
+    );
+    ReactDOM.render(
+        React.createElement(components.Reservations.Form,
+            {kind: 'tour', action: $newReservations.data('action-url')}),
+        $newReservations.find('#new-res-tour').get(0)
+    );
+    ReactDOM.render(
+        React.createElement(components.Reservations.Form,
+            {kind: 'transport', action: $newReservations.data('action-url')}),
+        $newReservations.find('#new-res-transport').get(0)
+    );
   }
 
 });

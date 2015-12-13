@@ -7,30 +7,31 @@ var toOption = function(c) { return { value: c.company.id, title: c.company.name
     TOURS = COMPANIES.filter(forKind('tour')).map(toOption),
     TRANSPORTS = COMPANIES.filter(forKind('transport')).map(toOption);
 
-var Hotel = React.createClass({
-  displayName: 'Hotel',
+function reservationTransfer(res) {
+  var dropOff = [
+    new Date(res.departure).toDateString(),
+    res.departure_time, res.dropoff_location
+  ].filter(Boolean).join(' ');
+
+  var pickUp = [
+    new Date(res.arrival).toDateString(),
+    res.arrival_time, res.pickup_location
+  ].filter(Boolean).join(' ');
+
+  return {drop_off: dropOff, pick_up: pickUp}
+}
+
+var Form = React.createClass({
+  displayName: 'Form',
   mixins: [React.addons.LinkedStateMixin],
 
   getInitialState: function() {
     var res = this.props.reservation,
         defaults = this.props.defaults || {},
-        pickUp, dropOff;
-    
+        pickUp, dropOff, transfer;
+
     if (res) {
-      dropOff = [
-        new Date(res.departure).toDateString(),
-        res.departure_time, res.dropoff_location
-      ].filter(Boolean).join(' ');
-
-      pickUp = [
-        new Date(res.arrival).toDateString(),
-        res.arrival_time, res.pickup_location
-      ].filter(Boolean).join(' ');
-
-      return _.assign({
-        pick_up: pickUp,
-        drop_off: dropOff
-      }, res);
+      return _.assign(reservationTransfer(res), res);
     }
     else {
       return {
@@ -54,12 +55,20 @@ var Hotel = React.createClass({
   },
 
   render: function() {
-    var hiddenId;
+    var hiddenId, companies, kind;
 
     if (this.state.id) {
       hiddenId = (
         <input type="hidden" name="reservation[id]" value={this.state.id} />
       );
+    }
+
+    kind = this.props.kind[0].toUpperCase() + this.props.kind.substr(1);
+
+    switch (this.props.kind) {
+      case 'hotel':     companies = HOTELS; break;
+      case 'tour':      companies = TOURS; break;
+      case 'transport': companies = TRANSPORTS; kind = 'Operator'; break;
     }
 
     return (
@@ -80,8 +89,8 @@ var Hotel = React.createClass({
 
           <div className="col-xs-12 col-sm-3">
             <Forms.SelectField id="reservation-company_id" name="reservation[company_id]"
-                              title="Hotel" prompt="Select a Company" required={true}
-                              value={this.linkState('company_id')} options={HOTELS} />
+                              title={kind} prompt="Select a Company" required={true}
+                              value={this.linkState('company_id')} options={companies} />
           </div>
 
           <div className="col-xs-6 col-sm-3">
@@ -126,5 +135,5 @@ var Hotel = React.createClass({
 });
 
 module.exports = {
-  Hotel: Hotel
+  Form: Form
 }
