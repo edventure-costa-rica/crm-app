@@ -9,7 +9,7 @@ var toOption = function(c) { return { value: c.company.id, title: c.company.name
 
 var Hotel = React.createClass({
   displayName: 'Hotel',
-  mixins: [LinkedStateMixin],
+  mixins: [React.addons.LinkedStateMixin],
 
   getInitialState: function() {
     var res = this.props.reservation,
@@ -54,7 +54,7 @@ var Hotel = React.createClass({
   },
 
   render: function() {
-    var hiddenId, rackPrice = this.state.net_price;
+    var hiddenId;
 
     if (this.state.id) {
       hiddenId = (
@@ -67,37 +67,36 @@ var Hotel = React.createClass({
         <form className="form" method="post" action={this.props.action}>
           {hiddenId}
 
-          <div className="col-xs-3 col-sm-2">
+          <div className="col-xs-12 col-sm-3">
             <Forms.PaxField id="reservation-pax" name="reservation[pax]"
                             title="Pax" required={true}
                             value={this.linkState('num_people')} />
           </div>
 
-          <div className="col-xs-6 col-sm-6">
+          <div className="col-xs-12 col-sm-6">
             <Forms.TextField id="reservation-services" name="reservation[services]"
                              title="Services" value={this.linkState('services')} />
           </div>
 
-          <div className="col-xs-3 col-sm-4">
+          <div className="col-xs-12 col-sm-3">
             <Forms.SelectField id="reservation-company_id" name="reservation[company_id]"
                               title="Hotel" prompt="Select a Company" required={true}
                               value={this.linkState('company_id')} options={HOTELS} />
           </div>
 
           <div className="col-xs-6 col-sm-3">
-            <Forms.NumberField id="reservation-net_price" name="reservation[net_price]"
-                               title="Net Price"
-                               onBlur={this.setDefaultRackPrice}
-                               value={this.linkState('net_price')}
-                               required={true} min={0} step={0.01} />
+            <Forms.PriceField id="reservation-net_price" name="reservation[net_price]"
+                              title="Net Price"
+                              onBlur={this.setDefaultRackPrice}
+                              value={this.linkState('net_price')}
+                              required={true} min={0} step={0.01} />
           </div>
 
           <div className="col-xs-6 col-sm-3">
-            <Forms.NumberField id="reservation-price" name="reservation[price]"
-                               title="Rack Price" 
-                               defaultValue={rackPrice}
-                               value={this.linkState('price')}
-                               required={true} min={0} step={0.01} />
+            <Forms.PriceField id="reservation-price" name="reservation[price]"
+                              title="Rack Price"
+                              value={this.linkState('price')}
+                              required={true} min={0} step={0.01} />
           </div>
 
           <div className="col-xs-6 col-sm-3">
@@ -112,6 +111,13 @@ var Hotel = React.createClass({
                                  title="Drop Off"
                                  value={this.linkState('dropOff')}
                                  required={true} />
+          </div>
+
+          <div className="col-xs-12 text-right">
+            <button className="btn btn-primary" type="submit">
+              <i className="glyphicon glyphicon-ok"></i>
+              &nbsp; Save
+            </button>
           </div>
         </form>
       </div>
