@@ -6,9 +6,10 @@ namespace :build do
   end
 
   task :components do
+    browserify = File.join(RAILS_ROOT, 'node_modules/.bin/browserify')
     Dir.chdir File.join(RAILS_ROOT, 'public/javascripts') do
       mkdir 'pack' unless Dir.exists? 'pack'
-      sh 'browserify -t reactify --debug ' +
+      sh browserify + ' -t reactify --debug ' +
              '-r ./components/index.js:components ' +
              '-p [minifyify --map components.map.json --output pack/components.map.json] ' +
              '-o pack/components.min.js'

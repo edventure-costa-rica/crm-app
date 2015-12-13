@@ -47,7 +47,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # show trips on their own, plus a list of upcoming trips
   map.resources :trips, :collection => {upcoming: :get, pending: :get} do |trip|
-    trip.resources :reservations, collection: {pending: :get, confirmed: :get}
+    trip.resources :reservations, collection: {pending: :get, confirmed: :get, paid: :get}
   end
 
   map.resources :reservations, collection: {unpaid: :get, paid: :get}

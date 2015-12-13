@@ -33,27 +33,8 @@
     <th><%= cl_f :contact_name %></th>
     <th><%= cl_f :family_name %></th>
     <th><%= cl_f :email %></th>
+    <th><%= cl_f :phone %></th>
     <th></th>
   </tr>
 
-  <% if defined? @results %>
-    <% @results.each do |client| %>
-      <tr>
-        <td><%= client.contact_name %></td>
-        <td><%= client.family_name %></td>
-        <td><%= client.email %></td>
-        <td>
-          <% link_to workflow_trips_url(client), class: 'btn btn-default btn-xs' do %>
-            <i class="glyphicon glyphicon-arrow-right"></i>
-            <span class="hidden-xs">Next</span>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-    <% if @results.empty? %>
-      <tr>
-        <td colspan="4" class="text-center"><em>No results found</em></td>
-      </tr>
-    <% end %>
-  <% end %>
 </table>

@@ -1,6 +1,5 @@
-var company_data = <%= @companies.
-  map { |c| { :label => c.name, :value => c.id } }.
-  to_json
-%>;
+(function(global) {
+  var companies = <%= @companies.to_json %>;
 
-loadData(company_data);
+  global.COMPANIES = companies;
+})(this);

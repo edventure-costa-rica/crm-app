@@ -1,4 +1,6 @@
 module.exports = {
   Hello: require('./hello'),
-  Search: require('./search')
+  Search: require('./search'),
+  Forms: require('./forms'),
+  Reservations: require('./reservations')
 };

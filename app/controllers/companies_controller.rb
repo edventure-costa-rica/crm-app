@@ -1,6 +1,7 @@
 class CompaniesController < ApplicationController
   # GET /companies
   # GET /companies.xml
+  # GET /companies.js
   def index
     query = []
     binds = []
