@@ -6,7 +6,7 @@ var TextField = React.createClass({
   render: function() {
     return (
       <div className="form-group">
-        <label for={this.props.id}>
+        <label htmlFor={this.props.id}>
           {this.props.title}
         </label>
 
@@ -29,7 +29,7 @@ var NumberField = React.createClass({
 
     return (
       <div className="form-group">
-        <label for={this.props.id}>
+        <label htmlFor={this.props.id}>
           {this.props.title}
         </label>
         
@@ -61,19 +61,19 @@ var SelectField = React.createClass({
       }
     }).map(function (opt) {
       return (
-        <option value={opt.value}>{opt.title}</option>
+        <option key={opt.value} value={opt.value}>{opt.title}</option>
       );
     }).value();
 
     if (this.props.prompt) {
       options.unshift(
-        <option>{this.props.prompt}</option>
+        <option key="prompt">{this.props.prompt}</option>
       );
     }
 
     return (
       <div className="form-group">
-        <label for={this.props.id}>
+        <label htmlFor={this.props.id}>
           {this.props.title}
         </label>
         
@@ -123,7 +123,7 @@ var PaxField = React.createClass({
   render: function() {
     return (
       <div className="form-group">
-        <label for={this.props.id}>
+        <label htmlFor={this.props.id}>
           {this.props.title}
         </label>
         
@@ -151,7 +151,7 @@ var TransferField = React.createClass({
   render: function() {
     return (
       <div className="form-group">
-        <label for={this.props.id}>
+        <label htmlFor={this.props.id}>
           {this.props.title}
         </label>
         
@@ -182,7 +182,7 @@ var PriceField = React.createClass({
 
     return (
       <div className="form-group">
-        <label for={this.props.id}>
+        <label htmlFor={this.props.id}>
           {this.props.title}
         </label>
         
@@ -206,6 +206,7 @@ var PriceField = React.createClass({
 
 module.exports = {
   PaxField: PaxField,
+  PriceField: PriceField,
   TransferField: TransferField,
   TextField: TextField,
   NumberField: NumberField,
