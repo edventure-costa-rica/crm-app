@@ -48,7 +48,7 @@ var Hotel = React.createClass({
   setDefaultRackPrice: function(ev) {
     var value = Number(ev.target.value);
 
-    if (! this.state.price) {
+    if (! this.state.price && value) {
       this.setState({price: value})
     }
   },

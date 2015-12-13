@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :people, :except => [:new, :create, :destroy]
 
-  map.resources :regions, 
+  map.resources :regions,
     :only => [ :index, :create, :update, :destroy ] \
   do |region|
     region.resources :companies, :only => :index
@@ -9,11 +9,11 @@ ActionController::Routing::Routes.draw do |map|
 
   # weekly payment schedule lives inside 
   # the reservations controller
-  map.weekly_payments '/payments/week', 
-    :controller => 'reservations', 
+  map.weekly_payments '/payments/week',
+    :controller => 'reservations',
     :action     => 'weekly_payments'
   map.yearly_payments '/payments/:year',
-    :controller => 'reservations', 
+    :controller => 'reservations',
     :action     => 'yearly_payments',
     :defaults   => { :year => nil }
 
@@ -30,7 +30,7 @@ ActionController::Routing::Routes.draw do |map|
 
       # trips have reservations, really
       client.resources :trips do |trip|
-        trip.resources :reservations, 
+        trip.resources :reservations,
           :collection => { :vouchers => :get, :pays => :get },
           :member     => { :voucher  => :get, :pay  => :get }
       end
@@ -47,10 +47,12 @@ ActionController::Routing::Routes.draw do |map|
 
   # show trips on their own, plus a list of upcoming trips
   map.resources :trips, :collection => {upcoming: :get, pending: :get} do |trip|
-    trip.resources :reservations, collection: {pending: :get, confirmed: :get, paid: :get}
+    trip.resources :reservations,
+                   collection: {pending: :get, confirmed: :get, paid: :get}
   end
 
-  map.resources :reservations, collection: {unpaid: :get, paid: :get}
+  map.resources :reservations, collection: {unpaid: :get, paid: :get},
+                member: {email: :get, confirm: :post}
 
   map.day_calendar 'calendar/day', controller: :calendar, action: :day
   map.week_calendar 'calendar/week', controller: :calendar, action: :week
@@ -77,7 +79,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # Sample resource route with sub-resources:
   #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-  
+
   # Sample resource route with more complex sub-resources
   #   map.resources :products do |products|
   #     products.resources :comments
