@@ -1,0 +1,37 @@
+
+<h2>Add Reservation</h2>
+
+<ul class="nav nav-tabs">
+  <li class="active">
+    <a href="#hotel" data-toggle="tab">
+      <i class="glyphicon glyphicon-bed"></i>
+      Hotel
+    </a>
+  </li>
+  <li>
+    <a href="#transport" data-toggle="tab">
+      <i class="glyphicon glyphicon-road"></i>
+      Transport
+    </a>
+  </li>
+  <li>
+    <a href="#tour" data-toggle="tab">
+      <i class="glyphicon glyphicon-sunglasses"></i>
+      Tour
+    </a>
+  </li>
+</ul>
+
+<div class="tab-content" id="new-reservations"
+     data-action-url="<%= new_client_trip_reservation_url([@trip.client, @trip]) %>">
+  <div class="tab-pane active" id="hotel">
+    <div id="new-res-hotel"></div>
+  </div>
+  <div class="tab-pane" id="transport">
+    <div id="new-res-transport"></div>
+  </div>
+  <div class="tab-pane" id="tour">
+    <div id="new-res-tour"></div>
+  </div>
+</div>
+
