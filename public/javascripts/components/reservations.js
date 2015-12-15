@@ -55,13 +55,16 @@ var Form = React.createClass({
   },
 
   render: function() {
-    var hiddenId, companies, kind;
+    var hiddenId, method = this.props.method,
+        companies, kind;
 
     if (this.state.id) {
       hiddenId = (
         <input type="hidden" name="reservation[id]" value={this.state.id} />
       );
     }
+
+    if (! method) method = this.state.id ? 'post' : 'put'
 
     kind = this.props.kind[0].toUpperCase() + this.props.kind.substr(1);
 
@@ -74,6 +77,7 @@ var Form = React.createClass({
     return (
       <div className="row">
         <form className="form" method="post" action={this.props.action}>
+          <input type="hidden" name=".method" value={method} />
           {hiddenId}
 
           <div className="col-xs-12 col-sm-3">
