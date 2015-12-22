@@ -1,5 +1,8 @@
 var _ = require('lodash');
 var Forms = require('./forms');
+var React = require('react');
+
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
 var toOption = function(c) { return { value: c.company.id, title: c.company.name } },
     forKind = function(kind) { return function(c) { return c.company.kind === kind } },
@@ -11,38 +14,38 @@ function reservationTransfer(res) {
   var dropOff = [
     new Date(res.departure).toDateString(),
     res.departure_time, res.dropoff_location
-  ].filter(Boolean).join(' ');
+  ].filter(Boolean).join(' / ');
 
   var pickUp = [
     new Date(res.arrival).toDateString(),
     res.arrival_time, res.pickup_location
-  ].filter(Boolean).join(' ');
+  ].filter(Boolean).join(' / ');
 
   return {drop_off: dropOff, pick_up: pickUp}
 }
 
 var Form = React.createClass({
   displayName: 'Form',
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
 
   getInitialState: function() {
     var res = this.props.reservation,
         defaults = this.props.defaults || {},
-        pickUp, dropOff, transfer;
+        departure, arrival;
 
     if (res) {
       return _.assign(reservationTransfer(res), res);
     }
     else {
-      return {
-        num_people: defaults.num_people,
-        arrival: defaults.arrival,
-        arrival_time: defaults.arrival_time,
+      departure = _.compact([defaults.departure, defaults.departure_time]).join(' ')
+      arrival = _.compact([defaults.arrival, defaults.arrival_time]).join(' ')
+
+      return _.assign(defaults, {
+        arrival_date_time: arrival,
+        departure_date_time: departure,
         dropoff_location: defaults.dropoff_location,
-        departure: defaults.departure,
-        departure_time: defaults.departure_time,
         pickup_location: defaults.pickup_location
-      };
+      });
     }
   },
 
@@ -81,7 +84,7 @@ var Form = React.createClass({
           {hiddenId}
 
           <div className="col-xs-12 col-sm-3">
-            <Forms.PaxField id="reservation-pax" name="reservation[pax]"
+            <Forms.PaxField id="reservation-num_people" name="reservation[num_people]"
                             title="Pax" required={true}
                             value={this.linkState('num_people')} />
           </div>
@@ -113,17 +116,29 @@ var Form = React.createClass({
           </div>
 
           <div className="col-xs-6 col-sm-3">
-            <Forms.TransferField id="reservation-pick_up" name="reservation[pick_up]"
-                                 title="Pick Up"
-                                 value={this.linkState('pickUp')}
+            <Forms.DateTimeField id="reservation-arrival_date_time" name="reservation[arrival_date_time]"
+                                 title="Arrival"
+                                 value={this.linkState('arrival_date_time')}
                                  required={true} />
           </div>
 
           <div className="col-xs-6 col-sm-3">
-            <Forms.TransferField id="reservation-drop_off" name="reservation[drop_off]"
-                                 title="Drop Off"
-                                 value={this.linkState('dropOff')}
+            <Forms.DateTimeField id="reservation-departure_date_time" name="reservation[departure_date_time]"
+                                 title="Departure"
+                                 value={this.linkState('departure_date_time')}
                                  required={true} />
+          </div>
+
+          <div className="col-xs-6">
+            <Forms.TextField id="reservation-dropoff" name="reservation[dropoff]"
+                             title="Drop Off Location"
+                             value={this.linkState('dropoff')} />
+          </div>
+
+          <div className="col-xs-6">
+            <Forms.TextField id="reservation-pickup" name="reservation[pickup]"
+                             title="Pick Up Location"
+                             value={this.linkState('pickup')} />
           </div>
 
           <div className="col-xs-12 text-right">

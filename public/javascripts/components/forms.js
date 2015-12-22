@@ -1,4 +1,7 @@
+var React = require('react');
 var _ = require('lodash');
+var moment = require('moment');
+var DateTime = require('react-datetime');
 
 var TextField = React.createClass({
   displayName: 'TextField',
@@ -147,8 +150,13 @@ var PaxField = React.createClass({
   }
 });
 
-var TransferField = React.createClass({
-  displayName: 'TransferField',
+var DateTimeField = React.createClass({
+  displayName: 'DateTimeField',
+
+  pickDate: function() {
+    console.log(arguments);
+  },
+
 
   render: function() {
     var events = _.pick(this.props, 'onBlur onFocus onChange'.split(' '));
@@ -165,12 +173,13 @@ var TransferField = React.createClass({
           </div>
 
           <input type="text" className="form-control" {...events}
-                 placeholder="date, time, and location"
+                 placeholder="date and time"
                  required={Boolean(this.props.required)}
                  valueLink={this.props.value}
                  name={this.props.name}
                  id={this.props.id} />
 
+          <DateTime />
         </div>
       </div>
     );
@@ -213,7 +222,7 @@ var PriceField = React.createClass({
 module.exports = {
   PaxField: PaxField,
   PriceField: PriceField,
-  TransferField: TransferField,
+  DateTimeField: DateTimeField,
   TextField: TextField,
   NumberField: NumberField,
   SelectField: SelectField

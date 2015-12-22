@@ -12,6 +12,7 @@ GEM
     activeresource (2.3.18)
       activesupport (= 2.3.18)
     activesupport (2.3.18)
+    chronic (0.10.2)
     daemons (1.2.3)
     eventmachine (1.0.8)
     iconv (1.0.4)
@@ -45,6 +46,7 @@ PLATFORMS
 
 DEPENDENCIES
   Ascii85 (~> 1.0.0)
+  chronic
   iconv
   pdf-reader (~> 0.8.6)
   prawn (~> 0.10)

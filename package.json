@@ -20,6 +20,11 @@
     "reactify": "^1.1.1"
   },
   "dependencies": {
-    "lodash": "^3.10.1"
+    "lodash": "^3.10.1",
+    "moment": "^2.10.6",
+    "react": "^0.14.3",
+    "react-addons-linked-state-mixin": "^0.14.3",
+    "react-datetime": "^2.0.1",
+    "react-dom": "^0.14.3"
   }
 }

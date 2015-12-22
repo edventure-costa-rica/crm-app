@@ -15,3 +15,5 @@ gem 'prawn', '~> 0.10'
 gem 'sqlite3'
 
 gem 'thin'
+
+gem 'chronic'

@@ -85,7 +85,7 @@ class ReservationsController < ApplicationController
   # POST /reservations
   # POST /reservations.xml
   def create
-    @reservation = Reservation.new(params[:reservation])
+    @reservation = Reservation.new(new_reservation_params)
     @client = Client.find(params[:client_id])
     @trip = Trip.find(params[:trip_id])
 
@@ -93,10 +93,11 @@ class ReservationsController < ApplicationController
       if @reservation.save
         format.html { redirect_to([@client, @trip, @reservation], :notice => 'Reservation was successfully created.') }
         format.xml  { render :xml => @reservation, :status => :created, :location => @reservation }
+        format.json { render json: @reservation, status: :created }
       else
-        @companies = []
         format.html { render :action => "new" }
         format.xml  { render :xml => @reservation.errors, :status => :unprocessable_entity }
+        format.json { render json: @reservation.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -243,4 +244,19 @@ class ReservationsController < ApplicationController
     @reservations = @trip.reservations.find(:all, conditions: conditions)
   end
 
+
+  private
+
+  def new_reservation_params
+    params[:reservation].tap do |input|
+      arrival = Chronic.parse input.delete(:arrival_date_time)
+      departure = Chronic.parse input.delete(:departure_date_time)
+
+      input[:arrival] = arrival.to_date
+      input[:arrival_time] = arrival.strftime('%l %P')
+
+      input[:departure] = departure.to_date
+      input[:departure_time] = departure.strftime('%l %P')
+    end
+  end
 end
