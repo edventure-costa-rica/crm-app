@@ -1,7 +1,8 @@
 var React = require('react');
 var _ = require('lodash');
 var moment = require('moment');
-var DateTime = require('react-datetime');
+var chrono = require('chrono-node');
+var DatePicker = require('react-date-picker');
 
 var TextField = React.createClass({
   displayName: 'TextField',
@@ -153,40 +154,73 @@ var PaxField = React.createClass({
 var DateTimeField = React.createClass({
   displayName: 'DateTimeField',
 
-  showPicker: function(ev) {
+  handleShowPicker: function(ev) {
     ev.preventDefault();
 
-    this.refs.picker.openCalendar();
+    var valid = this.validateValue(),
+        date = moment(this.parseValue());
+
+    this.setState({open: ! this.state.open, date: date, valid: valid});
   },
 
-  pickDate: function(dt) {
-    if (typeof dt === 'string') {
-      this.setState({valid: false})
-    }
-    else {
-      this.props.value.requestChange(dt.format('YYYY-MM-DD h:mm A'))
-    }
+  handlePickDate: function(_, selected) {
+    var prev = this.state.date;
+    var dateTime = moment(selected)
+        .hour(prev.hour())
+        .minute(prev.minute())
+        .second(prev.second());
+
+    var formatted = dateTime.format('YYYY-MM-DD h:mm A');
+    this.props.value.requestChange(formatted);
+
+    this.setState({date: dateTime, valid: true});
+
+    this.hidePicker();
+  },
+
+  hidePicker: function() {
+    this.setState({open: false});
+  },
+
+  validateValue: function() {
+    if (! this.props.value.value) return true;
+
+    var dt = this.parseValue();
+    return moment(dt).isValid();
+  },
+
+  parseValue: function() {
+    var string = this.props.value.value;
+
+    if (! string) return new Date();
+
+    return chrono.parseDate(string);
   },
 
   getInitialState: function() {
-    return {valid: true};
+    var value = this.parseValue(),
+        valid = this.validateValue(),
+        initialDate = valid ? moment(value) : moment().startOf('day');
+
+    return {open: false, valid: valid, date: initialDate};
   },
 
   render: function() {
     var events = _.pick(this.props, 'onBlur onFocus onChange'.split(' '));
-
-    var picker = React.createElement(DateTime, {
-      input: false,
-      defaultValue: this.props.value.value,
-      onChange: this.pickDate,
-      open: false,
-      dateFormat: 'YYYY-MM-DD',
-      timeFormat: 'h:mm A',
-      ref: 'picker'
-    });
-
     var classes = 'form-group datetime-container';
+    var picker;
+
     if (! this.state.valid) classes += ' has-error';
+
+    if (this.state.open) {
+      picker = React.createElement(DatePicker, {
+        minDate: this.props.min,
+        maxDate: this.props.max,
+        date: this.state.date,
+        onChange: this.handlePickDate,
+        hideFooter: true
+      });
+    }
 
     return (
       <div className={classes}>
@@ -196,7 +230,8 @@ var DateTimeField = React.createClass({
         
         <div className="input-group">
 
-          <input type="text" className="form-control" {...events}
+          <input type="datetime"
+                 className="form-control" {...events}
                  placeholder="date and time"
                  required={Boolean(this.props.required)}
                  valueLink={this.props.value}
@@ -209,7 +244,7 @@ var DateTimeField = React.createClass({
 
           <div className="input-group-btn">
             <button className="btn btn-default" tabIndex="-1"
-                    onClick={this.showPicker}>
+                    onClick={this.handleShowPicker}>
               <i className="glyphicon glyphicon-calendar" />
             </button>
           </div>
