@@ -4,6 +4,8 @@ var React = require('react');
 
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
+if (typeof window.COMPANIES === 'undefined') window.COMPANIES = [];
+
 var toOption = function(c) { return { value: c.company.id, title: c.company.name } },
     forKind = function(kind) { return function(c) { return c.company.kind === kind } },
     HOTELS = COMPANIES.filter(forKind('hotel')).map(toOption),
