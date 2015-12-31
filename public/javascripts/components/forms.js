@@ -161,6 +161,13 @@ var DateTimeField = React.createClass({
   render: function() {
     var events = _.pick(this.props, 'onBlur onFocus onChange'.split(' '));
 
+    var datePickerProps = {
+      input: false,
+      open: !! this.state.showPicker
+    };
+
+    var datePicker = React.createElement(Datetime, datePickerProps);
+
     return (
       <div className="form-group">
         <label htmlFor={this.props.id}>
@@ -168,6 +175,7 @@ var DateTimeField = React.createClass({
         </label>
         
         <div className="input-group">
+
           <div className="input-group-addon">
             <i className="glyphicon glyphicon-transfer" />
           </div>
@@ -179,7 +187,7 @@ var DateTimeField = React.createClass({
                  name={this.props.name}
                  id={this.props.id} />
 
-          <DateTime />
+          <datePicker />
         </div>
       </div>
     );
