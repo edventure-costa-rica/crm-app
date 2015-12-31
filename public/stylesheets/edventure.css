@@ -49,3 +49,14 @@ input[type=search] {
   from { -webkit-transform: rotate(0deg); }
   to { -webkit-transform: rotate(360deg); }
 }
+
+
+.datetime-container {
+  position: relative;
+}
+
+.datetime-container .datetime {
+  position: absolute;
+  top: 2.5em;
+  z-index: 1;
+}

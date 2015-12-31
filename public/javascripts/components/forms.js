@@ -153,32 +153,48 @@ var PaxField = React.createClass({
 var DateTimeField = React.createClass({
   displayName: 'DateTimeField',
 
-  pickDate: function() {
-    console.log(arguments);
+  showPicker: function(ev) {
+    ev.preventDefault();
+
+    this.refs.picker.openCalendar();
   },
 
+  pickDate: function(dt) {
+    if (typeof dt === 'string') {
+      this.setState({valid: false})
+    }
+    else {
+      this.props.value.requestChange(dt.format('YYYY-MM-DD h:mm A'))
+    }
+  },
+
+  getInitialState: function() {
+    return {valid: true};
+  },
 
   render: function() {
     var events = _.pick(this.props, 'onBlur onFocus onChange'.split(' '));
 
-    var datePickerProps = {
+    var picker = React.createElement(DateTime, {
       input: false,
-      open: !! this.state.showPicker
-    };
+      defaultValue: this.props.value.value,
+      onChange: this.pickDate,
+      open: false,
+      dateFormat: 'YYYY-MM-DD',
+      timeFormat: 'h:mm A',
+      ref: 'picker'
+    });
 
-    var datePicker = React.createElement(Datetime, datePickerProps);
+    var classes = 'form-group datetime-container';
+    if (! this.state.valid) classes += ' has-error';
 
     return (
-      <div className="form-group">
+      <div className={classes}>
         <label htmlFor={this.props.id}>
           {this.props.title}
         </label>
         
         <div className="input-group">
-
-          <div className="input-group-addon">
-            <i className="glyphicon glyphicon-transfer" />
-          </div>
 
           <input type="text" className="form-control" {...events}
                  placeholder="date and time"
@@ -187,7 +203,16 @@ var DateTimeField = React.createClass({
                  name={this.props.name}
                  id={this.props.id} />
 
-          <datePicker />
+          <div className="datetime">
+            {picker}
+          </div>
+
+          <div className="input-group-btn">
+            <button className="btn btn-default" tabIndex="-1"
+                    onClick={this.showPicker}>
+              <i className="glyphicon glyphicon-calendar" />
+            </button>
+          </div>
         </div>
       </div>
     );
