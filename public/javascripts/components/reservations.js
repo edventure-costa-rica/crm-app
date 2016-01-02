@@ -16,20 +16,26 @@ var Form = React.createClass({
   displayName: 'Form',
   mixins: [LinkedStateMixin],
 
-  getInitialState: function() {
-    var res = this.props.reservation,
-        defaults = res ? res.reservation : this.props.defaults || {},
+  getInitialState: function(props) {
+    props = props || this.props;
+
+    var res = props.reservation,
+        defaults = res ? res.reservation : props.defaults || {},
         departure, arrival;
 
     departure = _.compact([defaults.departure, defaults.departure_time]).join(' ');
     arrival = _.compact([defaults.arrival, defaults.arrival_time]).join(' ');
 
-    return _.assign(defaults, {
+    return _.assign({
       arrival_date_time: arrival,
       departure_date_time: departure,
       dropoff_location: defaults.dropoff_location,
       pickup_location: defaults.pickup_location
-    });
+    }, defaults);
+  },
+
+  componentWillReceiveProps: function(props) {
+    this.setState(this.getInitialState(props));
   },
 
   setDefaultRackPrice: function(ev) {
@@ -113,20 +119,20 @@ var Form = React.createClass({
           </div>
 
           <div className="col-xs-6">
-            <Forms.TextField id="reservation-dropoff" name="reservation[dropoff]"
-                             title="Drop Off Location"
-                             value={this.linkState('dropoff')} />
-          </div>
-
-          <div className="col-xs-6">
             <Forms.TextField id="reservation-pickup" name="reservation[pickup]"
                              title="Pick Up Location"
                              value={this.linkState('pickup')} />
           </div>
 
+          <div className="col-xs-6">
+            <Forms.TextField id="reservation-dropoff" name="reservation[dropoff]"
+                             title="Drop Off Location"
+                             value={this.linkState('dropoff')} />
+          </div>
+
           <div className="col-xs-12 text-right">
             <button className="btn btn-primary" type="submit">
-              <i className="glyphicon glyphicon-ok"></i>
+              <i className="glyphicon glyphicon-ok" />
               &nbsp; Save
             </button>
           </div>
@@ -138,4 +144,4 @@ var Form = React.createClass({
 
 module.exports = {
   Form: Form
-}
+};
