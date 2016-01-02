@@ -64,6 +64,10 @@ class Trip < ActiveRecord::Base
     num_disabled > 0
   end
 
+  def pax
+    [total_people, num_children, num_disabled].join('/').gsub(/\/0(\/0)?$/, '')
+  end
+
   def total_rack_price
     reservations.to_a.sum { |r| r.price.to_f }
   end
