@@ -227,21 +227,21 @@ class ReservationsController < ApplicationController
     @trip = Trip.find(params[:trip_id])
     conditions = {confirmed: false, paid: false}
     conditions[:kind] = params[:kind] if params.has_key? :kind
-    @reservations = @trip.reservations.find(:all, conditions: conditions)
+    @reservations = @trip.reservations.find(:all, conditions: conditions, order: 'arrival DESC')
   end
 
   def confirmed
     @trip = Trip.find(params[:trip_id])
     conditions = {confirmed: true, paid: false}
     conditions[:kind] = params[:kind] if params.has_key? :kind
-    @reservations = @trip.reservations.find(:all, conditions: conditions)
+    @reservations = @trip.reservations.find(:all, conditions: conditions, order: 'arrival DESC')
   end
 
   def paid
     @trip = Trip.find(params[:trip_id])
     conditions = {confirmed: true, paid: true}
     conditions[:kind] = params[:kind] if params.has_key? :kind
-    @reservations = @trip.reservations.find(:all, conditions: conditions)
+    @reservations = @trip.reservations.find(:all, conditions: conditions, order: 'arrival DESC')
   end
 
 
