@@ -6,15 +6,13 @@
 
 <%= render partial: 'trips/quick' %>
 
-<%= render partial: 'reservations/new' %>
-
 <h1>Pending Reservations</h1>
 
 <table class="table table-condensed table-striped">
-  <tr>
+  <tr class="row">
     <th>Pax</th>
-    <th>Services</th>
     <th>Company</th>
+    <th>Services</th>
     <th>Net Price</th>
     <th>Rack Price</th>
     <th>Pick Up</th>
@@ -23,12 +21,23 @@
   </tr>
 
   <% @reservations.each do |res| %>
-    <tr>
+    <tr class="row">
       <td><%= res.pax %></td>
-      <td><%= res.services %></td>
-      <td><%= res.company.name %></td>
-      <td><%= res.net_price %></td>
-      <td><%= res.price %></td>
+      <td class="col-xs-3 col-sm-2">
+        <% if res.company.kind == 'hotel' %>
+          <i class="glyphicon glyphicon-bed"></i>
+        <% elsif res.company.kind == 'transport' %>
+          <i class="glyphicon glyphicon-road"></i>
+        <% elsif res.company.kind == 'tour' %>
+          <i class="glyphicon glyphicon-sunglasses"></i>
+        <% else %>
+          <i class="glyphicon glyphicon-question-sign"></i>
+        <% end %>
+        <%= res.company.name %>
+      </td>
+      <td class="col-sm-2"><%= res.services %></td>
+      <td class="col-sm-1"><%= res.net_price %></td>
+      <td class="col-sm-1"><%= res.price %></td>
       <td><%= res.pickup %></td>
       <td><%= res.dropoff %></td>
       <td>
@@ -46,5 +55,7 @@
     </tr>
   <% end %>
 </table>
+
+<%= render partial: 'reservations/new' %>
 
 <%= javascript_include_tag companies_url(format: :js) %>
