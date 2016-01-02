@@ -37,7 +37,7 @@ $(function () {
   );
 
   // always select the first empty text field
-  $('.nav-tabs a[data-toggle="tab"]').on('shown.bs.tab', function(ev) {
+  $('a[data-toggle="tab"]').on('shown.bs.tab', function(ev) {
     var target = $(ev.target).attr('href');
     var firstInput = $(target).find('input[type="text"], textarea')
         .filter(function() { return this.value === '' })
