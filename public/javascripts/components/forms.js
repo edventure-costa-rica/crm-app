@@ -103,7 +103,7 @@ var PaxField = React.createClass({
       return {
         total: (parts[0] || 0),
         children: (parts[1] || 0), 
-        disabled: (parsts[2] || 0)
+        disabled: (parts[2] || 0)
       };
     },
 
@@ -139,7 +139,7 @@ var PaxField = React.createClass({
           </div>
 
           <input type="text" className="form-control" {...events}
-                 placeholder="pax"
+                 placeholder="number of people"
                  required={Boolean(this.props.required)}
                  valueLink={this.props.value}
                  name={this.props.name}
