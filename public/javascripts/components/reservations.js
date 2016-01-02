@@ -12,43 +12,23 @@ var toOption = function(c) { return { value: c.company.id, title: c.company.name
     TOURS = COMPANIES.filter(forKind('tour')).map(toOption),
     TRANSPORTS = COMPANIES.filter(forKind('transport')).map(toOption);
 
-function reservationTransfer(res) {
-  var dropOff = [
-    new Date(res.departure).toDateString(),
-    res.departure_time, res.dropoff_location
-  ].filter(Boolean).join(' / ');
-
-  var pickUp = [
-    new Date(res.arrival).toDateString(),
-    res.arrival_time, res.pickup_location
-  ].filter(Boolean).join(' / ');
-
-  return {drop_off: dropOff, pick_up: pickUp}
-}
-
 var Form = React.createClass({
   displayName: 'Form',
   mixins: [LinkedStateMixin],
 
   getInitialState: function() {
-    var res = this.props.reservation,
-        defaults = this.props.defaults || {},
+    var defaults = this.props.reservation || this.props.defaults || {},
         departure, arrival;
 
-    if (res) {
-      return _.assign(reservationTransfer(res), res);
-    }
-    else {
-      departure = _.compact([defaults.departure, defaults.departure_time]).join(' ')
-      arrival = _.compact([defaults.arrival, defaults.arrival_time]).join(' ')
+    departure = _.compact([defaults.departure, defaults.departure_time]).join(' ');
+    arrival = _.compact([defaults.arrival, defaults.arrival_time]).join(' ');
 
-      return _.assign(defaults, {
-        arrival_date_time: arrival,
-        departure_date_time: departure,
-        dropoff_location: defaults.dropoff_location,
-        pickup_location: defaults.pickup_location
-      });
-    }
+    return _.assign(defaults, {
+      arrival_date_time: arrival,
+      departure_date_time: departure,
+      dropoff_location: defaults.dropoff_location,
+      pickup_location: defaults.pickup_location
+    });
   },
 
   setDefaultRackPrice: function(ev) {
