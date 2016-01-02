@@ -5,6 +5,9 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var components = require('components');
 
+var chrono = require('chrono-node');
+var moment = require('moment');
+
 $(function () {
 
   function toggleWithCheckbox(target, source, focus) {
@@ -33,6 +36,19 @@ $(function () {
       $mountSearch.get(0)
   );
 
+  // always select the first empty text field
+  $('.nav-tabs a[data-toggle="tab"]').on('shown.bs.tab', function(ev) {
+    var target = $(ev.target).attr('href');
+    var firstInput = $(target).find('input[type="text"], textarea')
+        .filter(function() { return this.value === '' })
+        .first().focus();
+
+    if (firstInput.length === 0) {
+      $(target).find('input[type="text"], textarea')
+          .first().select();
+    }
+  });
+
   var $newReservations = $('#new-reservations');
   if ($newReservations.length) {
     ReactDOM.render(
@@ -51,6 +67,52 @@ $(function () {
         $newReservations.find('#new-res-transport').get(0)
     );
   }
+
+  var $bookTransferIn = $('#book-transfer-in'),
+      $bookTransferOut = $('#book-transfer-out'),
+      $transferTab = $('#new-reservation-tabs').find('a[href="#transport"]');
+
+  $bookTransferIn.add($bookTransferOut).on('click', function (ev) {
+    var defaults = {}, date;
+
+    ev.preventDefault();
+
+    if (TRIP) {
+      defaults.num_people = TRIP.total_people;
+
+      if (this.id === $bookTransferIn.attr('id')) {
+        date = moment(chrono.parseDate(TRIP.arrival));
+
+        if (date.isValid())
+          defaults.arrival_date_time = date.format('YYYY-MM-DD h:mm A');
+
+        if (TRIP.arrival_flight)
+          defaults.pickup_location = TRIP.arrival_flight;
+      }
+      else {
+        date = moment(chrono.parseDate(TRIP.departure));
+
+        if (date.isValid())
+          defaults.departure_date_time = date.format('YYYY-MM-DD h:mm A');
+
+        if (TRIP.departure_flight)
+          defaults.dropoff_location = TRIP.departure_flight;
+      }
+
+      console.log('using defaults', defaults);
+    }
+
+    ReactDOM.render(
+        React.createElement(components.Reservations.Form, {
+          kind: 'transport',
+          action: $newReservations.data('action-url'),
+          defaults: defaults
+        }),
+
+        $newReservations.find('#new-res-transport').get(0),
+        function() { $transferTab.tab('show') }
+    );
+  });
 
   var $quickTrip = $('#quick-trip'),
       $quickTripView = $('#trip-quick-details'),
