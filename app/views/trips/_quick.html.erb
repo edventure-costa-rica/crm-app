@@ -1,5 +1,7 @@
 <h2>Trip Details <small><%= @trip %></small></h2>
 
+<script>var TRIP = (<%= @trip.to_json %>).trip;</script>
+
 <div class="row" id="trip-quick-details">
   <div class="col-xs-12">
     <table class="table">
