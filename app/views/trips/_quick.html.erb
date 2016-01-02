@@ -1,3 +1,50 @@
-<% form_for @trip do |f| %>
-  <%= @trip %>
-<% end %>
+<h2>Trip Details <small><%= @trip %></small></h2>
+
+<div class="row" id="trip-quick-details">
+  <div class="col-xs-12">
+    <table class="table">
+      <tr>
+        <th><i class="glyphicon glyphicon-user"></i></th>
+        <th>Arrival</th>
+        <th>Location / Flight</th>
+        <th>Departure</th>
+        <th>Location / Flight</th>
+      </tr>
+
+      <tr>
+        <td><%= @trip.pax %></td>
+        <td><%= l @trip.arrival.to_datetime %></td>
+        <td><%= @trip.arrival_flight %></td>
+        <td><%= l @trip.departure.to_datetime %></td>
+        <td><%= @trip.departure_flight %></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="col-xs-12">
+    <div class="text-right">
+
+      <div class="btn-group">
+        <button class="btn btn-primary" id="show-quick-trip-form">
+          <i class="glyphicon glyphicon-pencil"></i>
+          Edit
+        </button>
+
+        <button class="btn btn-default" id="book-transfer-in">
+          <i class="glyphicon glyphicon-transfer"></i>
+          Transfer In
+        </button>
+
+        <button class="btn btn-default" id="book-transfer-out">
+          <i class="glyphicon glyphicon-transfer"></i>
+          Transfer Out
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="quick-trip"
+     data-action="<%= edit_trip_url(@trip) %>"
+     data-trip="<%=h @trip.to_json %>">
+</div>
