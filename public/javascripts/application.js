@@ -52,4 +52,32 @@ $(function () {
     );
   }
 
+  var $quickTrip = $('#quick-trip'),
+      $quickTripView = $('#trip-quick-details'),
+      $showQuickTrip = $('#show-quick-trip-form');
+
+  $showQuickTrip.on('click', function(ev) {
+    ev.preventDefault();
+
+    $quickTrip.hide();
+    $quickTripView.slideUp(function() {
+      ReactDOM.render(
+          React.createElement(components.Trips.QuickForm, {
+            trip: $quickTrip.data('trip'),
+            action: $quickTrip.data('action'),
+            onCancel: onCancel
+          }),
+          $quickTrip.get(0),
+          function () { $quickTrip.slideDown() }
+      )
+    });
+
+    function onCancel(ev) {
+      ev.preventDefault();
+
+      $quickTrip.slideUp(function () {
+        $quickTripView.slideDown()
+      });
+    }
+  });
 });

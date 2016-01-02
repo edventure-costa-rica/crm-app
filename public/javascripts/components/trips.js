@@ -69,10 +69,17 @@ var QuickForm = React.createClass({
             </div>
 
             <div className="col-xs-12 text-right">
-              <button className="btn btn-primary" type="submit">
-                <i className="glyphicon glyphicon-ok" />
-                &nbsp; Save
-              </button>
+              <div className="btn-group">
+                <button className="btn btn-primary" type="submit">
+                  <i className="glyphicon glyphicon-ok" />
+                  &nbsp; Save
+                </button>
+
+                <button className="btn btn-default" onClick={this.props.onCancel}>
+                  <i className="glyphicon glyphicon-remove" />
+                  &nbsp; Cancel
+                </button>
+              </div>
             </div>
           </form>
         </div>
