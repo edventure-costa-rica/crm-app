@@ -139,7 +139,7 @@ var PaxField = React.createClass({
           </div>
 
           <input type="text" className="form-control" {...events}
-                 placeholder="pax/children/disabled"
+                 placeholder="pax"
                  required={Boolean(this.props.required)}
                  valueLink={this.props.value}
                  name={this.props.name}
