@@ -98,8 +98,6 @@ $(function () {
         if (TRIP.departure_flight)
           defaults.dropoff_location = TRIP.departure_flight;
       }
-
-      console.log('using defaults', defaults);
     }
 
     ReactDOM.render(

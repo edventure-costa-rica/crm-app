@@ -4,6 +4,31 @@ var moment = require('moment');
 var chrono = require('chrono-node');
 var DatePicker = require('react-date-picker');
 
+function onKeyDown(ev) {
+  ev.persist();
+
+  if (ev.key === 'Enter') {
+    ev.preventDefault();
+
+    var types = [':button',':reset',':submit',':disabled','[type="hidden"]'],
+        selector = types.map(function(s) { return ':not(' + s + ')' }).join('');
+
+    var $target = $(ev.target),
+        $form = $target.closest('form'),
+        $inputs = $form.find(':input' + selector),
+        index = $inputs.index($target);
+
+    if (index === $inputs.length - 1) {
+      console.log('Submitting form');
+      $form.submit();
+    }
+    else {
+      console.log('Selecting input', index + 1);
+      $inputs.eq(index + 1).focus();
+    }
+  }
+}
+
 var TextField = React.createClass({
   displayName: 'TextField',
 
@@ -15,6 +40,7 @@ var TextField = React.createClass({
         </label>
 
         <input type="text" className='form-control'
+               onKeyDown={onKeyDown}
                required={Boolean(this.props.required)}
                defaultValue={this.props.defaultValue}
                valueLink={this.props.value}
@@ -38,6 +64,7 @@ var NumberField = React.createClass({
         </label>
         
         <input type="number" className='form-control'
+               onKeyDown={onKeyDown}
                placeholder={this.props.title}
                required={Boolean(this.props.required)}
                defaultValue={this.props.defaultValue}
@@ -81,7 +108,8 @@ var SelectField = React.createClass({
           {this.props.title}
         </label>
         
-        <select className="form-control" 
+        <select className="form-control"
+                onKeyDown={onKeyDown}
                 valueLink={this.props.value}
                 id={this.props.id} 
                 name={this.props.name}>
@@ -139,6 +167,7 @@ var PaxField = React.createClass({
           </div>
 
           <input type="text" className="form-control" {...events}
+                 onKeyDown={onKeyDown}
                  placeholder="number of people"
                  required={Boolean(this.props.required)}
                  valueLink={this.props.value}
@@ -233,6 +262,7 @@ var DateTimeField = React.createClass({
           <input type="datetime"
                  className="form-control" {...events}
                  placeholder="date and time"
+                 onKeyDown={onKeyDown}
                  required={Boolean(this.props.required)}
                  valueLink={this.props.value}
                  name={this.props.name}
@@ -275,6 +305,7 @@ var PriceField = React.createClass({
           </div>
 
           <input type="number" className="form-control" {...events}
+                 onKeyDown={onKeyDown}
                  required={Boolean(this.props.required)}
                  defaultValue={this.props.defaultValue}
                  valueLink={this.props.value} {...range}
