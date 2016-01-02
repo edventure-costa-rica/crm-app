@@ -17,7 +17,8 @@ var Form = React.createClass({
   mixins: [LinkedStateMixin],
 
   getInitialState: function() {
-    var defaults = this.props.reservation || this.props.defaults || {},
+    var res = this.props.reservation,
+        defaults = res ? res.reservation : this.props.defaults || {},
         departure, arrival;
 
     departure = _.compact([defaults.departure, defaults.departure_time]).join(' ');
