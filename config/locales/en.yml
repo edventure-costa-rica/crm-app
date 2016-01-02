@@ -5,6 +5,7 @@ en:
   time:
     formats:
       list: "%e-%m-%Y %l:%M%p"
+      default: "%Y-%m-%d %l:%M %p"
   date:
     formats:
       voucher: "%d - %B - %Y"
