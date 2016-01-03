@@ -147,7 +147,7 @@ class Reservation < ActiveRecord::Base
         self.trip.status = 'confirmed'
       end
 
-      self.trip.save!
+      self.trip.touch
     end
   end
 end
