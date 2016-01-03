@@ -69,14 +69,13 @@ class ReservationsController < ApplicationController
   # DELETE /reservations/1.xml
   def destroy
     @reservation = Reservation.find(params[:id])
+    @trip = @reservation.trip
+
     @reservation.destroy
 
-    @client = Client.find(params[:client_id])
-    @trip = Trip.find(params[:trip_id])
-
     respond_to do |format|
-      format.html { redirect_to(client_trip_reservations_url(@client, @trip)) }
-      format.xml  { head :ok }
+      format.html { redirect_to pending_trip_reservations_url(@trip),
+                                notice: 'Reservation deleted OK' }
     end
   end
 
