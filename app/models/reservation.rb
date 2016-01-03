@@ -14,6 +14,9 @@ class Reservation < ActiveRecord::Base
     res.send :within_trip_dates
   end
 
+  after_save :confirm_trip
+  after_destroy :confirm_trip
+
   def next_on_trip
     return unless trip
 
@@ -131,6 +134,20 @@ class Reservation < ActiveRecord::Base
       # use the arrival date for this departure if its the first
       self.departure ||= trip.reservations.empty? ?
         trip.arrival : trip.reservations.last.departure
+    end
+  end
+
+  def confirm_trip
+    if %w(pending confirmed).include? self.trip.status
+      pending = {conditions: 'NOT confirmed AND NOT paid'}
+
+      if trip.reservations.empty? or trip.reservations.exists? pending
+        self.trip.status = 'pending'
+      else
+        self.trip.status = 'confirmed'
+      end
+
+      self.trip.save!
     end
   end
 end
