@@ -6,14 +6,16 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :clients,
                 member: {remove: :get},
                 collection: {search: :get} do |client|
-    client.resources :trips, only: :index
+    client.resources :trips, only: %i(index new create)
   end
 
   map.resources :companies do |company|
     company.resources :reservations, only: :index
   end
 
-  map.resources :trips, collection: %i(upcoming) do |trip|
+  map.resources :trips,
+                except: %i(new create),
+                collection: %i(upcoming) do |trip|
     trip.resource :reservations, only: :create,
                   collection: %i(pending confirmed)
   end
