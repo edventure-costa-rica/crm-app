@@ -5141,10 +5141,10 @@ a.thumbnail.active {
 .alert-warning {
   color: #b67f5e;
   background-color: #fcf8e3;
-  border-color: #faebcc;
+  border-color: #ac624e;
 }
 .alert-warning hr {
-  border-top-color: #f7e1b5;
+  border-top-color: #9b5846;
 }
 .alert-warning .alert-link {
   color: #9b6646;
@@ -5816,22 +5816,22 @@ button.list-group-item-danger.active:focus {
   border-bottom-color: #bce8f1;
 }
 .panel-warning {
-  border-color: #faebcc;
+  border-color: #ac624e;
 }
 .panel-warning > .panel-heading {
   color: #b67f5e;
   background-color: #fcf8e3;
-  border-color: #faebcc;
+  border-color: #ac624e;
 }
 .panel-warning > .panel-heading + .panel-collapse > .panel-body {
-  border-top-color: #faebcc;
+  border-top-color: #ac624e;
 }
 .panel-warning > .panel-heading .badge {
   color: #fcf8e3;
   background-color: #b67f5e;
 }
 .panel-warning > .panel-footer + .panel-collapse > .panel-body {
-  border-bottom-color: #faebcc;
+  border-bottom-color: #ac624e;
 }
 .panel-danger {
   border-color: #ebccd1;
