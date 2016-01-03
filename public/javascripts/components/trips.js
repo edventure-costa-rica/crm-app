@@ -29,7 +29,16 @@ var QuickForm = React.createClass({
   },
 
   render: function () {
-    var method = 'put';
+    var cancelButton, method = 'put';
+
+    if (this.props.onCancel) {
+      cancelButton = (
+          <button className="btn btn-default" onClick={this.props.onCancel}>
+            <i className="glyphicon glyphicon-remove" />
+            &nbsp; Cancel
+          </button>
+      );
+    }
 
     return (
         <div className="row">
@@ -75,10 +84,7 @@ var QuickForm = React.createClass({
                   &nbsp; Save
                 </button>
 
-                <button className="btn btn-default" onClick={this.props.onCancel}>
-                  <i className="glyphicon glyphicon-remove" />
-                  &nbsp; Cancel
-                </button>
+                {cancelButton}
               </div>
             </div>
           </form>
