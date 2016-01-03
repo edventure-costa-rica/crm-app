@@ -137,4 +137,26 @@ $(function () {
       });
     }
   });
+
+  var $editReservation = $('#edit-reservation'),
+      $reservationModal = $('#edit-reservation-modal'),
+      $reservationMount = $reservationModal.find('.react-mount');
+
+  $editReservation.on('click', function (ev) {
+    ev.preventDefault();
+
+    var $this = $(this),
+        kind = $this.data('kind'),
+        action = $this.data('action'),
+        res = $this.data('reservation') || {};
+
+    ReactDOM.render(
+        React.createElement(
+            components.Reservations.Form,
+            {kind: kind, action: action, reservation: res}
+        ),
+        $reservationMount.get(0),
+        function() { $reservationModal.modal('show') }
+    );
+  })
 });
