@@ -69,7 +69,7 @@ var Form = React.createClass({
     return (
       <div className="row">
         <form className="form" method="post" action={this.props.action}>
-          <input type="hidden" name=".method" value={method} />
+          <input type="hidden" name="_method" value={method} />
           {hiddenId}
 
           <div className="col-xs-12 col-sm-3">
