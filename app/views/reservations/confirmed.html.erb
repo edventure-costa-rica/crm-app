@@ -96,6 +96,26 @@
   </tr>
 </table>
 
+<div class="row">
+  <div class="col-xs-12 text-center">
+    <div class="btn-group">
+      <% link_to vouchers_trip_reservations_url(@trip),
+                 class: 'btn btn-primary' do %>
+        <i class="glyphicon glyphicon-tags"></i>
+        &nbsp; Vouchers
+      <% end %>
+
+      <% link_to export_trip_reservations_url(@trip, style: 'confirmed'),
+                 class: 'btn btn-info' do %>
+        <i class="glyphicon glyphicon-import"></i>
+        &nbsp; Export
+      <% end %>
+
+    </div>
+  </div>
+</div>
+
+
 <div id="edit-price-modal" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
