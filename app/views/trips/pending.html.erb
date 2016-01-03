@@ -43,8 +43,8 @@
       <td>
         <ul class="list-inline">
           <li>
-            <button class="btn btn-link btn-xs"
-                    id="edit-reservation"
+            <button class="btn btn-link btn-xs edit-reservation"
+                    id="edit-reservation-<%= res.id %>"
                     data-kind="<%= res.company.kind %>"
                     data-action="<%= url_for(res) %>"
                     data-reservation="<%= h res.to_json %>">
@@ -76,8 +76,6 @@
 
 <%= render partial: 'reservations/new' %>
 
-<%= javascript_include_tag companies_url(format: :js) %>
-
 <div class="modal fade" id="edit-reservation-modal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -92,3 +90,12 @@
     </div>
   </div>
 </div>
+
+<% if flash[:params] %>
+  <% javascript_tag do %>
+    var DEFAULTS = (<%= flash[:params].to_json %>).reservation;
+    DEFAULTS.kind = <%= (flash[:kind] or 'hotel').to_json %>;
+  <% end %>
+<% end %>
+
+<%= javascript_include_tag companies_url(format: :js) %>
