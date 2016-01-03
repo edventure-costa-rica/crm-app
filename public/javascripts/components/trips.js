@@ -10,8 +10,10 @@ var QuickForm = React.createClass({
   mixins: [LinkedStateMixin],
   displayName: 'QuickForm',
 
-  getInitialState: function () {
-    var trip = this.props.trip,
+  getInitialState: function (props) {
+    props = props || this.props;
+
+    var trip = props.trip,
         state = trip ? _.assign({}, trip.trip) : {},
         date;
 
@@ -26,6 +28,10 @@ var QuickForm = React.createClass({
     }
 
     return state;
+  },
+
+  componentWillReceiveProps: function(props) {
+    this.setState(this.getInitialState(props));
   },
 
   render: function () {
