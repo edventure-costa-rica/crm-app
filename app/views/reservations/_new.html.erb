@@ -1,37 +1,42 @@
+<div id="add-reservation"
+     data-action-url="<%= client_trip_reservations_url([@trip.client, @trip]) %>"
+>
+  <h2>Add Reservation</h2>
 
-<h2>Add Reservation</h2>
+  <ul class="nav nav-pills" id="new-reservation-tabs">
+    <li>
+      <a href="#hotel" data-toggle="tab">
+        <i class="glyphicon glyphicon-bed"></i>
+        Hotel
+      </a>
+    </li>
 
-<ul class="nav nav-tabs" id="new-reservation-tabs">
-  <li class="active">
-    <a href="#hotel" data-toggle="tab">
-      <i class="glyphicon glyphicon-bed"></i>
-      Hotel
-    </a>
-  </li>
-  <li>
-    <a href="#transport" data-toggle="tab">
-      <i class="glyphicon glyphicon-road"></i>
-      Transport
-    </a>
-  </li>
-  <li>
-    <a href="#tour" data-toggle="tab">
-      <i class="glyphicon glyphicon-sunglasses"></i>
-      Tour
-    </a>
-  </li>
-</ul>
+    <li>
+      <a href="#transport" data-toggle="tab">
+        <i class="glyphicon glyphicon-road"></i>
+        Transport
+      </a>
+    </li>
 
-<div class="tab-content" id="new-reservations"
-     data-action-url="<%= client_trip_reservations_url([@trip.client, @trip]) %>">
-  <div class="tab-pane active" id="hotel">
-    <div id="new-res-hotel"></div>
-  </div>
-  <div class="tab-pane" id="transport">
-    <div id="new-res-transport"></div>
-  </div>
-  <div class="tab-pane" id="tour">
-    <div id="new-res-tour"></div>
+    <li>
+      <a href="#tour" data-toggle="tab">
+        <i class="glyphicon glyphicon-sunglasses"></i>
+        Tour
+      </a>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="new-reservations">
+    <div class="tab-pane" id="hotel">
+      <div class="react-mount"></div>
+    </div>
+
+    <div class="tab-pane" id="transport">
+      <div class="react-mount"></div>
+    </div>
+
+    <div class="tab-pane" id="tour">
+      <div class="react-mount"></div>
+    </div>
   </div>
 </div>
-

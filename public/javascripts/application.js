@@ -49,28 +49,25 @@ $(function () {
     }
   });
 
-  var $newReservations = $('#new-reservations');
-  if ($newReservations.length) {
+  var $addReservation = $('#add-reservation');
+
+  $addReservation.find('a[data-toggle="tab"]').on('show.bs.tab', function(ev) {
+    var target = $(this).attr('href'),
+        action = $addReservation.data('action-url'),
+        mount = $(target).find('.react-mount').get(0);
+
     ReactDOM.render(
-        React.createElement(components.Reservations.Form,
-            {kind: 'hotel', action: $newReservations.data('action-url')}),
-        $newReservations.find('#new-res-hotel').get(0)
-    );
-    ReactDOM.render(
-        React.createElement(components.Reservations.Form,
-            {kind: 'tour', action: $newReservations.data('action-url')}),
-        $newReservations.find('#new-res-tour').get(0)
-    );
-    ReactDOM.render(
-        React.createElement(components.Reservations.Form,
-            {kind: 'transport', action: $newReservations.data('action-url')}),
-        $newReservations.find('#new-res-transport').get(0)
-    );
-  }
+        React.createElement(
+            components.Reservations.Form,
+            {kind: target.replace('#',''), action: action}
+        ),
+        mount
+    )
+  });
 
   var $bookTransferIn = $('#book-transfer-in'),
       $bookTransferOut = $('#book-transfer-out'),
-      $transferTab = $('#new-reservation-tabs').find('a[href="#transport"]');
+      $transferTab = $addReservation.find('a[href="#transport"]');
 
   $bookTransferIn.add($bookTransferOut).on('click', function (ev) {
     var defaults = {}, date;
@@ -103,11 +100,11 @@ $(function () {
     ReactDOM.render(
         React.createElement(components.Reservations.Form, {
           kind: 'transport',
-          action: $newReservations.data('action-url'),
+          action: $addReservation.data('action-url'),
           defaults: defaults
         }),
 
-        $newReservations.find('#new-res-transport').get(0),
+        $addReservation.find('#transport .react-mount').get(0),
         function() { $transferTab.tab('show') }
     );
   });
