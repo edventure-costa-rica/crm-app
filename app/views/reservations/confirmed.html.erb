@@ -6,3 +6,101 @@
 
 <%= render partial: 'trips/quick', locals: {editable: false} %>
 
+<h2>Reservations</h2>
+
+<table class="table table-condensed table-striped">
+  <tr>
+    <th>Company</th>
+    <th>Services</th>
+    <th>Dates</th>
+    <th>Net Price</th>
+    <th>Rack Price</th>
+    <th>Profit</th>
+  </tr>
+
+  <% @reservations.each do |res| %>
+    <tr>
+      <td title="<%= res.company.kind.humanize %>">
+        <% if res.company.kind == 'hotel' %>
+          <i class="glyphicon glyphicon-bed"></i>
+        <% elsif res.company.kind == 'transport' %>
+          <i class="glyphicon glyphicon-road"></i>
+        <% elsif res.company.kind == 'tour' %>
+          <i class="glyphicon glyphicon-sunglasses"></i>
+        <% else %>
+          <i class="glyphicon glyphicon-question-sign"></i>
+        <% end %>
+        <%= res.company %>
+      </td>
+
+      <td><%= res.services %></td>
+      <td>
+        <%= l res.arrival.to_date, format: :short %> &ndash;
+        <%= l res.departure.to_date, format: :short %>
+      </td>
+
+      <td><%= usd res.net_price %></td>
+
+      <td>
+        <button class="edit-rack-price btn btn-primary btn-xs"
+                data-action="<%= h reservation_url(res) %>"
+                data-reservation="<%= h res.to_json %>"
+                title="Edit">
+          <i class="glyphicon glyphicon-pencil"></i>
+        </button>
+
+        <%= usd res.price %>
+      </td>
+
+      <td><%= usd res.profit %></td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <td colspan="3" class="text-right">
+      <strong>Supplemental Rack Price:&nbsp;</strong>
+    </td>
+
+    <td></td>
+
+    <td colspan="2">
+      <button class="edit-supplemental-price btn btn-primary btn-xs"
+              data-action="<%= h trip_url(@trip) %>"
+              data-supplemental="<%= h @trip.supplemental_price %>"
+              title="Edit">
+        <i class="glyphicon glyphicon-pencil"></i>
+      </button>
+
+      <%= usd @trip.supplemental_price %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="text-right" colspan="3">
+      <strong>Total:&nbsp;</strong>
+    </td>
+
+    <td><%= usd @trip.total_net_price %></td>
+    <td><%= usd @trip.total_rack_price + @trip.supplemental_price.to_f %></td>
+
+    <td>
+      <%= usd @trip.total_rack_price -
+                  @trip.total_net_price +
+                  @trip.supplemental_price.to_f %>
+    </td>
+  </tr>
+</table>
+
+<div id="edit-price-modal" class="modal fade">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edit Rack Price</h4>
+      </div>
+      <div class="modal-body">
+        <div class="react-mount"></div>
+      </div>
+    </div>
+  </div>
+</div>
