@@ -47,7 +47,7 @@ class TripsController < ApplicationController
   # POST /clients/:client_id/trips
   def create
     @client = Client.find(params[:client_id])
-    @trip = @client.trips.build(params[:trip])
+    @trip = @client.trips.build(trip_params)
 
     respond_to do |format|
       if @trip.save
@@ -70,7 +70,7 @@ class TripsController < ApplicationController
     @client = @trip.client
 
     respond_to do |format|
-      if @trip.update_attributes(params[:trip])
+      if @trip.update_attributes(trip_params)
         format.html { redirect_to(pending_trip_reservations_url(@trip),
                                   :notice => 'Trip was successfully updated.') }
         format.xml  { head :ok }
@@ -95,5 +95,19 @@ class TripsController < ApplicationController
     end
   end
 
+
+  private
+
+  def trip_params
+    params[:trip].tap do |input|
+      pax = input.delete(:pax)
+
+      if pax
+        total, children = pax.to_s.split('/', 2).map(&:to_i)
+        input[:total_people] = total
+        input[:num_children] = children
+      end
+    end
+  end
 
 end
