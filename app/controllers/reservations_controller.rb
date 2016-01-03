@@ -55,7 +55,7 @@ class ReservationsController < ApplicationController
     @trip = @reservation.trip
 
     destination =
-      if params[:next] == 'unconfirmed'
+      if params[:next] == 'confirmed'
         confirmed_trip_reservations_url(@trip)
       else
         pending_trip_reservations_url(@trip)
