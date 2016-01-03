@@ -13,10 +13,9 @@ ActionController::Routing::Routes.draw do |map|
     company.resources :reservations, only: :index
   end
 
-  map.resources :trips,
-                collection: {upcoming: :get},
-                member: {pending: :get, confirmed: :get} do |trip|
-    trip.resource :reservations, only: [:index, :create]
+  map.resources :trips, collection: %i(upcoming) do |trip|
+    trip.resource :reservations, only: :create,
+                  collection: %i(pending confirmed)
   end
 
   map.resources :reservations,
