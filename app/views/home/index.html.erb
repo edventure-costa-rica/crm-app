@@ -8,11 +8,12 @@
     <th>Name</th>
     <th class="hidden-xs">E-mail</th>
     <th class="hidden-xs">Dates</th>
+    <th class="hidden-xs">Updated</th>
   </tr>
 
   <% @recent.each do |trip| %>
   <tr>
-    <td class="col-xs-6 col-sm-3">
+    <td class="col-xs-6 col-sm-2">
       <span title="<%= trip.status.capitalize %>">
         <% if trip.pending? %>
           <i class="glyphicon glyphicon-hourglass"></i>
@@ -27,18 +28,27 @@
       </span>
     </td>
 
-    <td class="col-xs-6 col-sm-3">
-      <%= trip.client.to_s %>
+    <td class="col-xs-6 col-sm-2">
+      <i class="glyphicon glyphicon-user"></i>
+      <% link_to client_url(trip.client) do %>
+        <%= trip.client.family_name %>
+      <% end %>
     </td>
 
     <td class="hidden-xs col-sm-3">
       <i class="glyphicon glyphicon-envelope"></i>
-      <%= link_to trip.client.email, ['mailto', trip.client.email].join(':') %>
+      <% link_to ['mailto', trip.client.email].join(':') do %>
+        <%= trip.client.email %>
+      <% end %>
     </td>
 
     <td class="hidden-xs col-sm-3">
       <%= l trip.arrival.to_date, format: :short %> &ndash;
       <%= l trip.departure.to_date, format: :short %>
+    </td>
+
+    <td class="hidden-xs col-sm-2">
+      <%= l trip.updated_at, format: :short %>
     </td>
   </tr>
   <% end %>
