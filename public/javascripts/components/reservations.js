@@ -188,7 +188,7 @@ var RackPrice = React.createClass({
 
           <div className="row">
             <div className="col-xs-12 text-right">
-              <button type="submit" class="btn btn-primary">
+              <button type="submit" className="btn btn-primary">
                 <i className="glyphicon glyphicon-ok" />
                 &nbsp; Save
               </button>
