@@ -36,8 +36,8 @@
         <%= res.company.name %>
       </td>
       <td class="col-sm-2"><%= res.services %></td>
-      <td class="col-sm-1"><%= res.net_price %></td>
-      <td class="col-sm-1"><%= res.price %></td>
+      <td class="col-sm-1"><%= usd res.net_price %></td>
+      <td class="col-sm-1"><%= usd res.price %></td>
       <td><%= res.pickup %></td>
       <td><%= res.dropoff %></td>
       <td>
