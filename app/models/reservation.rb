@@ -97,19 +97,26 @@ class Reservation < ActiveRecord::Base
   end
 
   def arrival_precedes_departure
-    errors.add :departure, I18n.t(:arrival_precedes_departure) unless
-      self.departure >= self.arrival
+    if self.arrival and self.departure
+      errors.add :departure, I18n.t(:arrival_precedes_departure) unless
+        self.departure >= self.arrival
+    end
   end
 
   def within_trip_dates
-    errors.add :arrival, I18n.t(:arrival_before_trip) unless
-      self.arrival >= self.trip.arrival.to_date
-    errors.add :arrival, I18n.t(:arrival_after_trip) unless
-      self.arrival <= self.trip.departure.to_date
-    errors.add :departure, I18n.t(:departure_before_trip) unless
-      self.departure >= self.trip.arrival.to_date
-    errors.add :departure, I18n.t(:departure_after_trip) unless
-      self.departure <= self.trip.departure.to_date
+    if self.arrival
+      errors.add :arrival, I18n.t(:arrival_before_trip) unless
+        self.arrival >= self.trip.arrival.to_date
+      errors.add :arrival, I18n.t(:arrival_after_trip) unless
+        self.arrival <= self.trip.departure.to_date
+    end
+
+    if self.departure
+      errors.add :departure, I18n.t(:departure_before_trip) unless
+        self.departure >= self.trip.arrival.to_date
+      errors.add :departure, I18n.t(:departure_after_trip) unless
+        self.departure <= self.trip.departure.to_date
+    end
   end
 
   def after_initialize
