@@ -6,7 +6,7 @@
 
 <%= render partial: 'quick' %>
 
-<h1>Pending Reservations</h1>
+<h2>Reservations</h2>
 
 <table class="table table-condensed table-striped">
   <tr class="row">
@@ -95,6 +95,10 @@
   <% javascript_tag do %>
     var DEFAULTS = (<%= flash[:params].to_json %>).reservation;
     DEFAULTS.kind = <%= (flash[:kind] or 'hotel').to_json %>;
+  <% end %>
+<% elsif flash[:kind] %>
+  <% javascript_tag do %>
+    var KIND = <%= flash[:kind].to_json %>;
   <% end %>
 <% end %>
 

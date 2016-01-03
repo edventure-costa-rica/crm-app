@@ -129,3 +129,7 @@ if (window.DEFAULTS) {
     $('a[href="#' + DEFAULTS.kind + '"]').tab('show');
   }
 }
+
+else if (window.KIND) {
+  $('a[href="#' + KIND + '"]').tab('show');
+}
