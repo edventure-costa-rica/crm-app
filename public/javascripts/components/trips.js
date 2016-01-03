@@ -35,7 +35,9 @@ var QuickForm = React.createClass({
   },
 
   render: function () {
-    var cancelButton, method = 'put';
+    var cancelButton, method = 'post';
+
+    if (this.state.id) method = 'put';
 
     if (this.props.onCancel) {
       cancelButton = (
