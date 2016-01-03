@@ -69,10 +69,16 @@ class TripsController < ApplicationController
     @trip = Trip.find(params[:id])
     @client = @trip.client
 
+    url =
+      if params[:next] == 'confirmed'
+        confirmed_trip_reservations_url(@trip)
+      else
+        pending_trip_reservations_url(@trip)
+      end
+
     respond_to do |format|
       if @trip.update_attributes(trip_params)
-        format.html { redirect_to(pending_trip_reservations_url(@trip),
-                                  :notice => 'Trip was successfully updated.') }
+        format.html { redirect_to(url, :notice => 'Trip was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

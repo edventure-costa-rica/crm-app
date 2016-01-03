@@ -117,5 +117,58 @@ var QuickForm = React.createClass({
   }
 });
 
-module.exports = {QuickForm: QuickForm};
+var SupplementalPrice = React.createClass({
+  displayName: 'SupplementalPrice',
+  mixins: [LinkedStateMixin],
+
+  getInitialState: function(props) {
+    props = props || this.props;
+
+    return _.assign({}, props);
+  },
+
+  componentWillReceiveProps: function(props) {
+    this.setState(this.getInitialState(props));
+  },
+
+  render: function() {
+    return (
+        <form className="form" method="post" action={this.props.action}>
+          <input type="hidden" name="_method" value="put"/>
+
+          <div className="row">
+            <div className="col-xs-4">
+              <Forms.StaticField title="Total Net Price" value={this.state.totalNet} />
+            </div>
+
+            <div className="col-xs-4">
+              <Forms.StaticField title="Total Rack Price" value={this.state.totalRack} />
+            </div>
+
+            <div className="col-xs-4">
+              <Forms.PriceField title="Supplemental Rack Price"
+                                id="trip-supplemental_price"
+                                name="trip[supplemental_price]"
+                                require={true}
+                                value={this.linkState('price')} />
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-xs-12 text-right">
+              <button type="submit" className="btn btn-primary">
+                <i className="glyphicon glyphicon-ok" />
+                &nbsp; Save
+              </button>
+            </div>
+          </div>
+        </form>
+    );
+  }
+});
+
+module.exports = {
+  QuickForm: QuickForm,
+  SupplementalPrice: SupplementalPrice
+};
 

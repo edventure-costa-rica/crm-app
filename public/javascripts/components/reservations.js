@@ -160,7 +160,6 @@ var RackPrice = React.createClass({
     return (
         <form className="form" action={this.props.action} method="post">
           <input type="hidden" name="_method" value="put" />
-          <input type="hidden" name="reservation[id]" value={this.state.id} />
 
           <div className="row">
             <div className="col-xs-12 col-sm-6">

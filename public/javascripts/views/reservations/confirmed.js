@@ -14,7 +14,7 @@ var $rackPrice = $('.edit-rack-price'),
 
 $rackPrice.on('click', function() {
   var netPrice = $rackPrice.data('net-price'),
-      rackPrice = $rackPrice.data('rack-price'),
+      rackPrice = Number($rackPrice.data('rack-price')),
       services = $rackPrice.data('services'),
       company = $rackPrice.data('company'),
       action = $rackPrice.data('action');
@@ -36,12 +36,18 @@ $rackPrice.on('click', function() {
 
 $supplementalPrice.on('click', function() {
   var price = Number($supplementalPrice.data('price')),
+      totalNet = $supplementalPrice.data('total-net'),
+      totalRack = $supplementalPrice.data('total-rack'),
       action = $supplementalPrice.data('action');
 
   ReactDOM.render(
       React.createElement(
-          components.Trips.SupplementalPrice,
-          {action: action, price: price}
+          components.Trips.SupplementalPrice, {
+            action: action,
+            totalNet: totalNet,
+            totalRack: totalRack,
+            price: price
+          }
       ),
       $priceMount.get(0),
       function() { $priceModal.modal('show') }
