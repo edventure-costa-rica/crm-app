@@ -4,6 +4,7 @@ var components = require('components');
 
 var chrono = require('chrono-node');
 var moment = require('moment');
+var lib = require('../../lib');
 
 var $addReservation = $('#add-reservation');
 
@@ -22,6 +23,10 @@ $addReservation.find('a[data-toggle="tab"]').on('show.bs.tab', function(ev) {
       ),
       mount
   )
+
+}).on('shown.bs.tab', function (ev) {
+  var target = $(this).attr('href');
+  lib.selectFormInput(target);
 });
 
 var $bookTransferIn = $('#book-transfer-in'),
@@ -120,6 +125,9 @@ $editReservation.on('click', function (ev) {
   );
 });
 
+$reservationModal.on('shown.bs.modal', function () {
+  lib.selectFormInput($reservationMount.find('form'));
+});
 
 if (window.DEFAULTS) {
   if (DEFAULTS.id) {

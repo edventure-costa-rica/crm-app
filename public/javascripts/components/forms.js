@@ -4,26 +4,23 @@ var moment = require('moment');
 var chrono = require('chrono-node');
 var DatePicker = require('react-date-picker');
 
+var lib = require('../lib');
+
 function onKeyDown(ev) {
   ev.persist();
 
   if (ev.key === 'Enter') {
     ev.preventDefault();
 
-    var types = [':button',':reset',':submit',':disabled','[type="hidden"]'],
-        selector = types.map(function(s) { return ':not(' + s + ')' }).join('');
-
     var $target = $(ev.target),
         $form = $target.closest('form'),
-        $inputs = $form.find(':input' + selector),
+        $inputs = lib.formInputs($form),
         index = $inputs.index($target);
 
-    if (index === $inputs.length - 1) {
-      console.log('Submitting form');
+    if (index === $inputs.length - 1 || ev.ctrlKey || ev.metaKey) {
       $form.submit();
     }
     else {
-      console.log('Selecting input', index + 1);
       $inputs.eq(index + 1).focus();
     }
   }
