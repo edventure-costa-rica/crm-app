@@ -17,13 +17,13 @@ ActionController::Routing::Routes.draw do |map|
                 except: %i(new create edit show),
                 collection: %i(upcoming) do |trip|
     trip.resource :reservations, only: :create,
-                  collection: %i(pending confirmed)
+                  collection: %i(pending confirmed vouchers)
   end
 
   map.resources :reservations,
                 except: [:new, :create, :show, :edit],
                 collection: %i(unconfirmed unpaid),
-                member: {email: :get, confirm: :post}
+                member: {email: :get, confirm: :post, voucher: :get}
 
   map.resources :calendar, only: [],
                 collection: %i(day week month year)

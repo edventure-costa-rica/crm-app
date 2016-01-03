@@ -113,61 +113,13 @@ class ReservationsController < ApplicationController
     end
   end
 
-  def pay
-    @reservation = Reservation.find params[:id]
-
-    render :layout => 'print'
-  end
-
-  def pays
-    @reservations = Reservation.find :all,
-      :conditions => { :trip_id => params[:trip_id] },
-      :order      => 'paid_date ASC, arrival ASC'
-
-    render :layout => 'print'
-  end
-
-  def weekly_payments
-    # next sunday 
-    @week_ending = Date.today
-    @week_ending += 1 while (@week_ending.wday != 0)
-    @week_ending += 7.days
-
-    @reservations = Reservation.find :all,
-      :include    => [:trip],
-      :conditions => ['NOT paid AND paid_date <= ? AND ' + 
-                      'trip_id IS NOT NULL AND trips.departure >= ?', @week_ending, Date.today],
-      :order      => 'paid_date ASC'
-
-    respond_to do |format|
-      format.html { render :layout => 'print', :action => 'pays' }
-    end
-  end
-
-  def yearly_payments
-    if params[:year].nil? then 
-      @year = Date.today.year 
-    else 
-      @year = params[:year].to_i
-    end
-
-    @weeks = []
-    (1..52).each do |week|
-      data = { :week => week }
-      data[:week_start] = Date.commercial(@year, week, 1)
-      data[:week_end] = Date.commercial(@year, week, 7)
-      cond = { 
-        :paid      => true,
-        :paid_date => data[:week_start] .. data[:week_end]
-      }
-      data[:net_price] = Reservation.sum :net_price, :conditions => cond
-      data[:price] = Reservation.sum :price, :conditions => cond
-      @weeks << data
-    end
-  end
-
   # GET /trips/:trip_id/reservations/pending
   def pending
+    @trip = Trip.find(params[:trip_id])
+    @reservations = @trip.reservations
+  end
+
+  def confirmed
     @trip = Trip.find(params[:trip_id])
     @reservations = @trip.reservations
   end

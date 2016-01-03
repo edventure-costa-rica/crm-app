@@ -1,0 +1,8 @@
+<ol class="breadcrumb">
+  <li><%= link_to @trip.client, client_url(@trip.client) %></li>
+  <li><%= link_to @trip, client_trips_url(@trip.client) %></li>
+  <li class="active">Confirmed</li>
+</ol>
+
+<%= render partial: 'trips/quick', locals: {editable: false} %>
+
