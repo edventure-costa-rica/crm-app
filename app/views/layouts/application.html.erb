@@ -30,23 +30,21 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <span class="navbar-brand">Edventure TripDB</span>
+
+      <% link_to home_url, class: 'navbar-brand' do %>
+        Edventure TripDB
+      <% end %>
     </div>
 
     <div class="collapse navbar-collapse" id="navbar-collapse">
 
       <ul class="nav navbar-nav">
-        <% item_link_with_active(home_url) do %>
-          <i class="glyphicon glyphicon-home"></i>
-          <%= t('.home') %>
-        <% end %>
-
         <% item_link_with_active new_client_url do %>
           <i class="glyphicon glyphicon-plus-sign"></i>
           New Client
         <% end %>
 
-        <% item_link_with_active pending_trips_url do %>
+        <% item_link_with_active pending_reservations_url do %>
           <i class="glyphicon glyphicon-hourglass"></i>
           Pending
         <% end %>

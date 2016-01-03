@@ -30,73 +30,17 @@ class ReservationsController < ApplicationController
     end
   end
 
-  # GET /reservations/1
-  # GET /reservations/1.xml
-  def show
-    @reservation = Reservation.find(params[:id])
-    @client = @reservation.client
-    @trip = @reservation.trip
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @reservation }
-    end
-  end
-
-  # GET /reservations/new
-  # GET /reservations/new.xml
-  def new
-    @client = Client.find(params[:client_id])
-    @trip = Trip.find(params[:trip_id])
-    @reservation = Reservation.new :trip => @trip
-
-    if params[:kind]
-      @kind = Company.kinds.include?(params[:kind].downcase) ?
-        params[:kind].downcase : nil
-      @companies = Company.find_all_by_kind @kind, :order => 'companies.name'
-    else
-      @kind = nil
-      @companies = Company.all :order => 'companies.name'
-    end
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @reservation }
-    end
-  end
-
-  # GET /reservations/1/edit
-  def edit
-    @reservation = Reservation.find(params[:id])
-    @client = Client.find(params[:client_id])
-    @trip = Trip.find(params[:trip_id])
-
-    if params[:kind]
-      @kind = Company.kinds.include?(params[:kind].downcase) ?
-        params[:kind].downcase : nil
-      @companies = Company.find_all_by_kind @kind, :order => 'companies.name'
-    else
-      @kind = nil
-      @companies = Company.all :order => 'companies.name'
-    end
-
-  end
-
-  # POST /reservations
-  # POST /reservations.xml
+  # POST /trip/1/reservation
   def create
-    @reservation = Reservation.new(new_reservation_params)
-    @client = Client.find(params[:client_id])
     @trip = Trip.find(params[:trip_id])
+    @reservation = @trip.reservations.build(reservation_params)
 
     respond_to do |format|
       if @reservation.save
-        format.html { redirect_to([@client, @trip, @reservation], :notice => 'Reservation was successfully created.') }
-        format.xml  { render :xml => @reservation, :status => :created, :location => @reservation }
+        format.html { redirect_to(reservations_trip_url, :notice => 'Reservation was successfully created.') }
         format.json { render json: @reservation, status: :created }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @reservation.errors, :status => :unprocessable_entity }
         format.json { render json: @reservation.errors, status: :unprocessable_entity }
       end
     end
@@ -224,39 +168,40 @@ class ReservationsController < ApplicationController
   end
 
   def pending
-    @trip = Trip.find(params[:trip_id])
     conditions = {confirmed: false, paid: false}
     conditions[:kind] = params[:kind] if params.has_key? :kind
-    @reservations = @trip.reservations.find(:all, conditions: conditions, order: 'arrival DESC')
+    @reservations = Reservation.find(:all, conditions: conditions, order: 'arrival DESC')
   end
 
-  def confirmed
-    @trip = Trip.find(params[:trip_id])
+  def unpaid
     conditions = {confirmed: true, paid: false}
     conditions[:kind] = params[:kind] if params.has_key? :kind
-    @reservations = @trip.reservations.find(:all, conditions: conditions, order: 'arrival DESC')
+    @reservations = Reservation.find(:all, conditions: conditions, order: 'arrival DESC')
   end
 
   def paid
-    @trip = Trip.find(params[:trip_id])
     conditions = {confirmed: true, paid: true}
     conditions[:kind] = params[:kind] if params.has_key? :kind
-    @reservations = @trip.reservations.find(:all, conditions: conditions, order: 'arrival DESC')
+    @reservations = Reservation.find(:all, conditions: conditions, order: 'arrival DESC')
   end
 
 
   private
 
-  def new_reservation_params
+  def reservation_params
     params[:reservation].tap do |input|
       arrival = Chronic.parse input.delete(:arrival_date_time)
       departure = Chronic.parse input.delete(:departure_date_time)
 
-      input[:arrival] = arrival.to_date
-      input[:arrival_time] = arrival.strftime('%l %P')
+      if arrival
+        input[:arrival] = arrival.to_date
+        input[:arrival_time] = arrival.strftime('%l %P')
+      end
 
-      input[:departure] = departure.to_date
-      input[:departure_time] = departure.strftime('%l %P')
+      if departure
+        input[:departure] = departure.to_date
+        input[:departure_time] = departure.strftime('%l %P')
+      end
     end
   end
 end

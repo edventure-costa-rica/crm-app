@@ -18,12 +18,6 @@ ActionController::Routing::Routes.draw do |map|
     :defaults   => { :year => nil }
 
 
-  map.workflow_client 'workflow/client', controller: :workflow, action: :client
-  map.workflow_trips  'workflow/:client_id', controller: :workflow, action: :trips
-  map.workflow_new_trip 'workflow/:client_id/trip', controller: :workflow, action: :new_trip
-  map.workflow_create_trip 'workflow/:client_id/trip', method: :post, controller: :workflow, action: :create_trip
-  map.workflow_reservations  'workflow/res/:trip_id', controller: :workflow, action: :reservations
-
   # clients have trips and reservations, sort of
   map.resources :clients, member: {remove: :get}, collection: {search: :get} do |client|
       client.resources :reservations, :only => [ :show, :index ]
@@ -45,13 +39,15 @@ ActionController::Routing::Routes.draw do |map|
     company.resources :reservations, :only => [ :index ]
   end
 
-  # show trips on their own, plus a list of upcoming trips
-  map.resources :trips, :collection => {upcoming: :get, pending: :get} do |trip|
-    trip.resources :reservations,
-                   collection: {pending: :get, confirmed: :get, paid: :get}
+  map.resources :trips,
+                collection: {upcoming: :get},
+                member: {pending: :get, confirmed: :get} do |trip|
+    trip.resource :reservations, only: [:create]
   end
 
-  map.resources :reservations, collection: {unpaid: :get, paid: :get},
+  map.resources :reservations,
+                except: [:new, :create, :show, :edit],
+                collection: {pending: :get, unpaid: :get, paid: :get},
                 member: {email: :get, confirm: :post}
 
   map.day_calendar 'calendar/day', controller: :calendar, action: :day
