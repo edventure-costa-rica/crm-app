@@ -119,15 +119,15 @@ var Form = React.createClass({
           </div>
 
           <div className="col-xs-6">
-            <Forms.TextField id="reservation-pickup" name="reservation[pickup]"
+            <Forms.TextField id="reservation-pickup" name="reservation[pickup_location]"
                              title="Pick Up Location"
-                             value={this.linkState('pickup')} />
+                             value={this.linkState('pickup_location')} />
           </div>
 
           <div className="col-xs-6">
-            <Forms.TextField id="reservation-dropoff" name="reservation[dropoff]"
+            <Forms.TextField id="reservation-dropoff" name="reservation[dropoff_location]"
                              title="Drop Off Location"
-                             value={this.linkState('dropoff')} />
+                             value={this.linkState('dropoff_location')} />
           </div>
 
           <div className="col-xs-12 text-right">
