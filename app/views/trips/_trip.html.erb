@@ -1,4 +1,4 @@
-<% form_for([@client, @trip]) do |f| %>
+<% form_for(@trip) do |f| %>
   <%= f.error_messages %>
 
   <p><%=f.label :client %>: <%= link_to @client.family_name, @client %></p>

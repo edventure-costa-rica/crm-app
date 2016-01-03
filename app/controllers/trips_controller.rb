@@ -57,12 +57,6 @@ class TripsController < ApplicationController
     end
   end
 
-  # GET /trips/1/edit
-  def edit
-    @trip = Trip.find(params[:id])
-    @client = @trip.client
-  end
-
   # POST /trips
   # POST /trips.xml
   def create

@@ -1,5 +1,9 @@
-<h1><%= t '.title' %></h1>
+<ol class="breadcrumb">
+  <li><%= link_to @client, @client %></li>
+  <li><%= link_to 'Trips', client_trips_url(@client) %></li>
+  <li class="active">New</li>
+</ol>
 
-<%= render :partial => @trip, :locals => { :submit_text => t(:submit_create) } %>
+<h2><%= t '.title' %></h2>
 
-<%= link_to t('.list_trip'), client_trips_path(@client) %>
+<%= render partial: 'quick', locals: {action: client_trips_url(@client)} %>
