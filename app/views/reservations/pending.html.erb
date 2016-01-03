@@ -41,28 +41,34 @@
       <td><%= res.pickup %></td>
       <td><%= res.dropoff %></td>
       <td>
-        <div class="btn-group">
-          <button class="btn btn-default btn-xs"
-                  id="edit-reservation"
-                  data-kind="<%= res.company.kind %>"
-                  data-action="<%= url_for(res) %>"
-                  data-reservation="<%= h res.to_json %>">
-          <i class="glyphicon glyphicon-pencil"></i>
-            Edit
-          </button>
+        <ul class="list-inline">
+          <li>
+            <button class="btn btn-link btn-xs"
+                    id="edit-reservation"
+                    data-kind="<%= res.company.kind %>"
+                    data-action="<%= url_for(res) %>"
+                    data-reservation="<%= h res.to_json %>">
+              <i class="glyphicon glyphicon-pencil"></i>
+              Edit
+            </button>
+          </li>
 
-          <% link_to reservation_url(res), method: :delete,
-                     confirm: 'Really delete this reservation?',
-                     class: 'btn btn-danger btn-xs' do %>
-            <i class="glyphicon glyphicon-trash"></i>
-            Delete
-          <% end %>
-        </div>
+          <li>
+            <% link_to reservation_url(res), method: :delete,
+                       confirm: 'Really delete this reservation?',
+                       class: 'btn btn-link btn-xs' do %>
+              <i class="glyphicon glyphicon-trash"></i>
+              Delete
+            <% end %>
+          </li>
 
-        <% link_to email_reservation_url(res), class: 'btn btn-primary btn-xs' do %>
-          <i class="glyphicon glyphicon-envelope"></i>
-          Send Confirmation
-        <% end %>
+          <li>
+            <% link_to email_reservation_url(res), class: 'btn btn-link btn-xs' do %>
+              <i class="glyphicon glyphicon-envelope"></i>
+              Send Confirmation
+            <% end %>
+          </li>
+        </ul>
       </td>
     </tr>
   <% end %>
