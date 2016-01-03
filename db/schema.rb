@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110822164736) do
+ActiveRecord::Schema.define(:version => 20160103221921) do
 
   create_table "clients", :force => true do |t|
     t.string   "nationality"
@@ -122,6 +122,7 @@ ActiveRecord::Schema.define(:version => 20110822164736) do
     t.string   "arrival_flight"
     t.string   "departure_flight"
     t.date     "confirmation_date"
+    t.float    "supplemental_price", :default => 0.0
   end
 
 end
