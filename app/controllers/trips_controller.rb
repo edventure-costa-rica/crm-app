@@ -35,7 +35,7 @@ class TripsController < ApplicationController
   # GET /trips/1.xml
   def show
     @trip = Trip.find(params[:id])
-    @client = Client.find(params[:client_id])
+    @client = @trip.client
 
     respond_to do |format|
       format.html # show.html.erb
@@ -60,20 +60,19 @@ class TripsController < ApplicationController
   # GET /trips/1/edit
   def edit
     @trip = Trip.find(params[:id])
-    @client = Client.find(params[:client_id])
+    @client = @trip.client
   end
 
   # POST /trips
   # POST /trips.xml
   def create
-    @trip = Trip.new(params[:trip])
     @client = Client.find(params[:client_id])
-
-    @trip.client = @client
+    @trip = @client.trips.build(params[:trip])
 
     respond_to do |format|
       if @trip.save
-        format.html { redirect_to([@client, @trip], :notice => 'Trip was successfully created.') }
+        format.html { redirect_to(pending_trip_reservations_url(@trip),
+                                  :notice => 'Trip was successfully created.') }
         format.xml  { render :xml => @trip, :status => :created, :location => @trip }
       else
         format.html { render :action => "new" }
@@ -86,11 +85,12 @@ class TripsController < ApplicationController
   # PUT /trips/1.xml
   def update
     @trip = Trip.find(params[:id])
-    @client = Client.find(params[:client_id])
+    @client = @trip.client
 
     respond_to do |format|
       if @trip.update_attributes(params[:trip])
-        format.html { redirect_to([@client, @trip], :notice => 'Trip was successfully updated.') }
+        format.html { redirect_to(pending_trip_reservations_url(@trip),
+                                  :notice => 'Trip was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -103,11 +103,12 @@ class TripsController < ApplicationController
   # DELETE /trips/1.xml
   def destroy
     @trip = Trip.find(params[:id])
+    @client = @trip.client
+
     @trip.destroy
 
-    @client = Client.find(params[:client_id])
     respond_to do |format|
-      format.html { redirect_to(client_trips_url @client) }
+      format.html { redirect_to(@client) }
       format.xml  { head :ok }
     end
   end
