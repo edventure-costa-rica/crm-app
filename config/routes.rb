@@ -17,7 +17,7 @@ ActionController::Routing::Routes.draw do |map|
                 except: %i(new create edit show),
                 collection: %i(upcoming) do |trip|
     trip.resource :reservations, only: :create,
-                  collection: %i(pending confirmed vouchers)
+                  collection: %i(pending confirmed vouchers export)
   end
 
   map.resources :reservations,
