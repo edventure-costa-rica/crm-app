@@ -1,3 +1,6 @@
+<% editable = true unless defined? editable %>
+<% action = trip_url(@trip) unless defined? action %>
+
 <% unless @trip.new_record? %>
   <h2>Trip Details <small><%= @trip %></small></h2>
   <script>var TRIP = (<%= @trip.to_json %>).trip;</script>
@@ -23,34 +26,36 @@
       </table>
     </div>
 
-    <div class="col-xs-12">
-      <div class="text-right">
+    <% if editable %>
+      <div class="col-xs-12">
+        <div class="text-right">
 
-        <div class="btn-group">
-          <button class="btn btn-primary" id="show-quick-trip-form">
-            <i class="glyphicon glyphicon-pencil"></i>
-            Edit
-          </button>
+          <div class="btn-group">
+            <button class="btn btn-primary" id="show-quick-trip-form">
+              <i class="glyphicon glyphicon-pencil"></i>
+              Edit
+            </button>
 
-          <button class="btn btn-default" id="book-transfer-in">
-            <i class="glyphicon glyphicon-transfer"></i>
-            Transfer In
-          </button>
+            <button class="btn btn-default" id="book-transfer-in">
+              <i class="glyphicon glyphicon-transfer"></i>
+              Transfer In
+            </button>
 
-          <button class="btn btn-default" id="book-transfer-out">
-            <i class="glyphicon glyphicon-transfer"></i>
-            Transfer Out
-          </button>
+            <button class="btn btn-default" id="book-transfer-out">
+              <i class="glyphicon glyphicon-transfer"></i>
+              Transfer Out
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    <% end # editable %>
   </div>
 <% end %>
 
-<% action = trip_url(@trip) unless defined? action %>
-
-<div id="quick-trip"
-     data-active="<%= @trip.new_record? %>"
-     data-action="<%= h action %>"
-     data-trip="<%= h @trip.to_json %>">
-</div>
+<% if editable %>
+  <div id="quick-trip"
+       data-active="<%= @trip.new_record? %>"
+       data-action="<%= h action %>"
+       data-trip="<%= h @trip.to_json %>">
+  </div>
+<% end %>
