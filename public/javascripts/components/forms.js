@@ -28,6 +28,19 @@ function onKeyDown(ev) {
   }
 }
 
+var StaticField = React.createClass({
+  displayName: 'StaticField',
+
+  render: function() {
+    return (
+        <div className="form-group">
+          <label className="control-label">{this.props.title}</label>
+          <p className="form-control-static">{this.props.value}</p>
+        </div>
+    )
+  }
+});
+
 var TextField = React.createClass({
   displayName: 'TextField',
 
@@ -323,5 +336,6 @@ module.exports = {
   DateTimeField: DateTimeField,
   TextField: TextField,
   NumberField: NumberField,
-  SelectField: SelectField
+  SelectField: SelectField,
+  StaticField: StaticField
 }
