@@ -35,6 +35,11 @@ module ApplicationHelper
     end
   end
 
+  def usd(value)
+    precision = value.to_i == value.to_f ? 0 : 2
+    number_to_currency(value, precision: precision)
+  end
+
   def hnl(text)
     h(text).gsub(/\r?\n/, "<br/>\n")
   end
