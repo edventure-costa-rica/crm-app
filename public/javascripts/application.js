@@ -3,6 +3,7 @@
 
 $(function() {
   require('./views/search');
+  require('./views/trips/index');
   require('./views/trips/quick');
   require('./views/reservations/pending');
 });
