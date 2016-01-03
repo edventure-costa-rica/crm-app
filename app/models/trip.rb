@@ -10,12 +10,10 @@ class Trip < ActiveRecord::Base
   ]
 
   belongs_to :client
-  has_many :people, :order => 'created_at ASC', :dependent => :delete_all
   has_many :reservations, :dependent => :delete_all,
     :order => 'arrival ASC, departure ASC'
 
-  before_save :generate_default_values
-  after_save :maintain_people_size
+  before_validation_on_create :generate_default_values
 
   validates_presence_of :arrival, :departure
 
@@ -91,21 +89,6 @@ class Trip < ActiveRecord::Base
 
       self.registration_id = reg
     end
-  end
-
-  def maintain_people_size
-    # too many
-    if people.size > total_people
-      extra = people.find :all, :order => 'created_at ASC',
-        :offset => total_people
-      extra.each { |p| p.destroy }
-    
-    # too few
-    else
-      people.create :country => client.nationality while
-        people.size < total_people
-    end
-    
   end
 
 end
