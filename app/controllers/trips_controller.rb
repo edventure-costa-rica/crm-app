@@ -31,20 +31,7 @@ class TripsController < ApplicationController
     end
   end
 
-  # GET /trips/1
-  # GET /trips/1.xml
-  def show
-    @trip = Trip.find(params[:id])
-    @client = @trip.client
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @trip }
-    end
-  end
-
-  # GET /trips/new
-  # GET /trips/new.xml
+  # GET /clients/:client_id/trips/new
   def new
     @trip = Trip.new
     @client = Client.find(params[:client_id])
@@ -57,8 +44,7 @@ class TripsController < ApplicationController
     end
   end
 
-  # POST /trips
-  # POST /trips.xml
+  # POST /clients/:client_id/trips
   def create
     @client = Client.find(params[:client_id])
     @trip = @client.trips.build(params[:trip])
