@@ -47,3 +47,7 @@ $supplementalPrice.on('click', function() {
       function() { $priceModal.modal('show') }
   )
 });
+
+$priceModal.on('shown.bs.modal', function() {
+  lib.selectFormInput(this);
+});
