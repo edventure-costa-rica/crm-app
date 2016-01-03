@@ -37,11 +37,12 @@ class ReservationsController < ApplicationController
 
     respond_to do |format|
       if @reservation.save
-        format.html { redirect_to(reservations_trip_url, :notice => 'Reservation was successfully created.') }
-        format.json { render json: @reservation, status: :created }
+        format.html { redirect_to(pending_trip_url(@trip), :notice => 'Reservation was successfully created.') }
       else
-        format.html { render :action => "new" }
-        format.json { render json: @reservation.errors, status: :unprocessable_entity }
+        flash[:kind] = @reservation.company.kind rescue nil
+        flash[:params] = params
+        flash[:notice] = @reservation.errors.full_messages.join(', ')
+        format.html { redirect_to pending_trip_url(@trip) }
       end
     end
   end
@@ -50,17 +51,15 @@ class ReservationsController < ApplicationController
   # PUT /reservations/1.xml
   def update
     @reservation = Reservation.find(params[:id])
-    @client = Client.find(params[:client_id])
-    @trip = Trip.find(params[:trip_id])
+    @trip = @reservation.trip
 
     respond_to do |format|
-      if @reservation.update_attributes(params[:reservation])
-        format.html { redirect_to([@client, @trip, @reservation], :notice => 'Reservation was successfully updated.') }
-        format.xml  { head :ok }
+      if @reservation.update_attributes(reservation_params)
+        format.html { redirect_to(pending_trip_url(@trip), :notice => 'Reservation was successfully updated.') }
       else
-        @companies = []
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @reservation.errors, :status => :unprocessable_entity }
+        flash[:params] = params
+        flash[:notice] = @reservation.errors.full_messages.join(', ')
+        format.html { redirect_to pending_trip_url(@trip) }
       end
     end
   end

@@ -10,12 +10,15 @@ var $addReservation = $('#add-reservation');
 $addReservation.find('a[data-toggle="tab"]').on('show.bs.tab', function(ev) {
   var target = $(this).attr('href'),
       action = $addReservation.data('action-url'),
-      mount = $(target).find('.react-mount').get(0);
+      mount = $(target).find('.react-mount').get(0),
+      defaults = typeof window.DEFAULTS === 'undefined' ? {} : window.DEFAULTS;
+
+  delete window.DEFAULTS;
 
   ReactDOM.render(
       React.createElement(
           components.Reservations.Form,
-          {kind: target.replace('#',''), action: action}
+          {kind: target.replace('#',''), action: action, defaults: defaults}
       ),
       mount
   )
@@ -94,7 +97,7 @@ $showQuickTrip.on('click', function(ev) {
   }
 });
 
-var $editReservation = $('#edit-reservation'),
+var $editReservation = $('.edit-reservation'),
     $reservationModal = $('#edit-reservation-modal'),
     $reservationMount = $reservationModal.find('.react-mount');
 
@@ -114,4 +117,14 @@ $editReservation.on('click', function (ev) {
       $reservationMount.get(0),
       function() { $reservationModal.modal('show') }
   );
-})
+});
+
+
+if (window.DEFAULTS) {
+  if (DEFAULTS.id) {
+    $('#edit-reservation-' + DEFAULTS.id).click();
+  }
+  else {
+    $('a[href="#' + DEFAULTS.kind + '"]').tab('show');
+  }
+}
