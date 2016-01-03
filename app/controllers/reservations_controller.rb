@@ -38,12 +38,12 @@ class ReservationsController < ApplicationController
     respond_to do |format|
       if @reservation.save
         flash[:kind] = @reservation.company.kind
-        format.html { redirect_to(pending_trip_url(@trip), :notice => 'Reservation was successfully created.') }
+        format.html { redirect_to(pending_trip_reservations_url(@trip), :notice => 'Reservation was successfully created.') }
       else
         flash[:kind] = @reservation.company.kind rescue nil
         flash[:params] = params
         flash[:notice] = @reservation.errors.full_messages.join(', ')
-        format.html { redirect_to pending_trip_url(@trip) }
+        format.html { redirect_to pending_trip_reservations_url(@trip) }
       end
     end
   end
