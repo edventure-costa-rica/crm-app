@@ -69,6 +69,8 @@ class TripsController < ApplicationController
                                   :notice => 'Trip was successfully created.') }
         format.xml  { render :xml => @trip, :status => :created, :location => @trip }
       else
+        flash[:notice] = @trip.errors.full_messages.join(', ')
+
         format.html { render :action => "new" }
         format.xml  { render :xml => @trip.errors, :status => :unprocessable_entity }
       end
