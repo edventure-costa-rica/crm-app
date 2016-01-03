@@ -42,17 +42,18 @@
       <% @trips.each do |trip| %>
         <tr class="<%= cycle 'even', 'odd' %>">
           <td>
-            <% link_to trip_url(trip) do %>
+            <span title="<%= trip.status.capitalize %>">
               <% if trip.pending? %>
                 <i class="glyphicon glyphicon-hourglass"></i>
+                <%= link_to trip.to_s, pending_trip_reservations_url(trip) %>
               <% elsif trip.confirmed? %>
                 <i class="glyphicon glyphicon-tag"></i>
+                <%= link_to trip.to_s, confirmed_trip_reservations_url(trip) %>
               <% else %>
                 <i class="glyphicon glyphicon-remove"></i>
+                <%= trip.to_s %>
               <% end %>
-
-              <%= trip.registration_id %>
-            <% end %>
+            </span>
           </td>
           <% unless @client %>
             <td><%=h trip.client.family_name %></td>
