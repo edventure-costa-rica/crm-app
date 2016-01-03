@@ -1,8 +1,18 @@
 <% if @client %>
 <ol class="breadcrumb">
-  <li><%= link_to t('activerecord.models.trip.other'), trips_path %></li>
-  <li class="active"><%= @client %></li>
+  <li><%= link_to @client, client_url(@client) %></li>
+  <li class="active">Trips</li>
 </ol>
+<% elsif @controller.action_name != 'index' %>
+  <ol class="breadcrumb">
+    <li><%= link_to 'Trips', trips_url %></li>
+    <li class="active"><%= @controller.action_name.humanize %></li>
+  </ol>
+<% else %>
+  <ol class="breadcrumb">
+    <li><%= link_to 'Home', home_url %></li>
+    <li class="active">Trips</li>
+  </ol>
 <% end %>
 
 <div class="row">
@@ -31,7 +41,7 @@
 
       <% @trips.each do |trip| %>
         <tr class="<%= cycle 'even', 'odd' %>">
-          <td><%= link_to trip.registration_id, client_trip_path(trip.client, trip) %></td>
+          <td><%= link_to trip.registration_id, trip_url(trip) %></td>
           <% unless @client %>
             <td><%=h trip.client.family_name %></td>
           <% end %>
@@ -50,8 +60,8 @@
           </td>
           <td>
             <div class="btn-group">
-              <%= link_to t(:edit), edit_client_trip_path(trip.client, trip), class: 'btn btn-xs btn-primary' %>
-              <%= link_to t(:delete), client_trip_path(trip.client, trip), :confirm => t(:confirm),
+              <%= link_to t(:edit), edit_trip_url(trip), class: 'btn btn-xs btn-primary' %>
+              <%= link_to t(:delete), trip_url(trip), :confirm => t(:confirm),
                           :method => :delete, class: 'btn btn-xs btn-danger' %>
             </div>
           </td>
@@ -61,5 +71,3 @@
 
   </div>
 </div>
-
-<%= link_to t('.new'), new_client_trip_path(@client) unless @client.nil? %>
