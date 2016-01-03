@@ -44,7 +44,10 @@
       <td>
         <button class="edit-rack-price btn btn-primary btn-xs"
                 data-action="<%= h reservation_url(res) %>"
-                data-reservation="<%= h res.to_json %>"
+                data-company="<%= h res.company.to_s %>"
+                data-services="<%= h res.services %>"
+                data-net-price="<%= h usd(res.net_price) %>"
+                data-rack-price="<%= h res.price %>"
                 title="Edit">
           <i class="glyphicon glyphicon-pencil"></i>
         </button>
@@ -92,7 +95,7 @@
 </table>
 
 <div id="edit-price-modal" class="modal fade">
-  <div class="modal-dialog modal-sm">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button class="close" data-dismiss="modal">&times;</button>

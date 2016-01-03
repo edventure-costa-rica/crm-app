@@ -142,6 +142,64 @@ var Form = React.createClass({
   }
 });
 
+var RackPrice = React.createClass({
+  displayName: 'RackPrice',
+  mixins: [LinkedStateMixin],
+
+  getInitialState: function(props) {
+    props = props || this.props;
+
+    return _.assign({}, props);
+  },
+
+  componentWillReceiveProps: function(props) {
+    this.setState(this.getInitialState(props));
+  },
+
+  render: function() {
+    return (
+        <form className="form" action={this.props.action} method="post">
+          <input type="hidden" name="_method" value="put" />
+          <input type="hidden" name="reservation[id]" value={this.state.id} />
+
+          <div className="row">
+            <div className="col-xs-12 col-sm-6">
+              <Forms.StaticField title="Company" value={this.state.company} />
+            </div>
+
+            <div className="col-xs-12 col-sm-6">
+              <Forms.StaticField title="Services" value={this.state.services} />
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-xs-6">
+              <Forms.StaticField title="Net Price" value={this.state.netPrice} />
+            </div>
+
+            <div className="col-xs-6">
+              <Forms.PriceField value={this.linkState('rackPrice')}
+                                id="reservation-price"
+                                name="reservation[price]"
+                                required={true}
+                                title="Rack Price" />
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-xs-12 text-right">
+              <button type="submit" class="btn btn-primary">
+                <i className="glyphicon glyphicon-ok" />
+                &nbsp; Save
+              </button>
+            </div>
+          </div>
+        </form>
+    );
+  }
+});
+
 module.exports = {
-  Form: Form
+  Form: Form,
+  RackPrice: RackPrice
 };

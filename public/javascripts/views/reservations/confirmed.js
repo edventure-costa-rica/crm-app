@@ -13,13 +13,21 @@ var $rackPrice = $('.edit-rack-price'),
 
 
 $rackPrice.on('click', function() {
-  var reservation = $rackPrice.data('reservation'),
+  var netPrice = $rackPrice.data('net-price'),
+      rackPrice = $rackPrice.data('rack-price'),
+      services = $rackPrice.data('services'),
+      company = $rackPrice.data('company'),
       action = $rackPrice.data('action');
 
   ReactDOM.render(
       React.createElement(
-          components.Reservations.RackPrice,
-          {action: action, reservation: reservation}
+          components.Reservations.RackPrice, {
+            action: action,
+            company: company,
+            services: services,
+            netPrice: netPrice,
+            rackPrice: rackPrice
+          }
       ),
       $priceMount.get(0),
       function() { $priceModal.modal('show') }
