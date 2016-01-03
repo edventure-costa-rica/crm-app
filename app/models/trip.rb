@@ -80,6 +80,7 @@ class Trip < ActiveRecord::Base
     self.num_children = 0 if self.num_children.nil?
     self.num_disabled = 0 if self.num_disabled.nil?
     self.payment_pct  = 0 if self.payment_pct.nil?
+    self.status = 'pending' if self.status.nil?
 
     unless self.registration_id
       reg = 'F' + self.client.family_name[0,3].upcase
