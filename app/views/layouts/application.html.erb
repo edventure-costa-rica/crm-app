@@ -44,9 +44,9 @@
           New Client
         <% end %>
 
-        <% item_link_with_active pending_reservations_url do %>
+        <% item_link_with_active unconfirmed_reservations_url do %>
           <i class="glyphicon glyphicon-hourglass"></i>
-          Pending
+          Unconfirmed
         <% end %>
 
         <% item_link_with_active unpaid_reservations_url do %>
@@ -54,13 +54,28 @@
           Payment Due
         <% end %>
 
-        <% item_link_with_active paid_reservations_url do %>
-          <i class="glyphicon glyphicon-tag"></i>
-          Confirmed
+        <% item_link_with_active upcoming_trips_url do %>
+          <i class="glyphicon glyphicon-time"></i>
+          Upcoming
         <% end %>
+
+        <%= render partial: 'shared/extra_nav',
+                   locals: {item_class: "visible-xs visible-sm"} %>
       </ul>
 
-      <div id="mount-search" data-url="<%= h search_clients_url %>"></div>
+      <div class="hidden-xs hidden-sm"
+           id="mount-search"
+           data-url="<%= h search_clients_url %>"></div>
+
+      <div class="btn-group hidden-xs hidden-sm">
+        <div class="navbar-btn btn btn-info dropdown-toggle" data-toggle="dropdown">
+          <i class="glyphicon glyphicon-wrench"></i>
+        </div>
+
+        <ul class="dropdown-menu dropdown-menu-right">
+          <%= render partial: 'shared/extra_nav' %>
+        </ul>
+      </div>
 
     </div><!-- #navbar-collapse -->
 

@@ -1,0 +1,16 @@
+<% item_class = nil unless defined? item_class %>
+
+<% item_link_with_active clients_url, class: item_class do %>
+  <i class="glyphicon glyphicon-user"></i>
+  All Clients
+<% end %>
+
+<% item_link_with_active trips_url, class: item_class do %>
+  <i class="glyphicon glyphicon-tag"></i>
+  All Trips
+<% end %>
+
+<% item_link_with_active month_calendar_url, class: item_class do %>
+  <i class="glyphicon glyphicon-calendar"></i>
+  This Month
+<% end %>

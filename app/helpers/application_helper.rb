@@ -16,6 +16,15 @@ module ApplicationHelper
     active = options.fetch(:active_class, :active)
     item_options = current_page?(link_options) ? {class: active} : {}
 
+    if options.has_key? :class
+      item_options[:class] = [
+          item_options.delete(:class),
+          options.delete(:class)
+      ].compact.join(' ')
+    end
+
+    item_options = options.merge(item_options)
+
     link_contents = link_to(contents, link_options)
     tag_contents = content_tag(tag, link_contents, item_options)
 
