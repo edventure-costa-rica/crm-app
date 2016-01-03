@@ -33,19 +33,30 @@
         <% unless @client %>
           <th><%=tr_f :client %></th>
         <% end %>
-        <th><%=tr_f :status %></th>
         <th><%=tr_f :arrival %></th>
         <th><%=tr_f :departure %></th>
+        <th>Updated</th>
         <th></th>
       </tr>
 
       <% @trips.each do |trip| %>
         <tr class="<%= cycle 'even', 'odd' %>">
-          <td><%= link_to trip.registration_id, trip_url(trip) %></td>
+          <td>
+            <% link_to trip_url(trip) do %>
+              <% if trip.pending? %>
+                <i class="glyphicon glyphicon-hourglass"></i>
+              <% elsif trip.confirmed? %>
+                <i class="glyphicon glyphicon-tag"></i>
+              <% else %>
+                <i class="glyphicon glyphicon-remove"></i>
+              <% end %>
+
+              <%= trip.registration_id %>
+            <% end %>
+          </td>
           <% unless @client %>
             <td><%=h trip.client.family_name %></td>
           <% end %>
-          <td><%=h tr_f trip.status %></td>
           <td>
             <% link_to day_calendar_url(date: trip.arrival.to_date) do %>
               <i class="glyphicon glyphicon-calendar hidden-xs hidden-sm"></i>
@@ -58,6 +69,7 @@
               <%= l(trip.departure.to_date) %>
             <% end %>
           </td>
+          <td><%= l trip.updated_at, format: :short %></td>
           <td>
             <div class="btn-group">
               <button class="btn btn-primary btn-xs edit-trip"
