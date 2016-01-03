@@ -167,20 +167,22 @@ class ReservationsController < ApplicationController
     end
   end
 
+  # GET /trips/:trip_id/reservations/pending
   def pending
+    @trip = Trip.find(params[:trip_id])
+    @reservations = @trip.reservations
+  end
+
+  # GET /reservations/unconfirmed
+  def unconfirmed
     conditions = {confirmed: false, paid: false}
     conditions[:kind] = params[:kind] if params.has_key? :kind
     @reservations = Reservation.find(:all, conditions: conditions, order: 'arrival DESC')
   end
 
+  # GET /reservations/unpaid
   def unpaid
     conditions = {confirmed: true, paid: false}
-    conditions[:kind] = params[:kind] if params.has_key? :kind
-    @reservations = Reservation.find(:all, conditions: conditions, order: 'arrival DESC')
-  end
-
-  def paid
-    conditions = {confirmed: true, paid: true}
     conditions[:kind] = params[:kind] if params.has_key? :kind
     @reservations = Reservation.find(:all, conditions: conditions, order: 'arrival DESC')
   end

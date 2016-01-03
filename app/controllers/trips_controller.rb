@@ -112,10 +112,5 @@ class TripsController < ApplicationController
     end
   end
 
-  def pending
-    @trip = Trip.find(params[:id])
-    @reservations = @trip.reservations
-  end
-
 
 end

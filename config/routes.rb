@@ -20,7 +20,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :reservations,
                 except: [:new, :create, :show, :edit],
-                collection: %i(pending unpaid paid),
+                collection: %i(unconfirmed unpaid),
                 member: {email: :get, confirm: :post}
 
   map.resources :calendar, only: [],
