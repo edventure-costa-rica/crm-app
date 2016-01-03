@@ -107,12 +107,13 @@ $editReservation.on('click', function (ev) {
   var $this = $(this),
       kind = $this.data('kind'),
       action = $this.data('action'),
+      method = 'put',
       res = $this.data('reservation') || {};
 
   ReactDOM.render(
       React.createElement(
           components.Reservations.Form,
-          {kind: kind, action: action, reservation: res}
+          {kind: kind, action: action, method: method, reservation: res}
       ),
       $reservationMount.get(0),
       function() { $reservationModal.modal('show') }
