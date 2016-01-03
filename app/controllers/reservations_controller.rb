@@ -116,12 +116,12 @@ class ReservationsController < ApplicationController
   # GET /trips/:trip_id/reservations/pending
   def pending
     @trip = Trip.find(params[:trip_id])
-    @reservations = @trip.reservations
+    @reservations = @trip.reservations.all(order: 'arrival DESC')
   end
 
   def confirmed
     @trip = Trip.find(params[:trip_id])
-    @reservations = @trip.reservations
+    @reservations = @trip.reservations.all(order: 'arrival DESC')
   end
 
   # GET /reservations/unconfirmed
