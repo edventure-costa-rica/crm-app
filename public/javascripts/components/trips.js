@@ -49,7 +49,7 @@ var QuickForm = React.createClass({
     return (
         <div className="row">
           <form action={this.props.action} method="post" className="form">
-            <input type="hidden" name=".method" value={method} />
+            <input type="hidden" name="_method" value={method} />
 
             <div className="col-xs-6">
               <Forms.PaxField id="trip-total_people"
