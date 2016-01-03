@@ -62,6 +62,10 @@ class Reservation < ActiveRecord::Base
     num_people
   end
 
+  def profit
+    price.to_f - net_price.to_f
+  end
+
   def pickup
     date = arrival ? I18n.localize(arrival.to_date, format: :short) : nil
     time = arrival_time
