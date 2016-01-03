@@ -56,7 +56,7 @@ var Form = React.createClass({
       );
     }
 
-    if (! method) method = this.state.id ? 'post' : 'put'
+    if (! method) method = this.state.id ? 'put' : 'post';
 
     kind = this.props.kind[0].toUpperCase() + this.props.kind.substr(1);
 
