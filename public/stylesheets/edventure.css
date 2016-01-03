@@ -4,6 +4,14 @@ button:focus, a:focus { outline: none !important }
   margin: 60px auto;
 }
 
+#flash-notice {
+  position: fixed;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  z-index: 10000;
+}
+
 .margin-bottom-1 {
   margin-bottom: 1em;
 }

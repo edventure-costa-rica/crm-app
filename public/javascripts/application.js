@@ -31,5 +31,8 @@ $(function () {
     toggleWithCheckbox('#toggle_paid', this, !skipFocus)
   }).triggerHandler('change', true);
 
+  setTimeout(function() {
+    $('#flash-notice').fadeOut();
+  }, 5000);
 });
 
