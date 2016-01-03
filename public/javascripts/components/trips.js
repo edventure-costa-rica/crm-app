@@ -45,32 +45,48 @@ var QuickForm = React.createClass({
           <form action={this.props.action} method="post" className="form">
             <input type="hidden" name=".method" value={method} />
 
-            <div className="col-xs-6 col-sm-3">
+            <div className="col-xs-6">
+              <Forms.PaxField id="trip-total_people"
+                              name="trip[total_people]"
+                              title="Total People"
+                              required={true}
+                              value={this.linkState('total_people')} />
+            </div>
+
+
+            <div className="col-xs-6">
+              <Forms.PaxField id="trip-num_children"
+                              name="trip[num_children]"
+                              title="Children"
+                              value={this.linkState('num_children')} />
+            </div>
+
+            <div className="col-xs-6 col-sm-4">
               <Forms.DateTimeField id="trip-arrival"
                                    name="trip[arrival]"
                                    title="Arrival"
-                                   require={true}
+                                   required={true}
                                    value={this.linkState('arrival')}
               />
             </div>
 
-            <div className="col-xs-6 col-sm-3">
+            <div className="col-xs-6 col-sm-8">
               <Forms.TextField id="trip-arrival_flight"
                                name="trip[arrival_flight]"
                                title="Location / Flight"
                                value={this.linkState('arrival_flight')} />
             </div>
 
-            <div className="col-xs-6 col-sm-3">
+            <div className="col-xs-6 col-sm-4">
               <Forms.DateTimeField id="trip-departure"
                                    name="trip[departure]"
                                    title="Departure"
-                                   require={true}
+                                   required={true}
                                    value={this.linkState('departure')} />
             </div>
 
 
-            <div className="col-xs-6 col-sm-3">
+            <div className="col-xs-6 col-sm-8">
               <Forms.TextField id="trip-departure_flight"
                                name="trip[departure_flight]"
                                title="Location / Flight"
