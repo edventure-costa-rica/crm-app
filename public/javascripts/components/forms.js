@@ -18,7 +18,9 @@ function onKeyDown(ev) {
         index = $inputs.index($target);
 
     if (index === $inputs.length - 1 || ev.ctrlKey || ev.metaKey) {
-      $form.submit();
+      var submit = $form.find(':submit');
+      if (submit.length) submit.first().click();
+      else $form.submit();
     }
     else {
       $inputs.eq(index + 1).focus();
