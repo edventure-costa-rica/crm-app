@@ -45,7 +45,8 @@ Rails::Initializer.run do |config|
   #config.gem "Ascii85", :lib => "ascii85"
 
   #config.load_paths << "#{RAILS_ROOT}/vendor/prawn/lib"
-  config.load_paths << "#{RAILS_ROOT}/app/reports"
+  config.autoload_paths << "#{RAILS_ROOT}/app/reports"
+  config.autoload_paths << "#{RAILS_ROOT}/app/modules"
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
