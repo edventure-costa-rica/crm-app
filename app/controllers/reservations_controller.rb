@@ -1,3 +1,5 @@
+require 'csv'
+
 class ReservationsController < ApplicationController
   # GET /reservations
   # GET /reservations.xml
@@ -145,6 +147,19 @@ class ReservationsController < ApplicationController
     @reservations = Reservation.find(:all, conditions: conditions, order: 'arrival DESC')
   end
 
+  def export
+    @trip = Trip.find(params[:trip_id])
+
+    name = @trip.registration_id + '.csv'
+
+    csv = @trip.reservations.map do |res|
+      CSV.generate_line res.export, encoding: 'UTF-8'
+    end
+
+    respond_to do |format|
+      format.csv { send_data csv.join("\r\n"), filename: name }
+    end
+  end
 
   private
 
