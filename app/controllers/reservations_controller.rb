@@ -152,12 +152,14 @@ class ReservationsController < ApplicationController
 
     name = @trip.registration_id + '.csv'
 
+    header = CSV.generate_line(Reservation.export_header, encoding: 'UTF-8')
+
     csv = @trip.reservations.map do |res|
-      CSV.generate_line(res.export, encoding: 'UTF-8').strip
+      CSV.generate_line(res.export, encoding: 'UTF-8')
     end
 
     respond_to do |format|
-      format.csv { send_data csv.join("\r\n"), filename: name }
+      format.csv { send_data header + csv.join, filename: name }
     end
   end
 

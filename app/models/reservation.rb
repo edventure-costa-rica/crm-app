@@ -2,18 +2,18 @@ class Reservation < ActiveRecord::Base
   include Exportable
 
   export([
-      -> { company.name },
+      ['Company', -> { company.name }],
       :services,
-      -> { I18n.l arrival.to_date },
+      ['Arrival Date', -> { I18n.l arrival.to_date }],
       :arrival_time,
       :pickup_location,
-      -> { I18n.l departure.to_date },
+      ['Departure Date', -> { I18n.l departure.to_date }],
       :departure_time,
       :dropoff_location,
       :net_price,
       :price,
-      -> { confirmed ? 'true' : 'false' },
-      -> { paid ? 'true' : 'false' }
+      :confirmed,
+      :paid
   ])
 
   belongs_to :company

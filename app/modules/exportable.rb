@@ -7,6 +7,8 @@ module Exportable
     attributes = self.class.export_styles.fetch(style)
 
     attributes.map do |attr|
+      attr = attr.last if attr.is_a? Array
+
       if attr.is_a? Proc
         self.instance_exec(&attr)
       else
@@ -33,6 +35,26 @@ module Exportable
         export_styles[style] = blk.call
       else
         export_styles[style] = attributes
+      end
+    end
+
+
+    def export_header(style = :default)
+      @export_styles ||= Hash.new
+
+      attributes = export_styles.fetch(style)
+
+      attributes.map do |attr|
+        attr = attr.first if attr.is_a? Array
+
+        case attr
+        when String
+          attr
+        when Symbol
+          attr.to_s.humanize
+        else
+          attr.to_s
+        end
       end
     end
 
