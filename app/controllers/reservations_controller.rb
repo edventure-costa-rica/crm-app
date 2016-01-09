@@ -137,7 +137,17 @@ class ReservationsController < ApplicationController
   def unconfirmed
     conditions = {confirmed: false, paid: false}
     conditions[:kind] = params[:kind] if params.has_key? :kind
-    @reservations = Reservation.find(:all, conditions: conditions, order: 'arrival DESC')
+
+    @page = [params.fetch(:page, 1), 1].map(&:to_i).max
+    page_size = 50
+
+    @reservations =
+        Reservation.find(:all,
+                         joins: [:company, :trip],
+                         conditions: conditions,
+                         limit: page_size,
+                         offset: (@page - 1) * page_size,
+                         order: 'updated_at DESC, arrival ASC')
   end
 
   # GET /reservations/unpaid

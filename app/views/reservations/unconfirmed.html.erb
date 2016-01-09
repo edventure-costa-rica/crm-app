@@ -1,0 +1,81 @@
+<ol class="breadcrumb">
+  <li><%= link_to 'Trips', trips_url %></li>
+  <li class="active">Reservations</li>
+</ol>
+
+<h2>Unconfirmed Reservations</h2>
+
+<table class="table table-striped table-condensed">
+  <tr>
+    <th>Company</th>
+    <th class="hidden-xs hidden-sm">Trip</th>
+    <th>Family</th>
+    <th>Arrival</th>
+    <th></th>
+  </tr>
+
+  <% @reservations.each do |res| %>
+    <tr>
+      <td>
+        <% if res.company.kind == 'hotel' %>
+          <i class="glyphicon glyphicon-bed"></i>
+        <% elsif res.company.kind == 'transport' %>
+          <i class="glyphicon glyphicon-road"></i>
+        <% elsif res.company.kind == 'tour' %>
+          <i class="glyphicon glyphicon-sunglasses"></i>
+        <% else %>
+          <i class="glyphicon glyphicon-question-sign"></i>
+        <% end %>
+
+        <%= link_to res.company.name, res.company %>
+      </td>
+
+      <td class="hidden-xs hidden-sm">
+        <% if res.trip.pending? %>
+          <i class="glyphicon glyphicon-hourglass"></i>
+          <%= link_to res.trip.to_s, pending_trip_reservations_url(res.trip) %>
+        <% elsif res.trip.confirmed? %>
+          <i class="glyphicon glyphicon-tag"></i>
+          <%= link_to res.trip.to_s, confirmed_trip_reservations_url(res.trip) %>
+        <% else %>
+          <i class="glyphicon glyphicon-remove"></i>
+          <%= res.trip.to_s %>
+        <% end %>
+      </td>
+
+      <td>
+        <i class="glyphicon glyphicon-user"></i>
+        <%= link_to res.client, res.client %>
+      </td>
+
+      <td><%= l res.arrival.to_date %></td>
+
+      <td>
+
+        <ul class="list-inline">
+          <li>
+            <button class="btn btn-link btn-xs confirm-reservation"
+                    id="confirm-reservation-<%= res.id %>"
+                    data-action="<%= url_for(res) %>"
+                    data-reservation="<%= h res.to_json %>">
+              <i class="glyphicon glyphicon-ok-circle"></i>
+              Confirm
+            </button>
+          </li>
+
+          <li>
+            <% link_to reservation_url(res), method: :delete,
+                       confirm: 'Really delete this reservation?',
+                       class: 'btn btn-link btn-xs' do %>
+              <i class="glyphicon glyphicon-trash"></i>
+              Delete
+            <% end %>
+          </li>
+
+        </ul>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= render :partial => 'pages' %>

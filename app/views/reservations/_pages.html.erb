@@ -1,0 +1,31 @@
+<nav>
+  <ul class="pager">
+    <% if @page == 1 %>
+      <li class="previous disabled">
+        <span>
+          <span aria-hidden="true">&larr;</span> Newer
+        </span>
+      </li>
+    <% else %>
+      <li class="previous">
+        <% link_to current_url(page: @page - 1) do %>
+          <span aria-hidden="true">&larr;</span> Newer
+        <% end %>
+      </li>
+    <% end %>
+
+    <% if @reservations.empty? %>
+    <li class="next disabled">
+      <span>
+        Older <span aria-hidden="true">&rarr;</span>
+      </span>
+    </li>
+    <% else %>
+      <li class="next">
+        <% link_to current_url(page: @page + 1) do %>
+          Older <span aria-hidden="true">&rarr;</span>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</nav>
