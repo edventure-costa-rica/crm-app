@@ -153,7 +153,7 @@ class ReservationsController < ApplicationController
     name = @trip.registration_id + '.csv'
 
     csv = @trip.reservations.map do |res|
-      CSV.generate_line res.export, encoding: 'UTF-8'
+      CSV.generate_line(res.export, encoding: 'UTF-8').strip
     end
 
     respond_to do |format|
