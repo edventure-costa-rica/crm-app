@@ -20,6 +20,10 @@ $addReservation.find('a[data-toggle="tab"]').on('show.bs.tab', function(ev) {
 
   delete window.DEFAULTS;
 
+  if (TRIP.total_people && ! defaults.num_people) {
+    defaults.num_people = TRIP.total_people;
+  }
+
   ReactDOM.render(
       React.createElement(
           components.Reservations.Form,
