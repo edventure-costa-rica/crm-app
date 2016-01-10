@@ -46,6 +46,7 @@
                 data-action="<%= h reservation_url(res, next: 'confirmed') %>"
                 data-company="<%= h res.company.to_s %>"
                 data-services="<%= h res.services %>"
+                data-notes="<%= h res.notes %>"
                 data-net-price="<%= h usd(res.net_price) %>"
                 data-rack-price="<%= h res.price %>"
                 title="Edit">

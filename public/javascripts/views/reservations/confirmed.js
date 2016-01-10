@@ -18,6 +18,7 @@ $rackPrice.on('click', function() {
       rackPrice = Number($this.data('rack-price')),
       services = $this.data('services'),
       company = $this.data('company'),
+      notes = $this.data('notes'),
       action = $this.data('action');
 
   ReactDOM.render(
@@ -27,7 +28,8 @@ $rackPrice.on('click', function() {
             company: company,
             services: services,
             netPrice: netPrice,
-            rackPrice: rackPrice
+            rackPrice: rackPrice,
+            notes: notes
           }
       ),
       $priceMount.get(0),
