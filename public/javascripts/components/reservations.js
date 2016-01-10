@@ -267,8 +267,71 @@ var Confirmation = React.createClass({
   }
 });
 
+
+var Payment = React.createClass({
+  displayName: 'Payment',
+  mixins: [LinkedStateMixin],
+
+  getInitialState: function (props) {
+    props = props || this.props;
+
+    return _.assign({}, props);
+  },
+
+  componentWillReceiveProps: function (props) {
+    this.setState(this.getInitialState(props));
+  },
+
+  render: function() {
+    var today = moment().startOf('day');
+
+    return (
+        <form className="form" action={this.props.action} method="post">
+          <input type="hidden" name="_method" value="put" />
+          <input type="hidden" name="reservation[paid]" value="true"/>
+
+          <div className="row">
+            <div className="col-xs-6">
+              <Forms.StaticField title="Company" value={this.state.company} />
+            </div>
+
+            <div className="col-xs-6">
+              <Forms.StaticField title="Net Price" value={this.state.netPrice} />
+            </div>
+
+            <div className="col-xs-12">
+              <Forms.DateTimeField title="Date of Payment"
+                                   value={this.linkState('paidDate')}
+                                   name="reservation[paid_date]"
+                                   max={today} noTime={true}
+                                   id="reservation-paid_date" />
+            </div>
+
+            <div className="col-xs-12">
+              <Forms.TextArea title="Private Notes"
+                              value={this.linkState('notes')}
+                              name="reservation[notes]"
+                              id="reservation-notes" />
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-xs-12 text-right">
+              <button type="submit" className="btn btn-primary">
+                <i className="glyphicon glyphicon-usd" />
+                &nbsp; Mark as Paid
+              </button>
+            </div>
+          </div>
+        </form>
+    );
+  }
+});
+
+
 module.exports = {
   Form: Form,
   RackPrice: RackPrice,
-  Confirmation: Confirmation
+  Confirmation: Confirmation,
+  Payment: Payment
 };
