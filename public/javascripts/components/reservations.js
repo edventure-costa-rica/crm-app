@@ -293,15 +293,15 @@ var Payment = React.createClass({
           <input type="hidden" name="reservation[paid]" value="true"/>
 
           <div className="row">
-            <div className="col-xs-12">
+            <div className="col-xs-8 col-md-12">
               <Forms.StaticField title="Company" value={this.state.company} />
             </div>
 
-            <div className="col-xs-6">
+            <div className="col-xs-4 col-md-6">
               <Forms.StaticField title="Net Price" value={this.state.netPrice} />
             </div>
 
-            <div className="col-xs-6">
+            <div className="col-xs-12 col-md-6">
               <Forms.DateTimeField title="Date of Payment"
                                    value={this.linkState('paidDate')}
                                    name="reservation[paid_date]"
