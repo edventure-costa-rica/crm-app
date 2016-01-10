@@ -8,7 +8,11 @@ var lib = require('../../lib');
 
 var $addReservation = $('#add-reservation');
 
+var transferring = false;
+
 $addReservation.find('a[data-toggle="tab"]').on('show.bs.tab', function(ev) {
+  if (transferring) { transferring = false; return }
+
   var target = $(this).attr('href'),
       action = $addReservation.data('action-url'),
       mount = $(target).find('.react-mount').get(0),
@@ -61,6 +65,7 @@ $bookTransferIn.add($bookTransferOut).on('click', function (ev) {
     }
   }
 
+  transferring = true;
   ReactDOM.render(
       React.createElement(components.Reservations.Form, {
         kind: 'transport',
