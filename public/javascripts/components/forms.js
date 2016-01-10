@@ -242,7 +242,7 @@ var DateTimeField = React.createClass({
 
     var format = this.props.noTime ? 'YYYY-MM-DD' : 'YYYY-MM-DD h:mm A';
 
-    var formatted = dateTime.format('YYYY-MM-DD h:mm A');
+    var formatted = dateTime.format(format);
     this.props.value.requestChange(formatted);
 
     this.setState({date: dateTime, valid: true});
