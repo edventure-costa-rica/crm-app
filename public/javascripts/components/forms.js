@@ -282,6 +282,9 @@ var DateTimeField = React.createClass({
     var classes = 'form-group datetime-container';
     var picker;
 
+    var placeholder = 'date and time';
+    if (this.props.noTime) placeholder = 'date';
+
     if (! this.state.valid) classes += ' has-error';
 
     if (this.state.open) {
@@ -304,7 +307,7 @@ var DateTimeField = React.createClass({
 
           <input type="datetime"
                  className="form-control" {...events}
-                 placeholder="date and time"
+                 placeholder={placeholder}
                  onKeyDown={onKeyDown}
                  required={Boolean(this.props.required)}
                  valueLink={this.props.value}
