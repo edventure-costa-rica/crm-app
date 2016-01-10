@@ -57,7 +57,10 @@
             <button class="btn btn-link btn-xs confirm-reservation"
                     id="confirm-reservation-<%= res.id %>"
                     data-action="<%= url_for(res) %>"
-                    data-reservation="<%= h res.to_json %>">
+                    data-company="<%= h res.company.to_s %>"
+                    data-notes="<%= h res.notes.to_s %>"
+                    data-confirmation="<%= h res.confirmation_no.to_s %>"
+                    data-services="<%= h res.services.to_s %>">
               <i class="glyphicon glyphicon-ok-circle"></i>
               Confirm
             </button>
@@ -79,3 +82,18 @@
 </table>
 
 <%= render :partial => 'pages' %>
+
+
+<div id="confirm-reservation-modal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Confirm Reservation</h4>
+      </div>
+      <div class="modal-body">
+        <div class="react-mount"></div>
+      </div>
+    </div>
+  </div>
+</div>

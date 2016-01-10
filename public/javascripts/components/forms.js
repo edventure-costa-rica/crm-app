@@ -63,6 +63,28 @@ var TextField = React.createClass({
   }
 });
 
+var TextArea = React.createClass({
+  displayName: 'TextArea',
+
+  render: function() {
+    return (
+        <div className="form-group">
+          <label htmlFor={this.props.id}>
+            {this.props.title}
+          </label>
+
+          <textarea className='form-control'
+                 onKeyDown={onKeyDown}
+                 required={Boolean(this.props.required)}
+                 defaultValue={this.props.defaultValue}
+                 valueLink={this.props.value}
+                 name={this.props.name}
+                 id={this.props.id} />
+        </div>
+    )
+  }
+});
+
 var NumberField = React.createClass({
   displayName: 'NumberField',
 
@@ -335,6 +357,7 @@ module.exports = {
   PriceField: PriceField,
   DateTimeField: DateTimeField,
   TextField: TextField,
+  TextArea: TextArea,
   NumberField: NumberField,
   SelectField: SelectField,
   StaticField: StaticField

@@ -7,6 +7,7 @@ $(function() {
   require('./views/trips/quick');
   require('./views/reservations/pending');
   require('./views/reservations/confirmed');
+  require('./views/reservations/unconfirmed');
 });
 
 
