@@ -57,7 +57,7 @@
         <%= usd res.net_price %>
       </td>
 
-      <td class="col-xs-3 col-md-3">
+      <td class="col-xs-3">
 
         <ul class="list-inline">
           <li>
@@ -66,6 +66,7 @@
                     data-action="<%= reservation_url(res, next: 'unpaid') %>"
                     data-company="<%= h res.company.to_s %>"
                     data-notes="<%= h res.notes.to_s %>"
+                    data-net-price="<%= h usd res.net_price %>"
                     data-paid-date="<%= res.paid_date %>">
               <i class="glyphicon glyphicon-usd"></i>
               Paid
@@ -91,7 +92,7 @@
 <%= render :partial => 'pages' %>
 
 
-<div id="confirm-reservation-modal" class="modal fade">
+<div id="pay-reservation-modal" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

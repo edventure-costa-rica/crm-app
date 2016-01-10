@@ -8,6 +8,7 @@ $(function() {
   require('./views/reservations/pending');
   require('./views/reservations/confirmed');
   require('./views/reservations/unconfirmed');
+  require('./views/reservations/unpaid');
 });
 
 

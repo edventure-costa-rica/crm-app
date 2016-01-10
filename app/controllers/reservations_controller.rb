@@ -62,6 +62,8 @@ class ReservationsController < ApplicationController
         confirmed_trip_reservations_url(@trip)
       when 'unconfirmed'
         unconfirmed_reservations_url
+      when 'unpaid'
+        unpaid_reservations_url
       else
         pending_trip_reservations_url(@trip)
       end
