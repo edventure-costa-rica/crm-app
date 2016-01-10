@@ -57,8 +57,11 @@ class ReservationsController < ApplicationController
     @trip = @reservation.trip
 
     destination =
-      if params[:next] == 'confirmed'
+      case params[:next]
+      when 'confirmed'
         confirmed_trip_reservations_url(@trip)
+      when 'unconfirmed'
+        unconfirmed_reservations_url
       else
         pending_trip_reservations_url(@trip)
       end
@@ -137,16 +140,14 @@ class ReservationsController < ApplicationController
   def unconfirmed
     conditions = {confirmed: false, paid: false}
     conditions[:kind] = params[:kind] if params.has_key? :kind
-
-    @page = [params.fetch(:page, 1), 1].map(&:to_i).max
-    page_size = 50
+    limit, offset = page_to_limit_offset
 
     @reservations =
         Reservation.find(:all,
                          joins: [:company, :trip],
                          conditions: conditions,
-                         limit: page_size,
-                         offset: (@page - 1) * page_size,
+                         limit: limit,
+                         offset: offset,
                          order: 'updated_at DESC, arrival ASC')
   end
 
@@ -154,7 +155,15 @@ class ReservationsController < ApplicationController
   def unpaid
     conditions = {confirmed: true, paid: false}
     conditions[:kind] = params[:kind] if params.has_key? :kind
-    @reservations = Reservation.find(:all, conditions: conditions, order: 'arrival DESC')
+    limit, offset = page_to_limit_offset
+
+    @reservations =
+        Reservation.find(:all,
+                         joins: [:company, :trip],
+                         conditions: conditions,
+                         limit: limit,
+                         offset: offset,
+                         order: 'updated_at DESC, arrival ASC')
   end
 
   def export
@@ -190,5 +199,12 @@ class ReservationsController < ApplicationController
         input[:departure_time] = departure.strftime('%l %P')
       end
     end
+  end
+
+  def page_to_limit_offset(limit=50)
+    @page = [params.fetch(:page, 1), 1].map(&:to_i).max
+    offset = (@page - 1) * limit
+
+    [limit, offset]
   end
 end

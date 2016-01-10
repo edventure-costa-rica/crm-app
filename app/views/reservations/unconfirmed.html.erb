@@ -56,7 +56,7 @@
           <li>
             <button class="btn btn-link btn-xs confirm-reservation"
                     id="confirm-reservation-<%= res.id %>"
-                    data-action="<%= url_for(res) %>"
+                    data-action="<%= reservation_url(res, next: 'unconfirmed') %>"
                     data-company="<%= h res.company.to_s %>"
                     data-notes="<%= h res.notes.to_s %>"
                     data-confirmation="<%= h res.confirmation_no.to_s %>"
