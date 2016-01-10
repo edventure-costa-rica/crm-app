@@ -2,6 +2,8 @@ var _ = require('lodash');
 var Forms = require('./forms');
 var React = require('react');
 
+var moment = require('moment');
+
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
 if (typeof window.COMPANIES === 'undefined') window.COMPANIES = [];
@@ -291,7 +293,7 @@ var Payment = React.createClass({
           <input type="hidden" name="reservation[paid]" value="true"/>
 
           <div className="row">
-            <div className="col-xs-6">
+            <div className="col-xs-12">
               <Forms.StaticField title="Company" value={this.state.company} />
             </div>
 
@@ -299,7 +301,7 @@ var Payment = React.createClass({
               <Forms.StaticField title="Net Price" value={this.state.netPrice} />
             </div>
 
-            <div className="col-xs-12">
+            <div className="col-xs-6">
               <Forms.DateTimeField title="Date of Payment"
                                    value={this.linkState('paidDate')}
                                    name="reservation[paid_date]"
