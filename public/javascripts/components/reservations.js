@@ -186,6 +186,16 @@ var RackPrice = React.createClass({
           </div>
 
           <div className="row">
+            <div className="col-xs-12">
+              <Forms.TextArea value={this.linkState('notes')}
+                              id="reservation-notes"
+                              name="reservation[notes]"
+                              title="Private Notes" />
+            </div>
+          </div>
+
+
+          <div className="row">
             <div className="col-xs-12 text-right">
               <button type="submit" className="btn btn-primary">
                 <i className="glyphicon glyphicon-ok" />
