@@ -1,5 +1,5 @@
-<% editable = true unless defined? editable %>
-<% action = trip_url(@trip) unless defined? action %>
+<% unless defined? editable then editable = true end %>
+<% unless defined? action then action = trip_url(@trip) end %>
 
 <% unless @trip.new_record? %>
   <h2>Trip Details <small><%= @trip %></small></h2>
