@@ -201,7 +201,7 @@ class ReservationsController < ApplicationController
     end
   end
 
-  def page_to_limit_offset(limit=50)
+  def page_to_limit_offset(limit=25)
     @page = [params.fetch(:page, 1), 1].map(&:to_i).max
     offset = (@page - 1) * limit
 

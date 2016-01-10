@@ -13,7 +13,8 @@ class Reservation < ActiveRecord::Base
       :net_price,
       :price,
       :confirmed,
-      :paid
+      :paid,
+      :notes
   ])
 
   belongs_to :company
