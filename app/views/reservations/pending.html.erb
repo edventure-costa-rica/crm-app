@@ -36,12 +36,13 @@
         <%= res.company.name %>
       </td>
       <td class="col-xs-4 col-md-2"><%= res.services %></td>
-      <td class="hidden-xs hidden-sm"><%= usd res.net_price %></td>
-      <td class="hidden-xs hidden-sm"><%= usd res.price %></td>
-      <td class="hidden-xs hidden-sm"><%= res.pickup %></td>
-      <td class="hidden-xs hidden-sm"><%= res.dropoff %></td>
 
-      <td class="col-xs-4">
+      <td class="hidden-xs hidden-sm col-md-1"><%= usd res.net_price %></td>
+      <td class="hidden-xs hidden-sm col-md-1"><%= usd res.price %></td>
+      <td class="hidden-xs hidden-sm col-md-2"><%= res.pickup %></td>
+      <td class="hidden-xs hidden-sm col-md-2"><%= res.dropoff %></td>
+
+      <td class="col-xs-4 col-md-2">
         <ul class="list-inline">
           <li>
             <button class="btn btn-link btn-xs edit-reservation"
