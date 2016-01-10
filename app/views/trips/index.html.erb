@@ -15,85 +15,73 @@
   </ol>
 <% end %>
 
-<div class="row">
-  <div class="col-xs-12">
-    <h1>
-      <%= if @upcoming then t '.upcoming' else t '.title' end %>
-      <% if @client %><small><%= @client %></small><% end %>
-    </h1>
-  </div>
-</div>
+<h1>
+  <%= if @upcoming then t '.upcoming' else t '.title' end %>
+  <% if @client %><small><%= @client %></small><% end %>
+</h1>
 
-<div class="row">
-  <div class="col-xs-12">
+<table class="table table-striped table-condensed">
+  <tr>
+    <th>Trip</th>
+    <% unless @client %>
+      <th>Family</th>
+    <% end %>
+    <th><%=tr_f :arrival %></th>
+    <th><%=tr_f :departure %></th>
+    <th>Updated</th>
+    <th></th>
+  </tr>
 
-    <table class="table table-striped table-condensed">
-      <tr>
-        <th><%=tr_f :registration_id %></th>
-        <% unless @client %>
-          <th><%=tr_f :client %></th>
-        <% end %>
-        <th><%=tr_f :arrival %></th>
-        <th><%=tr_f :departure %></th>
-        <th>Updated</th>
-        <th></th>
-      </tr>
-
-      <% @trips.each do |trip| %>
-        <tr class="<%= cycle 'even', 'odd' %>">
-          <td>
-            <span title="<%= trip.status.capitalize %>">
-              <% if trip.pending? %>
-                <i class="glyphicon glyphicon-hourglass"></i>
-                <%= link_to trip.to_s, pending_trip_reservations_url(trip) %>
-              <% elsif trip.confirmed? %>
-                <i class="glyphicon glyphicon-tag"></i>
-                <%= link_to trip.to_s, confirmed_trip_reservations_url(trip) %>
-              <% else %>
-                <i class="glyphicon glyphicon-remove"></i>
-                <%= trip.to_s %>
-              <% end %>
-            </span>
-          </td>
-          <% unless @client %>
-            <td><%=h trip.client.family_name %></td>
+  <% @trips.each do |trip| %>
+    <tr>
+      <td>
+        <span title="<%= trip.status.capitalize %>">
+          <% if trip.pending? %>
+            <i class="glyphicon glyphicon-hourglass"></i>
+            <%= link_to trip.to_s, pending_trip_reservations_url(trip) %>
+          <% elsif trip.confirmed? %>
+            <i class="glyphicon glyphicon-tag"></i>
+            <%= link_to trip.to_s, confirmed_trip_reservations_url(trip) %>
+          <% else %>
+            <i class="glyphicon glyphicon-remove"></i>
+            <%= trip.to_s %>
           <% end %>
-          <td>
-            <% link_to day_calendar_url(date: trip.arrival.to_date) do %>
-              <i class="glyphicon glyphicon-calendar hidden-xs hidden-sm"></i>
-              <%= l(trip.arrival.to_date) %>
-            <% end %>
-          </td>
-          <td>
-            <% link_to day_calendar_url(date: trip.departure.to_date) do %>
-              <i class="glyphicon glyphicon-calendar hidden-xs hidden-sm"></i>
-              <%= l(trip.departure.to_date) %>
-            <% end %>
-          </td>
-          <td><%= l trip.updated_at, format: :short %></td>
-          <td>
-            <div class="btn-group">
-              <button class="btn btn-primary btn-xs edit-trip"
-                      id="edit-trip-<%= trip.id %>"
-                      data-action="<%= h trip_url(trip) %>"
-                      data-trip="<%= h trip.to_json %>">
-              <i class="glyphicon glyphicon-pencil"></i>
-                Edit
-              </button>
-
-              <% link_to trip_url(trip), :confirm => t(:confirm),
-                         :method => :delete, class: 'btn btn-xs btn-danger' do %>
-                <i class="glyphicon glyphicon-trash"></i>
-                Delete
-              <% end %>
-            </div>
-          </td>
-        </tr>
+        </span>
+      </td>
+      <% unless @client %>
+        <td>
+          <i class="glyphicon glyphicon-user"></i>
+          <%= link_to trip.client, client_url(trip.client) %>
+        </td>
       <% end %>
-    </table>
+      <td>
+        <% link_to day_calendar_url(date: trip.arrival.to_date) do %>
+          <i class="glyphicon glyphicon-calendar hidden-xs hidden-sm"></i>
+          <%= l(trip.arrival.to_date) %>
+        <% end %>
+      </td>
+      <td>
+        <% link_to day_calendar_url(date: trip.departure.to_date) do %>
+          <i class="glyphicon glyphicon-calendar hidden-xs hidden-sm"></i>
+          <%= l(trip.departure.to_date) %>
+        <% end %>
+      </td>
 
-  </div>
-</div>
+      <td><%= l trip.updated_at, format: :short %></td>
+
+      <td>
+        <div class="btn-group">
+          <% link_to trip_url(trip), :confirm => t(:confirm),
+                     :method => :delete, class: 'btn btn-xs btn-link' do %>
+            <i class="glyphicon glyphicon-trash"></i>
+            Delete
+          <% end %>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
 
 
 <%= render :partial => 'modal' %>
