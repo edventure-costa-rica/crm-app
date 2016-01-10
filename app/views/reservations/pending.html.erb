@@ -13,17 +13,17 @@
     <th>Pax</th>
     <th>Company</th>
     <th>Services</th>
-    <th>Net Price</th>
-    <th>Rack Price</th>
-    <th>Pick Up</th>
-    <th>Drop Off</th>
-    <th>Actions</th>
+    <th class="hidden-xs hidden-sm">Net Price</th>
+    <th class="hidden-xs hidden-sm">Rack Price</th>
+    <th class="hidden-xs hidden-sm">Pick Up</th>
+    <th class="hidden-xs hidden-sm">Drop Off</th>
+    <th></th>
   </tr>
 
   <% @reservations.each do |res| %>
     <tr class="row">
       <td><%= res.pax %></td>
-      <td class="col-xs-3 col-sm-2">
+      <td class="col-xs-4 col-md-2">
         <% if res.company.kind == 'hotel' %>
           <i class="glyphicon glyphicon-bed"></i>
         <% elsif res.company.kind == 'transport' %>
@@ -35,12 +35,13 @@
         <% end %>
         <%= res.company.name %>
       </td>
-      <td class="col-sm-2"><%= res.services %></td>
-      <td class="col-sm-1"><%= usd res.net_price %></td>
-      <td class="col-sm-1"><%= usd res.price %></td>
-      <td><%= res.pickup %></td>
-      <td><%= res.dropoff %></td>
-      <td>
+      <td class="col-xs-4 col-md-2"><%= res.services %></td>
+      <td class="hidden-xs hidden-sm"><%= usd res.net_price %></td>
+      <td class="hidden-xs hidden-sm"><%= usd res.price %></td>
+      <td class="hidden-xs hidden-sm"><%= res.pickup %></td>
+      <td class="hidden-xs hidden-sm"><%= res.dropoff %></td>
+
+      <td class="col-xs-4">
         <ul class="list-inline">
           <li>
             <button class="btn btn-link btn-xs edit-reservation"
