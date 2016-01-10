@@ -10,14 +10,21 @@ function onKeyDown(ev) {
   ev.persist();
 
   if (ev.key === 'Enter') {
-    ev.preventDefault();
-
     var $target = $(ev.target),
         $form = $target.closest('form'),
         $inputs = lib.formInputs($form),
-        index = $inputs.index($target);
+        index = $inputs.index($target),
+        hasModifier = ev.ctrlKey || ev.metaKey;
 
-    if (index === $inputs.length - 1 || ev.ctrlKey || ev.metaKey) {
+    // pressing enter within a textarea should act normally,
+    // unless pressing a modifier key also
+    if (! hasModifier && $target.prop('tagName') === 'TEXTAREA') {
+      return;
+    }
+
+    ev.preventDefault();
+
+    if (index === $inputs.length - 1 || hasModifier) {
       var submit = $form.find('[type=submit]');
       if (submit.length) submit.first().click();
       else $form.submit();
