@@ -240,6 +240,8 @@ var DateTimeField = React.createClass({
         .minute(prev.minute())
         .second(prev.second());
 
+    var format = this.props.noTime ? 'YYYY-MM-DD' : 'YYYY-MM-DD h:mm A';
+
     var formatted = dateTime.format('YYYY-MM-DD h:mm A');
     this.props.value.requestChange(formatted);
 
