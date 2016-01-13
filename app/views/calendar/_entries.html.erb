@@ -1,7 +1,72 @@
 
 <% if all_entries.empty? %>
   <p><em><%= t 'calendar.empty' %></em></p>
+  <div class="jumbotron">
+    <h1>No Data</h1>
+    <p>There are no data available for this time range.</p>
+  </div>
 <% else %>
+
+  <table class="table table-striped">
+    <tr>
+      <th>Date</th>
+      <th>Client</th>
+      <th>Company</th>
+      <th>Location</th>
+    </tr>
+
+    <% @range.each do |day| %>
+      <% entries = entries_for_date(day) %>
+
+      <% if entries.empty? %>
+        <tr>
+          <td><%= l day, format: :calendar %></td>
+          <td colspan="3"><em><%= t 'calendar.empty' %></em></td>
+        </tr>
+      <% end %>
+
+      <% entries.each do |entry| %>
+        <tr>
+          <td>
+            <%= link_to l(day, format: :calendar), day_calendar_url(date: day) %>
+          </td>
+
+          <td>
+            <i class="glyphicon glyphicon-user"></i>
+            <%= link_to entry.client.to_s, client_url(entry.client) %>
+          </td>
+
+          <td>
+            <% if entry.is_a? Reservation %>
+              <span title="<%= entry.company.kind.humanize %>">
+                <% if entry.company.kind == 'hotel' %>
+                  <i class="glyphicon glyphicon-bed"></i>
+                <% elsif entry.company.kind == 'transport' %>
+                  <i class="glyphicon glyphicon-road"></i>
+                <% elsif entry.company.kind == 'tour' %>
+                  <i class="glyphicon glyphicon-sunglasses"></i>
+                <% else %>
+                  <i class="glyphicon glyphicon-question-sign"></i>
+                <% end %>
+
+                <%= link_to entry.company.to_s, trip_url(entry.trip) %>
+              </span>
+
+              <% if entry.company.hotel? and entry.departure.to_date == day %>
+                <small><em><%= t(:departure) %></em></small>
+              <% elsif entry.company.hotel? and entry.arrival.to_date == day %>
+                <small><em><%= t(:arrival) %></em></small>
+              <% end %>
+            <% elsif entry.is_a? Trip %>
+            <% end %>
+          </td>
+
+          <td></td>
+        </tr>
+      <% end %>
+
+    <% end %>
+  </table>
 
   <table class="styled">
     <tr>
