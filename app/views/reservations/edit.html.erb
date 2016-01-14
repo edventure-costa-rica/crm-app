@@ -1,6 +1,0 @@
-<h1><%=t '.title' %></h1>
-
-<%= render :partial => @reservation, :locals => { :submit_text => t(:submit_update) } %>
-
-<%= link_to t(:show), [@reservation.client, @reservation.trip, @reservation] %> |
-<%= link_to t('.list_trip'), client_trip_reservations_path(@reservation.client, @reservation.trip) %>

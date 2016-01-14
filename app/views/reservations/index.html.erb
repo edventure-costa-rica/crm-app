@@ -1,83 +1,50 @@
-<%= render :partial => 'links' if @client and @trip %>
+<ol class="breadcrumb">
+  <li><%= link_to 'Companies', companies_url %></li>
+  <li><%= link_to @company.name, company_url(@company) %></li>
+  <li class="active">Reservations</li>
+</ol>
 
 <h1>
-  <%=t '.title' %>
-  <small><%= @client || @company.name %></small>
+  All Reservations
+  <small><%= @company.name %></small>
 </h1>
-
-<% if @trip then %>
-<p><%=t '.desc', :link => link_to(@trip, [@trip.client, @trip]) %></p>
-<% end %>
 
 <table class="table table-condensed table-striped">
   <tr>
-    <th><%=h re_f :arrival %></th>
-    <th><%=h re_f :departure %></th>
-<% unless @client %>
     <th><%=h re_f :client %></th>
     <th><%=h re_f :trip_id %></th>
-<% else %>
-    <th><%=h re_f :company %></th>
-    <th><%=h re_f :confirmed %></th>
-    <th><%=h re_f :paid %></th>
-<% end %>
-    <th><%=h re_f :services %></th>
-    <th></th>
+    <th><%=h re_f :arrival %></th>
+    <th><%=h re_f :departure %></th>
+    <th class="hidden-xs hidden-sm"><%=h re_f :services %></th>
   </tr>
 
-<% @reservations.each do |reservation| %>
-  <% company = reservation.company %>
-  <tr class="<%= cycle 'even', 'odd' %>">
-    <td class="col-xs-1">
-      <%= if @client then 
-            h l reservation.arrival, :format => :short
-          else
-            h l reservation.arrival, :format => :long
-          end %>
+<% @reservations.each do |res| %>
+  <tr>
+    <td class="col-xs-4 col-md-3">
+      <i class="glyphicon glyphicon-user"></i>
+      <%= link_to res.client.to_s, client_url(res.client) %>
     </td>
-    <td class="col-xs-1">
-      <%= if @client then
-            h l reservation.departure, :format => :short
-          else
-            h l reservation.departure, :format => :long
-          end %>
-    </td>
-<% unless @client %>
-    <td><%=h reservation.client %></td>
-    <td><%=h reservation.trip %></td>
-<% else %>
-    <td class="col-xs-2 col-sm-3">
-      <% if company.kind == 'hotel' %>
-        <i class="glyphicon glyphicon-bed" title="<%= co_f company.kind %>"></i>
-      <% elsif company.kind == 'transport' %>
-        <i class="glyphicon glyphicon-road" title="<%= co_f company.kind %>"></i>
-      <% elsif company.kind == 'tour' %>
-        <i class="glyphicon glyphicon-sunglasses" title="<%= co_f company.kind %>"></i>
+
+    <td class="col-xs-3 col-md-2 force-wrap">
+      <% trip = res.trip %>
+      <% if trip.pending? %>
+        <i class="glyphicon glyphicon-hourglass"></i>
+        <%= link_to trip.to_s, pending_trip_reservations_url(trip) %>
+      <% elsif trip.confirmed? %>
+        <i class="glyphicon glyphicon-tag"></i>
+        <%= link_to trip.to_s, confirmed_trip_reservations_url(trip) %>
       <% else %>
-        <i class="glyphicon glyphicon-question-sign" title="<%= co_f company.kind %>"></i>
+        <i class="glyphicon glyphicon-remove"></i>
+        <%= trip.to_s %>
       <% end %>
-
-      <%=h reservation.company.name %>
-      <em><small><%=h company.city %></small></em>
     </td>
 
-    <td><%=reservation.confirmed ? t(:true) : t(:false) %></td>
-    <td><%=reservation.paid ? t(:true) : t(:false) %></td>
-<% end %>
-    <td class="col-xs-3 col-sm-4" title="<%= reservation.services.to_s %>">
-      <%=hnl truncate reservation.services.to_s, length: 40 %>
+    <td class="col-xs-2"><%= l res.arrival.to_date %></td>
+    <td class="col-xs-2"><%= l res.departure.to_date %></td>
+
+    <td class="hidden-xs hidden-sm col-md-3">
+      <%= h res.services %>
     </td>
-<% if reservation.client.nil? %>
-  <td></td>
-<% else %>
-    <td class="col-xs-3 col-md-2">
-      <div class="btn-group">
-        <%= link_to t(:details), client_trip_reservation_url(reservation.client, reservation.trip, reservation), class: 'btn btn-xs btn-info' %>
-        <%= link_to t(:edit), edit_client_trip_reservation_path(reservation.client, reservation.trip, reservation), class: 'btn btn-xs btn-primary' %>
-        <%= link_to t(:delete), client_trip_reservation_url(reservation.client, reservation.trip, reservation), :confirm => t(:confirm), :method => :delete, class: 'btn btn-xs btn-danger' %>
-      </div>
-    </td>
-<% end %>
   </tr>
 <% end %>
 </table>

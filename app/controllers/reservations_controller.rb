@@ -1,30 +1,14 @@
 require 'csv'
 
 class ReservationsController < ApplicationController
-  # GET /reservations
-  # GET /reservations.xml
+  # GET /companies/1/reservations
   def index
-    @client = Client.find(params[:client_id]) if params[:client_id]
+    @reservations = Reservation.all(
+      :conditions => { :company_id => params[:company_id] },
+      :order      => 'arrival DESC'
+    )
 
-    if params[:trip_id] then
-      @reservations = Reservation.all \
-        :conditions => { :trip_id => params[:trip_id] },
-        :order      => 'arrival ASC'
-
-      @trip = Trip.find(params[:trip_id])
-
-    elsif params[:company_id] then
-      @reservations = Reservation.all \
-        :conditions => { :company_id => params[:company_id] },
-        :order      => 'arrival DESC'
-
-      @company = Company.find(params[:company_id])
-
-    else
-      logger.warn "Tried to list reservations without context\n"
-      @reservations = Reservation.all :order => 'arrival DESC'
-
-    end
+    @company = Company.find(params[:company_id])
 
     respond_to do |format|
       format.html # index.html.erb
