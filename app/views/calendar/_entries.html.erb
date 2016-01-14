@@ -6,9 +6,16 @@
   </div>
 <% else %>
 
-  <table class="table table-striped">
-    <% @range.each do |day| %>
-      <% entries = entries_for_date(day) %>
+  <% @range.each do |day| %>
+    <% entries = entries_for_date(day) %>
+    <table class="table table-striped">
+      <% if @range.count > 1 %>
+        <tr>
+          <th colspan="4" class="text-center">
+            <%= l day, format: :calendar_long %>
+          </th>
+        </tr>
+      <% end %>
 
       <% if entries.empty? %>
         <tr>
@@ -19,17 +26,17 @@
 
       <% entries.each do |entry| %>
         <tr>
-          <td>
+          <td class="col-xs-3">
             <i class="glyphicon glyphicon-calendar"></i>
             <%= link_to l(day, format: :calendar), day_calendar_url(date: day) %>
           </td>
 
-          <td>
+          <td class="col-xs-3">
             <i class="glyphicon glyphicon-user"></i>
             <%= link_to entry.client.to_s, client_url(entry.client) %>
           </td>
 
-          <td>
+          <td class="col-xs-3">
             <% if entry.is_a? Reservation %>
               <span title="<%= entry.company.kind.humanize %>">
                 <% if entry.company.kind == 'hotel' %>
@@ -42,9 +49,14 @@
                   <i class="glyphicon glyphicon-question-sign"></i>
                 <% end %>
 
-                <!-- TODO open reservation details in modal -->
-                <%= link_to entry.company.name, trip_url(entry.trip) %>
+                <%= entry.company.name %>
               </span>
+
+              <button class="btn btn-xs btn-link calendar-reservation"
+                      title="View Reservation"
+                      data-reservation="<%= h entry.to_json %>">
+                <i class="glyphicon glyphicon-info-sign"></i>
+              </button>
 
             <% elsif entry.is_a? Trip %>
               
@@ -63,24 +75,16 @@
             <% end %>
           </td>
 
-          <td>
-            <%
-               transfer =
-                   if Trip === entry
-                     trip_arrival_departure(entry, day)
-                   else
-                     res_arrival_departure(entry, day)
-                   end
-            %>
-            <% if transfer %>
+          <td class="col-xs-3">
+            <% if (transfer = entry_arrival_departure(entry, day)) %>
               <% icon = transfer == :arrival ? 'log-in' : 'log-out' %>
               <i class="glyphicon glyphicon-<%= icon %>"></i>
-              <%= transfer.to_s.humanize %>
+              <%= entry_transfer_string(entry, transfer) %>
             <% end %>
           </td>
         </tr>
       <% end %>
 
-    <% end %>
-  </table>
+    </table>
+  <% end %>
 <% end %>

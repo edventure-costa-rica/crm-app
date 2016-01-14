@@ -32,4 +32,23 @@ module CalendarHelper
     trip.send [trip_arrival_departure(trip, date), :flight].join('_')
   end
 
+  def entry_arrival_departure(entry, date)
+    if entry.is_a? Trip
+      trip_arrival_departure(entry, date)
+    else
+      res_arrival_departure(entry, date)
+    end
+  end
+
+  def entry_transfer_string(entry, transfer)
+    return unless transfer
+    return transfer.to_s.humanize if entry.is_a? Trip
+
+    if entry.company.hotel?
+      transfer.to_s.humanize
+    else
+      transfer == :arrival ? 'Pick Up' : 'Drop Off'
+    end
+  end
+
 end
