@@ -6,7 +6,8 @@ class Client < ActiveRecord::Base
     ['Contact name', ->{ [contact_title, contact_name].compact.join(' ') }],
     ['Email', ->{ email.to_s.strip }],
     ['Phone', ->{ phone.to_s.strip }],
-    :contact_address
+    :contact_address,
+    :nationality
   ])
 
     has_many :trips, :dependent => :delete_all
