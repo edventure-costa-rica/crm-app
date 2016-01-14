@@ -26,7 +26,7 @@ ActionController::Routing::Routes.draw do |map|
                 member: {email: :get, confirm: :post, voucher: :get}
 
   map.resources :calendar, only: [],
-                collection: %i(day week month year)
+                collection: %i(day week month)
 
   map.home 'home', controller: :home, action: :index
 
