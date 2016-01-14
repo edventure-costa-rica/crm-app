@@ -331,9 +331,93 @@ var Payment = React.createClass({
 });
 
 
+var View = React.createClass({
+  displayName: 'View',
+  mixins: [LinkedStateMixin],
+
+  getInitialState: function (props) {
+    props = props || this.props;
+
+    return _.assign({}, props);
+  },
+
+  componentWillReceiveProps: function (props) {
+    this.setState(this.getInitialState(props));
+  },
+
+  render: function() {
+    var res = this.state.reservation,
+        company = this.state.company;
+
+    var dateFormat = 'dddd, MMMM D, YYYY';
+
+    var arrivalDate = moment(res.arrival).format(dateFormat),
+        departureDate = moment(res.departure).format(dateFormat);
+    
+    var arrival = [arrivalDate, res.arrival_time].filter(Boolean).join(' - '),
+        departure = [departureDate, res.departure_time].filter(Boolean).join(' - ');
+
+    var netPrice = res.net_price ? '$' + Number(res.net_price) : '',
+        rackPrice = res.price ? '$' + Number(res.price) : '';
+
+    return (
+          <div className="row">
+            <div className="col-xs-4">
+              <Forms.StaticField title="Pax" value={res.num_people} />
+            </div>
+
+            <div className="col-xs-8">
+              <Forms.StaticField title="Services" value={res.services} />
+            </div>
+
+            <div className="col-xs-12">
+              <Forms.StaticField title="Company" value={company} />
+            </div>
+
+            <div className="col-xs-6">
+              <Forms.StaticField title="Arrival" value={arrival} />
+            </div>
+
+            <div className="col-xs-6">
+              <Forms.StaticField title="Pick Up" value={res.pickup_location} />
+            </div>
+
+            <div className="col-xs-6">
+              <Forms.StaticField title="Departure" value={departure} />
+            </div>
+
+            <div className="col-xs-6">
+              <Forms.StaticField title="Drop Off" value={res.dropoff_location} />
+            </div>
+
+            <div className="col-xs-6">
+              <Forms.StaticField title="Net Price" value={netPrice} />
+            </div>
+
+            <div className="col-xs-6">
+              <Forms.StaticField title="Rack Price" value={rackPrice} />
+            </div>
+
+            <div className="col-xs-12">
+              <Forms.StaticField title="Private Notes" value={res.notes} />
+            </div>
+
+            <div className="col-xs-12 text-right">
+              <a href={this.state.tripUrl} className="btn btn-primary">
+                <i className="glyphicon glyphicon-tag" />
+                &nbsp; Trip {this.state.tripId}
+              </a>
+            </div>
+          </div>
+    );
+  }
+});
+
+
 module.exports = {
   Form: Form,
   RackPrice: RackPrice,
   Confirmation: Confirmation,
-  Payment: Payment
+  Payment: Payment,
+  View: View
 };

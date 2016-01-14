@@ -54,6 +54,9 @@
 
               <button class="btn btn-xs btn-link calendar-reservation"
                       title="View Reservation"
+                      data-trip-url="<%= h confirmed_trip_reservations_url(entry.trip) %>"
+                      data-trip-id="<%= entry.trip.to_s %>"
+                      data-company="<%= h entry.company.to_s %>"
                       data-reservation="<%= h entry.to_json %>">
                 <i class="glyphicon glyphicon-info-sign"></i>
               </button>
@@ -88,3 +91,19 @@
     </table>
   <% end %>
 <% end %>
+
+
+<div class="modal fade" id="calendar-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Showing Reservation</h4>
+      </div>
+
+      <div class="modal-body">
+        <div class="react-mount"></div>
+      </div>
+    </div>
+  </div>
+</div>
