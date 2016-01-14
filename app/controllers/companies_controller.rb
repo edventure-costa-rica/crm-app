@@ -100,4 +100,19 @@ class CompaniesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+
+  def export
+    name = 'companies.csv'
+    header = CSV.generate_line(Company.export_header, encoding: 'UTF-8')
+
+    csv = Company.all(order: 'kind, name').map do |company|
+      CSV.generate_line(company.export, encoding: 'UTF-8')
+    end
+
+    respond_to do |format|
+      format.csv { send_data header + csv.join, filename: name }
+    end
+  end
+
 end

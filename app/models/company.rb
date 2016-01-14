@@ -1,4 +1,12 @@
 class Company < ActiveRecord::Base
+  include Exportable
+
+  export([
+    :name,
+    :kind,
+    ['Location', ->{ [address, region].compact.join(', ') }]
+  ])
+
   class << self
     attr_reader :kinds, :govt_id_types
 

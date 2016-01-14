@@ -1,64 +1,70 @@
+<ol class="breadcrumb">
+  <li><%= link_to 'Home', home_url %></li>
+  <% if params[:kind] %>
+    <li><%= link_to 'Companies', companies_url %></li>
+    <li class="active"><%= params[:kind].to_s.humanize + 's' %></li>
+  <% else %>
+    <li class="active">Companies</li>
+  <% end %>
+</ol>
 
 <div class="row">
   <div class="col-xs-12 text-center">
     <div class="btn-group">
       <a class="btn btn-default" href="<%= companies_path(kind: :hotel) %>">
         <i class="glyphicon glyphicon-bed"></i>
-        Hotel
+        Hotels
       </a>
       <a class="btn btn-default" href="<%= companies_path(kind: :transport) %>">
         <i class="glyphicon glyphicon-road"></i>
-        Transport
+        Transports
       </a>
       <a class="btn btn-default" href="<%= companies_path(kind: :tour) %>">
         <i class="glyphicon glyphicon-sunglasses"></i>
-        Tour
+        Tours
       </a>
       <a class="btn btn-primary" href="<%= new_company_path %>">
         <i class="glyphicon glyphicon-plus-sign"></i>
         New Company
       </a>
+      <% link_to export_companies_url, class: 'btn btn-info' do %>
+        <i class="glyphicon glyphicon-export"></i>
+        Export
+      <% end %>
     </div>
 
   </div>
 </div>
 
-<div class="row">
-  <div class="col-xs-12">
-    <h1><%= t '.title' %></h1>
+<h1>
+  <%= params[:kind] ? params[:kind].to_s.humanize : 'All' %>
+  Companies
+</h1>
 
-    <table class="table table-striped table-condensed">
-      <tr>
-        <th></th>
-        <th><%= co_f :name %></th>
-        <th><%= co_f :region %></th>
-        <th></th>
-      </tr>
+<table class="table table-striped table-condensed">
+  <tr>
+    <th><%= co_f :name %></th>
+    <th><%= co_f :region %></th>
+  </tr>
 
-      <% @companies.each do |company| %>
-          <tr class="<%= cycle('even', 'odd') %>">
-            <td>
-      <span title="<%=h co_f company.kind %>">
-      <% if company.kind == 'hotel' %>
-        <i class="glyphicon glyphicon-bed"></i>
-      <% elsif company.kind == 'transport' %>
-        <i class="glyphicon glyphicon-road"></i>
-      <% elsif company.kind == 'tour' %>
-        <i class="glyphicon glyphicon-sunglasses"></i>
-      <% else %>
-        <i class="glyphicon glyphicon-question-sign"></i>
-      <% end %>
-      </span>
-            </td>
-            <td><%=link_to company.name, company %></td>
-            <td><%=h company.region %></td>
-            <td>
-              <%= link_to t(:edit), edit_company_path(company), class: 'btn btn-xs btn-primary' %>
-            </td>
-          </tr>
-      <% end %>
-    </table>
-
-  </div>
-</div>
+  <% @companies.each do |company| %>
+    <tr class="<%= cycle('even', 'odd') %>">
+      <td>
+        <span title="<%= h co_f company.kind %>">
+        <% if company.kind == 'hotel' %>
+          <i class="glyphicon glyphicon-bed"></i>
+        <% elsif company.kind == 'transport' %>
+          <i class="glyphicon glyphicon-road"></i>
+        <% elsif company.kind == 'tour' %>
+          <i class="glyphicon glyphicon-sunglasses"></i>
+        <% else %>
+          <i class="glyphicon glyphicon-question-sign"></i>
+        <% end %>
+        </span>
+        <%= link_to company.name, company %>
+      </td>
+      <td><%= h company.region %></td>
+    </tr>
+  <% end %>
+</table>
 
