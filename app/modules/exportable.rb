@@ -13,7 +13,7 @@ module Exportable
         self.instance_exec(&attr)
       else
         self.send(attr)
-      end
+      end.to_s.strip
     end
   end
 
