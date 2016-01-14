@@ -5,6 +5,7 @@ class CalendarController < ApplicationController
 
   def day
     find_entries(@date, @date)
+    @range = @date .. @date
   end
 
   def week

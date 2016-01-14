@@ -5,16 +5,26 @@
   <li><%= link_to t('calendar.week.title') + ' ' + l(@date, format: :calendar_long), week_calendar_url(date: @date) %></li>
 </ul>
 
-<p align="center">
-  <%= link_to t('calendar.before'), month_calendar_url(date: @date - 1.month) %> |
-  <%= link_to t('.today'), month_calendar_url(date: Date.today) %> |
-  <%= link_to t('calendar.after'), month_calendar_url(date: @date + 1.month) %>
-</p>
+<nav>
+  <ul class="pager">
+    <li class="previous">
+      <% previous = @date - 1.month %>
+      <% link_to month_calendar_url(date: previous) do %>
+        &larr; <%= previous.strftime('%B') %>
+      <% end %>
+    </li>
+
+    <li>
+      <%= link_to t('.today'), month_calendar_url(date: Date.today) %>
+    </li>
+
+    <li class="next">
+      <% next_month = @date + 1.month %>
+      <% link_to month_calendar_url(date: next_month) do %>
+        <%= next_month.strftime('%B') %> &rarr;
+      <% end %>
+    </li>
+  </ul>
+</nav>
 
 <%= render partial: 'entries' %>
-
-<p align="center">
-  <%= link_to t('calendar.before'), month_calendar_url(date: @date - 1.month) %> |
-  <%= link_to t('.today'), month_calendar_url(date: Date.today) %> |
-  <%= link_to t('calendar.after'), month_calendar_url(date: @date + 1.month) %>
-</p>

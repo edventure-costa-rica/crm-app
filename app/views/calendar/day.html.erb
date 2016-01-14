@@ -5,41 +5,26 @@
   <li><%= link_to t('calendar.month.title') + ' ' + l(@date, format: :calendar_long), month_calendar_url(date: @date) %></li>
 </ul>
 
-<p align="center">
-  <%= link_to t('calendar.before'), day_calendar_url(date: @date - 1.day) %> |
-  <%= link_to t('calendar.today'), day_calendar_url(date: Date.today) %> |
-  <%= link_to t('calendar.after'), day_calendar_url(date: @date + 1.day) %>
-</p>
+<nav>
+  <ul class="pager">
+    <li class="previous">
+      <% previous = @date - 1.day %>
+      <% link_to day_calendar_url(date: previous) do %>
+        &larr; <%= previous.strftime('%B %e') %>
+      <% end %>
+    </li>
 
-<% if entries_for_date.empty? %>
-  <p><em><%= t 'calendar.empty' %></em></p>
-<% else %>
+    <li>
+      <%= link_to 'Today', day_calendar_url(date: Date.today) %>
+    </li>
 
-  <table class="styled">
-    <tr>
-      <th><%= re_f :client %></th>
-      <th><%= co_f :kind %></th>
-      <th><%= re_f :company %></th>
-    </tr>
+    <li class="next">
+      <% next_month = @date + 1.day %>
+      <% link_to day_calendar_url(date: next_month) do %>
+        <%= next_month.strftime('%B %e') %> &rarr;
+      <% end %>
+    </li>
+  </ul>
+</nav>
 
-  <% entries_for_date.each do |entry| %>
-      <tr class="<%= cycle('even', 'odd') %>">
-        <% if entry.is_a? Reservation %>
-          <td><%= link_to entry.client, client_url(entry.client) %></td>
-          <td><%= link_to co_f(entry.company.kind), client_reservation_url(entry.client, entry) %></td>
-          <td><%= link_to entry.company.name, company_url(entry.company) %></td>
-        <% else %>
-          <td><%= link_to entry.client, client_url(entry.client) %></td>
-          <td><%= link_to tr_f(trip_arrival_departure entry), client_trip_url(entry.client, entry) %></td>
-          <td><%= trip_flight entry %></td>
-        <% end %>
-      </tr>
-  <% end %>
-  </table>
-<% end %>
-
-<p align="center">
-  <%= link_to t('calendar.before'), day_calendar_url(date: @date - 1.day) %> |
-  <%= link_to t('calendar.today'), day_calendar_url(date: Date.today) %> |
-  <%= link_to t('calendar.after'), day_calendar_url(date: @date + 1.day) %>
-</p>
+<%= render partial: 'entries' %>
