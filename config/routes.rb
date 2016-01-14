@@ -5,11 +5,11 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :clients,
                 member: {remove: :get},
-                collection: {search: :get} do |client|
+                collection: %i(search export) do |client|
     client.resources :trips, only: %i(index new create)
   end
 
-  map.resources :companies do |company|
+  map.resources :companies, collection: [:export] do |company|
     company.resources :reservations, only: :index
   end
 
