@@ -1,4 +1,14 @@
 class Client < ActiveRecord::Base
+  include Exportable
+
+  export([
+    :family_name,
+    ['Contact name', ->{ [contact_title, contact_name].compact.join(' ') }],
+    ['Email', ->{ email.to_s.strip }],
+    ['Phone', ->{ phone.to_s.strip }],
+    :contact_address
+  ])
+
     has_many :trips, :dependent => :delete_all
     has_many :reservations, :through => :trip
 

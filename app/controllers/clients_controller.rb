@@ -105,4 +105,19 @@ class ClientsController < ApplicationController
 
     render json: results
   end
+
+  def export
+    name = 'clients.csv'
+
+    header = CSV.generate_line(Client.export_header, encoding: 'UTF-8')
+
+    csv = Client.all.map do |client|
+      CSV.generate_line(client.export, encoding: 'UTF-8')
+    end
+
+    respond_to do |format|
+      format.csv { send_data header + csv.join, filename: name }
+    end
+  end
+
 end

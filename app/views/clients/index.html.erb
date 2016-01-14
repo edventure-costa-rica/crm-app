@@ -1,15 +1,25 @@
+<ol class="breadcrumb">
+  <li><%= link_to 'Home', home_url %></li>
+  <li class="active">Clients</li>
+</ol>
+
 <div class="row">
   <div class="col-xs-12 text-center">
     <div class="btn-group">
-      <% link_to new_client_path, class: 'btn btn-primary' do %>
+      <% link_to new_client_url, class: 'btn btn-primary' do %>
         <i class="glyphicon glyphicon-plus-sign"></i>
-        <%= t('.new') %>
+        New Client
+      <% end %>
+
+      <% link_to export_clients_url, class: 'btn btn-info' do %>
+        <i class="glyphicon glyphicon-export"></i>
+        Export Contacts
       <% end %>
     </div>
   </div>
 </div>
 
-<h1><%= t '.title' %></h1>
+<h1>All Clients</h1>
 
 <table class="table table-striped table-condensed">
   <tr>
@@ -17,7 +27,6 @@
     <th><%= cl_f :family_name %></th>
     <th><%= cl_f :contact_name %></th>
     <th><%= cl_f :email %></th>
-    <th></th>
   </tr>
 
 <% @clients.each do |client| %>
@@ -28,9 +37,6 @@
     </td>
     <td><%=h client.contact_name %></td>
     <td><%= mail_to client.email %></td>
-    <td>
-      <%= link_to t(:edit), edit_client_path(client), class: 'btn btn-xs btn-primary' %>
-    </td>
   </tr>
 <% end %>
 </table>
