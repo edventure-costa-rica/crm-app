@@ -20,6 +20,14 @@ module CalendarHelper
     end
   end
 
+  def res_arrival_departure(res, date=@date)
+    if res.arrival.to_date == date
+      :arrival
+    elsif res.departure.to_date == date
+      :departure
+    end
+  end
+
   def trip_flight(trip, date=@date)
     trip.send [trip_arrival_departure(trip, date), :flight].join('_')
   end
