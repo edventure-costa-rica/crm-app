@@ -4,12 +4,14 @@ class Company < ActiveRecord::Base
   export([
     :name,
     :kind,
-    ['Location', ->{ [address, region].compact.join(', ') }],
+    ['Location', ->{ [address, region].compact.map(&:strip).reject(&:empty?).join(', ') }],
     :website,
     :general_contact,
     ['Administrative contact', :admin_contact],
     :reservation_contact,
-    ['Emails', ->{ emails.join('; ') }]
+    ['General Email', ->{ contact_general_email.to_s.clean_email }],
+    ['Administrative Email', ->{ contact_admin_email.to_s.clean_email }],
+    ['Reservation Email', ->{ contact_reservation_email.to_s.clean_email }]
   ])
 
   class << self
@@ -83,15 +85,6 @@ class Company < ActiveRecord::Base
         self.send("contact_#{type}_#{what}".to_s)
       end.push(email).compact.map(&:strip).reject(&:empty?).join(' ')
     end
-  end
-
-  def emails
-    [contact_general_email,
-     contact_admin_email,
-     contact_reservation_email].
-        compact.map(&:strip).reject do |email|
-      email.empty? or ! email.include?('@')
-    end.map(&:clean_email)
   end
 
   def after_initialize
