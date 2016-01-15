@@ -359,6 +359,6 @@ class String
   end
 
   def clean_email
-    self.tr('[]', '<>').sub(/^<(.+)>$/, '$1')
+    self.tr('[]', '<>').sub(/^<(.+)>$/, '\\1')
   end
 end
