@@ -44,6 +44,10 @@ en:
   "true": 'Yes'
   "false": 'No'
   cancel: Cancel
+  pending: Pending
+  confirmed: Confirmed
+  unconfirmed: Unconfirmed
+  unpaid: Unpaid
 
   day: Day of
   week: Week of
