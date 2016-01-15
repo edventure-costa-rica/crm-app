@@ -32,10 +32,6 @@ var Search = React.createClass({
     })
   }),
 
-  hideSearch: function() {
-    this.setState({query: ''})
-  },
-
   render: function() {
     console.log('Search', this.state);
 
@@ -46,21 +42,20 @@ var Search = React.createClass({
 
     return (
         <form action={this.props.url}
-              onSubmit={function(e) { e.preventDefault() }}
-              className="navbar-form navbar-left">
+              onSubmit={function(e) { e.preventDefault() }}>
+
           <div className="form-group">
             <label htmlFor="search-query" className="sr-only">Search</label>
             <input type="search" name="q"
                    value={this.state.query}
                    onChange={this.handleQueryChange}
-                   onBlur={this.hideSearch}
                    id="search-query"
                    className="form-control"
                    autoComplete="off"
-                   placeholder="Search Clients" />
+                   placeholder="name, email, or phone" />
 
           </div>
-          {this.state.query.length ? content : '' }
+          {this.state.query.length ? content : ''}
         </form>
     )
   }
@@ -68,81 +63,101 @@ var Search = React.createClass({
 
 var SearchResults = React.createClass({
   render: function () {
-    var content;
-    console.log('SearchResults', this.props);
-
     if (this.props.loading) {
-      content = <SearchLoading />
+      return <SearchLoading />
     }
 
     else if (this.props.data.length) {
-      content = _.map(this.props.data, function (result) {
-        return <SearchResult url={result.url}
+      var content = _.map(this.props.data, function (result, index) {
+        return <SearchResult key={index}
+                             url={result.url}
                              name={result.name}
                              phone={result.phone}
-                             email={result.email}/>
+                             email={result.email} />
 
-      })
+      });
+
+
+      return (
+          <table className="table table-striped">
+            {content}
+          </table>
+      )
     }
 
     else {
-      content = <SearchNoResults />
+      return <SearchNoResults />
     }
-
-    return (
-        <div id="search-results" className="list-group">
-          {content}
-        </div>
-    )
   }
 });
 
 var SearchResult = React.createClass({
   render: function () {
-    var email, phone, br = <br/>;
-    console.log('SearchResult', this.props);
+    var email, emailData, phone, phoneData
 
     if (this.props.email) {
+      emailData = String(this.props.email)
+          .toLowerCase()
+          .trim()
+          .replace(/^\W*|\W*$/, '');
+
       email = (
         <span>
           <i className="glyphicon glyphicon-envelope"/>
-          &nbsp; {String(this.props.email).toLowerCase()}
+          &nbsp;
+          <a href={"mailto:" + emailData}>
+            {emailData}
+          </a>
         </span>
       )
     }
 
     if (this.props.phone) {
+      phoneData = String(this.props.phone).trim().replace(/\D/g, '');
+
       phone = (
         <span>
           <i className="glyphicon glyphicon-phone"/>
-          &nbsp; {this.props.phone}
+          &nbsp;
+          <a href={"tel:" + phoneData}>
+            {this.props.phone}
+          </a>
         </span>
       )
     }
 
     return (
-        <a href={this.props.url} className="list-group-item">
-          <h4 className="list-group-item-heading">{this.props.name}</h4>
-          <p className="list-group-item-text">
-            {email} {email && phone ? br : ''} {phone}
-          </p>
-        </a>
+        <tr>
+          <td>
+            <i className="glyphicon glyphicon-user" />
+            &nbsp;
+            <a href={this.props.url}>
+              {this.props.name}
+            </a>
+          </td>
+
+          <td>
+            {email}
+          </td>
+
+          <td>
+            {phone}
+          </td>
+        </tr>
     )
   }
 });
 
 var SearchNoResults = React.createClass({
   render: function() {
-    console.log('SearchNoResults');
     return (
-        <div className="list-group-item">
-          <h4 className="list-group-item-heading">
-            <i className="glyphicon glyphicon-ban-circle"/>
-            &nbsp; No Results
-          </h4>
-          <p className="list-group-item-text">
-            Try changing your search criteria
-          </p>
+        <div className="alert alert-danger">
+          <strong>
+            <i className="glyphicon glyphicon-remove" />
+            &nbsp; No results
+          </strong>
+
+          &nbsp; Sorry, nothing was found matching your search criteria.
         </div>
     )
   }
@@ -150,17 +165,14 @@ var SearchNoResults = React.createClass({
 
 var SearchLoading = React.createClass({
   render: function() {
-    console.log('SearchLoading');
     return (
-        <div className="list-group-item">
-          <h4 className="list-group-item-heading">
+        <div className="alert alert-info">
+          <strong>
             <i className="glyphicon glyphicon-refresh spin"/>
             &nbsp; Loading...
-          </h4>
+          </strong>
 
-          <p className="list-group-item-text">
-            Please wait
-          </p>
+          &nbsp; Please wait while we query the server.
         </div>
     )
   }

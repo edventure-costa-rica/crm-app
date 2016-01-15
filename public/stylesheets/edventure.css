@@ -31,25 +31,8 @@ button:focus, a:focus { outline: none !important }
   text-overflow: ellipsis;
 }
 
-#client-results {
-  display: none
-}
-
 input[type=search] {
   border-radius: 1.5em;
-}
-
-#mount-search {
-  position: relative;
-}
-
-#search-results {
-  position: absolute;
-  top: 3em;
-
-  width: 20em;
-  max-height: 30em;
-  overflow-y: auto;
 }
 
 .glyphicon.spin {
