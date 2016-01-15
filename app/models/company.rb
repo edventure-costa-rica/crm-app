@@ -4,7 +4,12 @@ class Company < ActiveRecord::Base
   export([
     :name,
     :kind,
-    ['Location', ->{ [address, region].compact.join(', ') }]
+    ['Location', ->{ [address, region].compact.join(', ') }],
+    :website,
+    :general_contact,
+    ['Administrative contact', :admin_contact],
+    :reservation_contact,
+    ['Emails', ->{ emails.join('; ') }]
   ])
 
   class << self
@@ -69,6 +74,24 @@ class Company < ActiveRecord::Base
     return unless self.website?
 
     self.website = "http://#{website}" unless website =~ /^https?:/
+  end
+
+  %w(general admin reservation).each do |type|
+    define_method "#{type}_contact" do
+      email = self.send("contact_#{type}_email").to_s.clean_email
+      %w(name phone mobile).map do |what|
+        self.send("contact_#{type}_#{what}".to_s)
+      end.push(email).compact.map(&:strip).reject(&:empty?).join(' ')
+    end
+  end
+
+  def emails
+    [contact_general_email,
+     contact_admin_email,
+     contact_reservation_email].
+        compact.map(&:strip).reject do |email|
+      email.empty? or ! email.include?('@')
+    end.map(&:clean_email)
   end
 
   def after_initialize
