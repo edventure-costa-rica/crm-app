@@ -18,12 +18,12 @@ var QuickForm = React.createClass({
         date;
 
     if (state.arrival) {
-      date = moment(chrono.parseDate(state.arrival));
+      date = moment.utc(chrono.parseDate(state.arrival));
       if (date.isValid()) state.arrival = date.format('YYYY-MM-DD h:mm A');
     }
 
     if (state.departure) {
-      date = moment(chrono.parseDate(state.departure));
+      date = moment.utc(chrono.parseDate(state.departure));
       if (date.isValid()) state.departure = date.format('YYYY-MM-DD h:mm A');
     }
 

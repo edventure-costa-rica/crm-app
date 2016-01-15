@@ -50,7 +50,7 @@ $bookTransferIn.add($bookTransferOut).on('click', function (ev) {
     defaults.num_people = TRIP.total_people;
 
     if (this.id === $bookTransferIn.attr('id')) {
-      date = moment(chrono.parseDate(TRIP.arrival));
+      date = moment.utc(chrono.parseDate(TRIP.arrival));
 
       if (date.isValid())
         defaults.arrival_date_time = date.format('YYYY-MM-DD h:mm A');
@@ -59,7 +59,7 @@ $bookTransferIn.add($bookTransferOut).on('click', function (ev) {
         defaults.pickup_location = TRIP.arrival_flight;
     }
     else {
-      date = moment(chrono.parseDate(TRIP.departure));
+      date = moment.utc(chrono.parseDate(TRIP.departure));
 
       if (date.isValid())
         defaults.departure_date_time = date.format('YYYY-MM-DD h:mm A');
