@@ -19,6 +19,7 @@
   </tr>
 
 <% @reservations.each do |res| %>
+  <% next if res.client.nil? or res.trip.nil? %>
   <tr>
     <td class="col-xs-4 col-md-3">
       <i class="glyphicon glyphicon-user"></i>
