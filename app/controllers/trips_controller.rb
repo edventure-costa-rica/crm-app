@@ -109,8 +109,8 @@ class TripsController < ApplicationController
       arrival = Chronic.parse input.delete(:arrival)
       departure = Chronic.parse input.delete(:departure)
 
-      input[:arrival] = arrival.to_date     if arrival
-      input[:departure] = departure.to_date if departure
+      input[:arrival] = arrival     if arrival
+      input[:departure] = departure if departure
 
       pax = input.delete(:pax)
 
