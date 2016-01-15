@@ -264,9 +264,9 @@ var DateTimeField = React.createClass({
   parseValue: function() {
     var string = this.props.value.value;
 
-    if (! string) return new Date();
+    if (! string) return moment();
 
-    return chrono.parseDate(string);
+    return moment.utc(chrono.parseDate(string));
   },
 
   getInitialState: function() {
