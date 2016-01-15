@@ -39,6 +39,14 @@
     <div class="collapse navbar-collapse" id="navbar-collapse">
 
       <ul class="nav navbar-nav">
+
+        <li>
+          <a href="<%= search_clients_url %>" id="search-clients">
+            <i class="glyphicon glyphicon-search"></i>
+            Search Clients
+          </a>
+        </li>
+
         <% item_link_with_active new_client_url do %>
           <i class="glyphicon glyphicon-plus-sign"></i>
           New Client
@@ -63,11 +71,7 @@
                    locals: {item_class: "visible-xs visible-sm"} %>
       </ul>
 
-      <div class="hidden-xs hidden-sm"
-           id="mount-search"
-           data-url="<%= h search_clients_url %>"></div>
-
-      <div class="btn-group hidden-xs hidden-sm">
+      <div id="navbar-tools" class="btn-group hidden-xs hidden-sm navbar-right">
         <div class="navbar-btn btn btn-info dropdown-toggle" data-toggle="dropdown">
           <i class="glyphicon glyphicon-wrench"></i>
         </div>
