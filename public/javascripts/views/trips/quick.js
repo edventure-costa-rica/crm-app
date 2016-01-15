@@ -5,7 +5,7 @@ var components = require('components');
 
 var $quickTrip = $('#quick-trip');
 
-if (String($quickTrip.data('active')) === 'true') {
+if ($quickTrip.data('active')) {
   ReactDOM.render(
       React.createElement(components.Trips.QuickForm, {
         trip: $quickTrip.data('trip'),

@@ -51,11 +51,11 @@
 <% end %>
 
 <% if editable %>
-  <!-- pee -->
-
-  <div id="quick-trip" class="row"
-       data-active="<%= @trip.new_record? %>"
-       data-action="<%= h action %>"
-       data-trip="<%= h @trip.to_json %>">
+  <div class="container">
+    <div id="quick-trip" class="row"
+         data-active="<%= @trip.new_record? %>"
+         data-action="<%= h action %>"
+         data-trip="<%= h @trip.to_json %>">
+    </div>
   </div>
 <% end %>
