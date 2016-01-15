@@ -106,6 +106,12 @@ class TripsController < ApplicationController
 
   def trip_params
     params[:trip].tap do |input|
+      arrival = Chronic.parse input.delete(:arrival)
+      departure = Chronic.parse input.delete(:departure)
+
+      input[:arrival] = arrival.to_date     if arrival
+      input[:departure] = departure.to_date if departure
+
       pax = input.delete(:pax)
 
       if pax
