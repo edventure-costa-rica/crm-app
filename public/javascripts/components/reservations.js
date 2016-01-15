@@ -285,7 +285,7 @@ var Payment = React.createClass({
   },
 
   render: function() {
-    var today = moment().startOf('day');
+    var today = moment();
 
     return (
         <form className="form" action={this.props.action} method="post">
