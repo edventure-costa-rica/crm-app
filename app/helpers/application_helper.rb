@@ -357,4 +357,8 @@ class String
     q = Regexp.quote(quote_char)
     self.gsub(/[#{q}%_]/) { |c| q + c }
   end
+
+  def clean_email
+    self.tr('[]', '<>').sub(/^<(.+)>$/, '$1')
+  end
 end
