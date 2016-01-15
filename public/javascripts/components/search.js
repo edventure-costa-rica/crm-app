@@ -30,11 +30,9 @@ var Search = React.createClass({
 
       }.bind(this)
     })
-  }),
+  }, 250),
 
   render: function() {
-    console.log('Search', this.state);
-
     var content = (
         <SearchResults data={this.state.results}
                        loading={this.state.loading} />
@@ -80,7 +78,9 @@ var SearchResults = React.createClass({
 
       return (
           <table className="table table-striped">
-            {content}
+            <tbody>
+              {content}
+            </tbody>
           </table>
       )
     }
@@ -128,7 +128,7 @@ var SearchResult = React.createClass({
 
     return (
         <tr>
-          <td>
+          <td className="col-xs-6">
             <i className="glyphicon glyphicon-user" />
             &nbsp;
             <a href={this.props.url}>
@@ -136,11 +136,11 @@ var SearchResult = React.createClass({
             </a>
           </td>
 
-          <td>
+          <td className="col-xs-3 force-wrap">
             {email}
           </td>
 
-          <td>
+          <td className="col-xs-3">
             {phone}
           </td>
         </tr>
