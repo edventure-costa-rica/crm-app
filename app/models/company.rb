@@ -4,7 +4,7 @@ class Company < ActiveRecord::Base
   export([
     :name,
     :kind,
-    ['Location', ->{ [address, region].compact.map(&:strip).reject(&:empty?).join(', ') }],
+    ['Location', ->{ [address, region.to_s].compact.map(&:strip).reject(&:empty?).join(', ') }],
     :website,
     :general_contact,
     ['Administrative contact', :admin_contact],
