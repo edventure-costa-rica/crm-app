@@ -27,11 +27,6 @@ class Reservation < ActiveRecord::Base
   validates_associated :trip, :company
   validates_numericality_of :price, :allow_nil => true
 
-  validate do |res|
-    res.send :arrival_precedes_departure
-    res.send :within_trip_dates
-  end
-
   after_save :confirm_trip
   after_destroy :confirm_trip
 
@@ -118,29 +113,6 @@ class Reservation < ActiveRecord::Base
   [:net_price,:price].each do |attr|
     define_method "#{attr}=" do |value|
       write_attribute attr, value.sub(/^\s*\$\s*/, '')
-    end
-  end
-
-  def arrival_precedes_departure
-    if self.arrival and self.departure
-      errors.add :departure, I18n.t(:arrival_precedes_departure) unless
-        self.departure >= self.arrival
-    end
-  end
-
-  def within_trip_dates
-    if self.arrival
-      errors.add :arrival, I18n.t(:arrival_before_trip) unless
-        self.arrival >= self.trip.arrival.to_date
-      errors.add :arrival, I18n.t(:arrival_after_trip) unless
-        self.arrival <= self.trip.departure.to_date
-    end
-
-    if self.departure
-      errors.add :departure, I18n.t(:departure_before_trip) unless
-        self.departure >= self.trip.arrival.to_date
-      errors.add :departure, I18n.t(:departure_after_trip) unless
-        self.departure <= self.trip.departure.to_date
     end
   end
 

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160103221921) do
+ActiveRecord::Schema.define(:version => 20160228010216) do
 
   create_table "clients", :force => true do |t|
     t.string   "nationality"
@@ -85,10 +85,8 @@ ActiveRecord::Schema.define(:version => 20160103221921) do
   create_table "reservations", :force => true do |t|
     t.integer  "trip_id"
     t.integer  "company_id"
-    t.date     "arrival"
-    t.date     "departure"
-    t.string   "dropoff_location"
-    t.string   "pickup_location"
+    t.string   "drop_off"
+    t.string   "pick_up"
     t.text     "services"
     t.text     "notes"
     t.datetime "created_at"
@@ -100,9 +98,9 @@ ActiveRecord::Schema.define(:version => 20160103221921) do
     t.string   "confirmation_no"
     t.boolean  "paid"
     t.date     "paid_date"
-    t.string   "arrival_time"
-    t.string   "departure_time"
     t.integer  "num_people"
+    t.integer  "day",             :default => 0, :null => false
+    t.integer  "nights",          :default => 1, :null => false
   end
 
   create_table "trips", :force => true do |t|
