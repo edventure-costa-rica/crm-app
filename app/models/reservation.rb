@@ -4,10 +4,10 @@ class Reservation < ActiveRecord::Base
   export([
       ['Company', -> { company.name }],
       :services,
-      ['Arrival Date', -> { I18n.l arrival.to_date }],
+      ['Arrival Date', -> { I18n.l arrival }],
       :arrival_time,
       :pickup_location,
-      ['Departure Date', -> { I18n.l departure.to_date }],
+      ['Departure Date', -> { I18n.l departure }],
       :departure_time,
       :dropoff_location,
       :net_price,
@@ -30,20 +30,6 @@ class Reservation < ActiveRecord::Base
   after_save :confirm_trip
   after_destroy :confirm_trip
 
-  def next_on_trip
-    return unless trip
-
-    trip.reservations.find :first, :order => 'arrival ASC', :conditions =>
-      [ 'arrival > ?', self.arrival ]
-  end
-
-  def prev_on_trip
-    return unless trip
-
-    trip.reservations.find :first, :order => 'arrival ASC', :conditions =>
-      [ 'arrival < ?', self.arrival ]
-  end
-
   def to_s
     return Reservation.human_name if new_record?
 
@@ -51,24 +37,8 @@ class Reservation < ActiveRecord::Base
       I18n.localize(arrival.to_date, :format => :short)
   end
 
-  def region_id
-    company.region.id unless company.nil?
-  end
-
   def city
     self.company.city if self.company
-  end
-
-  def nights
-    (departure - arrival).to_i
-  end
-
-  def arrival_date_str
-    I18n.localize arrival.to_date, :format => :voucher
-  end
-
-  def departure_date_str
-    I18n.localize departure.to_date, :format => :voucher
   end
 
   def pax
@@ -79,34 +49,12 @@ class Reservation < ActiveRecord::Base
     price.to_f - net_price.to_f
   end
 
-  def pickup
-    date = arrival ? I18n.localize(arrival.to_date, format: :short) : nil
-    time = arrival_time
-    place = pickup_location
-
-    [date, time, place].compact.join(' ')
+  def arrival
+    trip.arrival + day
   end
 
-  def dropoff
-    date = departure ? I18n.localize(departure.to_date, format: :short) : nil
-    time = departure_time
-    place = dropoff_location
-
-    [date, time, place].compact.join(' ')
-  end
-
-  def arrival_place_and_time
-    [ pickup_location, arrival_time ].
-      select { |e| not e.nil? }.
-      map { |e| e.to_s }.
-      join "\n"
-  end
-
-  def departure_place_and_time
-    [ dropoff_location, departure_time ].
-      select { |e| not e.nil? }.
-      map { |e| e.to_s }.
-      join "\n"
+  def departure
+    trip.arrival + day + nights
   end
 
   # currency values accept (and drop) dollar signs
@@ -120,14 +68,6 @@ class Reservation < ActiveRecord::Base
     if new_record? and not trip.nil?
       # fill in number of people from trip size
       self.num_people ||= trip.total_people
-
-      # use the last reservation (or trip) for default arrival
-      self.arrival ||= trip.reservations.empty? ?
-        trip.arrival : trip.reservations.last.departure
-
-      # use the arrival date for this departure if its the first
-      self.departure ||= trip.reservations.empty? ?
-        trip.arrival : trip.reservations.last.departure
     end
   end
 
