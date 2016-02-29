@@ -6,6 +6,15 @@ var chrono = require('chrono-node');
 var moment = require('moment');
 var lib = require('../../lib');
 
+var $pasteReservations = $('#paste-reservations'),
+    $pasteModal = $('#paste-reservations-modal');
+
+$pasteReservations.on('click', function(ev) {
+  ev.preventDefault();
+
+  $pasteModal.modal('show');
+});
+
 var $addReservation = $('#add-reservation');
 
 var transferring = false;

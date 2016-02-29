@@ -76,6 +76,15 @@
   <% end %>
 </table>
 
+<% if @reservations.empty? %>
+  <div class="text-right">
+    <button class="btn btn-default" id="paste-reservations">
+      <i class="glyphicon glyphicon-paste"></i>
+      Paste From Excel
+    </button>
+  </div>
+<% end %>
+
 <%= render partial: 'reservations/new' %>
 
 <div class="modal fade" id="edit-reservation-modal">
@@ -92,6 +101,35 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="paste-reservations-modal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Paste Reservations</h4>
+      </div>
+
+      <div class="modal-body">
+        <% form_tag paste_trip_reservations_url(@trip) do %>
+          <div class="form-group">
+            <%= label_tag :reservations,
+                          'Paste Reservations from Excel' %>
+            <%= text_area_tag :reservations, nil, class: 'form-control' %>
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            <i class="glyphicon glyphicon-paste"></i>
+            Create Reservations
+          </button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 
 <% if flash[:params] %>
   <% javascript_tag do %>
