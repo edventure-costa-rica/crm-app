@@ -5,7 +5,7 @@ class ReservationsController < ApplicationController
   def index
     @reservations = Reservation.all(
       :conditions => { :company_id => params[:company_id] },
-      :order      => 'arrival DESC'
+      :order      => 'day DESC'
     )
 
     @company = Company.find(params[:company_id])
@@ -97,7 +97,7 @@ class ReservationsController < ApplicationController
     @trip = Trip.find params[:trip_id]
     @reservations = Reservation.all \
       :conditions => { :trip_id => @trip.id },
-      :order      => 'arrival ASC'
+      :order      => 'day ASC'
 
     vouchers = VoucherReport.new
     @reservations.each { |r| vouchers.add_reservation r }
@@ -114,12 +114,12 @@ class ReservationsController < ApplicationController
   # GET /trips/:trip_id/reservations/pending
   def pending
     @trip = Trip.find(params[:trip_id])
-    @reservations = @trip.reservations.all(order: 'arrival DESC')
+    @reservations = @trip.reservations.all(order: 'day DESC')
   end
 
   def confirmed
     @trip = Trip.find(params[:trip_id])
-    @reservations = @trip.reservations.all(order: 'arrival DESC')
+    @reservations = @trip.reservations.all(order: 'day DESC')
   end
 
   # GET /reservations/unconfirmed
@@ -134,7 +134,7 @@ class ReservationsController < ApplicationController
                          conditions: conditions,
                          limit: limit,
                          offset: offset,
-                         order: 'updated_at DESC, arrival ASC')
+                         order: 'updated_at DESC, day ASC')
   end
 
   # GET /reservations/unpaid
@@ -149,7 +149,7 @@ class ReservationsController < ApplicationController
                          conditions: conditions,
                          limit: limit,
                          offset: offset,
-                         order: 'updated_at DESC, arrival ASC')
+                         order: 'updated_at DESC, day ASC')
   end
 
   def export
@@ -171,20 +171,7 @@ class ReservationsController < ApplicationController
   private
 
   def reservation_params
-    params[:reservation].tap do |input|
-      arrival = Chronic.parse input.delete(:arrival_date_time)
-      departure = Chronic.parse input.delete(:departure_date_time)
-
-      if arrival
-        input[:arrival] = arrival.to_date
-        input[:arrival_time] = arrival.strftime('%l %P')
-      end
-
-      if departure
-        input[:departure] = departure.to_date
-        input[:departure_time] = departure.strftime('%l %P')
-      end
-    end
+    params[:reservation]
   end
 
   def page_to_limit_offset(limit=25)
