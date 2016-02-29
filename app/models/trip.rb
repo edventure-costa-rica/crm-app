@@ -11,7 +11,7 @@ class Trip < ActiveRecord::Base
 
   belongs_to :client
   has_many :reservations, :dependent => :delete_all,
-    :order => 'arrival ASC, departure ASC'
+    :order => 'day ASC'
 
   before_validation_on_create :generate_default_values
 
