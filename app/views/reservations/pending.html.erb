@@ -39,8 +39,8 @@
 
       <td class="hidden-xs hidden-sm col-md-1"><%= usd res.net_price %></td>
       <td class="hidden-xs hidden-sm col-md-1"><%= usd res.price %></td>
-      <td class="hidden-xs hidden-sm col-md-2"><%= res.pickup %></td>
-      <td class="hidden-xs hidden-sm col-md-2"><%= res.dropoff %></td>
+      <td class="hidden-xs hidden-sm col-md-2"><%= res.pick_up %></td>
+      <td class="hidden-xs hidden-sm col-md-2"><%= res.drop_off %></td>
 
       <td class="col-xs-4 col-md-2">
         <ul class="list-inline">
@@ -115,7 +115,8 @@
           <div class="form-group">
             <%= label_tag :reservations,
                           'Paste Reservations from Excel' %>
-            <%= text_area_tag :reservations, nil, class: 'form-control' %>
+            <%= text_area_tag :reservations, nil,
+                              class: 'form-control', rows: 6 %>
           </div>
 
           <button type="submit" class="btn btn-primary">
