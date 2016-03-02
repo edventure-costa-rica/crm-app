@@ -22,18 +22,9 @@ var Form = React.createClass({
     props = props || this.props;
 
     var res = props.reservation,
-        defaults = res ? res.reservation : props.defaults || {},
-        departure, arrival;
+        defaults = res ? res.reservation : props.defaults || {};
 
-    departure = _.compact([defaults.departure, defaults.departure_time]).join(' ');
-    arrival = _.compact([defaults.arrival, defaults.arrival_time]).join(' ');
-
-    return _.assign({
-      arrival_date_time: arrival,
-      departure_date_time: departure,
-      dropoff_location: defaults.dropoff_location,
-      pickup_location: defaults.pickup_location
-    }, defaults);
+    return _.assign({}, defaults);
   },
 
   componentWillReceiveProps: function(props) {
@@ -107,29 +98,15 @@ var Form = React.createClass({
           </div>
 
           <div className="col-xs-6 col-sm-3">
-            <Forms.DateTimeField id="reservation-arrival_date_time" name="reservation[arrival_date_time]"
-                                 title="Arrival"
-                                 value={this.linkState('arrival_date_time')}
-                                 required={true} />
+            <Forms.TextField id="reservation-pickup" name="reservation[pick_up]"
+                             title="Pick Up Time and Location"
+                             value={this.linkState('pick_up')} />
           </div>
 
           <div className="col-xs-6 col-sm-3">
-            <Forms.DateTimeField id="reservation-departure_date_time" name="reservation[departure_date_time]"
-                                 title="Departure"
-                                 value={this.linkState('departure_date_time')}
-                                 required={true} />
-          </div>
-
-          <div className="col-xs-6">
-            <Forms.TextField id="reservation-pickup" name="reservation[pickup_location]"
-                             title="Pick Up Location"
-                             value={this.linkState('pickup_location')} />
-          </div>
-
-          <div className="col-xs-6">
-            <Forms.TextField id="reservation-dropoff" name="reservation[dropoff_location]"
-                             title="Drop Off Location"
-                             value={this.linkState('dropoff_location')} />
+            <Forms.TextField id="reservation-dropoff" name="reservation[drop_off]"
+                             title="Drop Off Time and Location"
+                             value={this.linkState('drop_off')} />
           </div>
 
           <div className="col-xs-12 text-right">
