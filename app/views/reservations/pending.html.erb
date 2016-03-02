@@ -10,9 +10,10 @@
 
 <table class="table table-condensed table-striped">
   <tr class="row">
+    <th></th>
     <th>Pax</th>
     <th>Company</th>
-    <th>Services</th>
+    <th class="hidden-xs hidden-sm">Services</th>
     <th class="hidden-xs hidden-sm">Net Price</th>
     <th class="hidden-xs hidden-sm">Rack Price</th>
     <th class="hidden-xs hidden-sm">Pick Up</th>
@@ -22,8 +23,26 @@
 
   <% @reservations.each do |res| %>
     <tr class="row">
-      <td><%= res.pax %></td>
-      <td class="col-xs-4 col-md-2">
+
+      <td class="col-xs-1">
+        <% form_tag move_reservation_url(res) do %>
+          <div class="btn-group-vertical btn-group-xs">
+            <button type="submit" class="btn btn-link"
+                    name="earlier" title="Earlier">
+              <i class="glyphicon glyphicon-circle-arrow-up"></i>
+            </button>
+
+            <button type="submit" class="btn btn-link"
+                    name="later" title="Later">
+              <i class="glyphicon glyphicon-circle-arrow-down"></i>
+            </button>
+          </div>
+        <% end %>
+      </td>
+
+      <td class="col-xs-1"><%= res.pax %></td>
+
+      <td class="col-xs-6 col-md-2">
         <% if res.company.kind == 'hotel' %>
           <i class="glyphicon glyphicon-bed"></i>
         <% elsif res.company.kind == 'transport' %>
@@ -35,7 +54,7 @@
         <% end %>
         <%= res.company.name %>
       </td>
-      <td class="col-xs-4 col-md-2"><%= res.services %></td>
+      <td class="hidden-xs hidden-sm col-md-2"><%= res.services %></td>
 
       <td class="hidden-xs hidden-sm col-md-1"><%= usd res.net_price %></td>
       <td class="hidden-xs hidden-sm col-md-1"><%= usd res.price %></td>
@@ -72,6 +91,7 @@
           </li>
         </ul>
       </td>
+
     </tr>
   <% end %>
 </table>
