@@ -48,11 +48,11 @@ class Reservation < ActiveRecord::Base
   end
 
   def arrival
-    trip.arrival + day
+    trip.arrival.to_date + day
   end
 
   def departure
-    trip.arrival + day + nights
+    trip.arrival.to_date + day + nights
   end
 
   # currency values accept (and drop) dollar signs
