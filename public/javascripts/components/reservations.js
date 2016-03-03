@@ -24,7 +24,7 @@ var Form = React.createClass({
     var res = props.reservation,
         defaults = res ? res.reservation : props.defaults || {};
 
-    return _.assign({}, defaults);
+    return _.assign({nights: 1}, defaults);
   },
 
   componentWillReceiveProps: function(props) {
@@ -41,7 +41,9 @@ var Form = React.createClass({
 
   render: function() {
     var hiddenId, method = this.props.method,
-        companies, kind;
+        companies, kind, nights,
+        priceClass = 'col-xs-6 col-sm-3',
+        locationClass = 'col-xs-6 col-sm-3';
 
     if (this.state.id) {
       hiddenId = (
@@ -57,6 +59,20 @@ var Form = React.createClass({
       case 'hotel':     companies = HOTELS; break;
       case 'tour':      companies = TOURS; break;
       case 'transport': companies = TRANSPORTS; kind = 'Operator'; break;
+    }
+
+    if (this.props.kind === 'hotel') {
+      priceClass = 'col-xs-6 col-sm-2';
+      locationClass = 'col-xs-5 col-sm-3';
+      nights = (
+          <div className="col-xs-2">
+            <Forms.NumberField id="reservation-nights"
+                               name="reservation[nights]"
+                               title="Nights"
+                               value={this.linkState('nights')}
+                               required={true} min={1} step={1} />
+          </div>
+      );
     }
 
     return (
@@ -82,7 +98,7 @@ var Form = React.createClass({
                               value={this.linkState('company_id')} options={companies} />
           </div>
 
-          <div className="col-xs-6 col-sm-3">
+          <div className={priceClass}>
             <Forms.PriceField id="reservation-net_price" name="reservation[net_price]"
                               title="Net Price"
                               onBlur={this.setDefaultRackPrice}
@@ -90,20 +106,22 @@ var Form = React.createClass({
                               required={true} min={0} step={0.01} />
           </div>
 
-          <div className="col-xs-6 col-sm-3">
+          <div className={priceClass}>
             <Forms.PriceField id="reservation-price" name="reservation[price]"
                               title="Rack Price"
                               value={this.linkState('price')}
                               required={true} min={0} step={0.01} />
           </div>
 
-          <div className="col-xs-6 col-sm-3">
+          {nights}
+
+          <div className={locationClass}>
             <Forms.TextField id="reservation-pickup" name="reservation[pick_up]"
                              title="Pick Up Time and Location"
                              value={this.linkState('pick_up')} />
           </div>
 
-          <div className="col-xs-6 col-sm-3">
+          <div className={locationClass}>
             <Forms.TextField id="reservation-dropoff" name="reservation[drop_off]"
                              title="Drop Off Time and Location"
                              value={this.linkState('drop_off')} />
