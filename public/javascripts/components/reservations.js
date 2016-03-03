@@ -42,8 +42,8 @@ var Form = React.createClass({
   render: function() {
     var hiddenId, method = this.props.method,
         companies, kind, nights,
-        priceClass = 'col-xs-6 col-sm-3',
-        locationClass = 'col-xs-6 col-sm-3';
+        minRackPrice = Number(this.state.price),
+        locationClass = 'col-xs-6';
 
     if (this.state.id) {
       hiddenId = (
@@ -62,8 +62,7 @@ var Form = React.createClass({
     }
 
     if (this.props.kind === 'hotel') {
-      priceClass = 'col-xs-6 col-sm-2';
-      locationClass = 'col-xs-5 col-sm-3';
+      locationClass = 'col-xs-5';
       nights = (
           <div className="col-xs-2">
             <Forms.NumberField id="reservation-nights"
@@ -98,7 +97,7 @@ var Form = React.createClass({
                               value={this.linkState('company_id')} options={companies} />
           </div>
 
-          <div className={priceClass}>
+          <div className="col-xs-6">
             <Forms.PriceField id="reservation-net_price" name="reservation[net_price]"
                               title="Net Price"
                               onBlur={this.setDefaultRackPrice}
@@ -106,11 +105,11 @@ var Form = React.createClass({
                               required={true} min={0} step={0.01} />
           </div>
 
-          <div className={priceClass}>
+          <div className="col-xs-6">
             <Forms.PriceField id="reservation-price" name="reservation[price]"
                               title="Rack Price"
                               value={this.linkState('price')}
-                              required={true} min={0} step={0.01} />
+                              required={true} min={minRackPrice} step={0.01} />
           </div>
 
           {nights}
