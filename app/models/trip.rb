@@ -36,7 +36,7 @@ class Trip < ActiveRecord::Base
 
   def to_s; new_record? ? Trip.human_name : self.registration_id; end
 
-  def nights
+  def days
     (departure.to_date - arrival.to_date).to_i
   end
 
