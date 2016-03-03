@@ -77,6 +77,31 @@ class ReservationsController < ApplicationController
     end
   end
 
+  def move
+    res = Reservation.find(params[:id])
+    all = res.trip.reservations.to_a
+    index = all.index(res)
+
+    if params[:later]
+      other = all[index + 1]
+    elsif params[:earlier]
+      other = all[index - 1]
+    else
+      other = nil
+    end
+
+    if other
+      other.swap(res)
+
+      Reservation.transaction do
+        other.save!
+        res.save!
+      end
+    end
+
+    redirect_to pending_trip_reservations_url(res.trip)
+  end
+
   # GET /clients/1/trips/1/reservations/1/voucher
   def voucher
     @reservation = Reservation.find(params[:id])
