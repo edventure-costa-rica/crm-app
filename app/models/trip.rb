@@ -10,8 +10,7 @@ class Trip < ActiveRecord::Base
   ]
 
   belongs_to :client
-  has_many :reservations, :dependent => :delete_all,
-    :order => 'day ASC'
+  has_many :reservations, dependent: :delete_all, order: 'day ASC'
 
   before_validation_on_create :generate_default_values
 
@@ -32,6 +31,11 @@ class Trip < ActiveRecord::Base
     define_method(status + '?') do
       self.status == status
     end
+  end
+
+  def hotels
+    reservations.find(:all, include: :company,
+                      conditions: ['companies.kind = ?', 'hotel'])
   end
 
   def to_s; new_record? ? Trip.human_name : self.registration_id; end
