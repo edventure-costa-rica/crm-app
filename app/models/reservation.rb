@@ -62,6 +62,16 @@ class Reservation < ActiveRecord::Base
     end
   end
 
+  def swap(other)
+    a, b = self.day < other.day ? [self, other] : [other, self]
+    diff = b.day - a.day - a.nights
+
+    b.day = a.day
+    a.day = b.day + b.nights + diff
+
+    self
+  end
+
   def after_initialize
     if new_record? and not trip.nil?
       # fill in number of people from trip size
