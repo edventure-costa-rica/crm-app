@@ -76,6 +76,10 @@ class Reservation < ActiveRecord::Base
     if new_record? and not trip.nil?
       # fill in number of people from trip size
       self.num_people ||= trip.total_people
+
+      if day.nil? and company.hotel? and (hotel = trip.hotels.last)
+        self.day = hotel.day + hotel.nights
+      end
     end
   end
 
