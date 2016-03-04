@@ -12,6 +12,7 @@ en:
       calendar: "%B %d"
       calendar_long: "%A, %B %d, %Y"
       short: "%a %d %b"
+      tiny: '%b %d'
 
   invalid_email: is not a valid e-mail address
   arrival_precedes_departure: must come after arrival

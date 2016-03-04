@@ -11,11 +11,11 @@
 <table class="table table-condensed table-striped">
   <tr class="row">
     <th></th>
-    <th>Pax</th>
+    <th>Date</th>
     <th>Company</th>
     <th class="hidden-xs hidden-sm">Services</th>
-    <th class="hidden-xs hidden-sm">Net Price</th>
-    <th class="hidden-xs hidden-sm">Rack Price</th>
+    <th class="hidden-xs hidden-sm">Net</th>
+    <th class="hidden-xs hidden-sm">Rack</th>
     <th class="hidden-xs hidden-sm">Pick Up</th>
     <th class="hidden-xs hidden-sm">Drop Off</th>
     <th></th>
@@ -40,7 +40,10 @@
         <% end %>
       </td>
 
-      <td class="col-xs-1"><%= res.pax %></td>
+      <td class="col-xs-1">
+        <%= l res.arrival, format: :tiny %> &ndash;
+        <%= l res.departure, format: :tiny %>
+      </td>
 
       <td class="col-xs-6 col-md-2">
         <% if res.company.kind == 'hotel' %>
