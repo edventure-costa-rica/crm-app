@@ -1,6 +1,5 @@
 class ExcelParser
   attr_reader :errors
-  attr_accessor :trip
 
   def initialize(data)
     @data = data
@@ -12,8 +11,8 @@ class ExcelParser
     errors.size > 0
   end
 
-  def reservations
-    @reservations ||= parse_entries.map do |entry|
+  def reservations(trip)
+    @reservations ||= parse_entries(trip).map do |entry|
       trip.reservations.build(entry)
     end
   end
@@ -38,7 +37,7 @@ DIA	LUGAR	HOTEL	MEALS	TIPO HABITACION	TARIFA HAB 1	TARIFA HAB 2
 
 =end
 
-  def parse_entries
+  def parse_entries(trip)
     @data.each_line.each_with_index.reduce([]) do |entries, line_info|
       line_no = line_info.pop
       line = line_info.pop
@@ -48,7 +47,7 @@ DIA	LUGAR	HOTEL	MEALS	TIPO HABITACION	TARIFA HAB 1	TARIFA HAB 2
       begin
         columns = line.split(/\t/)
         company_name = columns[2]
-        services = columns.values_at(3, 4).grep(/\S/).join(", ")
+        services = columns.values_at(3, 4).grep(/\w/).join(", ")
         price = columns.from(5).map(&:to_f).reduce(0, &:+)
         day = columns.first.to_i
 
@@ -67,7 +66,7 @@ DIA	LUGAR	HOTEL	MEALS	TIPO HABITACION	TARIFA HAB 1	TARIFA HAB 2
           entry[:price] = price
           entry[:nights] = 1
           entry[:services] = services
-          entry[:num_people] = @trip.total_people
+          entry[:num_people] = trip.total_people
 
           entries.push(entry)
         end

@@ -197,16 +197,15 @@ class ReservationsController < ApplicationController
     paste_params = reservation_paste_params
 
     trip = Trip.find(params[:trip_id])
-    parser = ExcelParser.new(trip, paste_params[:paste])
+    parser = ExcelParser.new(paste_params[:paste])
 
-    trip.reservations = parser.reservations
+    trip.reservations = parser.reservations(trip)
 
     if parser.error?
-      flash[:notice] = parser.errors.join(", ")
-      flash[:params] = params
+      flash[:notice] = parser.errors.first
 
     elsif trip.save
-      flash[:notice] = "Created #{parser.reservations.size} reservations OK"
+      flash[:notice] = "Created #{trip.reservations.count} reservations OK"
 
     else
       flash[:notice] = trip.errors.full_messages.join(", ")

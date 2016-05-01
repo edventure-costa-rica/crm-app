@@ -133,6 +133,16 @@
 
       <div class="modal-body">
         <% form_tag paste_trip_reservations_url(@trip) do %>
+          <% unless @reservations.empty? %>
+          <div class="form-group">
+            <p class="form-control-static">
+              <strong>Warning:</strong>
+              Pasting will remove <em>all</em> existing reservations
+              for this trip.
+            </p>
+          </div>
+          <% end %>
+
           <div class="form-group">
             <%= label_tag 'reservations[paste]',
                           'Paste Reservations from Excel' %>
