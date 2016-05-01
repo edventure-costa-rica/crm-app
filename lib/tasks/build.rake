@@ -5,6 +5,7 @@ namespace :build do
     end
   end
 
+  desc 'Build JavaScript components'
   task :javascript do
     browserify = File.join(RAILS_ROOT, 'node_modules/.bin/browserify')
     scripts = %w(application.js)
