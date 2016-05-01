@@ -36,6 +36,7 @@ var QuickForm = React.createClass({
 
   render: function () {
     var cancelButton, method = 'post';
+    var offset = new Date().getTimezoneOffset();
 
     if (this.state.id) method = 'put';
 
@@ -52,6 +53,7 @@ var QuickForm = React.createClass({
         <div className="row">
           <form action={this.props.action} method="post" className="form">
             <input type="hidden" name="_method" value={method} />
+            <input type="hidden" name="trip[offset]" value={offset} />
 
             <div className="col-xs-6">
               <Forms.PaxField id="trip-total_people"
