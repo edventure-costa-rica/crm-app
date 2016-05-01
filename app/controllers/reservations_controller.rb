@@ -199,7 +199,7 @@ class ReservationsController < ApplicationController
     trip = Trip.find(params[:trip_id])
     parser = ExcelParser.new(paste_params[:paste])
 
-    trip.reservations = parser.reservations(trip)
+    trip.reservations = parser.reservations(trip).reverse
 
     if parser.error?
       flash[:notice] = parser.errors.first
