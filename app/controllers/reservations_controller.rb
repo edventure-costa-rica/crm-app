@@ -139,12 +139,12 @@ class ReservationsController < ApplicationController
   # GET /trips/:trip_id/reservations/pending
   def pending
     @trip = Trip.find(params[:trip_id])
-    @reservations = @trip.reservations.all(order: 'day DESC')
+    @reservations = @trip.reservations.all(order: 'day ASC')
   end
 
   def confirmed
     @trip = Trip.find(params[:trip_id])
-    @reservations = @trip.reservations.all(order: 'day DESC')
+    @reservations = @trip.reservations.all(order: 'day ASC')
   end
 
   # GET /reservations/unconfirmed
@@ -199,7 +199,7 @@ class ReservationsController < ApplicationController
     trip = Trip.find(params[:trip_id])
     parser = ExcelParser.new(paste_params[:paste])
 
-    trip.reservations = parser.reservations(trip).reverse
+    trip.reservations = parser.reservations(trip)
 
     if parser.error?
       flash[:notice] = parser.errors.first
