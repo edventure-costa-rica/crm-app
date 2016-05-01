@@ -193,10 +193,36 @@ class ReservationsController < ApplicationController
     end
   end
 
+  def paste
+    paste_params = reservation_paste_params
+
+    trip = Trip.find(params[:trip_id])
+    parser = ExcelParser.new(trip, paste_params[:paste])
+
+    trip.reservations = parser.reservations
+
+    if parser.error?
+      flash[:notice] = parser.errors.join(", ")
+      flash[:params] = params
+
+    elsif trip.save
+      flash[:notice] = "Created #{parser.reservations.size} reservations OK"
+
+    else
+      flash[:notice] = trip.errors.full_messages.join(", ")
+    end
+
+    redirect_to pending_trip_reservations_url(trip)
+  end
+
   private
 
   def reservation_params
     params[:reservation]
+  end
+
+  def reservation_paste_params
+    params[:reservations]
   end
 
   def page_to_limit_offset(limit=25)

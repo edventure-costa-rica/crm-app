@@ -58,7 +58,7 @@ class Reservation < ActiveRecord::Base
   # currency values accept (and drop) dollar signs
   [:net_price,:price].each do |attr|
     define_method "#{attr}=" do |value|
-      write_attribute attr, value.sub(/^\s*\$\s*/, '')
+      write_attribute attr, value.to_s.sub(/^\s*\$\s*/, '')
     end
   end
 

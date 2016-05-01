@@ -99,14 +99,12 @@
   <% end %>
 </table>
 
-<% if @reservations.empty? %>
-  <div class="text-right">
-    <button class="btn btn-default" id="paste-reservations">
-      <i class="glyphicon glyphicon-paste"></i>
-      Paste From Excel
-    </button>
-  </div>
-<% end %>
+<div class="text-right">
+  <button class="btn btn-default" id="paste-reservations">
+    <i class="glyphicon glyphicon-paste"></i>
+    Paste From Excel
+  </button>
+</div>
 
 <%= render partial: 'reservations/new' %>
 
@@ -136,9 +134,9 @@
       <div class="modal-body">
         <% form_tag paste_trip_reservations_url(@trip) do %>
           <div class="form-group">
-            <%= label_tag :reservations,
+            <%= label_tag 'reservations[paste]',
                           'Paste Reservations from Excel' %>
-            <%= text_area_tag :reservations, nil,
+            <%= text_area_tag 'reservations[paste]', nil,
                               class: 'form-control', rows: 6 %>
           </div>
 
