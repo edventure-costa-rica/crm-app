@@ -79,24 +79,19 @@ class ReservationsController < ApplicationController
 
   def move
     res = Reservation.find(params[:id])
-    all = res.trip.reservations.to_a
-    index = all.index(res)
 
-    if params[:later]
-      other = all[index + 1]
-    elsif params[:earlier]
-      other = all[index - 1]
-    else
-      other = nil
+    unless res.company.hotel?
+      flash[:notice] = "Unable to move #{res.company.kind} reservations"
+      redirect_to pending_trip_reservations_url(res.trip)
+      return
     end
 
-    if other
-      other.swap(res)
-
-      Reservation.transaction do
-        other.save!
-        res.save!
-      end
+    begin
+      direction = params[:later] ? :later : :earlier
+      StepReservationOrder.new(res, direction).save!
+    rescue => ex
+      flash[:notice] = ex.to_s
+      logger.warn ex.backtrace.join("\n\t")
     end
 
     redirect_to pending_trip_reservations_url(res.trip)
@@ -122,7 +117,7 @@ class ReservationsController < ApplicationController
     @trip = Trip.find params[:trip_id]
     @reservations = Reservation.all \
       :conditions => { :trip_id => @trip.id },
-      :order      => 'day ASC'
+      :order      => 'day ASC, id ASC'
 
     vouchers = VoucherReport.new
     @reservations.each { |r| vouchers.add_reservation r }
@@ -139,12 +134,12 @@ class ReservationsController < ApplicationController
   # GET /trips/:trip_id/reservations/pending
   def pending
     @trip = Trip.find(params[:trip_id])
-    @reservations = @trip.reservations.all(order: 'day ASC')
+    @reservations = @trip.reservations.all(order: 'day ASC, id ASC')
   end
 
   def confirmed
     @trip = Trip.find(params[:trip_id])
-    @reservations = @trip.reservations.all(order: 'day ASC')
+    @reservations = @trip.reservations.all(order: 'day ASC, id ASC')
   end
 
   # GET /reservations/unconfirmed
