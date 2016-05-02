@@ -25,18 +25,20 @@
     <tr class="row">
 
       <td class="col-xs-1">
-        <% form_tag move_reservation_url(res) do %>
-          <div class="btn-group-vertical btn-group-xs">
-            <button type="submit" class="btn btn-link"
-                    name="earlier" title="Earlier">
-              <i class="glyphicon glyphicon-circle-arrow-up"></i>
-            </button>
+        <% if res.hotel? %>
+          <% form_tag move_reservation_url(res) do %>
+            <div class="btn-group-vertical btn-group-xs">
+              <button type="submit" class="btn btn-link"
+                      name="earlier" title="Earlier">
+                <i class="glyphicon glyphicon-circle-arrow-up"></i>
+              </button>
 
-            <button type="submit" class="btn btn-link"
-                    name="later" title="Later">
-              <i class="glyphicon glyphicon-circle-arrow-down"></i>
-            </button>
-          </div>
+              <button type="submit" class="btn btn-link"
+                      name="later" title="Later">
+                <i class="glyphicon glyphicon-circle-arrow-down"></i>
+              </button>
+            </div>
+          <% end %>
         <% end %>
       </td>
 
