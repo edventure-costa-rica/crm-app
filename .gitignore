@@ -5,3 +5,6 @@ log
 .powrc
 .rvmrc
 **/node_modules
+public/javascripts/
+public/stylesheets/
+public/fonts/
