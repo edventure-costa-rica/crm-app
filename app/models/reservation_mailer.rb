@@ -21,6 +21,7 @@ class ReservationMailer < ActionMailer::Base
 
     recipients    rcpt
     from          config['from_address']
+    reply_to      config['reply_to']
     subject       "Reservación para los #{family}"
     body          reservation: reservation
   end
