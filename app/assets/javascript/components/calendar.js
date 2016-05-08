@@ -1,6 +1,5 @@
 var React = require('react');
 var _ = require('lodash');
-var moment = require('moment');
 var chrono = require('chrono-node');
 
 var Calendar = React.createClass({
@@ -11,7 +10,7 @@ var Calendar = React.createClass({
     var offset = new Date().getTimezoneOffset();
 
     $(calendar).fullCalendar({
-      events: this.props.events + '?offset=' + offset
+      events: this.props.events + '&offset=' + offset
     })
   },
 

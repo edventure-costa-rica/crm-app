@@ -2,7 +2,6 @@ var _ = require('lodash');
 var Forms = require('./forms');
 var React = require('react');
 
-var moment = require('moment');
 
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 

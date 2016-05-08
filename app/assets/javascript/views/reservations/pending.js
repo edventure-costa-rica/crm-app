@@ -1,7 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var chrono = require('chrono-node');
-var moment = require('moment');
 var lib = require('../../lib');
 var components = require('../../components');
 

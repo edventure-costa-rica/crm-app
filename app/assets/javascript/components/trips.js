@@ -3,7 +3,6 @@ var Forms = require('./forms');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
 var _ = require('lodash');
-var moment = require('moment');
 var chrono = require('chrono-node');
 
 var QuickForm = React.createClass({

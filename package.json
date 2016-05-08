@@ -20,6 +20,7 @@
     "gulp-bro": "^0.2.2",
     "gulp-concat": "^2.6.0",
     "gulp-less": "^3.1.0",
+    "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^2.0.0-alpha",
     "gulp-uglify": "^1.5.3",
     "gulp-util": "^3.0.7"

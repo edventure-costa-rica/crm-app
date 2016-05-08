@@ -7,6 +7,7 @@ var gutil = require('gulp-util');
 var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
 var concat = require('gulp-concat');
+var rename = require('gulp-rename');
 
 var sources = {
   fonts: ['./node_modules/bootstrap/fonts/**/*'],
@@ -43,7 +44,14 @@ gulp.task('less', function() {
 
 gulp.task('css', function() {
   return gulp.src(sources.css)
+      .pipe(rename(renameCss))
       .pipe(gulp.dest('./public/stylesheets/'));
+
+  function renameCss(file) {
+    if (file.basename === 'index') {
+      file.basename = 'react-date-picker'
+    }
+  }
 })
 
 gulp.task('contrib', function() {

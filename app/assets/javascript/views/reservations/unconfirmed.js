@@ -3,7 +3,6 @@ var ReactDOM = require('react-dom');
 var components = require('../../components');
 
 var chrono = require('chrono-node');
-var moment = require('moment');
 var lib = require('../../lib');
 
 var $confirmRes = $('.confirm-reservation'),
