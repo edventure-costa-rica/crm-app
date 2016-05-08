@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var components = require('components');
+var components = require('../../components');
 var lib = require('../../lib');
 
 

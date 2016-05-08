@@ -20,6 +20,7 @@ ActionController::Routing::Routes.draw do |map|
                   collection: {pending: :get,
                                confirmed: :get,
                                vouchers: :get,
+                               events: :get,
                                export: :get,
                                paste: :post}
   end

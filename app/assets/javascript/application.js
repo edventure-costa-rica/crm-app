@@ -12,7 +12,6 @@ $(function() {
   require('./views/calendar/entries');
 });
 
-
 $(function () {
   var lib = require('./lib');
 

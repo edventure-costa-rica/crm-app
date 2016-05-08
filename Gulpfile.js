@@ -2,20 +2,26 @@ var gulp = require('gulp');
 var path = require('path');
 var less = require('gulp-less');
 var babelify = require('babelify');
-var browserify = require('browserify');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
+var bro = require('gulp-bro');
 var gutil = require('gulp-util');
 var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
-var watchify = require('watchify');
+var concat = require('gulp-concat');
 
 var sources = {
   fonts: ['./node_modules/bootstrap/fonts/**/*'],
   less: ['./app/assets/less/styles.less'],
+  script: ['./app/assets/javascript/application.js'],
+  css: [
+    './node_modules/react-date-picker/index.css',
+    './node_modules/fullcalendar/dist/fullcalendar.min.css',
+    './node_modules/fullcalendar/dist/fullcalendar.print.css',
+  ],
   contrib: [
-    './node_modules/bootstrap/dist/js/bootstrap.min.js',
-    './node_modules/jquery/dist/jquery.min.js'
+    './node_modules/jquery/dist/jquery.js',
+    './node_modules/moment/moment.js',
+    './node_modules/fullcalendar/dist/fullcalendar.js',
+    './node_modules/bootstrap/dist/js/bootstrap.js',
   ]
 }
 
@@ -23,8 +29,6 @@ var paths = {
   less: ['./app/assets/less', './node_modules/bootstrap/less'],
   script: ['./node_modules', './app/assets/javascript'],
 }
-
-var b = createBrowserify();
 
 gulp.task('fonts', function() {
   return gulp.src(sources.fonts)
@@ -37,51 +41,54 @@ gulp.task('less', function() {
     .pipe(gulp.dest('./public/stylesheets'))
 })
 
-gulp.task('contrib', function() {
-  return gulp.src(sources.contrib)
-      .pipe(gulp.dest('./public/javascripts/'));
+gulp.task('css', function() {
+  return gulp.src(sources.css)
+      .pipe(gulp.dest('./public/stylesheets/'));
 })
 
+gulp.task('contrib', function() {
+  return gulp.src(sources.contrib)
+      .pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(uglify())
+        .pipe(concat('contrib.js'))
+      .pipe(sourcemaps.write('./'))
+      .pipe(gulp.dest('./public/javascripts'))
+})
+
+function browserifyPipeline() {
+  return gulp.src(sources.script)
+      .pipe(bro({
+        debug: true, 
+        paths: paths.script,
+        transform: [babelify.configure({presets: ['react']})],
+      }));
+}
+
 gulp.task('script', function() {
-  return b.bundle()
-      .pipe(source('application.js'))
-      .pipe(buffer())
+  return browserifyPipeline()
+      .pipe(gulp.dest('./public/javascripts/'))
+});
+
+gulp.task('release-script', function() {
+  return browserifyPipeline()
       .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(uglify())
         .on('error', gutil.log)
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest('./public/javascripts/'))
-});
+})
+
+gulp.task('watch-css', ['css'], function() {
+  gulp.watch(sources.css, ['css']);
+})
 
 gulp.task('watch-less', ['less'], function() {
-  var watchedFiles = paths.less
-      .map(function(p) { return path.join(p, '**/*.less') });
-
-  gulp.watch(watchedFiles, ['less']);
+  gulp.watch('./app/assets/less/**/*.less', ['less'])
 })
 
 gulp.task('watch-script', ['script'], function() {
-  b.on('update', function(ids) {
-    gulp.start(['script']);
-
-  }).on('log', gutil.log)
+  gulp.watch('./app/assets/javascript/**/*.js', ['script'])
 })
 
-gulp.task('watch-contrib', ['contrib'], function() {
-  gulp.watch(sources.contrib, ['contrib']);
-})
-
-gulp.task('watch', ['watch-script', 'watch-less', 'watch-contrib']);
-
-function createBrowserify() {
-  var b = browserify({
-    debug: true,
-    entries: ['./app/assets/javascript/application.js'],
-    paths: paths.script,
-    cache: {},
-    packageCache: {},
-
-  }).transform(babelify, {presets: ['react']});
-
-  return watchify(b);
-}
+gulp.task('watch', ['watch-script', 'watch-less', 'watch-css']);
+gulp.task('default', ['release-script', 'contrib', 'less', 'css']);

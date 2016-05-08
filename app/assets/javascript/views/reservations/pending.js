@@ -1,10 +1,21 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var components = require('components');
-
 var chrono = require('chrono-node');
 var moment = require('moment');
 var lib = require('../../lib');
+var components = require('../../components');
+
+var $calendar = $('#calendar');
+
+$(function() {
+  ReactDOM.render(
+      React.createElement(
+          components.Calendar,
+          {events: $calendar.data('events')}
+      ),
+      $calendar.get(0)
+  )
+});
 
 var $pasteReservations = $('#paste-reservations'),
     $pasteModal = $('#paste-reservations-modal');

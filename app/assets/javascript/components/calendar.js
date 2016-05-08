@@ -2,16 +2,16 @@ var React = require('react');
 var _ = require('lodash');
 var moment = require('moment');
 var chrono = require('chrono-node');
-var $ = require('jquery');
 
 var Calendar = React.createClass({
   displayName: 'Calendar',
 
   componentDidMount:  function() { 
     var calendar = this.refs.calendar;
+    var offset = new Date().getTimezoneOffset();
 
     $(calendar).fullCalendar({
-      events: this.props.events
+      events: this.props.events + '?offset=' + offset
     })
   },
 
@@ -23,9 +23,9 @@ var Calendar = React.createClass({
 
   render: function() {
     return (
-      <div ref="calendar" />
+      <div ref="calendar"></div>
     );
   }
-})
+});
 
-module.exports = Calendar
+module.exports = Calendar;
