@@ -142,8 +142,8 @@ class ReservationsController < ApplicationController
     start = Chronic.parse(params[:start]) - params[:offset].to_i
     end_ = Chronic.parse(params[:end]) - params[:offset].to_i
 
-    start_day = start - trip.arrival.to_date
-    end_day = end_ - trip.arrival.to_date
+    start_day = start.to_date - trip.arrival.to_date
+    end_day = end_.to_date - trip.arrival.to_date
 
     events = trip.reservations.find(:all, conditions:
         ['day > ? AND (day + nights) < ?', start_day.to_i, end_day.to_i]
