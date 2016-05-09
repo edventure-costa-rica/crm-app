@@ -4,20 +4,42 @@ var chrono = require('chrono-node');
 var lib = require('../../lib');
 var components = require('../../components');
 
-var $calendar = $('#calendar');
-
-$(function() {
-  ReactDOM.render(
-      React.createElement(
-          components.Calendar,
-          {events: $calendar.data('events')}
-      ),
-      $calendar.get(0)
-  )
-});
 
 var $pasteReservations = $('#paste-reservations'),
     $pasteModal = $('#paste-reservations-modal');
+var $addReservation = $('#add-reservation');
+var $calendar = $('#pending-calendar');
+var $details = $('#pending-details');
+
+$(function() {
+
+  var eventSources = [
+    {url: $calendar.data('trip'), color: 'black'},
+    {url: $calendar.data('hotels'), color: 'darkred'},
+    {url: $calendar.data('tours'), color: 'darkgreen'},
+    {url: $calendar.data('transports'), color: 'darkblue'}
+  ];
+
+  var startDate = $calendar.data('arrival');
+
+  ReactDOM.render(
+      React.createElement(components.Calendar, {
+        events: eventSources,
+        date: startDate,
+        dayClick: dayClick,
+        eventClick: eventClick
+      }),
+      $calendar.get(0)
+  );
+  
+  function dayClick(date) {
+  }
+
+  function eventClick(event) {
+    console.log('event clicked', event)
+  }
+});
+
 
 $pasteReservations.on('click', function(ev) {
   ev.preventDefault();
@@ -25,7 +47,6 @@ $pasteReservations.on('click', function(ev) {
   $pasteModal.modal('show');
 });
 
-var $addReservation = $('#add-reservation');
 
 var transferring = false;
 

@@ -38,7 +38,9 @@ gulp.task('fonts', function() {
 
 gulp.task('less', function() {
   return gulp.src(sources.less)
-    .pipe(less({paths: paths.less}))
+    .pipe(sourcemaps.init({loadMaps: true}))
+      .pipe(less({paths: paths.less}))
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./public/stylesheets'))
 })
 

@@ -15,6 +15,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :trips,
                 except: %i(new create edit show),
+                member: %i(event),
                 collection: %i(upcoming) do |trip|
     trip.resource :reservations, only: :create,
                   collection: {pending: :get,

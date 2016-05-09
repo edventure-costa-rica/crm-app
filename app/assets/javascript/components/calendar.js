@@ -9,8 +9,20 @@ var Calendar = React.createClass({
     var calendar = this.refs.calendar;
     var offset = new Date().getTimezoneOffset();
 
+    var {view, date, events, dayClick, eventClick} = this.props;
+    if (! Array.isArray(events)) events = [events];
+    if (! view) view = 'month';
+
     $(calendar).fullCalendar({
-      events: this.props.events + '&offset=' + offset
+      eventSources: events,
+      defaultView: view,
+      timezone: offset,
+      defaultDate: date,
+      header: {right: 'prev today next', center: '', left: 'title'},
+      businessHours: {start: '06:00', end: '18:00'},
+      eventLimit: 2,
+      dayClick: dayClick,
+      eventClick: eventClick
     })
   },
 
