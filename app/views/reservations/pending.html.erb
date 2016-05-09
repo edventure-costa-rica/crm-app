@@ -6,12 +6,16 @@
 
 <%= render partial: 'trips/quick' %>
 
-<h2>Reservations</h2>
-
-
 <div class="row">
   <div class="col-xs-12 col-sm-8">
-    <div id="calendar" data-events="<%= events_trip_reservations_url(@trip) %>"></div>
+    <div id="calendar"
+         data-trip="<%= event_trip_url(@trip) %>"
+         data-arrival="<%= @trip.arrival_date %>"
+         data-departure="<%= @trip.departure_date %>"
+         data-hotels="<%= events_trip_reservations_url(@trip, kind: :hotel) %>"
+         data-tours="<%= events_trip_reservations_url(@trip, kind: :tour) %>"
+         data-transports="<%= events_trip_reservations_url(@trip, kind: :transport) %>"
+    ></div>
   </div>
 
   <div class="col-xs-12 col-sm-4">
