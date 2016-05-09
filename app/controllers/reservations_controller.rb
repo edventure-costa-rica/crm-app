@@ -139,14 +139,15 @@ class ReservationsController < ApplicationController
 
   def events
     trip = Trip.find(params[:trip_id])
-    start = Chronic.parse(params[:start]) - params[:offset].to_i
-    end_ = Chronic.parse(params[:end]) - params[:offset].to_i
+    start = Chronic.parse(params[:start]) - params[:timezone].to_i
+    end_ = Chronic.parse(params[:end]) - params[:timezone].to_i
 
     start_day = start.to_date - trip.arrival.to_date
     end_day = end_.to_date - trip.arrival.to_date
 
-    events = trip.reservations.find(:all, conditions:
-        ['day > ? AND (day + nights) < ?', start_day.to_i, end_day.to_i]
+    events = trip.reservations.find(:all, joins: :company, conditions:
+        [ 'day > ? AND (day + nights) < ? AND companies.kind = ?',
+          start_day.to_i, end_day.to_i, params[:kind] ]
     )
 
     render json: events.map(&:to_event)
