@@ -46,7 +46,8 @@ class Trip < ActiveRecord::Base
         title: 'Arrival los ' + client.family_name,
         start: arrival_date,
         end: arrival_date + 1,
-        allDay: true
+        allDay: true,
+        type: :arrival
     }
   end
 
@@ -56,7 +57,8 @@ class Trip < ActiveRecord::Base
         title: 'Departure los ' + client.family_name,
         start: departure_date,
         end: departure_date + 1,
-        allDay: true
+        allDay: true,
+        type: :departure
     }
   end
 

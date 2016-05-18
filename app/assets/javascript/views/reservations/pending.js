@@ -7,52 +7,44 @@ var components = require('../../components');
 
 var $pasteReservations = $('#paste-reservations'),
     $pasteModal = $('#paste-reservations-modal');
+
 var $addReservation = $('#add-reservation');
+
+var $bookTransferIn = $('#book-transfer-in'),
+    $bookTransferOut = $('#book-transfer-out'),
+    $transferTab = $addReservation.find('a[href="#transport"]');
+
+var $quickTrip = $('#quick-trip'),
+    $quickTripView = $('#trip-quick-details'),
+    $showQuickTrip = $('#show-quick-trip-form');
+
+var $editReservation = $('.edit-reservation'),
+    $reservationModal = $('#edit-reservation-modal'),
+    $reservationMount = $reservationModal.find('.react-mount');
+
 var $calendar = $('#pending-calendar');
 var $details = $('#pending-details');
 
-$(function() {
+var eventSources = [
+  {url: $calendar.data('trip'), color: 'black'},
+  {url: $calendar.data('hotels'), color: 'darkred'},
+  {url: $calendar.data('tours'), color: 'darkgreen'},
+  {url: $calendar.data('transports'), color: 'darkblue'}
+];
 
-  var eventSources = [
-    {url: $calendar.data('trip'), color: 'black'},
-    {url: $calendar.data('hotels'), color: 'darkred'},
-    {url: $calendar.data('tours'), color: 'darkgreen'},
-    {url: $calendar.data('transports'), color: 'darkblue'}
-  ];
+var startDate = $calendar.data('arrival');
 
-  var startDate = $calendar.data('arrival');
-
-  ReactDOM.render(
-      React.createElement(components.Calendar, {
-        events: eventSources,
-        date: startDate,
-        dayClick: dayClick,
-        eventClick: eventClick
-      }),
-      $calendar.get(0)
-  );
-  
-  function dayClick(date) {
-  }
-
-  function eventClick(event) {
-    console.log('event clicked', event)
-  }
-});
-
-
-$pasteReservations.on('click', function(ev) {
-  ev.preventDefault();
-
-  $pasteModal.modal('show');
-});
-
-
-var transferring = false;
+ReactDOM.render(
+    React.createElement(components.Calendar, {
+      events: eventSources,
+      date: startDate,
+      dayClick: dayClick,
+      eventClick: eventClick
+    }),
+    $calendar.get(0)
+);
 
 $addReservation.find('a[data-toggle="tab"]').on('show.bs.tab', function(ev) {
-  if (transferring) { transferring = false; return }
-
   var target = $(this).attr('href'),
       action = $addReservation.data('action-url'),
       mount = $(target).find('.react-mount').get(0),
@@ -77,9 +69,19 @@ $addReservation.find('a[data-toggle="tab"]').on('show.bs.tab', function(ev) {
   lib.selectFormInput(target);
 });
 
-var $bookTransferIn = $('#book-transfer-in'),
-    $bookTransferOut = $('#book-transfer-out'),
-    $transferTab = $addReservation.find('a[href="#transport"]');
+
+function dayClick(date) {
+}
+
+function eventClick(event) {
+  console.log('event clicked', event)
+}
+
+$pasteReservations.on('click', function(ev) {
+  ev.preventDefault();
+
+  $pasteModal.modal('show');
+});
 
 $bookTransferIn.add($bookTransferOut).on('click', function (ev) {
   var defaults = {}, date;
@@ -122,10 +124,6 @@ $bookTransferIn.add($bookTransferOut).on('click', function (ev) {
   );
 });
 
-var $quickTrip = $('#quick-trip'),
-    $quickTripView = $('#trip-quick-details'),
-    $showQuickTrip = $('#show-quick-trip-form');
-
 $showQuickTrip.on('click', function(ev) {
   ev.preventDefault();
 
@@ -150,10 +148,6 @@ $showQuickTrip.on('click', function(ev) {
     });
   }
 });
-
-var $editReservation = $('.edit-reservation'),
-    $reservationModal = $('#edit-reservation-modal'),
-    $reservationMount = $reservationModal.find('.react-mount');
 
 $editReservation.on('click', function (ev) {
   ev.preventDefault();

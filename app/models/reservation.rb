@@ -41,7 +41,8 @@ class Reservation < ActiveRecord::Base
         title: company.name,
         allDay: nights > 0,
         start: arrival,
-        end: departure + 1
+        end: departure + 1,
+        type: company.kind
     }
   end
 
