@@ -1,38 +1,37 @@
 var React = require('react');
 var _ = require('lodash');
 var chrono = require('chrono-node');
+var extend = require('util')._extend;
 
 var Calendar = React.createClass({
   displayName: 'Calendar',
 
-  componentDidMount:  function() { 
+  call(method, ...args) {
+    return this.refs.calendar.fullCalendar(method, ...args)
+  },
+
+  componentDidMount() {
     var calendar = this.refs.calendar;
     var offset = new Date().getTimezoneOffset();
 
-    var {view, date, events, dayClick, eventClick} = this.props;
-    if (! Array.isArray(events)) events = [events];
-    if (! view) view = 'month';
-
-    $(calendar).fullCalendar({
-      eventSources: events,
+    var calendarOptions = extend({
       defaultView: view,
       timezone: offset,
-      defaultDate: date,
-      header: {right: 'prev today next', center: '', left: 'title'},
-      businessHours: {start: '06:00', end: '18:00'},
-      eventLimit: 2,
-      dayClick: dayClick,
-      eventClick: eventClick
-    })
+      header: {right: 'prev next', center: '', left: 'title'},
+      businessHours: {start: '06:00', end: '18:00'}
+
+    }, this.props);
+
+    $(calendar).fullCalendar(calendarOptions)
   },
 
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     var calendar = this.refs.calendar;
 
     $(calendar).fullCalendar('destroy');
   },
 
-  render: function() {
+  render() {
     return (
       <div ref="calendar"></div>
     );
