@@ -1,7 +1,7 @@
 var _ = require('lodash');
 var Forms = require('./forms');
+var Calendar = require('./calendar');
 var React = require('react');
-
 
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
@@ -406,6 +406,24 @@ var View = React.createClass({
   }
 });
 
+var PendingCalendar = React.createClass({
+  componentWillMount() {
+    var {tripUrl, hotelsUrl, toursUrl, transportsUrl} = this.props;
+
+    this.setState({eventSources: [
+      {color: 'silver', url: tripUrl},
+      {color: 'darkred', url: hotelsUrl},
+      {color: 'darkgreen', url: toursUrl},
+      {color: 'darkblue', url: transportsUrl}
+    ]});
+  },
+
+  render() {
+    return (
+        <Calendar {...this.props} eventSources={this.state.eventSources} />
+    );
+  }
+});
 
 module.exports = {
   Form: Form,

@@ -37,9 +37,11 @@ var startDate = $calendar.data('arrival');
 ReactDOM.render(
     React.createElement(components.Calendar, {
       events: eventSources,
-      date: startDate,
+      defaultDate: startDate,
       dayClick: dayClick,
-      eventClick: eventClick
+      eventClick: eventClick,
+      editable: true,
+      selectable: true
     }),
     $calendar.get(0)
 );

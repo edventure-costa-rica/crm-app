@@ -100,5 +100,8 @@ gulp.task('watch-script', ['script'], function() {
   gulp.watch('./app/assets/javascript/**/*.js', ['script'])
 })
 
+gulp.task('release', ['release-script', 'less', 'fonts', 'css', 'contrib']);
+
 gulp.task('watch', ['watch-script', 'watch-less', 'watch-css']);
-gulp.task('default', ['release-script', 'contrib', 'less', 'css']);
+
+gulp.task('default', ['release']);
