@@ -101,14 +101,14 @@ var Form = React.createClass({
                               title="Net Price"
                               onBlur={this.setDefaultRackPrice}
                               value={this.linkState('net_price')}
-                              required={true} min={0} step={0.01} />
+                              required={false} min={0} step={0.01} />
           </div>
 
           <div className="col-xs-6">
             <Forms.PriceField id="reservation-price" name="reservation[price]"
                               title="Rack Price"
                               value={this.linkState('price')}
-                              required={true} min={minRackPrice} step={0.01} />
+                              required={false} min={minRackPrice} step={0.01} />
           </div>
 
           {nights}

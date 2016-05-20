@@ -42,7 +42,8 @@ class Reservation < ActiveRecord::Base
         allDay: nights > 0,
         start: arrival,
         end: departure + 1,
-        type: company.kind
+        type: company.kind,
+        model: self
     }
   end
 

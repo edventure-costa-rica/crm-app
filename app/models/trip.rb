@@ -47,7 +47,8 @@ class Trip < ActiveRecord::Base
         start: arrival_date,
         end: arrival_date + 1,
         allDay: true,
-        type: :arrival
+        type: :arrival,
+        model: self
     }
   end
 
@@ -58,7 +59,8 @@ class Trip < ActiveRecord::Base
         start: departure_date,
         end: departure_date + 1,
         allDay: true,
-        type: :departure
+        type: :departure,
+        model: self
     }
   end
 

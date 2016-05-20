@@ -23,25 +23,15 @@ var $editReservation = $('.edit-reservation'),
     $reservationMount = $reservationModal.find('.react-mount');
 
 var $calendar = $('#pending-calendar');
-var $details = $('#pending-details');
-
-var eventSources = [
-  {url: $calendar.data('trip'), color: 'black'},
-  {url: $calendar.data('hotels'), color: 'darkred'},
-  {url: $calendar.data('tours'), color: 'darkgreen'},
-  {url: $calendar.data('transports'), color: 'darkblue'}
-];
-
-var startDate = $calendar.data('arrival');
 
 ReactDOM.render(
-    React.createElement(components.Calendar, {
-      events: eventSources,
-      defaultDate: startDate,
-      dayClick: dayClick,
-      eventClick: eventClick,
-      editable: true,
-      selectable: true
+    React.createElement(components.Pending.Page, {
+      tripUrl: $calendar.data('trip'),
+      hotelsUrl: $calendar.data('hotels'),
+      toursUrl: $calendar.data('tours'),
+      transportsUrl: $calendar.data('transports'),
+      arrivalDate: $calendar.data('arrival'),
+      departureDate: $calendar.data('departure')
     }),
     $calendar.get(0)
 );

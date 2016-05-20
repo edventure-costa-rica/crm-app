@@ -7,7 +7,7 @@
 <%= render partial: 'trips/quick' %>
 
 <div class="row">
-  <div class="col-xs-12 col-sm-8">
+  <div class="col-xs-12">
     <div id="pending-calendar"
          data-trip="<%= event_trip_url(@trip) %>"
          data-arrival="<%= @trip.arrival_date %>"
@@ -17,11 +17,11 @@
          data-transports="<%= events_trip_reservations_url(@trip, kind: :transport) %>"
     ></div>
   </div>
+</div>
 
-  <div class="col-xs-12 col-sm-4">
-    <%= render partial: 'reservations/new' %>
-    <div id="reservation-details"></div>
-  </div>
+<div class="col-xs-12 col-sm-4">
+  <%= render partial: 'reservations/new' %>
+  <div id="reservation-details"></div>
 </div>
 
 <table class="table table-condensed table-striped">

@@ -3,5 +3,6 @@ module.exports = {
   Forms: require('./forms'),
   Reservations: require('./reservations'),
   Trips: require('./trips'),
-  Calendar: require('./calendar')
+  Calendar: require('./calendar'),
+  Pending: require('./pending')
 };
