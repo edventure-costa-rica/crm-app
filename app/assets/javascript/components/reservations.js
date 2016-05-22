@@ -44,17 +44,20 @@ var Create = React.createClass({
         <div className="create-reservation-component">
           <Nav bsStyle="pills" activeKey={kind} onSelect={this.selectTab}>
             <NavItem eventKey="hotel">
-              <i class="glyphicon glyphicon-bed" />
+              <i className="glyphicon glyphicon-bed" />
+              &nbsp;
               Hotel
             </NavItem>
 
             <NavItem eventKey="transport">
-              <i class="glyphicon glyphicon-road"/>
+              <i className="glyphicon glyphicon-road"/>
+              &nbsp;
               Transport
             </NavItem>
 
             <NavItem eventKey="tour">
-              <i class="glyphicon glyphicon-sunglasses"/>
+              <i className="glyphicon glyphicon-sunglasses"/>
+              &nbsp;
               Tour
             </NavItem>
           </Nav>
