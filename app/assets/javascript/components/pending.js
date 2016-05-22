@@ -207,7 +207,7 @@ var EditModal = React.createClass({
   componentWillReceiveProps(props) {
     this.setState({
       event: props.event,
-      reservation: props.reservation,
+      res: props.reservation,
       visible: props.visible
     })
   },
@@ -219,15 +219,14 @@ var EditModal = React.createClass({
       return <Modal show={false} />
     }
 
+    var {event, res} = this.state;
     var action = event.update_url;
     var kind = event.type;
-    var res = this.state.reservation;
-    var event = this.state.event;
     var dateRange = this.formatRange(event.start, event.end);
 
     return (
-        <Modal show={true} onHide={this.props.onHide}>
-          <Modal.Header>
+        <Modal bsSize="large" show={true} onHide={this.props.onHide}>
+          <Modal.Header closeButton>
             <Modal.Title>
               Edit Reservation
               &nbsp;
@@ -247,17 +246,19 @@ var EditModal = React.createClass({
   formatRange(start, end) {
     var startDate = moment.utc(start).startOf('day');
     var endDate = moment.utc(end).startOf('day');
-    var range = [startDate];
+    var range = [this.formatDate(startDate)];
 
     if (! startDate.isSame(endDate)) {
-      range.push(endDate);
+      range.push(<span key="ndash"> &ndash; </span>);
+      range.push(this.formatDate(endDate));
     }
 
     return range
-        .map(function(d) { return d.format('ddd D MMM, YYYY') })
-        .join(' &ndash; ')
   },
 
+  formatDate(date) {
+    return date.format('ddd D MMM, YYYY')
+  }
 });
 
 var CreateModal = React.createClass({
