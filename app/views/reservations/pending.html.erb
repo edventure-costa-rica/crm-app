@@ -9,6 +9,7 @@
 <div class="row">
   <div class="col-xs-12">
     <div id="pending-calendar"
+         class="hidden-xs hidden-sm"
          data-trip="<%=h @trip.to_json %>"
          data-trip-events="<%= event_trip_url(@trip) %>"
          data-reservation-events="<%= events_trip_reservations_url(@trip) %>"
@@ -19,12 +20,14 @@
   </div>
 </div>
 
-<div class="col-xs-12 col-sm-4">
-  <%= render partial: 'reservations/new' %>
-  <div id="reservation-details"></div>
+<div class="text-right">
+  <button class="btn btn-default" id="paste-reservations">
+    <i class="glyphicon glyphicon-paste"></i>
+    Paste From Excel
+  </button>
 </div>
 
-<table class="table table-condensed table-striped">
+<table class="table table-condensed table-striped hidden-md hidden-lg">
   <tr class="row">
     <th></th>
     <th>Date</th>
@@ -117,12 +120,6 @@
   <% end %>
 </table>
 
-<div class="text-right">
-  <button class="btn btn-default" id="paste-reservations">
-    <i class="glyphicon glyphicon-paste"></i>
-    Paste From Excel
-  </button>
-</div>
 
 <div class="modal fade" id="edit-reservation-modal">
   <div class="modal-dialog modal-lg">
