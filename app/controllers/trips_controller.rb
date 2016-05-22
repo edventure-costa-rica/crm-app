@@ -33,7 +33,10 @@ class TripsController < ApplicationController
 
   def event
     trip = Trip.find(params[:id])
-    render json: [trip.arrival_event, trip.departure_event]
+    render json: [
+        @template.trip_arrival_event(trip),
+        @template.trip_departure_event(trip)
+    ]
   end
 
   # GET /clients/:client_id/trips/new

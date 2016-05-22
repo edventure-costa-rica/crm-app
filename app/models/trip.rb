@@ -40,30 +40,6 @@ class Trip < ActiveRecord::Base
 
   def to_s; new_record? ? Trip.human_name : self.registration_id; end
 
-  def arrival_event
-    {
-        id: "#{id}_arrival",
-        title: 'Arrival los ' + client.family_name,
-        start: arrival_date,
-        end: arrival_date + 1,
-        allDay: true,
-        type: :arrival,
-        model: self
-    }
-  end
-
-  def departure_event
-    {
-        id: "#{id}_departure",
-        title: 'Departure los ' + client.family_name,
-        start: departure_date,
-        end: departure_date + 1,
-        allDay: true,
-        type: :departure,
-        model: self
-    }
-  end
-
   def days
     (departure.to_date - arrival.to_date).to_i
   end

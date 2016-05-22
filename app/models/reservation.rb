@@ -35,19 +35,6 @@ class Reservation < ActiveRecord::Base
       I18n.localize(arrival.to_date, :format => :short)
   end
 
-  def to_event
-    {
-        id: id,
-        title: company.name,
-        allDay: nights > 0,
-        start: arrival,
-        end: departure + 1,
-        type: company.kind,
-        update_url: reservation_url(self),
-        model: self
-    }
-  end
-
   def city
     self.company.city if self.company
   end

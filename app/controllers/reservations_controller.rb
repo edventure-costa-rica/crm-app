@@ -149,7 +149,7 @@ class ReservationsController < ApplicationController
         [ 'day > ? AND (day + nights) < ?', start_day.to_i, end_day.to_i ]
     )
 
-    render json: events.map(&:to_event)
+    render json: events.map { |r| @template.reservation_event(r) }
   end
 
   def confirmed
