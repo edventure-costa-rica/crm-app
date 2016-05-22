@@ -86,4 +86,8 @@ class Reservation < ActiveRecord::Base
       self.trip.touch
     end
   end
+
+  def as_json(options={})
+    super({methods: %i(arrival departure)}.merge(options))
+  end
 end
