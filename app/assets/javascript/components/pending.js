@@ -245,8 +245,8 @@ var CreateModal = React.createClass({
     }
 
     return (
-        <Modal show={true} onHide={this.props.onHide}>
-          <Modal.Header>
+        <Modal bsSize="large" show={true} onHide={this.props.onHide}>
+          <Modal.Header closeButton>
             <Modal.Title>
               Create Reservation&nbsp;
               <small>{trip.registration_id}</small>

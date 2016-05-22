@@ -19,21 +19,19 @@ var Create = React.createClass({
   displayName: 'Create',
 
   getInitialState() {
-    return {kind: null, defaults: {}, day: 0}
+    return {kind: null}
   },
 
   componentWillReceiveProps(props) {
     this.setState({
-      kind: props.kind,
-      defaults: props.defaults,
-      day: Number(props.day)
+      kind: props.kind || this.state.kind
     })
   },
 
   render() {
     var action = this.props.action;
-    var day = this.state.day;
-    var defaults = this.state.defaults;
+    var day = this.props.day;
+    var defaults = this.props.defaults;
     var kind = this.state.kind;
     var form;
 
