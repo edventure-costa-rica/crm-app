@@ -173,16 +173,17 @@ var EditModal = React.createClass({
 
     var action = event.update_url;
     var kind = event.type;
-    var resId = res.reservation_id;
     var res = this.state.reservation;
     var event = this.state.event;
+    var dateRange = this.formatRange(event.start, event.end);
 
     return (
         <Modal show={true} onHide={this.props.onHide}>
           <Modal.Header>
             <Modal.Title>
               Edit Reservation
-              <small>{resId}</small>
+              &nbsp;
+              <small>{dateRange}</small>
             </Modal.Title>
           </Modal.Header>
 
@@ -193,7 +194,22 @@ var EditModal = React.createClass({
           </Modal.Body>
         </Modal>
     )
-  }
+  },
+
+  formatRange(start, end) {
+    var startDate = moment.utc(start).startOf('day');
+    var endDate = moment.utc(end).startOf('day');
+    var range = [startDate];
+
+    if (! startDate.isSame(endDate)) {
+      range.push(endDate);
+    }
+
+    return range
+        .map(function(d) { return d.format('ddd D MMM, YYYY') })
+        .join(' &ndash; ')
+  },
+
 });
 
 var CreateModal = React.createClass({
@@ -248,14 +264,19 @@ var CreateModal = React.createClass({
         <Modal bsSize="large" show={true} onHide={this.props.onHide}>
           <Modal.Header closeButton>
             <Modal.Title>
-              Create Reservation&nbsp;
-              <small>{trip.registration_id}</small>
+              Create Reservation
+              &nbsp;
+              <small>{this.formatDate(date)}</small>
             </Modal.Title>
           </Modal.Header>
 
           {body}
         </Modal>
     )
+  },
+
+  formatDate(date) {
+    return moment.utc(date).format('ddd D MMM, YYYY')
   },
 
   dateOutsideTrip() {
