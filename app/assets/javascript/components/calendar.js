@@ -7,7 +7,7 @@ var Calendar = React.createClass({
   displayName: 'Calendar',
 
   call(method, ...args) {
-    return this.refs.calendar.fullCalendar(method, ...args)
+    return $(this.refs.calendar).fullCalendar(method, ...args)
   },
 
   componentDidMount() {
