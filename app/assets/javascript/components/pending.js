@@ -228,7 +228,7 @@ var EditModal = React.createClass({
         <Modal bsSize="large" show={true} onHide={this.props.onHide}>
           <Modal.Header closeButton>
             <Modal.Title>
-              Edit Reservation
+              Edit {kind} reservation
               &nbsp;
               <small>{dateRange}</small>
             </Modal.Title>
@@ -274,7 +274,7 @@ var CreateModal = React.createClass({
       date: props.date,
       visible: props.visible,
       action: props.action,
-      defaults: props.defaults || {},
+      defaults: props.defaults || {num_people: props.trip.total_people},
       kind: props.kind
     })
   },
