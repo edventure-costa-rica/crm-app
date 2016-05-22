@@ -47,16 +47,16 @@ var Page = React.createClass({
   },
 
   handleDayClick(date) {
-    console.log('clicked date', date);
     this.setState({showCreate: true, createDate: date})
   },
 
   handleEventClick(event) {
+    if (event.model.trip) return;
+
     this.setState({showEdit: true, editEvent: event});
   },
 
   closeModal() {
-    console.log('closing modals')
     this.setState({showEdit: false, showCreate: false})
   },
 
