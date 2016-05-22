@@ -146,8 +146,7 @@ class ReservationsController < ApplicationController
     end_day = end_.to_date - trip.arrival.to_date
 
     events = trip.reservations.find(:all, joins: :company, conditions:
-        [ 'day > ? AND (day + nights) < ? AND companies.kind = ?',
-          start_day.to_i, end_day.to_i, params[:kind] ]
+        [ 'day > ? AND (day + nights) < ?', start_day.to_i, end_day.to_i ]
     )
 
     render json: events.map(&:to_event)
