@@ -1,4 +1,5 @@
 var Calendar = require('./calendar');
+var Reservations = require('./reservations');
 var Modal = require('react-bootstrap/lib/Modal');
 var React = require('react');
 var _ = require('lodash');
@@ -7,17 +8,19 @@ var Page = React.createClass({
   displayName: 'Page',
 
   getInitialState() {
-    return {event: null}
+    return {trip: this.props.trip}
   },
 
   render() {
     var arrival = this.props.arrivalDate;
-    var eventUrls = _.pick(this.props, ['tripUrl', 'hotelsUrl', 'toursUrl', 'transportsUrl']);
+    var eventUrls = _.pick(this.props, ['tripEvents', 'reservationEvents']);
 
-    var {event, trip} = this.state;
-    var reservation = event ? event.model.reservation : null;
+    var {editEvent, trip} = this.state;
+    var reservation = editEvent ? editEvent.model.reservation : null;
 
-    var {showEdit, showCreate} = this.state;
+    var {showEdit, showCreate, createDate} = this.state;
+
+    // TODO arrival and departure buttons on the calendar
 
     return (
         <div className="pending-page">
@@ -28,14 +31,15 @@ var Page = React.createClass({
               dayClick={this.handleDayClick} />
 
           <div className="event-modals">
-            <EditModal event={event}
+            <EditModal event={editEvent}
                        reservation={reservation}
-                       onClose={this.closeModal}
+                       onHide={this.closeModal}
                        visible={showEdit} />
 
             <CreateModal trip={trip}
-                         day={}
-                         onClose={this.closeModal}
+                         date={createDate}
+                         action={this.props.createUrl}
+                         onHide={this.closeModal}
                          visible={showCreate} />
           </div>
         </div>
@@ -43,11 +47,17 @@ var Page = React.createClass({
   },
 
   handleDayClick(date) {
-    this.setState({showCreate: true})
+    console.log('clicked date', date);
+    this.setState({showCreate: true, createDate: date})
   },
 
   handleEventClick(event) {
-    this.setState({showEdit: true, event: event});
+    this.setState({showEdit: true, editEvent: event});
+  },
+
+  closeModal() {
+    console.log('closing modals')
+    this.setState({showEdit: false, showCreate: false})
   },
 
   addEventTooltip(event, $el) {
@@ -93,14 +103,12 @@ var Page = React.createClass({
 
 var CalendarView = React.createClass({
   componentWillMount() {
-    var {tripUrl, hotelsUrl, toursUrl, transportsUrl} = this.props;
+    var {tripEvents, reservationEvents} = this.props;
 
     this.setState({
       eventSources: [
-        {color: 'silver', url: tripUrl, className: 'trip-events', editable: false},
-        {color: 'darkred', url: hotelsUrl},
-        {color: 'darkgreen', url: toursUrl},
-        {color: 'darkblue', url: transportsUrl}
+        {url: tripEvents, className: 'trip-events', editable: false},
+        {url: reservationEvents}
       ]
     });
   },
@@ -109,8 +117,35 @@ var CalendarView = React.createClass({
     return (
         <Calendar {...this.props}
             editable={true}
+            eventDataTransform={this.setEventDisplayProperties}
             eventSources={this.state.eventSources}/>
     );
+  },
+
+  setEventDisplayProperties(event) {
+    switch (event.type) {
+      case 'arrival':
+      case 'departure':
+        event.color = 'Silver';
+        break;
+
+      case 'hotel':
+        event.color = 'DarkRed';
+        break;
+
+      case 'tour':
+        event.color = 'DarkGreen';
+        break;
+
+      case 'transport':
+        event.color = 'DarkBlue';
+        break;
+
+      default:
+        event.color = 'Yellow';
+    }
+
+    return event;
   }
 });
 
@@ -125,25 +160,36 @@ var EditModal = React.createClass({
     this.setState({
       event: props.event,
       reservation: props.reservation,
+      visible: props.visible
     })
   },
 
   render() {
-    var res = this.state.reservation;
-    var event = this.state.event;
     var visible = !! this.state.visible;
 
+    if (! visible) {
+      return <Modal show={false} />
+    }
+
+    var action = event.update_url;
+    var kind = event.type;
+    var resId = res.reservation_id;
+    var res = this.state.reservation;
+    var event = this.state.event;
+
     return (
-        <Modal show={visible}>
+        <Modal show={true} onHide={this.props.onHide}>
           <Modal.Header>
             <Modal.Title>
-              Reservation
-              <small>{res.reservation_id}</small>
+              Edit Reservation
+              <small>{resId}</small>
             </Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
-
+            <Reservations.Form action={action}
+                               kind={kind}
+                               reservation={res} />
           </Modal.Body>
         </Modal>
     )
@@ -154,34 +200,71 @@ var CreateModal = React.createClass({
   displayName: 'CreateModal',
 
   getInitialState() {
-    return {visible: false}
+    return {visible: false, defaults: {}, kind: null}
   },
 
   componentWillReceiveProps(props) {
     this.setState({
-      event: props.event,
-      reservation: props.reservation,
+      trip: props.trip,
+      date: props.date,
+      visible: props.visible,
+      action: props.action,
+      defaults: props.defaults || {},
+      kind: props.kind
     })
   },
 
   render() {
-    var res = this.state.reservation;
-    var event = this.state.event;
     var visible = !! this.state.visible;
 
+    if (! visible) {
+      return <Modal show={false} />
+    }
+
+    var trip = this.state.trip;
+    var date = moment.utc(this.state.date).startOf('day');
+    var arrival = moment.utc(trip.arrival).startOf('day');
+    var departure = moment.utc(trip.departure).startOf('day');
+    var day = date.diff(arrival, 'days');
+
+    var body;
+
+    if (date.isBefore(arrival) || date.isAfter(departure)) {
+      body = this.dateOutsideTrip();
+    }
+
+    else {
+      body = (
+          <Modal.Body>
+            <Reservations.Create day={day}
+                                 kind={this.state.kind}
+                                 defaults={this.state.defaults}
+                                 action={this.state.action} />
+          </Modal.Body>
+      )
+    }
+
     return (
-        <Modal show={visible}>
+        <Modal show={true} onHide={this.props.onHide}>
           <Modal.Header>
             <Modal.Title>
-              Reservation
-              <small>{res.reservation_id}</small>
+              Create Reservation&nbsp;
+              <small>{trip.registration_id}</small>
             </Modal.Title>
           </Modal.Header>
 
-          <Modal.Body>
-
-          </Modal.Body>
+          {body}
         </Modal>
+    )
+  },
+
+  dateOutsideTrip() {
+    return (
+        <Modal.Body>
+          <h2>Error</h2>
+          <p>Sorry, you can't add a reservation outside of
+            the trip dates.</p>
+        </Modal.Body>
     )
   }
 })

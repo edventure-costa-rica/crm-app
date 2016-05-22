@@ -26,12 +26,12 @@ var $calendar = $('#pending-calendar');
 
 ReactDOM.render(
     React.createElement(components.Pending.Page, {
-      tripUrl: $calendar.data('trip'),
-      hotelsUrl: $calendar.data('hotels'),
-      toursUrl: $calendar.data('tours'),
-      transportsUrl: $calendar.data('transports'),
+      trip: $calendar.data('trip').trip,
+      tripEvents: $calendar.data('trip-events'),
+      reservationEvents: $calendar.data('reservation-events'),
       arrivalDate: $calendar.data('arrival'),
-      departureDate: $calendar.data('departure')
+      departureDate: $calendar.data('departure'),
+      createUrl: $calendar.data('create-url')
     }),
     $calendar.get(0)
 );

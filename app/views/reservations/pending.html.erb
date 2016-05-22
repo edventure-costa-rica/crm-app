@@ -9,12 +9,12 @@
 <div class="row">
   <div class="col-xs-12">
     <div id="pending-calendar"
-         data-trip="<%= event_trip_url(@trip) %>"
+         data-trip="<%=h @trip.to_json %>"
+         data-trip-events="<%= event_trip_url(@trip) %>"
+         data-reservation-events="<%= events_trip_reservations_url(@trip) %>"
          data-arrival="<%= @trip.arrival_date %>"
          data-departure="<%= @trip.departure_date %>"
-         data-hotels="<%= events_trip_reservations_url(@trip, kind: :hotel) %>"
-         data-tours="<%= events_trip_reservations_url(@trip, kind: :tour) %>"
-         data-transports="<%= events_trip_reservations_url(@trip, kind: :transport) %>"
+         data-create-url="<%= trip_reservations_url(@trip) %>"
     ></div>
   </div>
 </div>

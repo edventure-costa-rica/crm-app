@@ -2,6 +2,8 @@ var _ = require('lodash');
 var Forms = require('./forms');
 var Calendar = require('./calendar');
 var React = require('react');
+var Nav = require('react-bootstrap/lib/Nav');
+var NavItem = require('react-bootstrap/lib/NavItem');
 
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
@@ -12,6 +14,65 @@ var toOption = function(c) { return { value: c.company.id, title: c.company.name
     HOTELS = COMPANIES.filter(forKind('hotel')).map(toOption),
     TOURS = COMPANIES.filter(forKind('tour')).map(toOption),
     TRANSPORTS = COMPANIES.filter(forKind('transport')).map(toOption);
+
+var Create = React.createClass({
+  displayName: 'Create',
+
+  getInitialState() {
+    return {kind: null, defaults: {}, day: 0}
+  },
+
+  componentWillReceiveProps(props) {
+    this.setState({
+      kind: props.kind,
+      defaults: props.defaults,
+      day: Number(props.day)
+    })
+  },
+
+  render() {
+    var action = this.props.action;
+    var day = this.state.day;
+    var defaults = this.state.defaults;
+    var kind = this.state.kind || 'hotel';
+    var showForm = !! this.state.kind;
+
+    var formContainerClass = 'form-container';
+    if (! showForm) formContainerClass += ' hidden';
+
+    return (
+        <div className="create-reservation-component">
+          <Nav bsStyle="pills" activeKey={kind} onSelect={this.selectTab}>
+            <NavItem eventKey="hotel">
+              <i class="glyphicon glyphicon-bed" />
+              Hotel
+            </NavItem>
+
+            <NavItem eventKey="transport">
+              <i class="glyphicon glyphicon-road"/>
+              Transport
+            </NavItem>
+
+            <NavItem eventKey="tour">
+              <i class="glyphicon glyphicon-sunglasses"/>
+              Tour
+            </NavItem>
+          </Nav>
+
+          <div className={formContainerClass}>
+            <Form action={action}
+                  kind={kind}
+                  day={day}
+                  defaults={defaults} />
+          </div>
+        </div>
+    )
+  },
+
+  selectTab(key) {
+    this.setState({kind: key})
+  }
+});
 
 var Form = React.createClass({
   displayName: 'Form',
@@ -39,7 +100,7 @@ var Form = React.createClass({
   },
 
   render: function() {
-    var hiddenId, method = this.props.method,
+    var hiddenId, hiddenDay, method = this.props.method,
         companies, kind, nights,
         minRackPrice = Number(this.state.price),
         locationClass = 'col-xs-6';
@@ -47,6 +108,12 @@ var Form = React.createClass({
     if (this.state.id) {
       hiddenId = (
         <input type="hidden" name="reservation[id]" value={this.state.id} />
+      );
+    }
+
+    if (this.props.day) {
+      hiddenDay = (
+        <input type="hidden" name="reservation[day]" value={this.props.day} />
       );
     }
 
@@ -78,6 +145,7 @@ var Form = React.createClass({
         <form className="form" method="post" action={this.props.action}>
           <input type="hidden" name="_method" value={method} />
           {hiddenId}
+          {hiddenDay}
 
           <div className="col-xs-12 col-sm-3">
             <Forms.PaxField id="reservation-num_people" name="reservation[num_people]"
@@ -406,27 +474,9 @@ var View = React.createClass({
   }
 });
 
-var PendingCalendar = React.createClass({
-  componentWillMount() {
-    var {tripUrl, hotelsUrl, toursUrl, transportsUrl} = this.props;
-
-    this.setState({eventSources: [
-      {color: 'silver', url: tripUrl},
-      {color: 'darkred', url: hotelsUrl},
-      {color: 'darkgreen', url: toursUrl},
-      {color: 'darkblue', url: transportsUrl}
-    ]});
-  },
-
-  render() {
-    return (
-        <Calendar {...this.props} eventSources={this.state.eventSources} />
-    );
-  }
-});
-
 module.exports = {
   Form: Form,
+  Create: Create,
   RackPrice: RackPrice,
   Confirmation: Confirmation,
   Payment: Payment,
