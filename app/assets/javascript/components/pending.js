@@ -2,30 +2,63 @@ var Calendar = require('./calendar');
 var Reservations = require('./reservations');
 var Modal = require('react-bootstrap/lib/Modal');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var _ = require('lodash');
 
 var Page = React.createClass({
   displayName: 'Page',
 
   getInitialState() {
-    return {trip: this.props.trip}
+    return {}
+  },
+
+  componentWillReceiveProps(props) {
+    this.setState({
+      defaultDate: props.defaultDate
+    })
+  },
+
+  componentDidMount() {
+    this.applyBootstrapStyles();
+  },
+
+  componentDidUpdate() {
+    this.applyBootstrapStyles();
+  },
+
+  applyBootstrapStyles() {
+    var $calendar = $(ReactDOM.findDOMNode(this.refs.calendarView));
+
+    $calendar.find('.fc-button-group')
+        .removeClass('fc-button-group')
+        .addClass('btn-group');
+
+    $calendar.find('.fc-button')
+        .removeClass('fc-button')
+        .removeClass('fc-state-default')
+        .addClass('btn btn-default');
   },
 
   render() {
-    var arrival = this.props.arrivalDate;
+    var defaultDate = this.state.defaultDate || this.props.arrivalDate;
     var eventUrls = _.pick(this.props, ['tripEvents', 'reservationEvents']);
 
-    var {editEvent, trip} = this.state;
+    var {showEdit, showCreate, editEvent, createDate} = this.state;
     var reservation = editEvent ? editEvent.model.reservation : null;
 
-    var {showEdit, showCreate, createDate} = this.state;
-
-    // TODO arrival and departure buttons on the calendar
+    // show arrival and departure buttons on the calendar
+    var arrivalButton = {text: 'Arrival', click: this.handleArrivalClick};
+    var departureButton = {text: 'Departure', click: this.handleDepartureClick};
+    var buttons = {arrival: arrivalButton, departure: departureButton};
+    var headerButtons = {left: 'title', right: 'prev arrival,departure next'};
 
     return (
         <div className="pending-page">
           <CalendarView {...eventUrls}
-              defaultDate={arrival}
+              ref="calendarView"
+              defaultDate={defaultDate}
+              customButtons={buttons}
+              header={headerButtons}
               eventRender={this.addEventTooltip}
               eventClick={this.handleEventClick}
               dayClick={this.handleDayClick} />
@@ -36,7 +69,7 @@ var Page = React.createClass({
                        onHide={this.closeModal}
                        visible={showEdit} />
 
-            <CreateModal trip={trip}
+            <CreateModal trip={this.props.trip}
                          date={createDate}
                          action={this.props.createUrl}
                          onHide={this.closeModal}
@@ -44,6 +77,16 @@ var Page = React.createClass({
           </div>
         </div>
     );
+  },
+
+  handleArrivalClick() {
+    var trip = this.props.trip;
+    this.refs.calendarView.call('gotoDate', trip.arrival);
+  },
+
+  handleDepartureClick() {
+    var trip = this.props.trip;
+    this.refs.calendarView.call('gotoDate', trip.departure);
   },
 
   handleDayClick(date) {
@@ -116,10 +159,15 @@ var CalendarView = React.createClass({
   render() {
     return (
         <Calendar {...this.props}
+            ref="calendar"
             editable={true}
             eventDataTransform={this.setEventDisplayProperties}
             eventSources={this.state.eventSources}/>
     );
+  },
+
+  call(method, ...args) {
+    return this.refs.calendar.call(method, ...args);
   },
 
   setEventDisplayProperties(event) {
