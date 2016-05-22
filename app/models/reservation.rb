@@ -43,6 +43,7 @@ class Reservation < ActiveRecord::Base
         start: arrival,
         end: departure + 1,
         type: company.kind,
+        update_url: reservation_url(self),
         model: self
     }
   end
