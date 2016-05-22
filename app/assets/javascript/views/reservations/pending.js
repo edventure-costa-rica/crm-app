@@ -24,17 +24,19 @@ var $editReservation = $('.edit-reservation'),
 
 var $calendar = $('#pending-calendar');
 
-ReactDOM.render(
-    React.createElement(components.Pending.Page, {
-      trip: $calendar.data('trip').trip,
-      tripEvents: $calendar.data('trip-events'),
-      reservationEvents: $calendar.data('reservation-events'),
-      arrivalDate: $calendar.data('arrival'),
-      departureDate: $calendar.data('departure'),
-      createUrl: $calendar.data('create-url')
-    }),
-    $calendar.get(0)
-);
+if ($calendar.length) {
+  ReactDOM.render(
+      React.createElement(components.Pending.Page, {
+        trip: $calendar.data('trip').trip,
+        tripEvents: $calendar.data('trip-events'),
+        reservationEvents: $calendar.data('reservation-events'),
+        arrivalDate: $calendar.data('arrival'),
+        departureDate: $calendar.data('departure'),
+        createUrl: $calendar.data('create-url')
+      }),
+      $calendar.get(0)
+  );
+}
 
 $addReservation.find('a[data-toggle="tab"]').on('show.bs.tab', function(ev) {
   var target = $(this).attr('href'),
