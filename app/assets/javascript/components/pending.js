@@ -222,7 +222,7 @@ var EditModal = React.createClass({
     var {event, res} = this.state;
     var action = event.update_url;
     var kind = event.type;
-    var dateRange = this.formatRange(event.start, event.end);
+    var dateRange = this.formatRange(res.arrival, res.departure);
 
     return (
         <Modal bsSize="large" show={true} onHide={this.props.onHide}>
@@ -237,7 +237,7 @@ var EditModal = React.createClass({
           <Modal.Body>
             <Reservations.Form action={action}
                                kind={kind}
-                               reservation={res} />
+                               reservation={{reservation: res}} />
           </Modal.Body>
         </Modal>
     )
