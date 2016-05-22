@@ -9,7 +9,7 @@ module ReservationsHelper
         end: res.departure + 1,
         type: res.company.kind,
         update_url: reservation_url(res),
-        model: res
+        model: res.as_json(methods: %i(arrival departure))
     }
   end
 
