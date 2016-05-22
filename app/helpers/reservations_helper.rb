@@ -8,7 +8,8 @@ module ReservationsHelper
         start: res.arrival,
         end: res.departure + 1,
         type: res.company.kind,
-        update_url: reservation_url(res),
+        update_html: reservation_url(res, format: :html),
+        update_json: reservation_url(res, format: :json),
         model: res
     }
   end

@@ -55,10 +55,12 @@ class ReservationsController < ApplicationController
     respond_to do |format|
       if @reservation.update_attributes(reservation_params)
         format.html { redirect_to(destination, :notice => 'Reservation was successfully updated.') }
+        format.json { render json: @reservation }
       else
         flash[:params] = params
         flash[:notice] = @reservation.errors.full_messages.join(', ')
         format.html { redirect_to destination }
+        format.json { render json: {errors: @reservation.errors} }
       end
     end
   end

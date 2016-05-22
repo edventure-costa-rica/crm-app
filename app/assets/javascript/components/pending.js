@@ -59,6 +59,7 @@ var Page = React.createClass({
               defaultDate={defaultDate}
               customButtons={buttons}
               header={headerButtons}
+              eventResize={this.changeDuration}
               eventRender={this.addEventTooltip}
               eventClick={this.handleEventClick}
               dayClick={this.handleDayClick} />
@@ -77,6 +78,17 @@ var Page = React.createClass({
           </div>
         </div>
     );
+  },
+
+  changeDuration(event, delta, revert) {
+    if (! event.update_json) return revert();
+
+    var nights = event.model.reservation.nights + delta.days();
+
+    $.post(event.update_json,
+        {'reservation[nights]': nights, _method: 'put'})
+        .then(function(res) { event.model = res })
+        .fail(revert)
   },
 
   handleArrivalClick() {
@@ -220,7 +232,7 @@ var EditModal = React.createClass({
     }
 
     var {event, res} = this.state;
-    var action = event.update_url;
+    var action = event.update_html;
     var kind = event.type;
     var dateRange = this.formatRange(res.arrival, res.departure);
 
