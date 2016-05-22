@@ -34,11 +34,17 @@ var Create = React.createClass({
     var action = this.props.action;
     var day = this.state.day;
     var defaults = this.state.defaults;
-    var kind = this.state.kind || 'hotel';
-    var showForm = !! this.state.kind;
+    var kind = this.state.kind;
+    var form;
 
-    var formContainerClass = 'form-container';
-    if (! showForm) formContainerClass += ' hidden';
+    if (!! kind) {
+      form = (
+          <Form action={action}
+                kind={kind}
+                day={day}
+                defaults={defaults} />
+      )
+    }
 
     return (
         <div className="create-reservation-component">
@@ -62,12 +68,7 @@ var Create = React.createClass({
             </NavItem>
           </Nav>
 
-          <div className={formContainerClass}>
-            <Form action={action}
-                  kind={kind}
-                  day={day}
-                  defaults={defaults} />
-          </div>
+          {form}
         </div>
     )
   },
