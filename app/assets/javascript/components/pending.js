@@ -76,6 +76,7 @@ var Page = React.createClass({
               {...eventChangeCallbacks}
               {...tooltipHandlers}
               ref="calendarView"
+              aspectRatio={2}
               defaultDate={defaultDate}
               customButtons={buttons}
               header={headerButtons}
