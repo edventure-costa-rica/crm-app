@@ -1,7 +1,17 @@
-.pending-page {
+#pending-calendar {
   .fc-day-number:hover, .fc-event:not(.trip-events) .fc-title:hover {
     cursor: pointer;
     text-decoration: underline;
+  }
+
+  @media print {
+    display: none !important;
+  }
+}
+
+#pending-table {
+  @media print {
+    display: block !important;
   }
 }
 
