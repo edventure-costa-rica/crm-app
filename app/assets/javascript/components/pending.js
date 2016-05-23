@@ -216,7 +216,7 @@ var Page = React.createClass({
         }
 
         if (res.confirmed) {
-          $el.find('fc-content').insert('<i class="glyphicon glyphicon-ok"/>')
+          $el.find('fc-content').append('<i class="glyphicon glyphicon-ok"/>')
         }
     }
 
