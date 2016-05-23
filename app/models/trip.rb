@@ -78,6 +78,17 @@ class Trip < ActiveRecord::Base
     reservations.to_a.sum { |r| r.net_price.to_f }
   end
 
+  # override arrival setter to update
+  # all reservations with the difference in days
+  def arrival=(value)
+    delta = value.to_date - self.arrival_date
+    reservations.each do |res|
+      res.day += delta
+    end
+
+    write_attribute(:arrival, value)
+  end
+
   def generate_default_values
     self.num_children = 0 if self.num_children.nil?
     self.num_disabled = 0 if self.num_disabled.nil?
