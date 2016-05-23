@@ -118,8 +118,8 @@ class TripsController < ApplicationController
       departure = Chronic.parse input.delete(:departure)
       offset = input.delete(:offset).try(:to_i) || 0
 
-      input[:arrival] = arrival - (offset * 60) if arrival
-      input[:departure] = departure - (offset * 60) if departure
+      input[:arrival] = arrival + (offset * 60) if arrival
+      input[:departure] = departure + (offset * 60) if departure
 
       pax = input.delete(:pax)
 
