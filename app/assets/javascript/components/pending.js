@@ -59,8 +59,8 @@ var Page = React.createClass({
               defaultDate={defaultDate}
               customButtons={buttons}
               header={headerButtons}
-              eventResize={this.changeDuration}
-              eventRender={this.addEventTooltip}
+              eventDrop={this.changeEventStart}
+              eventResize={this.changeEventDuration}
               eventClick={this.handleEventClick}
               dayClick={this.handleDayClick} />
 
@@ -80,13 +80,22 @@ var Page = React.createClass({
     );
   },
 
-  changeDuration(event, delta, revert) {
-    if (! event.update_json) return revert();
+  changeEventStart(event, delta, revert) {
+    var day = event.model.reservation.day + delta.days();
 
+    this.changeEvent(event, {day: day}, revert);
+  },
+
+  changeEventDuration(event, delta, revert) {
     var nights = event.model.reservation.nights + delta.days();
 
-    $.post(event.update_json,
-        {'reservation[nights]': nights, _method: 'put'})
+    this.changeEvent(event, {nights: nights}, revert);
+  },
+
+  changeEvent(event, data, revert) {
+    if (! event.update_json) return revert();
+
+    $.post(event.update_json, {_method: 'put', reservation: data})
         .then(function(res) { event.model = res })
         .fail(revert)
   },
@@ -115,45 +124,56 @@ var Page = React.createClass({
     this.setState({showEdit: false, showCreate: false})
   },
 
-  addEventTooltip(event, $el) {
-    var model = event.model,
-        trip = model.trip,
-        res = model.reservation;
-    var tooltip = [];
-
-    switch (event.type) {
-      case 'arrival':
-        tooltip.push(trip.arrival_flight);
-        tooltip.push(time(trip.arrival));
-        break;
-
-      case 'departure':
-        tooltip.push(trip.departure_flight);
-        tooltip.push(time(trip.departure));
-        break;
-
-      default:
-        tooltip.push(res.services);
-        if (res.drop_off) {
-          tooltip.push('Drop off: ' + res.drop_off);
-        }
-        if (res.pick_up) {
-          tooltip.push('Pick up: ' + res.pick_up);
-        }
-
-        if (res.confirmed) {
-          $el.find('fc-content').insert('<i class="glyphicon glyphicon-ok"/>')
-        }
-    }
-
-    let tooltipText = tooltip.filter(Boolean).join('<br/>');
-
-    return $el.tooltip({container: 'body', title: tooltipText, html: true});
-
-    function time(date) {
-      return moment.utc(date).format('h:mma');
-    }
-  }
+  // this shit doesnt work
+  // removeEventTooltip(event, jsEv) {
+  //   var $el = $(jsEv.target).closest('tr').find('.fc-event');
+  //
+  //   $el.tooltip('destroy');
+  //   console.log('remove tooltip', $el.get(0));
+  // },
+  //
+  // addEventTooltip(event, $el) {
+  //   var model = event.model,
+  //       trip = model.trip,
+  //       res = model.reservation;
+  //   var tooltip = [];
+  //
+  //   if (! ($el instanceof $)) $el = $($el.target).closest('tr').find('.fc-event');
+  //   console.log('add tooltip', $el.get(0));
+  //
+  //   switch (event.type) {
+  //     case 'arrival':
+  //       tooltip.push(trip.arrival_flight);
+  //       tooltip.push(time(trip.arrival));
+  //       break;
+  //
+  //     case 'departure':
+  //       tooltip.push(trip.departure_flight);
+  //       tooltip.push(time(trip.departure));
+  //       break;
+  //
+  //     default:
+  //       tooltip.push(res.services);
+  //       if (res.drop_off) {
+  //         tooltip.push('Drop off: ' + res.drop_off);
+  //       }
+  //       if (res.pick_up) {
+  //         tooltip.push('Pick up: ' + res.pick_up);
+  //       }
+  //
+  //       if (res.confirmed) {
+  //         $el.find('fc-content').insert('<i class="glyphicon glyphicon-ok"/>')
+  //       }
+  //   }
+  //
+  //   let tooltipText = tooltip.filter(Boolean).join('<br/>');
+  //
+  //   return $el.tooltip({container: 'body', title: tooltipText, html: true});
+  //
+  //   function time(date) {
+  //     return moment.utc(date).format('h:mma');
+  //   }
+  // }
 });
 
 var CalendarView = React.createClass({
