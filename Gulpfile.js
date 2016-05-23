@@ -70,7 +70,9 @@ function browserifyPipeline() {
       .pipe(bro({
         debug: true, 
         paths: paths.script,
-        transform: [babelify.configure({presets: ['react']})],
+        transform: [
+          babelify.configure({presets: ['react', 'es2015']})
+        ],
       }));
 }
 
