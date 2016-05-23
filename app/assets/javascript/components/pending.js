@@ -2,6 +2,7 @@ var Calendar = require('./calendar');
 var Reservations = require('./reservations');
 var Trips = require('./trips');
 var Modal = require('react-bootstrap/lib/Modal');
+var Button = require('react-bootstrap/lib/Button');
 var ButtonGroup = require('react-bootstrap/lib/ButtonGroup');
 var ButtonToolbar = require('react-bootstrap/lib/ButtonToolbar');
 var React = require('react');
@@ -433,11 +434,82 @@ var CreateModal = React.createClass({
   }
 });
 
+var PasteButton = React.createClass({
+  displayName: 'PasteButton',
+
+  getInitialState() {
+    return {show: false}
+  },
+
+  render() {
+    let action = this.props.action;
+
+    return (
+        <div id="paste-button">
+          <Button bsStyle="info" onClick={this.handleShowModal}>
+            <i className="glyphicon glyphicon-paste" />
+            &nbsp;
+            Paste from Excel
+          </Button>
+
+          <Modal show={this.state.show}
+                 onHide={this.handleCloseModal}>
+
+            <Modal.Header closeButton>
+              <Modal.Title>
+                Paste from Excel
+              </Modal.Title>
+            </Modal.Header>
+            
+            <Modal.Body>
+              <form action={action} method="post">
+                <div className="form-group">
+                  <label htmlFor="reservations-paste">
+                    Copy and Paste from an Excel Spreadsheet:
+                  </label>
+
+                  <textarea rows={6}
+                            className="form-control"
+                            id="reservations-paste"
+                            name="reservations[paste]" />
+                </div>
+
+                <p className="form-control-static">
+                  <strong>Warning:</strong>
+                  &nbsp;
+                  Pasting will remove <em>all</em> existing reservations
+                  for this trip.
+                </p>
+
+                <Button type="submit">
+                  <i className="glyphicon glyphicon-paste" />
+                  &nbsp;
+                  Create Reservations
+                </Button>
+              </form>
+
+            </Modal.Body>
+          </Modal>
+        </div>
+    );
+  },
+
+  handleShowModal() {
+    this.setState({show: true})
+  },
+
+  handleCloseModal() {
+    this.setState({show: false})
+  }
+
+})
+
 var PageButtons = React.createClass({
   displayName: 'PageButtons',
 
   render() {
     var updateUrl = this.props.tripUrl;
+    var pasteUrl = this.props.pasteUrl;
     var trip = this.props.trip;
 
     return (
@@ -448,6 +520,7 @@ var PageButtons = React.createClass({
           </ButtonGroup>
 
           <ButtonGroup>
+            <PasteButton action={pasteUrl} />
             {/* put other buttons here: transfer in/out, paste */}
           </ButtonGroup>
 

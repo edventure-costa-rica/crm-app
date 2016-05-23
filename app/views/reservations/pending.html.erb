@@ -18,13 +18,6 @@
      data-departure="<%= @trip.departure_date %>"
      data-trip="<%=h @trip.to_json %>"></div>
 
-<div class="row">
-  <div class="col-xs-12 text-center">
-    <div id="pending-buttons"
-         data-update-url="<%=h trip_url(@trip) %>"></div>
-  </div>
-</div>
-
 <%= render partial: 'trips/quick' %>
 
 <div class="row">
@@ -38,9 +31,9 @@
   </div>
 </div>
 
-<table class="table table-condensed table-striped hidden-md hidden-lg">
+<table id="pending-table"
+       class="table table-condensed table-striped hidden-md hidden-lg">
   <tr class="row">
-    <th></th>
     <th>Date</th>
     <th>Company</th>
     <th class="hidden-xs hidden-sm">Services</th>
@@ -54,27 +47,12 @@
   <% @reservations.each do |res| %>
     <tr class="row">
 
-      <td class="col-xs-1">
-        <% if res.company.hotel? %>
-          <% form_tag move_reservation_url(res) do %>
-            <div class="btn-group-vertical btn-group-xs">
-              <button type="submit" class="btn btn-link"
-                      name="earlier" title="Earlier">
-                <i class="glyphicon glyphicon-circle-arrow-up"></i>
-              </button>
+      <td class="col-xs-2">
+        <%= l res.arrival, format: :tiny %>
 
-              <button type="submit" class="btn btn-link"
-                      name="later" title="Later">
-                <i class="glyphicon glyphicon-circle-arrow-down"></i>
-              </button>
-            </div>
-          <% end %>
+        <% if res.nights > 0 %>
+          &ndash; <%= l res.departure, format: :tiny %>
         <% end %>
-      </td>
-
-      <td class="col-xs-1">
-        <%= l res.arrival, format: :tiny %> &ndash;
-        <%= l res.departure, format: :tiny %>
       </td>
 
       <td class="col-xs-6 col-md-2">
@@ -130,72 +108,5 @@
     </tr>
   <% end %>
 </table>
-
-
-<div class="modal fade" id="edit-reservation-modal">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Edit Pending Reservation</h4>
-      </div>
-
-      <div class="modal-body">
-        <div class="react-mount"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="paste-reservations-modal">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Paste Reservations</h4>
-      </div>
-
-      <div class="modal-body">
-        <% form_tag paste_trip_reservations_url(@trip) do %>
-          <% unless @reservations.empty? %>
-          <div class="form-group">
-            <p class="form-control-static">
-              <strong>Warning:</strong>
-              Pasting will remove <em>all</em> existing reservations
-              for this trip.
-            </p>
-          </div>
-          <% end %>
-
-          <div class="form-group">
-            <%= label_tag 'reservations[paste]',
-                          'Paste Reservations from Excel' %>
-            <%= text_area_tag 'reservations[paste]', nil,
-                              class: 'form-control', rows: 6 %>
-          </div>
-
-          <button type="submit" class="btn btn-primary">
-            <i class="glyphicon glyphicon-paste"></i>
-            Create Reservations
-          </button>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-<% if flash[:params] %>
-  <% javascript_tag do %>
-    var DEFAULTS = (<%= flash[:params].to_json %>).reservation;
-    DEFAULTS.kind = <%= (flash[:kind] or 'hotel').to_json %>;
-  <% end %>
-<% elsif flash[:kind] %>
-  <% javascript_tag do %>
-    var KIND = <%= flash[:kind].to_json %>;
-  <% end %>
-<% end %>
 
 <%= javascript_include_tag companies_url(format: :js) %>

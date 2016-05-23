@@ -24,10 +24,12 @@ if ($calendar.length) {
 
 if ($buttons.length) {
   let tripUrl = $buttons.data('update-url');
+  let pasteUrl = $buttons.data('paste-url');
   let trip = $data.data('trip');
 
   ReactDOM.render(
       <Pending.PageButtons trip={trip}
+                           pasteUrl={pasteUrl}
                            tripUrl={tripUrl}/>,
       $buttons.get(0)
   )
