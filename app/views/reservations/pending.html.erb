@@ -4,27 +4,38 @@
   <li class="active">Pending</li>
 </ol>
 
-<%= render partial: 'trips/quick' %>
-
-<div class="row">
-  <div class="col-xs-12">
-    <div id="pending-calendar"
-         class="hidden-xs hidden-sm"
-         data-trip="<%=h @trip.to_json %>"
-         data-trip-events="<%= event_trip_url(@trip) %>"
-         data-reservation-events="<%= events_trip_reservations_url(@trip) %>"
-         data-arrival="<%= @trip.arrival_date %>"
-         data-departure="<%= @trip.departure_date %>"
-         data-create-url="<%= trip_reservations_url(@trip) %>"
-    ></div>
-  </div>
-</div>
 
 <div class="text-right">
   <button class="btn btn-default" id="paste-reservations">
     <i class="glyphicon glyphicon-paste"></i>
     Paste From Excel
   </button>
+</div>
+
+
+<div id="pending-data" class="hidden"
+     data-arrival="<%= @trip.arrival_date %>"
+     data-departure="<%= @trip.departure_date %>"
+     data-trip="<%=h @trip.to_json %>"></div>
+
+<div class="row">
+  <div class="col-xs-12 text-center">
+    <div id="pending-buttons"
+         data-update-url="<%=h trip_url(@trip) %>"></div>
+  </div>
+</div>
+
+<%= render partial: 'trips/quick' %>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div id="pending-calendar"
+         class="hidden-xs hidden-sm"
+         data-trip-events="<%= event_trip_url(@trip) %>"
+         data-reservation-events="<%= events_trip_reservations_url(@trip) %>"
+         data-create-url="<%= trip_reservations_url(@trip) %>"
+    ></div>
+  </div>
 </div>
 
 <table class="table table-condensed table-striped hidden-md hidden-lg">

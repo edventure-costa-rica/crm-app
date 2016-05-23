@@ -1,6 +1,9 @@
 var Calendar = require('./calendar');
 var Reservations = require('./reservations');
+var Trips = require('./trips');
 var Modal = require('react-bootstrap/lib/Modal');
+var ButtonGroup = require('react-bootstrap/lib/ButtonGroup');
+var ButtonToolbar = require('react-bootstrap/lib/ButtonToolbar');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var _ = require('lodash');
@@ -428,8 +431,32 @@ var CreateModal = React.createClass({
         </Modal.Body>
     )
   }
-})
+});
+
+var PageButtons = React.createClass({
+  displayName: 'PageButtons',
+
+  render() {
+    var updateUrl = this.props.tripUrl;
+    var trip = this.props.trip;
+
+    return (
+        <ButtonToolbar>
+          <ButtonGroup>
+            <Trips.QuickFormButton trip={trip}
+                                   action={updateUrl} />
+          </ButtonGroup>
+
+          <ButtonGroup>
+            {/* put other buttons here: transfer in/out, paste */}
+          </ButtonGroup>
+
+        </ButtonToolbar>
+    )
+  }
+});
 
 module.exports = {
-  Page: Page
+  Page: Page,
+  PageButtons: PageButtons
 };

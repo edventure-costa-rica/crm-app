@@ -4,7 +4,27 @@
   <li class="active">Confirmed</li>
 </ol>
 
-<%= render partial: 'trips/quick', locals: {editable: false} %>
+<div class="row">
+  <div class="col-xs-12 text-center">
+    <div class="btn-group">
+      <% link_to vouchers_trip_reservations_url(@trip),
+                 class: 'btn btn-primary' do %>
+        <i class="glyphicon glyphicon-tags"></i>
+        &nbsp; Vouchers
+      <% end %>
+
+      <% link_to export_trip_reservations_url(@trip),
+                 class: 'btn btn-info' do %>
+        <i class="glyphicon glyphicon-export"></i>
+        &nbsp; Export
+      <% end %>
+
+    </div>
+  </div>
+</div>
+
+
+<%= render partial: 'trips/quick' %>
 
 <h2>Reservations</h2>
 
@@ -96,26 +116,6 @@
     </td>
   </tr>
 </table>
-
-<div class="row">
-  <div class="col-xs-12 text-center">
-    <div class="btn-group">
-      <% link_to vouchers_trip_reservations_url(@trip),
-                 class: 'btn btn-primary' do %>
-        <i class="glyphicon glyphicon-tags"></i>
-        &nbsp; Vouchers
-      <% end %>
-
-      <% link_to export_trip_reservations_url(@trip),
-                 class: 'btn btn-info' do %>
-        <i class="glyphicon glyphicon-export"></i>
-        &nbsp; Export
-      <% end %>
-
-    </div>
-  </div>
-</div>
-
 
 <div id="edit-price-modal" class="modal fade">
   <div class="modal-dialog">
