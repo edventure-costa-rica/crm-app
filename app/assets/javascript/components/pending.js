@@ -122,12 +122,12 @@ var Page = React.createClass({
 
   handleArrivalClick() {
     var trip = this.props.trip;
-    this.refs.calendarView.call('gotoDate', trip.arrival);
+    this.refs.calendarView.calendarMethod('gotoDate', trip.arrival);
   },
 
   handleDepartureClick() {
     var trip = this.props.trip;
-    this.refs.calendarView.call('gotoDate', trip.departure);
+    this.refs.calendarView.calendarMethod('gotoDate', trip.departure);
   },
 
   handleDayClick(date) {
@@ -263,8 +263,8 @@ var CalendarView = React.createClass({
     );
   },
 
-  call(method, ...args) {
-    return this.refs.calendar.call(method, ...args);
+  calendarMethod(method, ...args) {
+    return this.refs.calendar.calendarMethod(method, ...args);
   },
 
   setEventDisplayProperties(event) {

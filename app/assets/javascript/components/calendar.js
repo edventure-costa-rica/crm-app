@@ -6,7 +6,7 @@ var extend = require('util')._extend;
 var Calendar = React.createClass({
   displayName: 'Calendar',
 
-  call(method, ...args) {
+  calendarMethod(method, ...args) {
     return $(this.refs.calendar).fullCalendar(method, ...args)
   },
 
@@ -16,8 +16,7 @@ var Calendar = React.createClass({
 
     var calendarOptions = extend({
       timezone: offset,
-      header: {right: 'prev next', center: '', left: 'title'},
-      // businessHours: {start: '06:00', end: '18:00'}
+      header: {right: 'prev next', center: '', left: 'title'}
 
     }, this.props);
 
