@@ -58,7 +58,7 @@ var Page = React.createClass({
     };
 
     var tooltipHandlers = {
-      eventRender: this.createEventTooltip,
+      eventRender: this.renderEventElement,
       eventMouseover: this.handleEventMouseOver,
       eventMouseout: this.handleEventMouseOut,
       eventResizeStart: this.handleEventInteractionStart,
@@ -164,13 +164,38 @@ var Page = React.createClass({
     }
   },
 
-  createEventTooltip(event, $el) {
+  renderEventElement(event, $el) {
     var model = event.model,
         trip = model.trip,
-        res = model.reservation;
-    var tooltip = [];
+        res = model.reservation,
+        kind = event.type;
+    var icon, tooltip = [];
 
-    switch (event.type) {
+    switch (kind) {
+      case 'hotel':
+        icon = 'bed';
+        break;
+
+      case 'tour':
+        icon = 'sunglasses';
+        break;
+
+      case 'transport':
+        icon = 'road';
+        break;
+
+      case 'arrival':
+      case 'departure':
+        icon = 'plane';
+    }
+
+    if (icon) {
+      $el.find('.fc-content').prepend(
+          `<i class="glyphicon glyphicon-${icon}"></i>`
+      );
+    }
+
+    switch (kind) {
       case 'arrival':
         tooltip.push(trip.arrival_flight);
         tooltip.push(time(trip.arrival));
