@@ -1,61 +1,24 @@
-<% unless defined? editable then editable = true end %>
-<% unless defined? action then action = trip_url(@trip) end %>
+<h2>Trip Details <small><%= @trip %></small></h2>
+<script>var TRIP = (<%= @trip.to_json %>).trip;</script>
 
-<% unless @trip.new_record? %>
-  <h2>Trip Details <small><%= @trip %></small></h2>
-  <script>var TRIP = (<%= @trip.to_json %>).trip;</script>
+<div class="row" id="trip-quick-details">
+  <div class="col-xs-12">
+    <table class="table">
+      <tr>
+        <th><i class="glyphicon glyphicon-user"></i></th>
+        <th>Arrival</th>
+        <th>Location / Flight</th>
+        <th>Departure</th>
+        <th>Location / Flight</th>
+      </tr>
 
-  <div class="row" id="trip-quick-details">
-    <div class="col-xs-12">
-      <table class="table">
-        <tr>
-          <th><i class="glyphicon glyphicon-user"></i></th>
-          <th>Arrival</th>
-          <th>Location / Flight</th>
-          <th>Departure</th>
-          <th>Location / Flight</th>
-        </tr>
-
-        <tr>
-          <td><%= @trip.pax %></td>
-          <td><%= l @trip.arrival.to_datetime %></td>
-          <td><%= @trip.arrival_flight %></td>
-          <td><%= l @trip.departure.to_datetime %></td>
-          <td><%= @trip.departure_flight %></td>
-        </tr>
-      </table>
-    </div>
-
-    <% if editable then %>
-      <div class="col-xs-12 text-right">
-        <div class="btn-group">
-          <button class="btn btn-primary" id="show-quick-trip-form">
-            <i class="glyphicon glyphicon-pencil"></i>
-            Edit
-          </button>
-
-          <button class="btn btn-default" id="book-transfer-in">
-            <i class="glyphicon glyphicon-transfer"></i>
-            Transfer In
-          </button>
-
-          <button class="btn btn-default" id="book-transfer-out">
-            <i class="glyphicon glyphicon-transfer"></i>
-            Transfer Out
-          </button>
-        </div>
-      </div>
-    <% end %>
+      <tr>
+        <td><%= @trip.pax %></td>
+        <td><%= l @trip.arrival.to_datetime %></td>
+        <td><%= @trip.arrival_flight %></td>
+        <td><%= l @trip.departure.to_datetime %></td>
+        <td><%= @trip.departure_flight %></td>
+      </tr>
+    </table>
   </div>
-
-<% end %>
-
-<% if editable %>
-  <div class="container">
-    <div id="quick-trip" class="row"
-         data-active="<%= @trip.new_record? %>"
-         data-action="<%= h action %>"
-         data-trip="<%= h @trip.to_json %>">
-    </div>
-  </div>
-<% end %>
+</div>
