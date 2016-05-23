@@ -233,8 +233,8 @@ var DateTimeField = React.createClass({
   },
 
   handlePickDate: function(_, selected) {
-    var prev = this.state.date;
-    var dateTime = moment(selected)
+    var prev = this.state.date.local();
+    var dateTime = selected.local()
         .hour(prev.hour())
         .minute(prev.minute())
         .second(prev.second());
@@ -244,7 +244,7 @@ var DateTimeField = React.createClass({
     var formatted = dateTime.format(format);
     this.props.value.requestChange(formatted);
 
-    this.setState({date: dateTime, valid: true});
+    this.setState({date: dateTime.utc(), valid: true});
 
     this.hidePicker();
   },
