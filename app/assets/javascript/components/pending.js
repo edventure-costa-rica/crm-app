@@ -13,7 +13,7 @@ var Page = React.createClass({
   displayName: 'Page',
 
   getInitialState() {
-    return {}
+    return {editEvent: {}}
   },
 
   componentWillReceiveProps(props) {
@@ -48,7 +48,7 @@ var Page = React.createClass({
     var eventUrls = _.pick(this.props, ['tripEvents', 'reservationEvents']);
 
     var {showEdit, showCreate, editEvent, createDate} = this.state;
-    var reservation = editEvent ? editEvent.model.reservation : null;
+    var reservation = editEvent.model ? editEvent.model.reservation : null;
 
     // show arrival and departure buttons on the calendar
     var arrivalButton = {text: 'Arrival', click: this.handleArrivalClick};
@@ -83,7 +83,8 @@ var Page = React.createClass({
               dayClick={this.handleDayClick} />
 
           <div className="event-modals">
-            <EditModal event={editEvent}
+            <EditModal action={editEvent.update_html}
+                       kind={editEvent.kind}
                        reservation={reservation}
                        onHide={this.closeModal}
                        visible={showEdit} />
@@ -292,6 +293,40 @@ var CalendarView = React.createClass({
   }
 });
 
+var EditLink = React.createClass({
+  displayName: 'EditLink',
+
+  getInitialState() {
+    return {show: false}
+  },
+
+  render() {
+    return (
+        <div className="edit-reservation-link">
+
+          <Button bsStyle="link"
+                  bsSize="xsmall"
+                  onClick={this.handleShowModal}>
+            <i className="glyphicon glyphicon-pencil" />
+            &nbsp; Edit
+          </Button>
+
+          <EditModal {...this.props}
+              onHide={this.handleCloseModal}
+              visible={this.state.show} />
+        </div>
+    )
+  },
+
+  handleShowModal() {
+    this.setState({show: true})
+  },
+
+  handleCloseModal() {
+    this.setState({show: false})
+  }
+});
+
 var EditModal = React.createClass({
   displayName: 'EditModal',
 
@@ -301,7 +336,8 @@ var EditModal = React.createClass({
 
   componentWillReceiveProps(props) {
     this.setState({
-      event: props.event,
+      action: props.action,
+      kind: props.kind,
       res: props.reservation,
       visible: props.visible
     })
@@ -314,9 +350,7 @@ var EditModal = React.createClass({
       return <Modal show={false} />
     }
 
-    var {event, res} = this.state;
-    var action = event.update_html;
-    var kind = event.type;
+    var {action, kind, res} = this.state;
     var dateRange = this.formatRange(res.arrival, res.departure);
 
     return (
@@ -502,7 +536,7 @@ var PasteButton = React.createClass({
     this.setState({show: false})
   }
 
-})
+});
 
 var PageButtons = React.createClass({
   displayName: 'PageButtons',
@@ -531,5 +565,6 @@ var PageButtons = React.createClass({
 
 module.exports = {
   Page: Page,
-  PageButtons: PageButtons
+  PageButtons: PageButtons,
+  EditLink: EditLink
 };

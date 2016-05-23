@@ -4,19 +4,18 @@
   <li class="active">Pending</li>
 </ol>
 
-
-<div class="text-right">
-  <button class="btn btn-default" id="paste-reservations">
-    <i class="glyphicon glyphicon-paste"></i>
-    Paste From Excel
-  </button>
-</div>
-
-
 <div id="pending-data" class="hidden"
      data-arrival="<%= @trip.arrival_date %>"
      data-departure="<%= @trip.departure_date %>"
      data-trip="<%=h @trip.to_json %>"></div>
+
+<div class="row">
+  <div class="col-xs-12 text-center">
+    <div id="pending-buttons"
+         data-paste-url="<%=h paste_trip_reservations_url(@trip) %>"
+         data-update-url="<%=h trip_url(@trip) %>"></div>
+  </div>
+</div>
 
 <%= render partial: 'trips/quick' %>
 
@@ -77,14 +76,10 @@
       <td class="col-xs-4 col-md-2">
         <ul class="list-inline">
           <li>
-            <button class="btn btn-link btn-xs edit-reservation"
-                    id="edit-reservation-<%= res.id %>"
-                    data-kind="<%= res.company.kind %>"
-                    data-action="<%= url_for(res) %>"
-                    data-reservation="<%= h res.to_json %>">
-              <i class="glyphicon glyphicon-pencil"></i>
-              Edit
-            </button>
+            <span class="edit-reservation"
+                  data-reservation="<%=h res.to_json %>"
+                  data-action="<%=h url_for(res) %>"
+                  data-kind="<%=h res.company.kind %>"></span>
           </li>
 
           <li>

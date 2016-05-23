@@ -7,6 +7,7 @@ var Pending = require('../../components').Pending;
 var $data = $('#pending-data');
 var $buttons = $('#pending-buttons');
 var $calendar = $('#pending-calendar');
+var $editButtons = $('#pending-table').find('.edit-reservation');
 
 if ($calendar.length) {
   ReactDOM.render(
@@ -34,6 +35,20 @@ if ($buttons.length) {
       $buttons.get(0)
   )
 }
+
+$editButtons.each(function() {
+  let $button = $(this);
+  let action = $button.data('action'),
+      kind = $button.data('kind'),
+      res = $button.data('reservation').reservation;
+
+  ReactDOM.render(
+      <Pending.EditLink action={action}
+                        kind={kind}
+                        reservation={res} />,
+      this
+  )
+});
 
 //
 // $bookTransferIn.add($bookTransferOut).on('click', function (ev) {
