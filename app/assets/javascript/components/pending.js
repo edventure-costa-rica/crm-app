@@ -52,15 +52,29 @@ var Page = React.createClass({
     var buttons = {arrival: arrivalButton, departure: departureButton};
     var headerButtons = {left: 'title', right: 'prev arrival,departure next'};
 
+    var eventChangeCallbacks = {
+      eventDrop: this.changeEventStart,
+      eventResize: this.changeEventDuration
+    };
+
+    var tooltipHandlers = {
+      eventRender: this.createEventTooltip,
+      eventMouseover: this.handleEventMouseOver,
+      eventMouseout: this.handleEventMouseOut,
+      eventResizeStart: this.handleEventInteractionStart,
+      eventResizeStop: this.handleEventInteractionStop
+    };
+
     return (
         <div className="pending-page">
-          <CalendarView {...eventUrls}
+          <CalendarView
+              {...eventUrls}
+              {...eventChangeCallbacks}
+              {...tooltipHandlers}
               ref="calendarView"
               defaultDate={defaultDate}
               customButtons={buttons}
               header={headerButtons}
-              eventDrop={this.changeEventStart}
-              eventResize={this.changeEventDuration}
               eventClick={this.handleEventClick}
               dayClick={this.handleDayClick} />
 
@@ -124,56 +138,76 @@ var Page = React.createClass({
     this.setState({showEdit: false, showCreate: false})
   },
 
-  // this shit doesnt work
-  // removeEventTooltip(event, jsEv) {
-  //   var $el = $(jsEv.target).closest('tr').find('.fc-event');
-  //
-  //   $el.tooltip('destroy');
-  //   console.log('remove tooltip', $el.get(0));
-  // },
-  //
-  // addEventTooltip(event, $el) {
-  //   var model = event.model,
-  //       trip = model.trip,
-  //       res = model.reservation;
-  //   var tooltip = [];
-  //
-  //   if (! ($el instanceof $)) $el = $($el.target).closest('tr').find('.fc-event');
-  //   console.log('add tooltip', $el.get(0));
-  //
-  //   switch (event.type) {
-  //     case 'arrival':
-  //       tooltip.push(trip.arrival_flight);
-  //       tooltip.push(time(trip.arrival));
-  //       break;
-  //
-  //     case 'departure':
-  //       tooltip.push(trip.departure_flight);
-  //       tooltip.push(time(trip.departure));
-  //       break;
-  //
-  //     default:
-  //       tooltip.push(res.services);
-  //       if (res.drop_off) {
-  //         tooltip.push('Drop off: ' + res.drop_off);
-  //       }
-  //       if (res.pick_up) {
-  //         tooltip.push('Pick up: ' + res.pick_up);
-  //       }
-  //
-  //       if (res.confirmed) {
-  //         $el.find('fc-content').insert('<i class="glyphicon glyphicon-ok"/>')
-  //       }
-  //   }
-  //
-  //   let tooltipText = tooltip.filter(Boolean).join('<br/>');
-  //
-  //   return $el.tooltip({container: 'body', title: tooltipText, html: true});
-  //
-  //   function time(date) {
-  //     return moment.utc(date).format('h:mma');
-  //   }
-  // }
+  handleEventInteractionStart(event) {
+    event.disableTooltip = true;
+  },
+
+  handleEventInteractionStop(event) {
+    event.disableTooltip = false;
+  },
+
+  handleEventMouseOver(event, jsEvent) {
+    if (event.disableTooltip) return;
+    let fcEvent = $(jsEvent.target).closest('.fc-event');
+
+    if (fcEvent.length) {
+      $(fcEvent).tooltip('show');
+    }
+  },
+
+  handleEventMouseOut(event, jsEvent) {
+    if (event.disableTooltip) return;
+    let fcEvent = $(jsEvent.target).closest('.fc-event');
+
+    if (fcEvent.length) {
+      $(fcEvent).tooltip('hide');
+    }
+  },
+
+  createEventTooltip(event, $el) {
+    var model = event.model,
+        trip = model.trip,
+        res = model.reservation;
+    var tooltip = [];
+
+    switch (event.type) {
+      case 'arrival':
+        tooltip.push(trip.arrival_flight);
+        tooltip.push(time(trip.arrival));
+        break;
+
+      case 'departure':
+        tooltip.push(trip.departure_flight);
+        tooltip.push(time(trip.departure));
+        break;
+
+      default:
+        tooltip.push(res.services);
+        if (res.drop_off) {
+          tooltip.push('Drop off: ' + res.drop_off);
+        }
+        if (res.pick_up) {
+          tooltip.push('Pick up: ' + res.pick_up);
+        }
+
+        if (res.confirmed) {
+          $el.find('fc-content').insert('<i class="glyphicon glyphicon-ok"/>')
+        }
+    }
+
+    let tooltipText = tooltip.filter(Boolean).join('<br/>');
+
+    return $el.tooltip({
+      trigger: 'manual',
+      container: 'body',
+      title: tooltipText,
+      html: true
+    });
+
+    function time(date) {
+      return moment.utc(date).format('h:mma');
+    }
+  }
 });
 
 var CalendarView = React.createClass({
