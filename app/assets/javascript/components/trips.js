@@ -1,9 +1,43 @@
 var React = require('react');
 var Forms = require('./forms');
+var Modal = require('react-bootstrap/lib/Modal');
+var Button = require('react-bootstrap/lib/Button');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
 var _ = require('lodash');
 var chrono = require('chrono-node');
+
+var QuickFormButton = React.createClass({
+  displayName: 'QuickFormButton',
+
+  getInitialState() {
+    return {showModal: false}
+  },
+
+  render() {
+    var buttonText = this.props.buttonText || 'Edit Trip';
+
+    return (
+        <Button bsStyle="primary" onClick={this.handleShowModal}>
+          <i className="glyphicon glyphicon-pencil" />
+          &nbsp;
+          {buttonText}
+
+          <QuickForm {...this.props}
+                     show={this.state.showModal}
+                     onHide={this.handleHideModal} />
+        </Button>
+    );
+  },
+
+  handleShowModal() {
+    this.setState({showModal: true})
+  },
+
+  handleHideModal() {
+    this.setState({showModal: false})
+  }
+});
 
 var QuickForm = React.createClass({
   mixins: [LinkedStateMixin],
@@ -26,6 +60,8 @@ var QuickForm = React.createClass({
       if (date.isValid()) state.departure = date.format('YYYY-MM-DD h:mm A');
     }
 
+    state.show = props.show;
+
     return state;
   },
 
@@ -35,8 +71,17 @@ var QuickForm = React.createClass({
 
   render: function () {
     var cancelButton, method = 'post';
+    var title = 'Create New';
+    var small;
 
-    if (this.state.id) method = 'put';
+    if (this.state.id) {
+      method = 'put';
+      title = 'Edit'
+    }
+
+    if (this.state.registration_id) {
+      small = <small>{this.state.registration_id}</small>
+    }
 
     if (this.props.onCancel) {
       cancelButton = (
@@ -48,70 +93,81 @@ var QuickForm = React.createClass({
     }
 
     return (
-        <div className="row">
-          <form action={this.props.action} method="post" className="form">
-            <input type="hidden" name="_method" value={method} />
+        <Modal bsSize="large" show={this.state.show} onHide={this.props.onHide}>
+          <Modal.Header closeButton>
+            <Modal.Title>
+              {title} Trip
+              &nbsp; {small}
+            </Modal.Title>
+          </Modal.Header>
 
-            <div className="col-xs-6">
-              <Forms.PaxField id="trip-total_people"
-                              name="trip[total_people]"
-                              title="Total People"
-                              required={true}
-                              value={this.linkState('total_people')} />
+          <Modal.Body>
+            <div className="row">
+              <form action={this.props.action} method="post" className="form">
+                <input type="hidden" name="_method" value={method} />
+
+                <div className="col-xs-6">
+                  <Forms.PaxField id="trip-total_people"
+                                  name="trip[total_people]"
+                                  title="Total People"
+                                  required={true}
+                                  value={this.linkState('total_people')} />
+                </div>
+
+
+                <div className="col-xs-6">
+                  <Forms.PaxField id="trip-num_children"
+                                  name="trip[num_children]"
+                                  title="Children"
+                                  value={this.linkState('num_children')} />
+                </div>
+
+                <div className="col-xs-6 col-sm-4">
+                  <Forms.DateTimeField id="trip-arrival"
+                                       name="trip[arrival]"
+                                       title="Arrival"
+                                       required={true}
+                                       value={this.linkState('arrival')}
+                  />
+                </div>
+
+                <div className="col-xs-6 col-sm-8">
+                  <Forms.TextField id="trip-arrival_flight"
+                                   name="trip[arrival_flight]"
+                                   title="Location / Flight"
+                                   value={this.linkState('arrival_flight')} />
+                </div>
+
+                <div className="col-xs-6 col-sm-4">
+                  <Forms.DateTimeField id="trip-departure"
+                                       name="trip[departure]"
+                                       title="Departure"
+                                       required={true}
+                                       value={this.linkState('departure')} />
+                </div>
+
+
+                <div className="col-xs-6 col-sm-8">
+                  <Forms.TextField id="trip-departure_flight"
+                                   name="trip[departure_flight]"
+                                   title="Location / Flight"
+                                   value={this.linkState('departure_flight')} />
+                </div>
+
+                <div className="col-xs-12 text-right">
+                  <div className="btn-group">
+                    <button className="btn btn-primary" type="submit">
+                      <i className="glyphicon glyphicon-ok" />
+                      &nbsp; Save
+                    </button>
+
+                    {cancelButton}
+                  </div>
+                </div>
+              </form>
             </div>
-
-
-            <div className="col-xs-6">
-              <Forms.PaxField id="trip-num_children"
-                              name="trip[num_children]"
-                              title="Children"
-                              value={this.linkState('num_children')} />
-            </div>
-
-            <div className="col-xs-6 col-sm-4">
-              <Forms.DateTimeField id="trip-arrival"
-                                   name="trip[arrival]"
-                                   title="Arrival"
-                                   required={true}
-                                   value={this.linkState('arrival')}
-              />
-            </div>
-
-            <div className="col-xs-6 col-sm-8">
-              <Forms.TextField id="trip-arrival_flight"
-                               name="trip[arrival_flight]"
-                               title="Location / Flight"
-                               value={this.linkState('arrival_flight')} />
-            </div>
-
-            <div className="col-xs-6 col-sm-4">
-              <Forms.DateTimeField id="trip-departure"
-                                   name="trip[departure]"
-                                   title="Departure"
-                                   required={true}
-                                   value={this.linkState('departure')} />
-            </div>
-
-
-            <div className="col-xs-6 col-sm-8">
-              <Forms.TextField id="trip-departure_flight"
-                               name="trip[departure_flight]"
-                               title="Location / Flight"
-                               value={this.linkState('departure_flight')} />
-            </div>
-
-            <div className="col-xs-12 text-right">
-              <div className="btn-group">
-                <button className="btn btn-primary" type="submit">
-                  <i className="glyphicon glyphicon-ok" />
-                  &nbsp; Save
-                </button>
-
-                {cancelButton}
-              </div>
-            </div>
-          </form>
-        </div>
+          </Modal.Body>
+        </Modal>
     )
   }
 });
@@ -168,6 +224,7 @@ var SupplementalPrice = React.createClass({
 
 module.exports = {
   QuickForm: QuickForm,
+  QuickFormButton: QuickFormButton,
   SupplementalPrice: SupplementalPrice
 };
 
