@@ -7,7 +7,7 @@ var Pending = require('../../components').Pending;
 var $data = $('#pending-data');
 var $buttons = $('#pending-buttons');
 var $calendar = $('#pending-calendar');
-var $editButtons = $('#pending-table').find('.edit-reservation');
+var $reservationLinks = $('#pending-table').find('.reservation-links');
 
 if ($calendar.length) {
   ReactDOM.render(
@@ -39,16 +39,22 @@ if ($buttons.length) {
   )
 }
 
-$editButtons.each(function() {
+$reservationLinks.each(function() {
   let $button = $(this);
-  let action = $button.data('action'),
+  let editUrl = $button.data('edit-url'),
+      deleteUrl = $button.data('delete-url'),
+      confirmUrl = $button.data('confirm-url'),
       kind = $button.data('kind'),
       res = $button.data('reservation').reservation;
 
   ReactDOM.render(
-      <Pending.EditLink action={action}
-                        kind={kind}
-                        reservation={res} />,
+      <Pending.ReservationButtons bsStyle="link"
+                                  bsSize="xs"
+                                  editUrl={editUrl}
+                                  deleteUrl={deleteUrl}
+                                  confirmUrl={confirmUrl}
+                                  reservation={res}
+                                  kind={kind} />,
       this
   )
 });

@@ -296,28 +296,28 @@ var CalendarView = React.createClass({
   }
 });
 
-var EditLink = React.createClass({
-  displayName: 'EditLink',
+var EditButton = React.createClass({
+  displayName: 'EditButton',
 
   getInitialState() {
     return {show: false}
   },
 
   render() {
-    return (
-        <div className="edit-reservation-link">
+    var style = this.props.bsStyle || 'link';
+    var size = this.props.bsSize || 'small';
 
-          <Button bsStyle="link"
-                  bsSize="xsmall"
-                  onClick={this.handleShowModal}>
-            <i className="glyphicon glyphicon-pencil" />
-            &nbsp; Edit
-          </Button>
+    return (
+        <Button bsStyle={style}
+                bsSize={size}
+                onClick={this.handleShowModal}>
+          <i className="glyphicon glyphicon-pencil"/>
+          {' '} Edit
 
           <EditModal {...this.props}
               onHide={this.handleCloseModal}
-              visible={this.state.show} />
-        </div>
+              visible={this.state.show}/>
+        </Button>
     )
   },
 
@@ -374,27 +374,12 @@ var EditModal = React.createClass({
             <Reservations.Form action={action}
                                kind={kind}
                                reservation={{reservation: res}}>
-              <ButtonGroup>
-                <Button bsStyle="danger" onClick={this.deleteReservation}>
-                  <i className="glyphicon glyphicon-trash" />
-                  {' '} Delete Reservation
-                </Button>
-              </ButtonGroup>
+              <ReservationButtons deleteUrl={action}
+                                  kind={kind} />
             </Reservations.Form>
           </Modal.Body>
         </Modal>
     )
-  },
-
-  deleteReservation(ev) {
-    ev.preventDefault();
-
-    if (! confirm('Really delete this reservation?')) return;
-
-    $('<form method="post"/>')
-        .attr('action', this.state.action)
-        .append('<input name="_method" value="delete" />')
-        .submit()
   },
 
   formatRange(start, end) {
@@ -494,6 +479,54 @@ var CreateModal = React.createClass({
             the trip dates.</p>
         </Modal.Body>
     )
+  }
+});
+
+var ConfirmButton = React.createClass({
+  render() {
+    var size = this.props.bsSize;
+    var style = this.props.bsStyle || 'default';
+
+    return (
+        <Button bsStyle={style} bsSize={size}
+                onClick={this.navigate}>
+          <i className="glyphicon glyphicon-envelope" />
+          {' '} Send Confirmation
+        </Button>
+    )
+  },
+
+  navigate(ev) {
+    ev.preventDefault();
+
+    window.location = this.props.action;
+  }
+});
+
+var DeleteButton = React.createClass({
+  render() {
+    var style = this.props.bsStyle || 'danger';
+    var size = this.props.bsSize;
+    return (
+        <ButtonGroup>
+          <Button bsStyle={style} bsSize={size}
+                  onClick={this.deleteReservation}>
+            <i className="glyphicon glyphicon-trash" />
+            {' '} Delete
+          </Button>
+        </ButtonGroup>
+    );
+  },
+
+  deleteReservation(ev) {
+    ev.preventDefault();
+
+    if (! confirm('Really delete this reservation?')) return;
+
+    $('<form method="post"/>')
+        .attr('action', this.props.action)
+        .append('<input name="_method" value="delete" />')
+        .submit()
   }
 });
 
@@ -645,8 +678,46 @@ var PageButtons = React.createClass({
   }
 });
 
+var ReservationButtons = React.createClass({
+  render() {
+    var style = this.props.bsStyle || 'default';
+    var size = this.props.bsSize;
+    var {editUrl, deleteUrl, confirmUrl, reservation, kind} = this.props;
+
+    var editButton, deleteButton, confirmButton;
+
+    if (editUrl) {
+      editButton = <EditButton action={editUrl}
+                               kind={kind}
+                               bsStyle={style}
+                               bsSize={size}
+                               reservation={reservation}/>
+    }
+
+    if (deleteUrl) {
+      deleteButton = <DeleteButton action={deleteUrl}
+                                   bsStyle={style}
+                                   bsSize={size} />
+    }
+
+    if (confirmUrl) {
+      confirmButton = <ConfirmButton action={confirmUrl}
+                                     bsStyle={style}
+                                     bsSize={size} />
+    }
+
+    return (
+        <ButtonGroup>
+          {editButton}
+          {deleteButton}
+          {confirmButton}
+        </ButtonGroup>
+    )
+  }
+})
+
 module.exports = {
   Page: Page,
   PageButtons: PageButtons,
-  EditLink: EditLink
+  ReservationButtons: ReservationButtons
 };
