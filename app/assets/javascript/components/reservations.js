@@ -22,10 +22,8 @@ var Create = React.createClass({
     return {kind: null}
   },
 
-  componentDidMount() {
-    this.setState({
-      kind: this.props.kind
-    })
+  componentWillMount() {
+    return this.componentWillReceiveProps(this.props)
   },
 
   componentWillReceiveProps(props) {
@@ -86,17 +84,19 @@ var Form = React.createClass({
   displayName: 'Form',
   mixins: [LinkedStateMixin],
 
-  getInitialState: function(props) {
-    props = props || this.props;
+  getInitialState: function() {
+    return {nights: 0};
+  },
 
-    var res = props.reservation,
-        defaults = res ? res.reservation : props.defaults || {};
-
-    return _.assign({nights: 1}, defaults);
+  componentWillMount() {
+    return this.componentWillReceiveProps(this.props)
   },
 
   componentWillReceiveProps: function(props) {
-    this.setState(this.getInitialState(props));
+    var res = props.reservation,
+        defaults = res ? res.reservation : props.defaults || {};
+
+    this.setState(_.assign({nights: 1}, defaults));
   },
 
   setDefaultRackPrice: function(ev) {

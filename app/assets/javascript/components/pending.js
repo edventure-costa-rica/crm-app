@@ -49,6 +49,7 @@ var Page = React.createClass({
 
     var {showEdit, showCreate, editEvent, createDate} = this.state;
     var reservation = editEvent.model ? editEvent.model.reservation : null;
+    var eventKind = editEvent.type;
 
     // show arrival and departure buttons on the calendar
     var arrivalButton = {text: 'Arrival', click: this.handleArrivalClick};
@@ -85,13 +86,14 @@ var Page = React.createClass({
 
           <div className="event-modals">
             <EditModal action={editEvent.update_html}
-                       kind={editEvent.kind}
+                       kind={eventKind}
                        reservation={reservation}
                        onHide={this.closeModal}
                        visible={showEdit} />
 
             <CreateModal trip={this.props.trip}
                          date={createDate}
+                         kind={eventKind}
                          action={this.props.createUrl}
                          onHide={this.closeModal}
                          visible={showCreate} />
@@ -335,6 +337,10 @@ var EditModal = React.createClass({
     return {visible: false}
   },
 
+  componentWillMount() {
+    return this.componentWillReceiveProps(this.props)
+  },
+
   componentWillReceiveProps(props) {
     this.setState({
       action: props.action,
@@ -396,6 +402,10 @@ var CreateModal = React.createClass({
 
   getInitialState() {
     return {visible: false, defaults: {}, kind: null}
+  },
+
+  componentWillMount() {
+    return this.componentWillReceiveProps(this.props);
   },
 
   componentWillReceiveProps(props) {
