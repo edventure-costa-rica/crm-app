@@ -201,11 +201,17 @@ var Form = React.createClass({
                              value={this.linkState('drop_off')} />
           </div>
 
-          <div className="col-xs-12 text-right">
-            <button className="btn btn-primary" type="submit">
-              <i className="glyphicon glyphicon-ok" />
-              &nbsp; Save
-            </button>
+          <div className="col-xs-12">
+            <div className="btn-toolbar">
+              <div className="btn-group">
+                <button className="btn btn-primary" type="submit">
+                  <i className="glyphicon glyphicon-ok" />
+                  &nbsp; Save
+                </button>
+              </div>
+
+              {this.props.children}
+            </div>
           </div>
         </form>
       </div>

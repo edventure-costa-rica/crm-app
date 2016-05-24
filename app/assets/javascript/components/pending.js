@@ -373,10 +373,28 @@ var EditModal = React.createClass({
           <Modal.Body>
             <Reservations.Form action={action}
                                kind={kind}
-                               reservation={{reservation: res}} />
+                               reservation={{reservation: res}}>
+              <ButtonGroup>
+                <Button bsStyle="danger" onClick={this.deleteReservation}>
+                  <i className="glyphicon glyphicon-trash" />
+                  {' '} Delete Reservation
+                </Button>
+              </ButtonGroup>
+            </Reservations.Form>
           </Modal.Body>
         </Modal>
     )
+  },
+
+  deleteReservation(ev) {
+    ev.preventDefault();
+
+    if (! confirm('Really delete this reservation?')) return;
+
+    $('<form method="post"/>')
+        .attr('action', this.state.action)
+        .append('<input name="_method" value="delete" />')
+        .submit()
   },
 
   formatRange(start, end) {
