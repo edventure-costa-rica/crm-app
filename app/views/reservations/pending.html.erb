@@ -5,15 +5,17 @@
 </ol>
 
 <div id="pending-data" class="hidden"
+     data-trip="<%=h @trip.to_json %>"
      data-arrival="<%= @trip.arrival_date %>"
      data-departure="<%= @trip.departure_date %>"
-     data-trip="<%=h @trip.to_json %>"></div>
+     data-update-trip-url="<%=h trip_url(@trip) %>"
+     data-create-reservation-url="<%= trip_reservations_url(@trip) %>"
+     data-paste-reservations-url="<%=h paste_trip_reservations_url(@trip) %>"
+></div>
 
 <div class="row">
   <div class="col-xs-12 text-center">
-    <div id="pending-buttons"
-         data-paste-url="<%=h paste_trip_reservations_url(@trip) %>"
-         data-update-url="<%=h trip_url(@trip) %>"></div>
+    <div id="pending-buttons"></div>
   </div>
 </div>
 
@@ -25,7 +27,6 @@
          class="hidden-xs hidden-sm"
          data-trip-events="<%= event_trip_url(@trip) %>"
          data-reservation-events="<%= events_trip_reservations_url(@trip) %>"
-         data-create-url="<%= trip_reservations_url(@trip) %>"
     ></div>
   </div>
 </div>

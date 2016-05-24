@@ -22,9 +22,15 @@ var Create = React.createClass({
     return {kind: null}
   },
 
+  componentDidMount() {
+    this.setState({
+      kind: this.props.kind
+    })
+  },
+
   componentWillReceiveProps(props) {
     this.setState({
-      kind: props.kind || this.state.kind
+      kind: props.kind
     })
   },
 
@@ -35,7 +41,7 @@ var Create = React.createClass({
     var kind = this.state.kind;
     var form;
 
-    if (!! kind) {
+    if (kind) {
       form = (
           <Form action={action}
                 kind={kind}

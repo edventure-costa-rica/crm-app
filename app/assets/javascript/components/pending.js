@@ -483,8 +483,7 @@ var PasteButton = React.createClass({
         <div id="paste-button">
           <Button bsStyle="info" onClick={this.handleShowModal}>
             <i className="glyphicon glyphicon-paste" />
-            &nbsp;
-            Paste from Excel
+            {' '} Paste from Excel
           </Button>
 
           <Modal show={this.state.show}
@@ -539,12 +538,62 @@ var PasteButton = React.createClass({
 
 });
 
+var TransferButton = React.createClass({
+  displayName: 'TransferButton',
+
+  getInitialState() {
+    return {show: false}
+  },
+
+  render() {
+    var which = this.props.which;
+    var action = this.props.createUrl;
+    var trip = this.props.trip.trip;
+    var dateTime = moment.utc(trip[which]);
+    var title = 'Transfer ' + (which === 'arrival' ? 'In' : 'Out');
+    var transfer = which === 'arrival' ? 'pick_up' : 'drop_off';
+    var flight = which === 'arrival' ? 'arrival_flight' : 'departure_flight';
+
+    var defaults = {
+      num_people: trip.total_people,
+      services: title,
+      nights: 0
+    };
+
+    defaults[transfer] = [trip[flight], dateTime.format('h:mma')].join(' ');
+
+    return (
+        <Button {...this.props} onClick={this.handleShowModal}>
+          <i className="glyphicon glyphicon-transfer" />
+          {' ' + title}
+
+          <CreateModal kind={"transport"}
+                       trip={trip}
+                       date={dateTime}
+                       action={action}
+                       defaults={defaults}
+                       onHide={this.handleHideModal}
+                       visible={this.state.show} />
+        </Button>
+    );
+  },
+
+  handleShowModal() {
+    this.setState({show: true})
+  },
+
+  handleHideModal() {
+    this.setState({show: false})
+  }
+});
+
 var PageButtons = React.createClass({
   displayName: 'PageButtons',
 
   render() {
     var updateUrl = this.props.tripUrl;
     var pasteUrl = this.props.pasteUrl;
+    let createUrl = this.props.createUrl;
     var trip = this.props.trip;
 
     return (
@@ -555,8 +604,12 @@ var PageButtons = React.createClass({
           </ButtonGroup>
 
           <ButtonGroup>
+            <TransferButton trip={trip} createUrl={createUrl} which="arrival" />
+            <TransferButton trip={trip} createUrl={createUrl} which="departure" />
+          </ButtonGroup>
+
+          <ButtonGroup>
             <PasteButton action={pasteUrl} />
-            {/* put other buttons here: transfer in/out, paste */}
           </ButtonGroup>
 
         </ButtonToolbar>

@@ -13,25 +13,28 @@ if ($calendar.length) {
   ReactDOM.render(
       React.createElement(Pending.Page, {
         trip: $data.data('trip').trip,
-        tripEvents: $calendar.data('trip-events'),
-        reservationEvents: $calendar.data('reservation-events'),
         arrivalDate: $data.data('arrival'),
         departureDate: $data.data('departure'),
-        createUrl: $calendar.data('create-url')
+        createUrl: $data.data('create-trip-url'),
+
+        tripEvents: $calendar.data('trip-events'),
+        reservationEvents: $calendar.data('reservation-events')
       }),
       $calendar.get(0)
   );
 }
 
 if ($buttons.length) {
-  let tripUrl = $buttons.data('update-url');
-  let pasteUrl = $buttons.data('paste-url');
+  let tripUrl = $data.data('update-trip-url');
+  let pasteUrl = $data.data('paste-reservations-url');
+  let createUrl = $data.data('create-reservation-url');
   let trip = $data.data('trip');
 
   ReactDOM.render(
       <Pending.PageButtons trip={trip}
+                           createUrl={createUrl}
                            pasteUrl={pasteUrl}
-                           tripUrl={tripUrl}/>,
+                           tripUrl={tripUrl} />,
       $buttons.get(0)
   )
 }
