@@ -19,7 +19,8 @@ class ReservationsController < ApplicationController
   # POST /trip/1/reservation
   def create
     @trip = Trip.find(params[:trip_id])
-    @reservation = @trip.reservations.build(reservation_params)
+    @reservation = @trip.reservations.build(
+      reservation_params.merge(confirmed: false))
 
     respond_to do |format|
       if @reservation.save
@@ -46,14 +47,12 @@ class ReservationsController < ApplicationController
         confirmed_trip_reservations_url(@trip)
       when 'unconfirmed'
         unconfirmed_reservations_url
-      when 'unpaid'
-        unpaid_reservations_url
       else
         pending_trip_reservations_url(@trip)
       end
 
     respond_to do |format|
-      if @reservation.update_attributes(reservation_params)
+      if @reservation.update_attributes(reservation_params.merge(confirmed: false))
         format.html { redirect_to(destination, :notice => 'Reservation was successfully updated.') }
         format.json { render json: @reservation }
       else
@@ -161,7 +160,7 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/unconfirmed
   def unconfirmed
-    conditions = {confirmed: false, paid: false}
+    conditions = {confirmed: nil}
     conditions[:kind] = params[:kind] if params.has_key? :kind
     limit, offset = page_to_limit_offset
 
