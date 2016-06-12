@@ -75,9 +75,7 @@ class Reservation < ActiveRecord::Base
 
   def confirm_trip
     if %w(pending confirmed).include? self.trip.status
-      pending = {confirmed: false, paid: false}
-
-      if trip.reservations.empty? or trip.reservations.exists? pending
+      if trip.reservations.empty? or not trip.reservations.all?(&:confirmed)
         self.trip.status = 'pending'
       else
         self.trip.status = 'confirmed'
