@@ -21,10 +21,15 @@
 
 <%= render partial: 'trips/quick' %>
 
-<div class="row">
+<div class="row hidden-xs hidden-sm hidden-print">
+  <div class="col-xs-12">
+    <p class="text-muted">
+      <i class="glyphicon glyphicon-calendar"></i>
+      Click on the calendar to add or modify reservations.
+    </p>
+  </div>
   <div class="col-xs-12">
     <div id="pending-calendar"
-         class="hidden-xs hidden-sm"
          data-trip-events="<%= event_trip_url(@trip) %>"
          data-reservation-events="<%= events_trip_reservations_url(@trip) %>"
     ></div>
