@@ -174,21 +174,6 @@ class ReservationsController < ApplicationController
                          order: 'updated_at DESC, day ASC')
   end
 
-  # GET /reservations/unpaid
-  def unpaid
-    conditions = {confirmed: true, paid: false}
-    conditions[:kind] = params[:kind] if params.has_key? :kind
-    limit, offset = page_to_limit_offset
-
-    @reservations =
-        Reservation.find(:all,
-                         joins: [:company, :trip],
-                         conditions: conditions,
-                         limit: limit,
-                         offset: offset,
-                         order: 'updated_at DESC, day ASC')
-  end
-
   def export
     @trip = Trip.find(params[:trip_id])
 

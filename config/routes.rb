@@ -28,7 +28,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :reservations,
                 only: [:update, :destroy],
-                collection: %i(unconfirmed unpaid),
+                collection: %i(unconfirmed),
                 member: {email: :get,
                          confirm: :post,
                          voucher: :get,
