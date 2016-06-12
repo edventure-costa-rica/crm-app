@@ -45,11 +45,11 @@ class Trip < ActiveRecord::Base
   end
 
   def arrival_date
-    arrival.to_date
+    arrival.try(:to_date)
   end
 
   def departure_date
-    departure.to_date
+    departure.try(:to_date)
   end
 
   @statuses.each do |s|
@@ -81,9 +81,11 @@ class Trip < ActiveRecord::Base
   # override arrival setter to update
   # all reservations with the difference in days
   def arrival=(value)
-    delta = value.to_date - self.arrival_date
-    reservations.each do |res|
-      res.day += delta
+    unless self.arrival.nil?
+      delta = value.to_date - self.arrival_date
+      reservations.each do |res|
+        res.day += delta
+      end
     end
 
     write_attribute(:arrival, value)
