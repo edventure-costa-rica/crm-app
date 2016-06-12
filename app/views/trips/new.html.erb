@@ -6,4 +6,7 @@
 
 <h2><%= t '.title' %></h2>
 
-<%= render partial: 'quick', locals: {action: client_trips_url(@client)} %>
+<div id="quick-trip"
+     data-active="true"
+     data-trip="<%= @trip.to_json %>"
+     data-action="<%= client_trips_url(@client) %>"></div>

@@ -15,11 +15,13 @@ var QuickFormButton = React.createClass({
   },
 
   render() {
-    var buttonText = this.props.buttonText || 'Edit Trip';
+    var buttonText = this.props.text || 'Edit Trip';
+    var icon = this.props.icon || 'pencil';
+    var style = this.props.style || 'primary';
 
     return (
-        <Button bsStyle="primary" onClick={this.handleShowModal}>
-          <i className="glyphicon glyphicon-pencil" />
+        <Button bsStyle={style} onClick={this.handleShowModal}>
+          <i className={"glyphicon glyphicon-"+icon} />
           &nbsp;
           {buttonText}
 

@@ -3,15 +3,17 @@ var ReactDOM = require('react-dom');
 var components = require('../../components');
 
 
-var $quickTrip = $('#quick-trip');
+var $tripBtn = $('#quick-trip-btn');
 
-if ($quickTrip.data('active')) {
+if ($tripBtn.length) {
+  var data = $tripBtn.data();
+
   ReactDOM.render(
-      React.createElement(components.Trips.QuickForm, {
-        trip: $quickTrip.data('trip'),
-        action: $quickTrip.data('action')
-      }),
+      React.createElement(components.Trips.QuickFormButton, data /*{
+        trip: $tripBtn.data('trip'),
+        action: $tripBtn.data('action'),
+      }*/),
 
-      $quickTrip.get(0)
+      $tripBtn.get(0)
   );
 }

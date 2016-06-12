@@ -14,9 +14,9 @@
 
       <tr>
         <td><%= @trip.pax %></td>
-        <td><%= l @trip.arrival.to_datetime %></td>
+        <td><%= l @trip.arrival.try(:to_datetime) %></td>
         <td><%= @trip.arrival_flight %></td>
-        <td><%= l @trip.departure.to_datetime %></td>
+        <td><%= l @trip.departure.try(:to_datetime) %></td>
         <td><%= @trip.departure_flight %></td>
       </tr>
     </table>

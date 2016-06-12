@@ -5,23 +5,24 @@
 
 <div class="row">
   <div class="col-xs-12 text-center">
+
+    <div class="btn-group" id="quick-trip-btn"
+         data-icon="plus"
+         data-style="success"
+         data-text="<%= t('.new') %>"
+         data-trip="<%= @trip.to_json %>"
+         data-action="<%= client_trips_url(@client) %>"></div>
+
+    <% link_to client_trips_url(@client), class: 'btn btn-default' do %>
+      <i class="glyphicon glyphicon-plane"></i>
+      <%= t('.list_trip') %>
+    <% end %>
+
     <div class="btn-group">
-
-      <% link_to client_trips_url(@client), class: 'btn btn-default' do %>
-        <i class="glyphicon glyphicon-plane"></i>
-        <%= t('.list_trip') %>
-      <% end %>
-
-      <% link_to new_client_trip_path(@client), class: 'btn btn-default' do %>
-        <i class="glyphicon glyphicon-plus-sign"></i>
-        <%= t('.new') %>
-      <% end %>
-
       <% link_to edit_client_path(@client), class: 'btn btn-primary' do %>
         <i class="glyphicon glyphicon-pencil"></i>
-        <%= t(:edit) %>
+        Edit Family Details
       <% end %>
-
     </div>
   </div>
 </div>
