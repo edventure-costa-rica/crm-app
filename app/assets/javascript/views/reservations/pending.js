@@ -15,7 +15,7 @@ if ($calendar.length) {
         trip: $data.data('trip').trip,
         arrivalDate: $data.data('arrival'),
         departureDate: $data.data('departure'),
-        createUrl: $data.data('create-trip-url'),
+        createUrl: $data.data('create-reservation-url'),
 
         tripEvents: $calendar.data('trip-events'),
         reservationEvents: $calendar.data('reservation-events')
