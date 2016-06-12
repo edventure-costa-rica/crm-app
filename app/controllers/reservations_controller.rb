@@ -52,7 +52,7 @@ class ReservationsController < ApplicationController
       end
 
     respond_to do |format|
-      if @reservation.update_attributes(reservation_params.merge(confirmed: false))
+      if @reservation.update_attributes(reservation_params)
         format.html { redirect_to(destination, :notice => 'Reservation was successfully updated.') }
         format.json { render json: @reservation }
       else
