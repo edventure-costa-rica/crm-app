@@ -657,9 +657,7 @@ var PageButtons = React.createClass({
   displayName: 'PageButtons',
 
   render() {
-    var updateUrl = this.props.tripUrl;
-    var pasteUrl = this.props.pasteUrl;
-    let createUrl = this.props.createUrl;
+    let {createUrl, pasteUrl, updateUrl} = this.props;
     var trip = this.props.trip;
 
     return (
