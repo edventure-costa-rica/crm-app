@@ -16,9 +16,17 @@
       <% link_to export_trip_reservations_url(@trip),
                  class: 'btn btn-info' do %>
         <i class="glyphicon glyphicon-export"></i>
-        &nbsp; Export
+        Export
       <% end %>
 
+    </div>
+
+    <div class="btn-group">
+      <a href="<%= pending_trip_reservations_url(@trip) %>"
+         class="btn btn-default">
+        <i class="glyphicon glyphicon-pencil"></i>
+        Edit Reservations
+      </a>
     </div>
   </div>
 </div>
