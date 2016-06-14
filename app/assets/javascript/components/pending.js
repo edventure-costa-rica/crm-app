@@ -599,17 +599,39 @@ var PasteButton = React.createClass({
 
 });
 
-var TransferButton = React.createClass({
-  displayName: 'TransferButton',
+var TransferButtons = React.createClass({
+  displayName: 'TransferButtons',
 
   getInitialState() {
-    return {show: false}
+    return {show: false, defaults: {}, trip: this.props.trip.trip}
   },
 
   render() {
-    var which = this.props.which;
-    var action = this.props.createUrl;
-    var trip = this.props.trip.trip;
+    return (
+        <ButtonGroup>
+          <Button {...this.props} onClick={() => this.handleShowModal('arrival')}>
+            <i className="glyphicon glyphicon-transfer" />
+            {' '} Transfer In
+          </Button>
+
+          <Button {...this.props} onClick={() => this.handleShowModal('departure')}>
+            <i className="glyphicon glyphicon-transfer" />
+            {' '} Out
+
+            <CreateModal kind="transport"
+                         trip={this.state.trip}
+                         date={this.state.dateTime}
+                         action={this.props.createUrl}
+                         defaults={this.state.defaults}
+                         onHide={this.handleHideModal}
+                         visible={this.state.show} />
+          </Button>
+        </ButtonGroup>
+    );
+  },
+
+  handleShowModal(which) {
+    var trip = this.state.trip;
     var dateTime = moment.utc(trip[which]);
     var title = 'Transfer ' + (which === 'arrival' ? 'In' : 'Out');
     var transfer = which === 'arrival' ? 'pick_up' : 'drop_off';
@@ -623,24 +645,7 @@ var TransferButton = React.createClass({
 
     defaults[transfer] = [trip[flight], dateTime.format('h:mma')].join(' ');
 
-    return (
-        <Button {...this.props} onClick={this.handleShowModal}>
-          <i className="glyphicon glyphicon-transfer" />
-          {' ' + title}
-
-          <CreateModal kind={"transport"}
-                       trip={trip}
-                       date={dateTime}
-                       action={action}
-                       defaults={defaults}
-                       onHide={this.handleHideModal}
-                       visible={this.state.show} />
-        </Button>
-    );
-  },
-
-  handleShowModal() {
-    this.setState({show: true})
+    this.setState({show: true, defaults: defaults, dateTime: dateTime})
   },
 
   handleHideModal() {
@@ -664,10 +669,7 @@ var PageButtons = React.createClass({
                                    action={updateUrl} />
           </ButtonGroup>
 
-          <ButtonGroup>
-            <TransferButton trip={trip} createUrl={createUrl} which="arrival" />
-            <TransferButton trip={trip} createUrl={createUrl} which="departure" />
-          </ButtonGroup>
+          <TransferButtons trip={trip} createUrl={createUrl} />
 
           <ButtonGroup>
             <PasteButton action={pasteUrl} />
