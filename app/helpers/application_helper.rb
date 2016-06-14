@@ -77,15 +77,13 @@ module ApplicationHelper
       [Region, nil]
     elsif controller.class == PeopleController
       [Person, @trip]
-    elsif controller.class == CalendarController
-      [Reservation, l(@date.to_date, format: :calendar)]
     end
 
     t = ''
     if model then
       t << model.human_name(:count => 0)
       t << ": "
-      t << I18n.translate(controller.action_name)
+      t << controller.action_name.capitalize
       t << " #{obj}" if obj
       t << " - "
     end
