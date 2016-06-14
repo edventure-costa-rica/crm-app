@@ -138,6 +138,7 @@ class ReservationsController < ApplicationController
     @reservations = @trip.reservations.all(order: 'day ASC, id ASC')
   end
 
+  # reservations for a trip
   def events
     trip = Trip.find(params[:trip_id])
     start = Chronic.parse(params[:start]) - params[:timezone].to_i
@@ -151,6 +152,19 @@ class ReservationsController < ApplicationController
     )
 
     render json: events.map { |r| @template.reservation_event(r) }
+  end
+
+  # reservations for all trips
+  def calendar
+    start_time = params[:start] || Time.now.beginning_of_month
+    end_time   = params[:end]   || Time.now.beginning_of_month.next_month
+    timezone   = params[:timezone].to_i || 360 # costa rica
+
+    @reservations = Reservation.find(:all, joins: :trip, conditions: [
+      "date(trips.arrival, '+' || day || ' days') > ? " +
+        "OR date(trips.arrival, '+' || (day + nights) || ' days') < ?",
+      start_time.to_date - timezone, end_time - timezone
+    ])
   end
 
   def confirmed

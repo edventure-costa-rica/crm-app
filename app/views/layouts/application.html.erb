@@ -52,6 +52,11 @@
           New Client
         <% end %>
 
+        <% item_link_with_active calendar_reservations_url do %>
+          <i class="glyphicon glyphicon-calendar"></i>
+          Reservations
+        <% end %>
+
         <% item_link_with_active unconfirmed_reservations_url do %>
           <i class="glyphicon glyphicon-hourglass"></i>
           Unconfirmed
@@ -59,7 +64,7 @@
 
         <% item_link_with_active upcoming_trips_url do %>
           <i class="glyphicon glyphicon-time"></i>
-          Upcoming
+          Upcoming Trips
         <% end %>
 
         <%= render partial: 'shared/extra_nav',
