@@ -52,10 +52,27 @@
           New Client
         <% end %>
 
-        <% item_link_with_active reservations_calendar_url do %>
-          <i class="glyphicon glyphicon-calendar"></i>
-          Reservations
-        <% end %>
+        <li class="dropdown">
+          <% link_to '#', 'class' => 'dropdown-toggle',
+                     'data-toggle' => 'dropdown' do %>
+            <i class="glyphicon glyphicon-calendar"></i>
+            Calendar <span class="caret"></span>
+          <% end %>
+
+          <ul class="dropdown-menu">
+            <% item_link_with_active reservations_calendar_url do %>
+              Reservations
+            <% end %>
+
+            <% item_link_with_active transfer_calendar_url do %>
+              Transfers
+            <% end %>
+
+            <% item_link_with_active companies_calendar_url do %>
+              Companies
+            <% end %>
+          </ul>
+        </li>
 
         <% item_link_with_active unconfirmed_reservations_url do %>
           <i class="glyphicon glyphicon-hourglass"></i>
