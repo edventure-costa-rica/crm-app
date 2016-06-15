@@ -34,7 +34,7 @@ ActionController::Routing::Routes.draw do |map|
                          voucher: :get,
                          move: :post}
 
-  map.transfer_calendar 'calendar/transfer', controller: :calendar, action: :transfer
+  map.transfer_calendar 'calendar/transfers', controller: :calendar, action: :transfers
   map.companies_calendar 'calendar/companies', controller: :calendar, action: :companies
   map.company_calendar 'calendar/company/:id', controller: :calendar, action: :company
   map.reservations_calendar 'calendar/view', controller: :calendar, action: :view

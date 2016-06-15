@@ -4,7 +4,7 @@
 </ol>
 
 
-<table class="table table-condensed table-striped">
+<table class="table table-condensed table-striped hidden-lg hidden-md">
   <tr class="row">
     <th>Date</th>
     <th>Family</th>
@@ -17,7 +17,7 @@
     <tr class="row">
       <td class="col-xs-2">
         <%= l res.arrival, format: :short %>
-        <% if res.nights > 0 then %>
+        <% if res.nights > 0 %>
           &ndash;
           <br> <%= l res.departure, format: :short %>
           <br> <small class="text-muted"><%= pluralize res.nights, 'night' %></small>
@@ -43,9 +43,7 @@
       </td>
 
       <td class="col-xs-3">
-        <span title="<%= h res.services %>">
-          <%= truncate res.services %>
-        </span>
+        <%= res.services %>
       </td>
 
       <td class="col-xs-3 small">
@@ -53,7 +51,7 @@
           Pick Up: <%= res.pick_up %> <br>
         <% end %>
         <% if res.drop_off and not res.drop_off.empty? %>
-          Drop Off: <%= res.drop_off %>
+          Drop Off: <%= res.drop_off %> <br>
         <% end %>
       </td>
     </tr>
