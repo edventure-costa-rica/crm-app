@@ -1,0 +1,17 @@
+<nav>
+  <ul class="pager">
+    <li class="previous">
+      <% link_to url_for(start: @start_at - (@end_at - @start_at) - 1) do %>
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        Earlier
+      <% end %>
+    </li>
+
+    <li class="next">
+      <% link_to url_for(start: @end_at) do %>
+        Later
+        <i class="glyphicon glyphicon-chevron-right"></i>
+      <% end %>
+    </li>
+  </ul>
+</nav>
