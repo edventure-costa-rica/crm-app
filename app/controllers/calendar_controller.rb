@@ -48,24 +48,25 @@ class CalendarController < ApplicationController
 
   def reservation_range(*conditions)
     start_time = params[:start] || Time.now.beginning_of_month
-    end_time   = params[:end]   || Time.now.beginning_of_month.next_month
+    end_time   = params[:end]   || Chronic.parse(start_time.to_s).next_month
     timezone   = params[:timezone].to_i || 360 # costa rica
 
-    start_at, end_at =
-      Chronic.parse(start_time.to_s) - (timezone * 60),
+    @start_at, @end_at =
+      [ Chronic.parse(start_time.to_s) - (timezone * 60),
         Chronic.parse(end_time.to_s) - (timezone * 60)
+      ].map(&:to_date)
 
     joins = [:company, {trip: :client}]
 
     @reservations = Reservation.all(joins: joins, conditions: [
-      [ "reservations.confirmed = ? AND " +
-        "(date(trips.arrival, '+' || reservations.day || ' days') > ? " +
-        "OR date(trips.arrival, '+' || (reservations.day + reservations.nights) || ' days') < ?)",
+      [ "reservations.confirmed = ?",
+        "(date(trips.arrival, '+' || reservations.day || ' days') >= ?",
+        "date(trips.arrival, '+' || (reservations.day + reservations.nights) || ' days') < ?)",
         conditions.shift
       ].compact.join(' AND '),
       true,
-      start_at,
-      end_at,
+      @start_at,
+      @end_at,
       *conditions
     ])
 
