@@ -1,0 +1,61 @@
+<ol class="breadcrumb">
+  <li><%= link_to 'Home', home_url %></li>
+  <li class="active">Calendar</li>
+</ol>
+
+
+<table class="table table-condensed table-striped">
+  <tr class="row">
+    <th>Date</th>
+    <th>Family</th>
+    <th>Company</th>
+    <th>Services</th>
+    <th>Details</th>
+  </tr>
+
+  <% @reservations.each do |res| %>
+    <tr class="row">
+      <td class="col-xs-2">
+        <%= l res.arrival, format: :short %>
+        <% if res.nights > 0 then %>
+          &ndash;
+          <br> <%= l res.departure, format: :short %>
+          <br> <small class="text-muted"><%= pluralize res.nights, 'night' %></small>
+        <% end %>
+      </td>
+
+      <td class="col-xs-2">
+        <i class="glyphicon glyphicon-user"></i>
+        <%= link_to res.client, client_url(res.client) %>
+      </td>
+
+      <td class="col-xs-2">
+        <% if res.company.kind == 'hotel' %>
+          <i class="glyphicon glyphicon-bed"></i>
+        <% elsif res.company.kind == 'transport' %>
+          <i class="glyphicon glyphicon-road"></i>
+        <% elsif res.company.kind == 'tour' %>
+          <i class="glyphicon glyphicon-sunglasses"></i>
+        <% else %>
+          <i class="glyphicon glyphicon-question-sign"></i>
+        <% end %>
+        <%= link_to res.company.name, company_url(res.company) %>
+      </td>
+
+      <td class="col-xs-3">
+        <span title="<%= h res.services %>">
+          <%= truncate res.services %>
+        </span>
+      </td>
+
+      <td class="col-xs-3 small">
+        <% if res.pick_up and not res.pick_up.empty? %>
+          Pick Up: <%= res.pick_up %> <br>
+        <% end %>
+        <% if res.drop_off and not res.drop_off.empty? %>
+          Drop Off: <%= res.drop_off %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>

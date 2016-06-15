@@ -1,2 +1,5 @@
-<h1>Calendar#company</h1>
-<p>Find me in app/views/calendar/company.html.erb</p>
+<ol class="breadcrumb">
+  <li><%= link_to 'Home', home_url %></li>
+  <li><%= link_to 'Calendar', companies_calendar_url %></li>
+  <li class="active"><%= @company.name %></li>
+</ol>
