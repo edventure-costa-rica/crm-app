@@ -55,16 +55,12 @@
         </td>
       <% end %>
       <td>
-        <% link_to day_calendar_url(date: trip.arrival.to_date) do %>
-          <i class="glyphicon glyphicon-calendar hidden-xs hidden-sm"></i>
-          <%= l(trip.arrival.to_date) %>
-        <% end %>
+        <i class="glyphicon glyphicon-calendar hidden-xs hidden-sm"></i>
+        <%= l(trip.arrival.to_date) %>
       </td>
       <td>
-        <% link_to day_calendar_url(date: trip.departure.to_date) do %>
-          <i class="glyphicon glyphicon-calendar hidden-xs hidden-sm"></i>
-          <%= l(trip.departure.to_date) %>
-        <% end %>
+        <i class="glyphicon glyphicon-calendar hidden-xs hidden-sm"></i>
+        <%= l(trip.departure.to_date) %>
       </td>
 
       <td><%= l trip.updated_at, format: :short %></td>
