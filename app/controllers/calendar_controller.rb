@@ -40,9 +40,9 @@ class CalendarController < ApplicationController
         Chronic.parse(end_time.to_s) - (timezone * 60)
 
     @trips = Trip.all(conditions: [
-      "(arrival > ? AND arrival < ?) OR " +
-        "(departure > ? AND departure < ?)",
-      start_at, end_at, start_at, end_at
+      "status = ? AND ((arrival > ? AND arrival < ?) OR " +
+        "(departure > ? AND departure < ?))",
+      'confirmed', start_at, end_at, start_at, end_at
     ])
   end
 
@@ -58,10 +58,12 @@ class CalendarController < ApplicationController
     joins = [:company, {trip: :client}]
 
     @reservations = Reservation.all(joins: joins, conditions: [
-      [ "(date(trips.arrival, '+' || reservations.day || ' days') > ? " +
+      [ "reservations.confirmed = ? AND " +
+        "(date(trips.arrival, '+' || reservations.day || ' days') > ? " +
         "OR date(trips.arrival, '+' || (reservations.day + reservations.nights) || ' days') < ?)",
         conditions.shift
       ].compact.join(' AND '),
+      true,
       start_at,
       end_at,
       *conditions
