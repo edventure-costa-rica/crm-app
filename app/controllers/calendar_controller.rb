@@ -5,11 +5,19 @@ class CalendarController < ApplicationController
   end
 
   def transfers
-    trip_range
+    @companies = Company.all(conditions: {kind: 'transport'})
+
+    select_company, company =
+      if params.has_key? :company_id
+        @company = Company.find(params[:company_id])
+        ['AND companies.id = ?', @company]
+      end
+
     reservation_range(
-      'companies.kind = ? AND reservations.services LIKE ?',
-      'transport', '%transfer%'
-    )
+      'companies.kind = ? AND reservations.services LIKE ? ' + select_company.to_s,
+      'transport', '%transfer%', *[company].compact
+
+    ).sort_by! { |r| [r.arrival, r.services] }
 
     render_calendar
   end
@@ -23,27 +31,11 @@ class CalendarController < ApplicationController
 
   private
 
-  def render_calendar(html=true)
+  def render_calendar
     respond_to do |format|
-      format.html if html
+      format.html
       format.json { render json: @reservations.map { |r| @template.reservation_event(r) } }
     end
-  end
-
-  def trip_range
-    start_time = params[:start] || Time.now.beginning_of_month
-    end_time   = params[:end]   || Time.now.beginning_of_month.next_month
-    timezone   = params[:timezone].to_i || 360 # costa rica
-
-    start_at, end_at =
-      Chronic.parse(start_time.to_s) - (timezone * 60),
-        Chronic.parse(end_time.to_s) - (timezone * 60)
-
-    @trips = Trip.all(conditions: [
-      "status = ? AND ((arrival > ? AND arrival < ?) OR " +
-        "(departure > ? AND departure < ?))",
-      'confirmed', start_at, end_at, start_at, end_at
-    ])
   end
 
   def reservation_range(*conditions)
