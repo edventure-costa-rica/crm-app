@@ -55,6 +55,34 @@ class Reservation < ActiveRecord::Base
     trip.arrival.to_date + day + nights
   end
 
+  def transport_pick_up
+    if not pick_up.to_s.empty?
+      pick_up
+
+    elsif trip.arrival == arrival
+      trip.arrival_flight
+
+    else
+      trip.reservations.
+        detect { |r| r.company.hotel? and r.departure == arrival }.
+        try(:company).try(:name)
+    end
+  end
+
+  def transport_drop_off
+    if not drop_off.to_s.empty?
+      drop_off
+
+    elsif trip.departure == arrival
+      trip.departure_flight
+
+    else
+      trip.reservations.
+        detect { |r| r.company.hotel? and r.arrival == arrival }.
+        try(:company).try(:name)
+    end
+  end
+
   # currency values accept (and drop) dollar signs
   [:net_price,:price].each do |attr|
     define_method "#{attr}=" do |value|
