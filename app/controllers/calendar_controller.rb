@@ -11,6 +11,8 @@ class CalendarController < ApplicationController
       if params.has_key? :company_id
         @company = Company.find(params[:company_id])
         ['AND companies.id = ?', @company]
+      else
+        @company = nil
       end
 
     reservation_range(

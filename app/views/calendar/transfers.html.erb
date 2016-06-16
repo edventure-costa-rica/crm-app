@@ -5,6 +5,16 @@
 </ol>
 
 <div class="row">
+  <div class="col-xs-12">
+    <h1>
+      Transfer Schedule
+      <small>
+        <%= l @start_at, format: :short %> &ndash;
+        <%= l @end_at - 1, format: :short %>
+      </small>
+    </h1>
+  </div>
+
   <div id="calendar-mount"
        data-events="<%= h current_url(format: :json) %>"
        class="col-xs-12 hidden-xs hidden-sm hidden-print"></div>
@@ -14,9 +24,9 @@
   </div>
 </div>
 
-<table class="table table-striped table-condensed">
-  <tr class="row">
-    <% unless defined? @company %>
+<table class="table table-striped table-condensed hidden-md hidden-lg">
+  <tr>
+    <% unless @company %>
       <th>Company</th>
     <% end %>
 
@@ -28,8 +38,8 @@
   </tr>
 
   <% @reservations.each do |res| %>
-    <tr class="row">
-      <% unless defined? @company %>
+    <tr>
+      <% unless @company %>
       <td><%= link_to res.company.name, res.company %></td>
       <% end %>
 
