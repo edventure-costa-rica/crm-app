@@ -136,6 +136,10 @@ class ReservationsController < ApplicationController
   def pending
     @trip = Trip.find(params[:trip_id])
     @reservations = @trip.reservations.all(order: 'day ASC, id ASC')
+
+    trip_range = @trip.arrival.to_date .. (@trip.departure.to_date + 1)
+    @pick_ups = trip_range.map { |date| [date.iso8601, @template.trip_pick_up_date(@trip, date)] }.to_h
+    @drop_offs = trip_range.map { |date| [date.iso8601, @template.trip_drop_off_date(@trip, date)] }.to_h
   end
 
   # reservations for a trip

@@ -13,7 +13,7 @@ var Page = React.createClass({
   displayName: 'Page',
 
   getInitialState() {
-    return {editEvent: {}}
+    return {editEvent: {}, createDefaults: {}}
   },
 
   componentWillReceiveProps(props) {
@@ -57,6 +57,8 @@ var Page = React.createClass({
     var buttons = {arrival: arrivalButton, departure: departureButton};
     var headerButtons = {left: 'title', right: 'prev arrival,departure next'};
 
+    var {createDefaults} = this.state;
+
     var eventChangeCallbacks = {
       eventDrop: this.changeEventStart,
       eventResize: this.changeEventDuration
@@ -95,6 +97,7 @@ var Page = React.createClass({
             <CreateModal trip={this.props.trip}
                          date={createDate}
                          kind={eventKind}
+                         defaults={createDefaults}
                          action={this.props.createUrl}
                          onHide={this.closeModal}
                          visible={showCreate} />
@@ -134,7 +137,13 @@ var Page = React.createClass({
   },
 
   handleDayClick(date) {
-    this.setState({showCreate: true, createDate: date})
+    var {pickUps, dropOffs} = this.props;
+    var defaults = {};
+
+    if (pickUps) { defaults.pick_up = pickUps[date.toISOString()] }
+    if (dropOffs) { defaults.drop_off = dropOffs[date.toISOString()] }
+
+    this.setState({showCreate: true, createDate: date, createDefaults: defaults})
   },
 
   handleEventClick(event) {
@@ -423,7 +432,7 @@ var CreateModal = React.createClass({
       date: props.date,
       visible: props.visible,
       action: props.action,
-      defaults: props.defaults || {num_people: props.trip.total_people},
+      defaults: _.extend({num_people: props.trip.total_people}, props.defaults || {}),
       kind: props.kind
     })
   },
