@@ -362,6 +362,9 @@ var EditModal = React.createClass({
     var {action, confirmUrl, kind, res} = this.state;
     var dateRange = this.formatRange(res.arrival, res.departure);
 
+    // already confirmed, dont show confirm button
+    if (res.confirmed) confirmUrl = null;
+
     return (
         <Modal bsSize="large" show={true} onHide={this.props.onHide}>
           <Modal.Header closeButton>
