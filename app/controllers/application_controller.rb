@@ -9,18 +9,16 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
 
   # make sure all links include a locale param
-  def default_url_options(options={})
-    { :lc => I18n.locale }
-  end
+  # def default_url_options(options={})
+  #   { :lc => I18n.locale }
+  # end
 
   # use the locale param to actually set the proper value
   before_filter :set_locale
 
 protected
   def set_locale
-    I18n.locale = params[:lc]
-
-    logger.debug "Using locale #{I18n.locale} based on query param lc=#{params[:lc]}\n"
+    I18n.locale = params[:lc] || 'en'
   end
 
   class << self
