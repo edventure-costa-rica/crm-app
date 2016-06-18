@@ -26,7 +26,7 @@ module ReservationsHelper
 
   def trip_pick_up_date(trip, date)
     if trip.arrival.to_date == date.to_date
-      trip.arrival_flight
+      [trip.arrival_flight, trip.arrival.strftime('%l:%M %P')].compact.join(' ')
 
     else
       trip.reservations.
@@ -46,7 +46,7 @@ module ReservationsHelper
 
   def trip_drop_off_date(trip, date)
     if trip.departure.to_date == date.to_date
-      trip.departure_flight
+      [trip.departure_flight, trip.departure.strftime('%l:%M %P')].compact.join(' ')
 
     else
       trip.reservations.
