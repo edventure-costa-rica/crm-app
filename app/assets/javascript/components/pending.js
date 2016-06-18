@@ -87,6 +87,7 @@ var Page = React.createClass({
           <div className="event-modals">
             <EditModal action={editEvent.update_html}
                        kind={eventKind}
+                       confirmUrl={editEvent.confirm_url}
                        reservation={reservation}
                        onHide={this.closeModal}
                        visible={showEdit} />
@@ -346,7 +347,8 @@ var EditModal = React.createClass({
       action: props.action,
       kind: props.kind,
       res: props.reservation,
-      visible: props.visible
+      visible: props.visible,
+      confirmUrl: props.confirmUrl
     })
   },
 
@@ -357,7 +359,7 @@ var EditModal = React.createClass({
       return <Modal show={false} />
     }
 
-    var {action, kind, res} = this.state;
+    var {action, confirmUrl, kind, res} = this.state;
     var dateRange = this.formatRange(res.arrival, res.departure);
 
     return (
@@ -375,6 +377,7 @@ var EditModal = React.createClass({
                                kind={kind}
                                reservation={{reservation: res}}>
               <ReservationButtons deleteUrl={action}
+                                  confirmUrl={confirmUrl}
                                   kind={kind} />
             </Reservations.Form>
           </Modal.Body>
