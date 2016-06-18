@@ -657,14 +657,14 @@ var PageButtons = React.createClass({
   displayName: 'PageButtons',
 
   render() {
-    let {createUrl, pasteUrl, updateUrl} = this.props;
+    let {createUrl, pasteUrl, tripUrl} = this.props;
     var trip = this.props.trip;
 
     return (
         <ButtonToolbar>
           <ButtonGroup>
             <Trips.QuickFormButton trip={trip}
-                                   action={updateUrl} />
+                                   action={tripUrl} />
           </ButtonGroup>
 
           <TransferButtons trip={trip} createUrl={createUrl} />
