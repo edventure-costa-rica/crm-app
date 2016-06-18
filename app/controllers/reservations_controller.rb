@@ -78,26 +78,6 @@ class ReservationsController < ApplicationController
     end
   end
 
-  def move
-    res = Reservation.find(params[:id])
-
-    unless res.company.hotel?
-      flash[:notice] = "Unable to move #{res.company.kind} reservations"
-      redirect_to pending_trip_reservations_url(res.trip)
-      return
-    end
-
-    begin
-      direction = params[:later] ? :later : :earlier
-      StepReservationOrder.new(res, direction).save!
-    rescue => ex
-      flash[:notice] = ex.to_s
-      logger.warn ex.backtrace.join("\n\t")
-    end
-
-    redirect_to pending_trip_reservations_url(res.trip)
-  end
-
   # GET /clients/1/trips/1/reservations/1/voucher
   def voucher
     @reservation = Reservation.find(params[:id])

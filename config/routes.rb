@@ -28,11 +28,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :reservations,
                 only: [:update, :destroy],
-                collection: %i(unconfirmed),
-                member: {email: :get,
-                         confirm: :post,
-                         voucher: :get,
-                         move: :post}
+                collection: %i(unconfirmed confirm_all),
+                member: {confirm: :post,
+                         voucher: :get}
 
   map.transfer_calendar 'calendar/transfers', controller: :calendar, action: :transfers
   map.companies_calendar 'calendar/companies', controller: :calendar, action: :companies

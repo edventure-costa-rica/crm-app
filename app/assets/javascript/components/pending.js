@@ -371,8 +371,8 @@ var EditModal = React.createClass({
     var {action, confirmUrl, kind, res} = this.state;
     var dateRange = this.formatRange(res.arrival, res.departure);
 
-    // already confirmed, dont show confirm button
-    if (res.confirmed) confirmUrl = null;
+    // already mailed, dont show confirm button
+    if (res.mailed_at) confirmUrl = null;
 
     return (
         <Modal bsSize="large" show={true} onHide={this.props.onHide}>
@@ -504,17 +504,19 @@ var ConfirmButton = React.createClass({
 
     return (
         <Button bsStyle={style} bsSize={size}
-                onClick={this.navigate}>
+                onClick={this.postForm}>
           <i className="glyphicon glyphicon-envelope" />
           {' '} Send Confirmation
         </Button>
     )
   },
 
-  navigate(ev) {
+  postForm(ev) {
     ev.preventDefault();
 
-    window.location = this.props.action;
+    $('<form method="post"/>')
+        .attr('action', this.props.action)
+        .submit();
   }
 });
 
