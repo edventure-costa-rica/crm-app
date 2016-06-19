@@ -55,6 +55,12 @@ class Reservation < ActiveRecord::Base
     trip.arrival.to_date + day + nights
   end
 
+  def guess_reservation_email
+    [:reservation_email, :general_email, :admin_email].
+        map { |method| company.send method }.
+        compact.map(&:clean_email).reject(&:empty?).first
+  end
+
   # currency values accept (and drop) dollar signs
   [:net_price,:price].each do |attr|
     define_method "#{attr}=" do |value|

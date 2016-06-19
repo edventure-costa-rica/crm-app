@@ -138,6 +138,31 @@ class ReservationsController < ApplicationController
     render json: events.map { |r| @template.reservation_event(r) }
   end
 
+  def confirm
+    @reservation = Reservation.find(params[:id])
+
+    if @reservation.confirmed
+      flash[:notice] = "Reservation already confirmed"
+
+    elsif @reservation.mailed_at
+      flash[:notice] = "Confirmation email sent at #{@reservation.mailed_at.to_datetime}"
+
+    else
+      begin
+        mail = ReservationMailer.deliver_confirmation_email(@reservation)
+        flash[:notice] = "Sent confirmation email to #{mail['to']}"
+
+      rescue RuntimeError => ex
+        flash[:notice] = "Failed to send email: #{ex.message}"
+      end
+
+      @reservation.mailed_at = Time.current
+      @reservation.save!
+    end
+
+    redirect_to pending_trip_reservations_url(@reservation.trip)
+  end
+
   def confirmed
     @trip = Trip.find(params[:trip_id])
     @reservations = @trip.reservations.all(order: 'day ASC, id ASC')

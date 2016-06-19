@@ -10,14 +10,10 @@ class ReservationMailer < ActionMailer::Base
   end
 
   def confirmation_email(res)
-    company = res.company
     family = res.client.family_name
 
-    rcpt = [:reservation_email, :general_email, :admin_email].
-      map { |method| company.send method }
-      compact.map(&:clean_email).reject(&:empty?).first
-
-    raise "#{company} has no email address" unless rcpt
+    rcpt = res.guess_reservation_email or
+        raise "#{res.company} has no reservation email address"
 
     recipients    rcpt
     from          config['from_address']
