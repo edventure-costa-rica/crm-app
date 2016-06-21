@@ -218,8 +218,8 @@ var Form = React.createClass({
   }
 });
 
-var RackPrice = React.createClass({
-  displayName: 'RackPrice',
+var Prices = React.createClass({
+  displayName: 'Prices',
   mixins: [LinkedStateMixin],
 
   getInitialState: function(props) {
@@ -490,7 +490,7 @@ var View = React.createClass({
 module.exports = {
   Form: Form,
   Create: Create,
-  RackPrice: RackPrice,
+  Prices: Prices,
   Confirmation: Confirmation,
   Payment: Payment,
   View: View

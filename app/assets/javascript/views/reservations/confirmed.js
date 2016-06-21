@@ -22,7 +22,7 @@ $rackPrice.on('click', function() {
 
   ReactDOM.render(
       React.createElement(
-          components.Reservations.RackPrice, {
+          components.Reservations.Prices, {
             action: action,
             company: company,
             services: services,
