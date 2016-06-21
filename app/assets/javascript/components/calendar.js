@@ -3,8 +3,8 @@ var _ = require('lodash');
 var chrono = require('chrono-node');
 var extend = require('util')._extend;
 
-var Calendar = React.createClass({
-  displayName: 'Calendar',
+var FullCalendar = React.createClass({
+  displayName: 'FullCalendar',
 
   calendarMethod(method, ...args) {
     return $(this.refs.calendar).fullCalendar(method, ...args)
@@ -36,4 +36,6 @@ var Calendar = React.createClass({
   }
 });
 
-module.exports = Calendar;
+
+module.exports = {FullCalendar};
+

@@ -1,4 +1,4 @@
-var Calendar = require('./calendar');
+var {FullCalendar} = require('./calendar');
 var Reservations = require('./reservations');
 var Trips = require('./trips');
 var Modal = require('react-bootstrap/lib/Modal');
@@ -267,7 +267,7 @@ var CalendarView = React.createClass({
 
   render() {
     return (
-        <Calendar {...this.props}
+        <FullCalendar {...this.props}
             ref="calendar"
             editable={true}
             eventDataTransform={this.setEventDisplayProperties}

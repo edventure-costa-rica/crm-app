@@ -1,12 +1,12 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var {Calendar} = require('../../components');
+var {FullCalendar} = require('../../components').Calendar;
 
 var $calendarMount = $('#calendar-mount');
 
 if ($calendarMount.length) {
   ReactDOM.render(
-      React.createElement(Calendar, {
+      React.createElement(FullCalendar, {
         eventSources: $calendarMount.data('events')
       }),
       $calendarMount.get(0)

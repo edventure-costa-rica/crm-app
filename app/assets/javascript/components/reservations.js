@@ -1,6 +1,5 @@
 var _ = require('lodash');
 var Forms = require('./forms');
-var Calendar = require('./calendar');
 var React = require('react');
 var Nav = require('react-bootstrap/lib/Nav');
 var NavItem = require('react-bootstrap/lib/NavItem');
