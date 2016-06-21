@@ -87,7 +87,7 @@
              data-reservation="<%=h res.to_json %>"
              data-edit-url="<%=h reservation_url(res) %>"
              data-delete-url="<%=h reservation_url(res) %>"
-             data-confirm-url="<%=h email_reservation_url(res) %>"
+             data-confirm-url="<%=h confirm_reservation_url(res) %>"
              data-kind="<%=h res.company.kind %>"></div>
       </td>
 
