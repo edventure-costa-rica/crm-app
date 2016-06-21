@@ -128,7 +128,7 @@ var SearchResult = React.createClass({
 
     return (
         <tr>
-          <td className="col-xs-6">
+          <td className="col-xs-4">
             <i className="glyphicon glyphicon-user" />
             &nbsp;
             <a href={this.props.url}>
@@ -136,11 +136,11 @@ var SearchResult = React.createClass({
             </a>
           </td>
 
-          <td className="col-xs-3 force-wrap">
+          <td className="col-xs-4 force-wrap">
             {email}
           </td>
 
-          <td className="col-xs-3">
+          <td className="col-xs-4">
             {phone}
           </td>
         </tr>
