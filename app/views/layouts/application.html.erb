@@ -53,7 +53,8 @@
         <% end %>
 
         <li class="dropdown">
-          <% link_to '#', 'class' => 'dropdown-toggle',
+          <% link_to reservations_calendar_url,
+                     'class' => 'dropdown-toggle',
                      'data-toggle' => 'dropdown' do %>
             <i class="glyphicon glyphicon-calendar"></i>
             Calendar <span class="caret"></span>
