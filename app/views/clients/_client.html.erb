@@ -20,27 +20,27 @@
 
   <div class="form-group">
     <%= f.label :family_name %>
-    <%= f.text_field :family_name, class: 'form-control' %>
+    <%= f.text_field :family_name, class: 'form-control', required: true %>
   </div>
   <div class="form-group">
-    <%= f.label :contact_address %><br />
+    <%= f.label :contact_address %>
     <%= f.text_area :contact_address, :rows => 3, class: 'form-control' %>
   </div>
   <div class="form-group">
-    <%= f.label :nationality %><br />
+    <%= f.label :nationality %>
     <%= f.text_field :nationality, class: 'form-control' %>
   </div>
   <div class="form-group">
-    <%= f.label :email %><br />
-    <%= f.text_field :email, class: 'form-control' %>
+    <%= f.label :email %>
+    <%= f.text_field :email, class: 'form-control', required: true %>
   </div>
   <div class="form-group">
-    <%= f.label :phone %><br />
+    <%= f.label :phone %>
     <%= f.text_field :phone, class: 'form-control' %>
   </div>
   <div class="form-group">
-    <%= f.label :notes %><br />
-    <%= f.text_area :notes, class: 'form-control' %>
+    <%= f.label :notes, 'Private Notes' %>
+    <%= f.text_area :notes, class: 'form-control', rows: 2 %>
   </div>
   <div class="btn-group">
     <%= f.submit submit_text, class: 'btn btn-primary' %>
