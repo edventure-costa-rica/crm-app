@@ -32,9 +32,11 @@ class Client < ActiveRecord::Base
     condition = [
       "family_name LIKE ? ESCAPE '\\' OR
        contact_name LIKE ? ESCAPE '\\' OR
-       email LIKE ? ESCAPE '\\'"]
+       email LIKE ? ESCAPE '\\' OR
+       phone LIKE ? ESCAPE '\\'"]
     condition << query.escape_like + '%'
     condition << query.escape_like + '%'
+    condition << '%' + query.escape_like + '%'
     condition << '%' + query.escape_like + '%'
 
     all(options.merge(conditions: condition))
