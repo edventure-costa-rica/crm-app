@@ -7,7 +7,8 @@ var $calendarMount = $('#calendar-mount');
 if ($calendarMount.length) {
   ReactDOM.render(
       React.createElement(FullCalendar, {
-        eventSources: $calendarMount.data('events')
+        eventSources: $calendarMount.data('events'),
+        defaultDate: $calendarMount.data('date')
       }),
       $calendarMount.get(0)
   );
