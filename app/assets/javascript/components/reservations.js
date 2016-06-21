@@ -249,14 +249,18 @@ var Prices = React.createClass({
 
           <div className="row">
             <div className="col-xs-6">
-              <Forms.StaticField title="Net Price" value={this.state.netPrice} />
+              <Forms.PriceField value={this.linkState('netPrice')}
+                                id="reservation-net_price"
+                                name="reservation[net_price]"
+                                required={false}
+                                title="Net Price" />
             </div>
 
             <div className="col-xs-6">
               <Forms.PriceField value={this.linkState('rackPrice')}
                                 id="reservation-price"
                                 name="reservation[price]"
-                                required={true}
+                                required={false}
                                 title="Rack Price" />
             </div>
           </div>

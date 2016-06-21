@@ -13,7 +13,7 @@ var $rackPrice = $('.edit-rack-price'),
 
 $rackPrice.on('click', function() {
   var $this = $(this),
-      netPrice = $this.data('net-price'),
+      netPrice = Number($this.data('net-price')),
       rackPrice = Number($this.data('rack-price')),
       services = $this.data('services'),
       company = $this.data('company'),
