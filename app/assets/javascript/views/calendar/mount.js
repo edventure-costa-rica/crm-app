@@ -6,12 +6,10 @@ var $calendarMount = $('#calendar-mount');
 
 if ($calendarMount.length) {
   ReactDOM.render(
-      <Calendar eventSources={[ $calendarMount.data('events') ]} />,
+      React.createElement(Calendar, {
+        eventSources: $calendarMount.data('events')
+      }),
       $calendarMount.get(0)
   );
 }
 
-
-function changeDate() {
-  
-}
