@@ -656,9 +656,14 @@ var TransferButtons = React.createClass({
   handleShowModal(which) {
     var trip = this.state.trip;
     var dateTime = moment.utc(trip[which]);
+    let date = dateTime.toISOString().split('T').shift();
     var title = 'Transfer ' + (which === 'arrival' ? 'In' : 'Out');
-    var transfer = which === 'arrival' ? 'pick_up' : 'drop_off';
-    var flight = which === 'arrival' ? 'arrival_flight' : 'departure_flight';
+
+    let transfers = ['pick_up', 'drop_off'];
+    let flight = which === 'arrival' ? 'arrival_flight' : 'departure_flight';
+    let location = which === 'arrival' ? this.props.dropOffs : this.props.pickUps;
+
+    if (which === 'departure') transfers.reverse();
 
     var defaults = {
       num_people: trip.total_people,
@@ -666,7 +671,12 @@ var TransferButtons = React.createClass({
       nights: 0
     };
 
-    defaults[transfer] = [trip[flight], dateTime.format('h:mma')].join(' ');
+    defaults[transfers.shift()] = [
+      trip[flight],
+      dateTime.format('h:mma')
+    ].join(' ');
+
+    defaults[transfers.shift()] = location[date];
 
     this.setState({show: true, defaults: defaults, dateTime: dateTime})
   },
@@ -680,7 +690,7 @@ var PageButtons = React.createClass({
   displayName: 'PageButtons',
 
   render() {
-    let {createUrl, pasteUrl, tripUrl, confirmUrl} = this.props;
+    let {createUrl, pasteUrl, tripUrl, confirmUrl, pickUps, dropOffs} = this.props;
     var trip = this.props.trip;
 
     return (
@@ -690,7 +700,10 @@ var PageButtons = React.createClass({
                                    action={tripUrl} />
           </ButtonGroup>
 
-          <TransferButtons trip={trip} createUrl={createUrl} />
+          <TransferButtons trip={trip}
+                           pickUps={pickUps}
+                           dropOffs={dropOffs}
+                           createUrl={createUrl} />
 
           <ButtonGroup>
             <ConfirmButton action={confirmUrl} confirmAll={true} />
