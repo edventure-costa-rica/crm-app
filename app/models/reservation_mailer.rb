@@ -9,13 +9,18 @@ class ReservationMailer < ActionMailer::Base
   end
 
   def confirmation_email(res)
-    rcpt = res.guess_reservation_email or
+    rcpt_address = res.guess_reservation_email or
         raise "#{res.company} has no reservation email address"
 
-    recipients    rcpt
-    from          config.fetch('from_address', 'do-not-reply@edventure.biz')
-    reply_to      config.fetch('reply_to', 'maite@edventure.biz')
+    from_address = config['from']
+
+    recipients    rcpt_address
+    from          from_address
     subject       "Reservación para los #{res.client.family_name}"
-    body          reservation: res
+    body          reservation: res,
+                  client: res.client,
+                  company: res.company,
+                  from: from_address,
+                  signature: config['signature']
   end
 end
