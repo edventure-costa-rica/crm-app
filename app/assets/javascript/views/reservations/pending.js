@@ -30,12 +30,14 @@ if ($buttons.length) {
   let tripUrl = $data.data('update-trip-url');
   let pasteUrl = $data.data('paste-reservations-url');
   let createUrl = $data.data('create-reservation-url');
+  let confirmUrl = $data.data('confirm-reservations-url');
   let trip = $data.data('trip');
 
   ReactDOM.render(
       <Pending.PageButtons trip={trip}
                            createUrl={createUrl}
                            pasteUrl={pasteUrl}
+                           confirmUrl={confirmUrl}
                            tripUrl={tripUrl} />,
       $buttons.get(0)
   )
