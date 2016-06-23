@@ -39,6 +39,33 @@ class TripsController < ApplicationController
     ]
   end
 
+  def confirm
+    trip = Trip.find(params[:id])
+    reservations = trip.reservations.
+      find_all { |r| r.mailed_at.nil? and not r.confirmed }
+
+    if reservations.empty?
+      flash[:notice] = 'All confirmations were already sent'
+
+    else
+      msgs = reservations.map do |res|
+        begin
+          mail = ReservationMailer.deliver_confirmation_email(res)
+          res.update_attributes(mailed_at: Time.current)
+
+          "Sent confirmation email to #{mail['to']}"
+
+        rescue => ex
+          "Failed to send email: #{ex.message}"
+        end
+      end
+
+      flash[:notice] = msgs.join(', ')
+    end
+
+    redirect_to pending_trip_reservations_url(trip)
+  end
+
   # GET /clients/:client_id/trips/new
   def new
     @trip = Trip.new
