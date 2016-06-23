@@ -500,13 +500,14 @@ var CreateModal = React.createClass({
 var ConfirmButton = React.createClass({
   render() {
     var size = this.props.bsSize;
-    var style = this.props.bsStyle || 'default';
+    var style = this.props.bsStyle || 'success';
+    var title = this.props.confirmAll ? 'Send Confirmations' : 'Send Confirmation';
 
     return (
         <Button bsStyle={style} bsSize={size}
                 onClick={this.postForm}>
           <i className="glyphicon glyphicon-envelope" />
-          {' '} Send Confirmation
+          {' ' + title}
         </Button>
     )
   },
@@ -558,11 +559,10 @@ var PasteButton = React.createClass({
     let action = this.props.action;
 
     return (
-        <div id="paste-button">
-          <Button bsStyle="info" onClick={this.handleShowModal}>
-            <i className="glyphicon glyphicon-paste" />
-            {' '} Paste from Excel
-          </Button>
+        <Button bsStyle="info" onClick={this.handleShowModal}>
+          <i className="glyphicon glyphicon-paste"/>
+          {' '} Paste from Excel
+
 
           <Modal show={this.state.show}
                  onHide={this.handleCloseModal}>
@@ -572,7 +572,7 @@ var PasteButton = React.createClass({
                 Paste from Excel
               </Modal.Title>
             </Modal.Header>
-            
+
             <Modal.Body>
               <form action={action} method="post">
                 <div className="form-group">
@@ -583,7 +583,7 @@ var PasteButton = React.createClass({
                   <textarea rows={6}
                             className="form-control"
                             id="reservations-paste"
-                            name="reservations[paste]" />
+                            name="reservations[paste]"/>
                 </div>
 
                 <p className="form-control-static">
@@ -594,7 +594,7 @@ var PasteButton = React.createClass({
                 </p>
 
                 <Button type="submit">
-                  <i className="glyphicon glyphicon-paste" />
+                  <i className="glyphicon glyphicon-paste"/>
                   &nbsp;
                   Create Reservations
                 </Button>
@@ -602,7 +602,7 @@ var PasteButton = React.createClass({
 
             </Modal.Body>
           </Modal>
-        </div>
+        </Button>
     );
   },
 
@@ -674,7 +674,7 @@ var PageButtons = React.createClass({
   displayName: 'PageButtons',
 
   render() {
-    let {createUrl, pasteUrl, tripUrl} = this.props;
+    let {createUrl, pasteUrl, tripUrl, confirmUrl} = this.props;
     var trip = this.props.trip;
 
     return (
@@ -687,6 +687,7 @@ var PageButtons = React.createClass({
           <TransferButtons trip={trip} createUrl={createUrl} />
 
           <ButtonGroup>
+            <ConfirmButton action={confirmUrl} confirmAll={true} />
             <PasteButton action={pasteUrl} />
           </ButtonGroup>
 
