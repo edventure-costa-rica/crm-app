@@ -515,6 +515,12 @@ var ConfirmButton = React.createClass({
   postForm(ev) {
     ev.preventDefault();
 
+    let confirmation = this.props.confirmAll
+        ? 'Send confirmation emails for all unconfirmed reservations?'
+        : 'Send confirmation email for this reservation?';
+
+    if (! confirm(confirmation)) return;
+
     $('<form method="post"/>')
         .attr('action', this.props.action)
         .submit();
