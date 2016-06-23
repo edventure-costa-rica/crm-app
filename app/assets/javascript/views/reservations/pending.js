@@ -30,7 +30,7 @@ if ($buttons.length) {
   let tripUrl = $data.data('update-trip-url');
   let pasteUrl = $data.data('paste-reservations-url');
   let createUrl = $data.data('create-reservation-url');
-  let confirmUrl = $data.data('confirm-reservations-url');
+  let confirmUrl = $data.data('confirm-trip-url');
   let pickUps = $data.data('pick-ups');
   let dropOffs = $data.data('drop-offs');
   let trip = $data.data('trip');

@@ -9,7 +9,7 @@
      data-arrival="<%= @trip.arrival_date %>"
      data-departure="<%= @trip.departure_date %>"
      data-update-trip-url="<%=h trip_url(@trip) %>"
-     data-confirm-reservations-url="<%= h confirm_all_reservations_url(@trip) %>"
+     data-confirm-trip-url="<%= h confirm_trip_url(@trip) %>"
      data-create-reservation-url="<%= trip_reservations_url(@trip) %>"
      data-paste-reservations-url="<%=h paste_trip_reservations_url(@trip) %>"
      data-pick-ups="<%= h @pick_ups.to_json %>"

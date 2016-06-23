@@ -15,7 +15,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :trips,
                 except: %i(new create edit show),
-                member: %i(event),
+                member: %i(event confirm),
                 collection: %i(upcoming) do |trip|
     trip.resource :reservations, only: :create,
                   collection: {pending: :get,
@@ -28,7 +28,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :reservations,
                 only: [:update, :destroy],
-                collection: %i(unconfirmed confirm_all),
+                collection: %i(unconfirmed),
                 member: {confirm: :post,
                          voucher: :get}
 
