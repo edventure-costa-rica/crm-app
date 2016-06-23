@@ -56,7 +56,7 @@ class Reservation < ActiveRecord::Base
   end
 
   def guess_reservation_email
-    [:reservation_email, :general_email, :admin_email].
+    [:contact_reservation_email, :contact_general_email, :contact_admin_email].
         map { |method| company.send method }.
         compact.map(&:clean_email).reject(&:empty?).first
   end
