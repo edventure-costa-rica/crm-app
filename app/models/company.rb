@@ -48,8 +48,6 @@ class Company < ActiveRecord::Base
 
   validates_presence_of :bank_govt_id_type,
     :if => Proc.new { |co| not co.bank_govt_id.blank? }
-  validates_inclusion_of :bank_govt_id_type, :in => Company.govt_id_types,
-    :if => Proc.new { |co| not co.bank_govt_id_type.blank? }
 
   has_many :reservations
   belongs_to :region

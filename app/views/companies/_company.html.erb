@@ -1,4 +1,3 @@
-<%= javascript_include_tag 'tabs' %>
 <% form_for(@company, html: {class: 'form'}) do |f| %>
   <%= f.error_messages %>
 
@@ -166,8 +165,7 @@
     <div class="form-group">
       <%= f.label :bank_govt_id_type %>
       <%= f.select :bank_govt_id_type,
-                   Company.govt_id_types.
-                       map { |t| [ co_f(t), t ] },
+                   Company.govt_id_types.map { |t| [co_f(t), t] },
                    { :prompt => true },
                    { :class => 'form-control' }
       %>
