@@ -25,12 +25,16 @@ module ReservationsHelper
   end
 
   def trip_pick_up_date(trip, date)
-    if trip.arrival.to_date == date.to_date
+    date = date.to_date
+
+    if trip.arrival.to_date == date
       [trip.arrival_flight, trip.arrival.strftime('%l:%M %P')].compact.join(' ')
 
     else
+      # pick up from the first hotel for the given date
       trip.reservations.
-          detect { |r| r.company.hotel? and r.departure == date.to_date }.
+          find_all { |r| r.company.hotel? }.
+          detect { |r| date.between?(r.arrival, r.departure) }.
           try(:company).try(:name)
     end
   end
@@ -45,12 +49,16 @@ module ReservationsHelper
   end
 
   def trip_drop_off_date(trip, date)
-    if trip.departure.to_date == date.to_date
+    date = date.to_date
+
+    if trip.departure.to_date == date
       [trip.departure_flight, trip.departure.strftime('%l:%M %P')].compact.join(' ')
 
     else
+      # drop off at the last hotel for the given date
       trip.reservations.
-          detect { |r| r.company.hotel? and r.arrival == date.to_date }.
+          find_all { |r| r.company.hotel? }.to_a.reverse.
+          detect { |r| r.arrival == date or date.between?(r.arrival, r.departure) }.
           try(:company).try(:name)
     end
   end
