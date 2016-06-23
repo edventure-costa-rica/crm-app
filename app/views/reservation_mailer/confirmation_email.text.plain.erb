@@ -1,0 +1,53 @@
+Buenos días,
+
+Reciba un cordial saludo!
+
+Favor realizar la siguiente reservación
+Y CONFIRMARNOS CON EL MONTO TOTAL NETO A PAGAR MEDIANTE PROFORMA:
+
+
+Lugar: <%= @company.name %>
+Nombre Cliente: los <%= @client.family_name %>
+Nacionalidad: <%= @client.nationality %>
+Número de personas: <%= @reservation.num_people %>
+
+Servicio: <%= @reservation.services %>
+
+<% if @reservation.nights > 0 %>
+Ingreso: <%= l @reservation.arrival, format: :long %>
+Salida: <%= l @reservation.departure, format: :long %>
+  <%= pluralize @reservation.nights, 'noche' %>
+<% end %>
+
+*** Nota ***
+
+Como política de nuestra empresa, una vez realizado el pago
+por la reservación respectiva, exigimos factura por los servicios que
+contratamos, ésta deberá ser confeccionada a nombre de:
+  Edventure Costa Rica S.A.
+
+Y enviada al apartado postal:
+  1073-2070 Costa Rica
+
+O bien, escaneada mediante esta misma cuenta de email.
+
+*** Nota ***
+
+
+De antemano agradecemos su gran apoyo y pronta respuesta.
+
+Muchas gracias,
+
+<%= @signature %>
+<%= @from %>
+EDVENTURE COSTA RICA S.A.
+
+
+---
+
+Find Edventure... and live your dream!
+
+http://www.edventure.biz
+office: (506) 2273-0981
+mobile: (506) 8539-0651
+
