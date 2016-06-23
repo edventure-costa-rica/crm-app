@@ -13,14 +13,16 @@ class ReservationMailer < ActionMailer::Base
         raise "#{res.company} has no reservation email address"
 
     from_address = config['from']
+    signature    = config['signature']
 
     recipients    rcpt_address
-    from          from_address
-    subject       "Reservación para los #{res.client.family_name}"
+    from          "#{signature} <#{from_address}>"
+    # bcc           from_address
+    subject       "Reservación Fam. #{res.client.family_name}"
     body          reservation: res,
                   client: res.client,
                   company: res.company,
                   from: from_address,
-                  signature: config['signature']
+                  signature: signature
   end
 end
