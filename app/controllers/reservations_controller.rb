@@ -19,8 +19,7 @@ class ReservationsController < ApplicationController
   # POST /trip/1/reservation
   def create
     @trip = Trip.find(params[:trip_id])
-    @reservation = @trip.reservations.build(
-      reservation_params.merge(confirmed: false))
+    @reservation = @trip.reservations.build(reservation_params)
 
     respond_to do |format|
       if @reservation.save
@@ -223,7 +222,7 @@ class ReservationsController < ApplicationController
   private
 
   def reservation_params
-    params[:reservation]
+    params[:reservation].merge(confirmed: false, mailed_at: nil)
   end
 
   def reservation_paste_params
