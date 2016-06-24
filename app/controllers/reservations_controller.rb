@@ -19,7 +19,7 @@ class ReservationsController < ApplicationController
   # POST /trip/1/reservation
   def create
     @trip = Trip.find(params[:trip_id])
-    @reservation = @trip.reservations.build(reservation_params)
+    @reservation = @trip.reservations.build(create_params)
 
     respond_to do |format|
       if @reservation.save
@@ -51,7 +51,7 @@ class ReservationsController < ApplicationController
       end
 
     respond_to do |format|
-      if @reservation.update_attributes(reservation_params)
+      if @reservation.update_attributes(update_params)
         format.html { redirect_to(destination, :notice => 'Reservation was successfully updated.') }
         format.json { render json: @reservation }
       else
@@ -199,8 +199,6 @@ class ReservationsController < ApplicationController
   end
 
   def paste
-    paste_params = reservation_paste_params
-
     trip = Trip.find(params[:trip_id])
     parser = ExcelParser.new(paste_params[:paste])
 
@@ -221,11 +219,20 @@ class ReservationsController < ApplicationController
 
   private
 
-  def reservation_params
+  def update_params
+    params[:reservation].tap do |params|
+      unless params[:confirmed]
+        params[:confirmed] = false
+        params[:mailed_at] = nil
+      end
+    end
+  end
+
+  def create_params
     params[:reservation].merge(confirmed: false, mailed_at: nil)
   end
 
-  def reservation_paste_params
+  def paste_params
     params[:reservations]
   end
 
