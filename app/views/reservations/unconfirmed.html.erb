@@ -59,6 +59,7 @@
                     data-action="<%= reservation_url(res, next: 'unconfirmed') %>"
                     data-company="<%= h res.company.to_s %>"
                     data-notes="<%= h res.notes.to_s %>"
+                    data-net-price="<%= h res.net_price %>"
                     data-confirmation="<%= h res.confirmation_no.to_s %>"
                     data-services="<%= h res.services.to_s %>">
               <i class="glyphicon glyphicon-ok-circle"></i>

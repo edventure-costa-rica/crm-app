@@ -319,6 +319,13 @@ var Confirmation = React.createClass({
             </div>
 
             <div className="col-xs-12">
+              <Forms.PriceField title="Net Price"
+                                value={this.linkState('netPrice')}
+                                id="reservation-net_price"
+                                name="reservation[net_price]" />
+            </div>
+
+            <div className="col-xs-12">
               <Forms.TextField title="Confirmation Number"
                                value={this.linkState('confirmation')}
                                name="reservation[confirmation_no]"

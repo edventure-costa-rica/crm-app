@@ -14,6 +14,7 @@ $confirmRes.on('click', function() {
   var $this = $(this),
       confirmation = $this.data('confirmation'),
       notes = $this.data('notes'),
+      netPrice = Number($this.data('net-price')),
       services = $this.data('services'),
       company = $this.data('company'),
       action = $this.data('action');
@@ -25,6 +26,7 @@ $confirmRes.on('click', function() {
             company: company,
             services: services,
             confirmation: confirmation,
+            netPrice: netPrice,
             notes: notes
           }
       ),
