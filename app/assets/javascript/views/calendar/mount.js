@@ -8,7 +8,8 @@ if ($calendarMount.length) {
   ReactDOM.render(
       React.createElement(FullCalendar, {
         eventSources: $calendarMount.data('events'),
-        defaultDate: $calendarMount.data('date')
+        defaultDate: $calendarMount.data('date'),
+        pageLoadDate: $calendarMount.data('page-load-date')
       }),
       $calendarMount.get(0)
   );
