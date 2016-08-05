@@ -13,6 +13,18 @@
         <%= l @end_at - 1, format: :short %>
       </small>
     </h1>
+
+    <form method="get" class="form" id="company">
+      <div class="form-group">
+        <label for="company_id">Company:</label>
+        <select name="company_id" id="company_id" class="form-control"
+                onchange="$('form#company').submit()">
+          <% company_id = @company ? @company.id : nil %>
+          <option value disabled<%= ' selected' unless company_id %>>Select a Company</option>
+          <%= options_from_collection_for_select @companies, :id, :name, company_id %>
+        </select>
+      </div>
+    </form>
   </div>
 
   <div id="calendar-mount"

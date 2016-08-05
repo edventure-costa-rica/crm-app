@@ -16,9 +16,11 @@ var FullCalendar = React.createClass({
 
     if (pageLoadDate && ! this.loading) {
       let url = [location.protocol, '//', location.host, location.pathname].join('');
-      url += '?' + startParam + '=' + encodeURIComponent(view.intervalStart.format('YYYY-MM-DD'));
+      let start = startParam + '=' + encodeURIComponent(view.intervalStart.format('YYYY-MM-DD'));
+      let query = location.search.slice(1).replace(/start=[0-9-]+/, '');
+      if (query && query[0] !== '&') query = '&' + query;
 
-      location.href = url;
+      location.href = url + '?' + start + query;
     }
   },
 
