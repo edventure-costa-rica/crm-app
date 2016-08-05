@@ -129,7 +129,7 @@ class Trip < ActiveRecord::Base
   def mkdir_ftp
     if Trip.ftp_mkdir
       logger.info "Creating FTP directory at #{ftp_abs_path}"
-      FileUtils.mkdir_p(ftp_abs_path) rescue nil
+      logger.info %x(mkdir -p #{ftp_abs_path})
     else
       logger.info "Not creating FTP directory"
     end
