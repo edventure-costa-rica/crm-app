@@ -1,6 +1,9 @@
+require 'fileutils'
+
 class Trip < ActiveRecord::Base
   class << self
     attr_reader :statuses
+    attr_accessor :ftp_mkdir, :ftp_host, :ftp_root, :ftp_path
   end
 
   @statuses = [
@@ -11,6 +14,8 @@ class Trip < ActiveRecord::Base
 
   belongs_to :client
   has_many :reservations, dependent: :delete_all, order: 'day ASC'
+
+  after_create :mkdir_ftp
 
   before_validation_on_create :generate_default_values
 
@@ -39,6 +44,19 @@ class Trip < ActiveRecord::Base
   end
 
   def to_s; new_record? ? Trip.human_name : self.registration_id; end
+
+  def ftp_abs_path
+    File.join(Trip.ftp_root, ftp_rel_path)
+  end
+
+  def ftp_rel_path
+    name = [created_at.year, registration_id, client.family_name] * '_'
+    File.join(Trip.ftp_path, name)
+  end
+
+  def ftp_url
+    File.join("ftp://#{Trip.ftp_host}", ftp_rel_path)
+  end
 
   def days
     (departure.to_date - arrival.to_date).to_i
@@ -105,6 +123,15 @@ class Trip < ActiveRecord::Base
         self.arrival.year
 
       self.registration_id = reg
+    end
+  end
+
+  def mkdir_ftp
+    if Trip.ftp_mkdir
+      logger.info "Creating FTP directory at #{ftp_abs_path}"
+      FileUtils.mkdir_p(ftp_abs_path) rescue nil
+    else
+      logger.info "Not creating FTP directory"
     end
   end
 
