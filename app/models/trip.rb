@@ -46,12 +46,12 @@ class Trip < ActiveRecord::Base
   def to_s; new_record? ? Trip.human_name : self.registration_id; end
 
   def ftp_abs_path
-    File.join(Trip.ftp_root, ftp_rel_path)
+    File.join(Trip.ftp_root.to_s, ftp_rel_path)
   end
 
   def ftp_rel_path
     name = [created_at.year, registration_id, client.family_name] * '_'
-    File.join(Trip.ftp_path, name)
+    File.join(Trip.ftp_path.to_s, name)
   end
 
   def ftp_url

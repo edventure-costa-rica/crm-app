@@ -686,11 +686,24 @@ var TransferButtons = React.createClass({
   }
 });
 
+var FtpButton = React.createClass({
+  displayName: 'FtpButton',
+
+  render: function() {
+    return (
+      <Button href={this.props.action}>
+        <i className="glyphicon glyphicon-folder-open" />
+        {' '}FTP Files
+      </Button>
+    );
+  }
+})
+
 var PageButtons = React.createClass({
   displayName: 'PageButtons',
 
   render() {
-    let {createUrl, pasteUrl, tripUrl, confirmUrl, pickUps, dropOffs} = this.props;
+    let {createUrl, pasteUrl, tripUrl, confirmUrl, ftpUrl, pickUps, dropOffs} = this.props;
     var trip = this.props.trip;
 
     return (
@@ -708,6 +721,7 @@ var PageButtons = React.createClass({
           <ButtonGroup>
             <ConfirmButton action={confirmUrl} confirmAll={true} />
             <PasteButton action={pasteUrl} />
+            <FtpButton action={ftpUrl} />
           </ButtonGroup>
 
         </ButtonToolbar>

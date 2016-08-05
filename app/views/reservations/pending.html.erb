@@ -8,6 +8,7 @@
      data-trip="<%=h @trip.to_json %>"
      data-arrival="<%= @trip.arrival_date %>"
      data-departure="<%= @trip.departure_date %>"
+     data-ftp-url="<%= @trip.ftp_url %>"
      data-update-trip-url="<%=h trip_url(@trip) %>"
      data-confirm-trip-url="<%= h confirm_trip_url(@trip) %>"
      data-create-reservation-url="<%= trip_reservations_url(@trip) %>"
