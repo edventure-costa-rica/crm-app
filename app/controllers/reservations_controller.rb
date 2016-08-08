@@ -221,7 +221,8 @@ class ReservationsController < ApplicationController
 
   def update_params
     params[:reservation].tap do |params|
-      unless params[:confirmed]
+      if not params.has_key?(:confirmed) and
+          @reservation.confirmation_change(params)
         params[:confirmed] = false
         params[:mailed_at] = nil
       end

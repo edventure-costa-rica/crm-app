@@ -94,4 +94,10 @@ class Reservation < ActiveRecord::Base
   def as_json(options={})
     super({methods: %i(arrival departure)}.merge(options))
   end
+
+  def confirmation_change(params)
+    %i(drop_off pick_up services num_people).any? do |key|
+      params.has_key?(key) and params[key].to_s != send(key).to_s
+    end
+  end
 end
