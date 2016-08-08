@@ -234,7 +234,10 @@ var Page = React.createClass({
         }
 
         if (res.confirmed) {
-          $el.find('fc-content').append('<i class="glyphicon glyphicon-ok"/>')
+          tooltip.push('\u2713 Confirmed');
+          $el.find('.fc-title').before(
+              `<i class="glyphicon glyphicon-ok"></i>`
+          )
         }
     }
 
