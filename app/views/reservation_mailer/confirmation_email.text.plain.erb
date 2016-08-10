@@ -10,6 +10,9 @@ Lugar: <%= @company.name %>
 Nombre Cliente: Fam. <%= @client.family_name %>
 Nacionalidad: <%= @client.nationality %>
 Número de personas: <%= @reservation.num_people %>
+<% if @trip.num_children > 0 %>
+  Niños: <%= @trip.num_children %>
+<% end %>
 
 Servicio: <%= @reservation.services %>
 
