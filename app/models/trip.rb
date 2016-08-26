@@ -18,6 +18,7 @@ class Trip < ActiveRecord::Base
   after_create :mkdir_ftp
 
   before_validation_on_create :generate_default_values
+  before_create :generate_registration_id
 
   validates_presence_of :arrival, :departure
 
@@ -114,15 +115,16 @@ class Trip < ActiveRecord::Base
     self.num_disabled = 0 if self.num_disabled.nil?
     self.payment_pct  = 0 if self.payment_pct.nil?
     self.status = 'pending' if self.status.nil?
+  end
 
-    unless self.registration_id
-      reg = 'F' + self.client.family_name[0,3].upcase
-      reg += format '%02d%02d%04d',
-        self.arrival.day,
-        self.arrival.month,
-        self.arrival.year
-
-      self.registration_id = reg
+  def generate_registration_id
+    if self.registration_id.nil?
+      self.registration_id =
+          format 'F%s%02d%02d%04d',
+                 self.client.family_name.strip[0, 3].upcase,
+                 self.arrival_date.day,
+                 self.arrival_date.month,
+                 self.arrival_date.year
     end
   end
 
