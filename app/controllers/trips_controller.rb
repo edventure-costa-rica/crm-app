@@ -87,13 +87,15 @@ class TripsController < ApplicationController
     respond_to do |format|
       if @trip.save
         format.html { redirect_to(pending_trip_reservations_url(@trip),
-                                  :notice => 'Trip was successfully created.') }
-        format.xml  { render :xml => @trip, :status => :created, :location => @trip }
-      else
-        flash[:notice] = @trip.errors.full_messages.join(', ')
+                                  notice: 'Trip was successfully created.') }
+        format.json { render json: {location: pending_trip_reservations_url(@trip)},
+                             status: :created,
+                             notice: 'Trip was successfully created.' }
 
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @trip.errors, :status => :unprocessable_entity }
+      else
+        format.html { render 'clients/show',
+                             notice: @trip.errors.full_messages.join(', ') }
+        format.json { render json: @trip.errors, status: :unprocessable_entity }
       end
     end
   end
