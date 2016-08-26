@@ -84,19 +84,13 @@ class TripsController < ApplicationController
     @client = Client.find(params[:client_id])
     @trip = @client.trips.build(trip_params)
 
-    respond_to do |format|
-      if @trip.save
-        format.html { redirect_to(pending_trip_reservations_url(@trip),
-                                  notice: 'Trip was successfully created.') }
-        format.json { render json: {location: pending_trip_reservations_url(@trip)},
-                             status: :created,
-                             notice: 'Trip was successfully created.' }
-
-      else
-        format.html { render 'clients/show',
-                             notice: @trip.errors.full_messages.join(', ') }
-        format.json { render json: @trip.errors, status: :unprocessable_entity }
-      end
+    if @trip.save
+      render json: {location: pending_trip_reservations_url(@trip)},
+             status: :created,
+             notice: 'Trip was successfully created.'
+    else
+      render json: {errors: @trip.errors.full_messages},
+             status: :unprocessable_entity
     end
   end
 

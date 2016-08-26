@@ -71,10 +71,26 @@ var QuickForm = React.createClass({
     this.setState(this.getInitialState(props));
   },
 
+  submitForm: function(ev) {
+    ev.preventDefault();
+
+    const form = ev.target;
+    this.setState({errors: null});
+
+    $.post(form.action, $(form).serialize(), 'json').then((data) => {
+      location.href = data.location;
+
+    }, (xhr) => {
+      const data = xhr.responseJSON;
+      this.setState({errors: data.errors});
+    });
+  },
+
   render: function () {
     var cancelButton, method = 'post';
     var title = 'Create New';
     var small;
+    var errors;
 
     if (this.state.id) {
       method = 'put';
@@ -94,6 +110,16 @@ var QuickForm = React.createClass({
       );
     }
 
+    if (this.state.errors) {
+      errors = (
+          <div className="alert alert-warning alert-dismissible">
+            <button className="close" data-dismiss="alert"><span>&times;</span></button>
+
+            {this.state.errors.join(', ')}
+          </div>
+      );
+    }
+
     return (
         <Modal bsSize="large" show={this.state.show} onHide={this.props.onHide}>
           <Modal.Header closeButton>
@@ -104,8 +130,12 @@ var QuickForm = React.createClass({
           </Modal.Header>
 
           <Modal.Body>
+            {errors}
+
             <div className="row">
-              <form action={this.props.action} method="post" className="form">
+              <form action={this.props.action}
+                    onSubmit={this.submitForm}
+                    method="post" className="form">
                 <input type="hidden" name="_method" value={method} />
 
                 <div className="col-xs-6">
