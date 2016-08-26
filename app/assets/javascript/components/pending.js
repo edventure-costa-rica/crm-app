@@ -236,8 +236,17 @@ var Page = React.createClass({
         if (res.confirmed) {
           tooltip.push('\u2713 Confirmed');
           $el.find('.fc-title').before(
-              `<i class="glyphicon glyphicon-ok"></i>`
+              '<i class="glyphicon glyphicon-ok"></i> '
           )
+        }
+
+        else if (res.mailed_at) {
+          const mailed = moment.utc(res.mailed_at).format('lll');
+          tooltip.push('Emailed: ' + mailed);
+
+          $el.find('.fc-title').before(
+              '<i class="glyphicon glyphicon-envelope"></i> '
+          );
         }
     }
 
