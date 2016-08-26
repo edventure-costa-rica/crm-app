@@ -20,7 +20,8 @@ class Trip < ActiveRecord::Base
   before_validation_on_create :generate_default_values
   before_create :generate_registration_id
 
-  validates_presence_of :arrival, :departure
+  validates_presence_of :arrival, :departure,
+                        message: 'must be a valid date'
 
   validates_numericality_of :total_people,
     :greater_than => 0, :only_integer => true
