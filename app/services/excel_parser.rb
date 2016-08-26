@@ -49,7 +49,11 @@ DIA	LUGAR	HOTEL	MEALS	TIPO HABITACION	TARIFA HAB 1	TARIFA HAB 2
         company_name = columns[2]
         services = columns.values_at(3, 4).grep(/\w/).join(", ")
         price = columns.from(5).map(&:to_f).reduce(0, &:+)
-        day = columns.first.to_i - 1
+
+        date = Date.parse(columns.first)
+        raise "Cannot parse date #{columns.first}" unless date and date > trip.arrival.to_date
+
+        day = (date - trip.arrival.to_date).to_i
 
         raise "Cannot find company named #{company_name}" unless
             (company = find_hotel(company_name))
@@ -68,6 +72,7 @@ DIA	LUGAR	HOTEL	MEALS	TIPO HABITACION	TARIFA HAB 1	TARIFA HAB 2
           entry[:services] = services
           entry[:num_people] = trip.total_people
 
+          Rails.logger.info "*** entry: #{entry.inspect}"
           entries.push(entry)
         end
 
