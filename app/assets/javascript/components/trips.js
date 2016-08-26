@@ -78,7 +78,13 @@ var QuickForm = React.createClass({
     this.setState({errors: null});
 
     $.post(form.action, $(form).serialize(), 'json').then((data) => {
-      location.href = data.location;
+      if (data && data.location) {
+        location.href = data.location;
+      }
+      else {
+        this.setState({show: false});
+        alert('Trip saved OK');
+      }
 
     }, (xhr) => {
       const data = xhr.responseJSON;
@@ -184,6 +190,13 @@ var QuickForm = React.createClass({
                                    name="trip[departure_flight]"
                                    title="Location / Flight"
                                    value={this.linkState('departure_flight')} />
+                </div>
+
+                <div className="col-xs-12">
+                  <Forms.TextArea id="trip-notes"
+                                  name="trip[notes]"
+                                  title="Private Notes"
+                                  value={this.linkState('notes')} />
                 </div>
 
                 <div className="col-xs-12 text-right">

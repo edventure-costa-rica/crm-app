@@ -85,9 +85,10 @@ class TripsController < ApplicationController
     @trip = @client.trips.build(trip_params)
 
     if @trip.save
+      flash[:notice] = 'Trip was successfully created.'
       render json: {location: pending_trip_reservations_url(@trip)},
-             status: :created,
-             notice: 'Trip was successfully created.'
+             status: :created
+
     else
       render json: {errors: @trip.errors.full_messages},
              status: :unprocessable_entity
@@ -107,14 +108,13 @@ class TripsController < ApplicationController
         pending_trip_reservations_url(@trip)
       end
 
-    respond_to do |format|
-      if @trip.update_attributes(trip_params)
-        format.html { redirect_to(url, :notice => 'Trip was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @trip.errors, :status => :unprocessable_entity }
-      end
+    if @trip.update_attributes(trip_params)
+      flash[:notice] = 'Trip was successfully updated.'
+      render json: {location: pending_trip_reservations_url(@trip)}
+
+    else
+      render json: {errors: @trip.errors.full_messages},
+             status: :unprocessable_entity
     end
   end
 
