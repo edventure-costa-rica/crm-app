@@ -19,6 +19,18 @@
         <td><%= l @trip.departure.try(:to_datetime) %></td>
         <td><%= @trip.departure_flight %></td>
       </tr>
+
+      <% unless @trip.notes.blank? %>
+        <tr>
+          <td>
+            <strong>Notes:</strong>
+          </td>
+
+          <td colspan="4">
+            <span><%= simple_format @trip.notes %></span>
+          </td>
+        </tr>
+      <% end %>
     </table>
   </div>
 </div>
