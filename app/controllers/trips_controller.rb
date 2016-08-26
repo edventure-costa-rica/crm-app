@@ -101,13 +101,6 @@ class TripsController < ApplicationController
     @trip = Trip.find(params[:id])
     @client = @trip.client
 
-    url =
-      if params[:next] == 'confirmed'
-        confirmed_trip_reservations_url(@trip)
-      else
-        pending_trip_reservations_url(@trip)
-      end
-
     if @trip.update_attributes(trip_params)
       flash[:notice] = 'Trip was successfully updated.'
       render json: {location: pending_trip_reservations_url(@trip)}
