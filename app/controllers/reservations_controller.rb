@@ -162,6 +162,29 @@ class ReservationsController < ApplicationController
     redirect_to pending_trip_reservations_url(@reservation.trip)
   end
 
+  def confirmation
+    @reservation = Reservation.find(params[:id])
+
+    if @reservation.confirmed
+      render json: {error: "Reservation already confirmed"}
+
+    elsif @reservation.mailed_at
+      render json: {
+          error: "Confirmation email sent " +
+              I18n.l(@reservation.mailed_at.to_datetime, format: :short)
+      }
+
+    else
+      begin
+        mail = ReservationMailer.create_confirmation_email(@reservation)
+        render json: {mail: {rcpt: mail.to, subject: mail.subject, body: mail.body}}
+
+      rescue => ex
+        render json: {error: ex.message, stack: ex.backtrace}
+      end
+    end
+  end
+
   def confirmed
     @trip = Trip.find(params[:trip_id])
     @reservations = @trip.reservations.all(order: 'day ASC, id ASC')

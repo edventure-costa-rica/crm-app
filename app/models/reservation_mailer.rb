@@ -8,21 +8,28 @@ class ReservationMailer < ActionMailer::Base
     super
   end
 
-  def confirmation_email(res)
-    rcpt_address = res.guess_reservation_email or
-        raise "#{res.company} has no reservation email address"
+  def confirmation_email(res, override=Hash.new)
+    rcpt_address = override.fetch(:rcpt) do
+      res.guess_reservation_email
+    end
 
     from_address = config['from']
     signature    = config['signature']
+    content      = override.fetch(:body) do
+      { reservation: res,
+        trip: res.trip,
+        client: res.client,
+        company: res.company,
+        from: from_address,
+        signature: signature
+      }
+    end
+
 
     recipients    rcpt_address
     from          "#{signature} <#{from_address}>"
     bcc           from_address
     subject       "Reservación Fam. #{res.client.family_name}"
-    body          reservation: res,
-                  client: res.client,
-                  company: res.company,
-                  from: from_address,
-                  signature: signature
+    body          content
   end
 end

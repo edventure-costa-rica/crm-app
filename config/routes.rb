@@ -30,6 +30,7 @@ ActionController::Routing::Routes.draw do |map|
                 only: [:update, :destroy],
                 collection: %i(unconfirmed),
                 member: {confirm: :post,
+                         confirmation: :get,
                          voucher: :get}
 
   map.transfer_calendar 'calendar/transfers', controller: :calendar, action: :transfers
