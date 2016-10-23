@@ -32,7 +32,7 @@ class ChangeReservationDates < ActiveRecord::Migration
     Trip.find_each do |trip|
       Reservation.find_all_by_trip_id(trip.id).each do |res|
         day = (res.arrival.to_date - trip.arrival.to_date).to_i
-        nights = (res.departure.to_date - res.departure.to_date).to_i
+        nights = (res.departure.to_date - res.arrival.to_date).to_i
         
         res.update_attributes day: day, nights: nights
       end
