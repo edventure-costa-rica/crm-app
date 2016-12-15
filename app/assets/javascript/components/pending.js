@@ -1,6 +1,7 @@
 var {FullCalendar} = require('./calendar');
 var Reservations = require('./reservations');
 var Trips = require('./trips');
+var Forms = require('./forms');
 var Modal = require('react-bootstrap/lib/Modal');
 var Button = require('react-bootstrap/lib/Button');
 var ButtonGroup = require('react-bootstrap/lib/ButtonGroup');
@@ -379,7 +380,11 @@ var EditModal = React.createClass({
     var visible = !! this.state.visible;
 
     if (! visible) {
-      return <Modal show={false} />
+      return (
+          <div>
+            {this.state.nextModal}
+          </div>
+      );
     }
 
     var {action, confirmUrl, mailUrl, kind, res} = this.state;
@@ -405,11 +410,19 @@ var EditModal = React.createClass({
               <ReservationButtons deleteUrl={action}
                                   confirmUrl={confirmUrl}
                                   mailUrl={mailUrl}
+                                  showNextModal={this.showNextModal}
                                   kind={kind} />
             </Reservations.Form>
           </Modal.Body>
         </Modal>
     )
+  },
+
+  showNextModal(modal) {
+    this.setState({
+      visible: false,
+      nextModal: modal
+    });
   },
 
   formatRange(start, end) {
@@ -521,22 +534,13 @@ var ConfirmButton = React.createClass({
     var size = this.props.bsSize;
     var style = this.props.bsStyle || 'success';
     var title = this.props.confirmAll ? 'Send Confirmations' : 'Send Confirmation';
-    var confirmation;
-
-    if (this.state.mail) {
-      confirmation = (
-          <ConfirmationForm action={this.props.action}
-                            mail={this.state.mail} />
-      )
-    }
 
     return (
         <Button bsStyle={style} bsSize={size}
                 onClick={this.dispatch}
-                disabled={!! this.props.loading}>
+                disabled={!! this.state.loading}>
           <i className='glyphicon glyphicon-envelope' />
           {' ' + title}
-          {confirmation}
         </Button>
     )
   },
@@ -546,10 +550,17 @@ var ConfirmButton = React.createClass({
       return this.postForm(ev);
     }
 
+    else if (! this.props.showNextModal) {
+      return
+    }
+
     this.setState({loading: true});
 
     $.get(this.props.mailUrl).then((mail) => {
-      this.setState({mail});
+      this.props.showNextModal(
+          <ConfirmationForm action={this.props.action}
+                            mail={mail} />
+      );
 
     }).fail((xhr) => {
       alert('Could not send confirmation: ' + xhr.responseJSON.error);
@@ -576,10 +587,22 @@ var ConfirmButton = React.createClass({
 
 var ConfirmationForm = React.createClass({
   render() {
-    return (
-        <form action={this.props.action} method="post" className={""}>
+    const {rcpt, subject, body} = this.props.mail;
 
-        </form>
+    return (
+        <Modal bsSize="large" show={true}>
+          <Modal.Header closeButton>
+            <Modal.Title>
+              Send Confirmation
+              <small>{rcpt}</small>
+            </Modal.Title>
+          </Modal.Header>
+
+          <form action={this.props.action}>
+            <Forms.TextArea title="Body:"
+                            value={body} />
+          </form>
+        </Modal>
     );
   }
 });
@@ -790,6 +813,8 @@ var ReservationButtons = React.createClass({
   render() {
     var style = this.props.bsStyle || 'default';
     var size = this.props.bsSize;
+    var showNextModal = this.props.showNextModal;
+
     var {editUrl, deleteUrl, confirmUrl, mailUrl, reservation, kind} = this.props;
 
     var editButton, deleteButton, confirmButton;
@@ -805,14 +830,15 @@ var ReservationButtons = React.createClass({
     if (deleteUrl) {
       deleteButton = <DeleteButton action={deleteUrl}
                                    bsStyle={style}
-                                   bsSize={size} />
+                                   bsSize={size}/>
     }
 
     if (confirmUrl) {
       confirmButton = <ConfirmButton action={confirmUrl}
                                      mailUrl={mailUrl}
+                                     showNextModal={showNextModal}
                                      bsStyle={style}
-                                     bsSize={size} />
+                                     bsSize={size}/>
     }
 
     return (
@@ -821,9 +847,9 @@ var ReservationButtons = React.createClass({
           {deleteButton}
           {confirmButton}
         </ButtonGroup>
-    )
+    );
   }
-})
+});
 
 module.exports = {
   Page: Page,
