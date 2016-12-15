@@ -178,7 +178,9 @@ class ReservationsController < ApplicationController
     else
       begin
         mail = ReservationMailer.create_confirmation_email(@reservation)
-        render json: {mail: {rcpt: mail.to, subject: mail.subject, body: mail.body}}
+        render json: {mail: {rcpt: mail.to,
+                             subject: mail.subject,
+                             body: mail.parts.first.body}}
 
       rescue => ex
         render status: :internal_server_error,
