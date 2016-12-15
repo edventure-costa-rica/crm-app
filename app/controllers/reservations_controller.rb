@@ -139,6 +139,8 @@ class ReservationsController < ApplicationController
 
   def confirm
     @reservation = Reservation.find(params[:id])
+    overrides = Hash.new
+    overrides[:body] = params[:body] unless params[:body].empty?
 
     if @reservation.confirmed
       flash[:notice] = "Reservation already confirmed"
@@ -148,7 +150,7 @@ class ReservationsController < ApplicationController
 
     else
       begin
-        mail = ReservationMailer.deliver_confirmation_email(@reservation)
+        mail = ReservationMailer.deliver_confirmation_email(@reservation, overrides)
         flash[:notice] = "Sent confirmation email to #{mail['to']}"
 
       rescue RuntimeError => ex

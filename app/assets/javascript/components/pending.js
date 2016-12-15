@@ -656,6 +656,13 @@ var ConfirmationForm = React.createClass({
   onHide() {
     this.setState({visible: false});
     if (this.props.onHide) this.props.onHide();
+  },
+
+  onSubmit() {
+    $('<form method="post"/>')
+        .attr('action', this.props.action)
+        .append($('<input name="body" />').attr('value', this.state.body))
+        .submit()
   }
 });
 
