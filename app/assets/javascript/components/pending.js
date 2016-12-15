@@ -386,7 +386,7 @@ var EditModal = React.createClass({
     var dateRange = this.formatRange(res.arrival, res.departure);
 
     // already mailed, dont show confirm button
-    if (res.mailed_at) confirmUrl = null;
+    if (res.mailed_at || res.confirmed) confirmUrl = null;
 
     return (
         <Modal bsSize="large" show={true} onHide={this.props.onHide}>
