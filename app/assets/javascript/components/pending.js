@@ -617,10 +617,8 @@ var ConfirmationForm = React.createClass({
                     action={this.props.action}>
 
                 <div className="col-xs-12">
-                  <Forms.TextField title="Subject:"
-                                   defaultValue={subject}
-                                   readOnly
-                                   disabled />
+                  <Forms.StaticField title="Subject:"
+                                     value={subject} />
                 </div>
 
 
@@ -628,6 +626,7 @@ var ConfirmationForm = React.createClass({
                   <Forms.TextArea title="Body:"
                                   name='body'
                                   defaultValue={body}
+                                  rows={20}
                                   value={this.linkState('body')} />
                 </div>
 

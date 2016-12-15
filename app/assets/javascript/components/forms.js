@@ -59,6 +59,8 @@ var TextField = React.createClass({
 
         <input type="text" className='form-control'
                onKeyDown={onKeyDown}
+               readOnly={!! this.props.readOnly}
+               disabled={!! this.props.disabled}
                required={Boolean(this.props.required)}
                defaultValue={this.props.defaultValue}
                valueLink={this.props.value}
@@ -80,12 +82,13 @@ var TextArea = React.createClass({
           </label>
 
           <textarea className='form-control'
-                 onKeyDown={onKeyDown}
-                 required={Boolean(this.props.required)}
-                 defaultValue={this.props.defaultValue}
-                 valueLink={this.props.value}
-                 name={this.props.name}
-                 id={this.props.id} />
+                    onKeyDown={onKeyDown}
+                    rows={this.props.rows}
+                    required={Boolean(this.props.required)}
+                    defaultValue={this.props.defaultValue}
+                    valueLink={this.props.value}
+                    name={this.props.name}
+                    id={this.props.id} />
         </div>
     )
   }
