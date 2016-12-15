@@ -166,10 +166,11 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.find(params[:id])
 
     if @reservation.confirmed
-      render json: {error: "Reservation already confirmed"}
+      render json: {error: "Reservation already confirmed"},
+             status: :not_acceptable
 
     elsif @reservation.mailed_at
-      render json: {
+      render status: :conflict, json: {
           error: "Confirmation email sent " +
               I18n.l(@reservation.mailed_at.to_datetime, format: :short)
       }
@@ -180,7 +181,8 @@ class ReservationsController < ApplicationController
         render json: {mail: {rcpt: mail.to, subject: mail.subject, body: mail.body}}
 
       rescue => ex
-        render json: {error: ex.message, stack: ex.backtrace}
+        render status: :internal_server_error,
+               json: {error: ex.message, stack: ex.backtrace}
       end
     end
   end
