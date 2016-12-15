@@ -410,6 +410,7 @@ var EditModal = React.createClass({
               <ReservationButtons deleteUrl={action}
                                   confirmUrl={confirmUrl}
                                   mailUrl={mailUrl}
+                                  modalHide={this.props.onHide}
                                   showNextModal={this.showNextModal}
                                   kind={kind} />
             </Reservations.Form>
@@ -559,6 +560,7 @@ var ConfirmButton = React.createClass({
     $.get(this.props.mailUrl).then((mail) => {
       this.props.showNextModal(
           <ConfirmationForm action={this.props.action}
+                            onHide={this.props.modalHide}
                             mail={mail} />
       );
 
@@ -586,11 +588,17 @@ var ConfirmButton = React.createClass({
 });
 
 var ConfirmationForm = React.createClass({
+  getInitialState() {
+    return {visible: true}
+  },
+
   render() {
     const {rcpt, subject, body} = this.props.mail;
 
     return (
-        <Modal bsSize="large" show={true}>
+        <Modal bsSize="large"
+               show={this.state.visible}
+               onHide={this.onHide}>
           <Modal.Header closeButton>
             <Modal.Title>
               Send Confirmation
@@ -604,6 +612,11 @@ var ConfirmationForm = React.createClass({
           </form>
         </Modal>
     );
+  },
+
+  onHide() {
+    this.setState({visible: false});
+    if (this.props.onHide) this.props.onHide();
   }
 });
 
@@ -836,6 +849,7 @@ var ReservationButtons = React.createClass({
     if (confirmUrl) {
       confirmButton = <ConfirmButton action={confirmUrl}
                                      mailUrl={mailUrl}
+                                     modalHide={this.props.modalHide}
                                      showNextModal={showNextModal}
                                      bsStyle={style}
                                      bsSize={size}/>
