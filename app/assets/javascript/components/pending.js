@@ -90,6 +90,7 @@ var Page = React.createClass({
             <EditModal action={editEvent.update_html}
                        kind={eventKind}
                        confirmUrl={editEvent.confirm_url}
+                       mailUrl={editEvent.mail_url}
                        reservation={reservation}
                        onHide={this.closeModal}
                        visible={showEdit} />
@@ -369,7 +370,8 @@ var EditModal = React.createClass({
       kind: props.kind,
       res: props.reservation,
       visible: props.visible,
-      confirmUrl: props.confirmUrl
+      confirmUrl: props.confirmUrl,
+      mailUrl: props.mailUrl,
     })
   },
 
@@ -380,7 +382,7 @@ var EditModal = React.createClass({
       return <Modal show={false} />
     }
 
-    var {action, confirmUrl, kind, res} = this.state;
+    var {action, confirmUrl, mailUrl, kind, res} = this.state;
     var dateRange = this.formatRange(res.arrival, res.departure);
 
     // already mailed, dont show confirm button
@@ -402,6 +404,7 @@ var EditModal = React.createClass({
                                reservation={{reservation: res}}>
               <ReservationButtons deleteUrl={action}
                                   confirmUrl={confirmUrl}
+                                  mailUrl={mailUrl}
                                   kind={kind} />
             </Reservations.Form>
           </Modal.Body>
@@ -510,18 +513,50 @@ var CreateModal = React.createClass({
 });
 
 var ConfirmButton = React.createClass({
+  getInitialState() {
+    return {}
+  },
+
   render() {
     var size = this.props.bsSize;
     var style = this.props.bsStyle || 'success';
     var title = this.props.confirmAll ? 'Send Confirmations' : 'Send Confirmation';
+    var confirmation;
+
+    if (this.state.mail) {
+      confirmation = (
+          <ConfirmationForm action={this.props.action}
+                            mail={this.state.mail} />
+      )
+    }
 
     return (
         <Button bsStyle={style} bsSize={size}
-                onClick={this.postForm}>
-          <i className="glyphicon glyphicon-envelope" />
+                onClick={this.dispatch}
+                disabled={!! this.props.loading}>
+          <i className='glyphicon glyphicon-envelope' />
           {' ' + title}
+          {confirmation}
         </Button>
     )
+  },
+
+  dispatch(ev) {
+    if (this.props.confirmAll) {
+      return this.postForm(ev);
+    }
+
+    this.setState({loading: true});
+
+    $.get(this.props.mailUrl).then((mail) => {
+      this.setState({mail});
+
+    }).fail((xhr) => {
+      alert('Could not send confirmation: ' + xhr.responseJSON.error);
+
+    }).always(() => {
+      this.setState({loading: false});
+    });
   },
 
   postForm(ev) {
@@ -536,6 +571,16 @@ var ConfirmButton = React.createClass({
     $('<form method="post"/>')
         .attr('action', this.props.action)
         .submit();
+  }
+});
+
+var ConfirmationForm = React.createClass({
+  render() {
+    return (
+        <form action={this.props.action} method="post" className={""}>
+
+        </form>
+    );
   }
 });
 
@@ -745,7 +790,7 @@ var ReservationButtons = React.createClass({
   render() {
     var style = this.props.bsStyle || 'default';
     var size = this.props.bsSize;
-    var {editUrl, deleteUrl, confirmUrl, reservation, kind} = this.props;
+    var {editUrl, deleteUrl, confirmUrl, mailUrl, reservation, kind} = this.props;
 
     var editButton, deleteButton, confirmButton;
 
@@ -765,6 +810,7 @@ var ReservationButtons = React.createClass({
 
     if (confirmUrl) {
       confirmButton = <ConfirmButton action={confirmUrl}
+                                     mailUrl={mailUrl}
                                      bsStyle={style}
                                      bsSize={size} />
     }

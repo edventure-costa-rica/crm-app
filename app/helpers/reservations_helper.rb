@@ -11,6 +11,7 @@ module ReservationsHelper
         update_html: reservation_url(res, format: :html),
         update_json: reservation_url(res, format: :json),
         confirm_url: confirm_reservation_url(res),
+        mail_url: confirmation_reservation_url(res),
         model: res
     }
   end
