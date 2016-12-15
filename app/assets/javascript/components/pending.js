@@ -6,6 +6,7 @@ var Modal = require('react-bootstrap/lib/Modal');
 var Button = require('react-bootstrap/lib/Button');
 var ButtonGroup = require('react-bootstrap/lib/ButtonGroup');
 var ButtonToolbar = require('react-bootstrap/lib/ButtonToolbar');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var _ = require('lodash');
@@ -561,7 +562,7 @@ var ConfirmButton = React.createClass({
       this.props.showNextModal(
           <ConfirmationForm action={this.props.action}
                             onHide={this.props.modalHide}
-                            mail={mail} />
+                            mail={mail.mail} />
       );
 
     }).fail((xhr) => {
@@ -588,6 +589,9 @@ var ConfirmButton = React.createClass({
 });
 
 var ConfirmationForm = React.createClass({
+  displayName: 'ConfirmationForm',
+  mixins: [LinkedStateMixin],
+
   getInitialState() {
     return {visible: true}
   },
@@ -602,14 +606,50 @@ var ConfirmationForm = React.createClass({
           <Modal.Header closeButton>
             <Modal.Title>
               Send Confirmation
+              {' '}
               <small>{rcpt}</small>
             </Modal.Title>
           </Modal.Header>
 
-          <form action={this.props.action}>
-            <Forms.TextArea title="Body:"
-                            value={body} />
-          </form>
+          <Modal.Body>
+            <div className="row">
+              <form method="post"
+                    action={this.props.action}>
+
+                <div className="col-xs-12">
+                  <Forms.TextField title="Subject:"
+                                   defaultValue={subject}
+                                   readOnly
+                                   disabled />
+                </div>
+
+
+                <div className="col-xs-12">
+                  <Forms.TextArea title="Body:"
+                                  name='body'
+                                  defaultValue={body}
+                                  value={this.linkState('body')} />
+                </div>
+
+
+                <div className="col-xs-12">
+                  <ButtonGroup>
+                    <Button onClick={this.onHide}>
+                      <i className="glyphicon glyphicon-remove" />
+                      {' '}
+                      Cancel
+                    </Button>
+
+                    <Button onClick={this.onSubmit}>
+                      <i className="glyphicon glyphicon-envelope" />
+                      {' '}
+                      Send Email
+                    </Button>
+                  </ButtonGroup>
+                </div>
+              </form>
+            </div>
+          </Modal.Body>
         </Modal>
     );
   },
