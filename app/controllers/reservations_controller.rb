@@ -157,7 +157,7 @@ class ReservationsController < ApplicationController
         flash[:notice] = "Failed to send email: #{ex.message}"
       end
 
-      @reservation.mailed_at = Time.current
+      @reservation.mailed_at = Time.zone.now
       @reservation.save!
     end
 
