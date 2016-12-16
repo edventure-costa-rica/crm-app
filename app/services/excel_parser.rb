@@ -91,10 +91,10 @@ DIA	LUGAR	HOTEL	MEALS	TIPO HABITACION	TARIFA HAB 1	TARIFA HAB 2
   end
 
   def parse_day_for_trip(trip, day)
-    raise 'You must specify a date (eg, 2016-12-31)' if
+    raise 'You must specify a date (eg, 31-12-2017)' if
         day.strip.size < 6
 
-    date = Date.parse(day)
+    date = Date.parse(day, '%d-%m-%Y')
 
     raise "Cannot parse date #{day}" unless
         date and date > trip.arrival.to_date
