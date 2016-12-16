@@ -94,7 +94,7 @@ DIA	LUGAR	HOTEL	MEALS	TIPO HABITACION	TARIFA HAB 1	TARIFA HAB 2
     raise 'You must specify a date (eg, 31-12-2017)' if
         day.strip.size < 6
 
-    date = Date.parse(day, '%d-%m-%Y')
+    date = Chronic.parse(day, endian_precedence: [:little, :middle]).to_date
 
     raise "Cannot parse date #{day}" unless
         date and date > trip.arrival.to_date
