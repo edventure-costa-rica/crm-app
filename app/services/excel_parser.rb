@@ -40,7 +40,7 @@ DIA	LUGAR	HOTEL	MEALS	TIPO HABITACION	TARIFA HAB 1	TARIFA HAB 2
   def parse_entries(trip)
     @data.each_line.each_with_index.reduce([]) do |entries, line_info|
       line_no = line_info.pop
-      line = line_info.pop
+      line = line_info.pop.strip.sub /^'/, ''
 
       next entries unless line =~ /^\d/
 
