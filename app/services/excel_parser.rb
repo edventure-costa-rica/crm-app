@@ -40,12 +40,18 @@ DIA	LUGAR	HOTEL	MEALS	TIPO HABITACION	TARIFA HAB 1	TARIFA HAB 2
   def parse_entries(trip)
     @data.each_line.each_with_index.reduce([]) do |entries, line_info|
       line_no = line_info.pop
-      line = line_info.pop.strip.sub /^'/, ''
+      line = line_info.pop.strip.sub /^[‘'“"]/, ''
 
-      next entries unless line =~ /^\d/
+      unless line =~ /^\d/
+        errors.push "The first column is not a date"
+        next entries
+      end
 
       begin
         columns = line.split(/\t/)
+        raise "Not an Excel table, no tab characters" unless
+            columns.size > 1
+
         company_name = columns[2]
         services = columns.values_at(3, 4).grep(/\w/).join(", ")
         price = columns.from(5).map(&:to_f).reduce(0, &:+)

@@ -229,7 +229,7 @@ class ReservationsController < ApplicationController
 
   def paste
     trip = Trip.find(params[:trip_id])
-    parser = ExcelParser.new(paste_params[:paste])
+    parser = ExcelParser.new(paste_params[:paste].force_encoding('utf-8'))
 
     trip.reservations = parser.reservations(trip)
 
