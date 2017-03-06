@@ -3,7 +3,6 @@
 source /usr/local/rvm/scripts/rvm
 
 cd $(dirname $0)/..
-echo $PWD > /tmp/errors.txt
 
 export RAILS_ENV=production
-exec rvm default do bundle exec thin "$@" >>/tmp/errors.txt 2>&1
+exec rvm default do bundle exec thin "$@" 2>&1

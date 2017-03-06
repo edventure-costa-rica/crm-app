@@ -40,7 +40,7 @@ DIA	LUGAR	HOTEL	MEALS	TIPO HABITACION	TARIFA HAB 1	TARIFA HAB 2
   def parse_entries(trip)
     @data.each_line.each_with_index.reduce([]) do |entries, line_info|
       line_no = line_info.pop
-      line = line_info.pop.strip.sub /^[‘'“"]/, ''
+      line = line_info.pop.strip.sub /^\D*/, ''
 
       unless line =~ /^\d/
         errors.push "The first column is not a date"
@@ -71,9 +71,15 @@ DIA	LUGAR	HOTEL	MEALS	TIPO HABITACION	TARIFA HAB 1	TARIFA HAB 2
           entry[:day] = day
           entry[:company] = company
           entry[:price] = price
-          entry[:nights] = 1
           entry[:services] = services
           entry[:num_people] = trip.total_people
+
+          entry[:nights] = 
+            if services =~ /^Transfer/i
+              0
+            else
+              1
+            end
 
           entries.push(entry)
         end
@@ -102,8 +108,9 @@ DIA	LUGAR	HOTEL	MEALS	TIPO HABITACION	TARIFA HAB 1	TARIFA HAB 2
 
     date = Chronic.parse(day, endian_precedence: [:little, :middle]).to_date
 
-    raise "Cannot parse date #{day}" unless
-        date and date > trip.arrival.to_date
+    raise "Cannot parse date #{day}" unless date
+    raise "#{date} is before arrival #{trip.arrival.to_date}" if
+        trip.arrival.to_date > date
 
     (date - trip.arrival.to_date).to_i
   end

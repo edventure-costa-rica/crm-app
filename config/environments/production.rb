@@ -1,5 +1,18 @@
 # Settings specified here will take precedence over those in config/environment.rb
 
+config.action_mailer.perform_deliveries = true
+config.action_mailer.delivery_method = :smtp
+
+config.action_mailer.smtp_settings = {
+  address: 'mail.edventure.biz',
+  port: 25,
+  domain: 'edventure.biz',
+  user_name: 'reservations@edventure.biz',
+  password: 'uLCyyIxG1',
+  authentication: :plain
+}
+
+
 # The production environment is meant for finished, "live" apps.
 # Code is not reloaded between requests
 config.cache_classes = true
