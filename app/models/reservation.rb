@@ -96,7 +96,7 @@ class Reservation < ActiveRecord::Base
   end
 
   def confirmation_change(params)
-    %i(drop_off pick_up services num_people nights).any? do |key|
+    %i(drop_off pick_up services num_people day nights).any? do |key|
       params.has_key?(key) and params[key].to_s != send(key).to_s
     end
   end
