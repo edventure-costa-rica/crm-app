@@ -20,7 +20,7 @@ class VoucherReport < Prawn::Document
           :height   => 5.28.mm,
           :left     => 95.71.mm,
           :bottom   => 80.47.mm,
-          :source   => [:reservation_id],
+          :source   => [:confirmation_no],
         },
         { :width    => 34.14.mm,
           :height   => 5.28.mm,
@@ -97,7 +97,7 @@ class VoucherReport < Prawn::Document
           :source   => proc { "Maite Salinas" }
         }
     ]
-    
+
     def self.new(options={})
         options[:margin] = 0
         options[:page_size] = [ 5.5.in, 8.5.in ]
@@ -108,7 +108,7 @@ class VoucherReport < Prawn::Document
 
     def add_reservation(reservation)
         start_new_page
-        
+
         # background image
         image @@voucher, :fit => [ bounds.width, bounds.height ]
 
