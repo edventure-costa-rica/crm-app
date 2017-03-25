@@ -584,6 +584,7 @@ var ConfirmButton = React.createClass({
 
     $('<form method="post"/>')
         .attr('action', this.props.action)
+        .appendTo(document.body)
         .submit();
   }
 });
@@ -662,6 +663,7 @@ var ConfirmationForm = React.createClass({
     $('<form method="post"/>')
         .attr('action', this.props.action)
         .append($('<input name="body" />').attr('value', this.state.body))
+        .appendTo(document.body)
         .submit()
   }
 });
@@ -689,6 +691,7 @@ var DeleteButton = React.createClass({
     $('<form method="post"/>')
         .attr('action', this.props.action)
         .append('<input name="_method" value="delete" />')
+        .appendTo(document.body)
         .submit()
   }
 });
