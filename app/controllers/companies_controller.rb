@@ -93,11 +93,17 @@ class CompaniesController < ApplicationController
   # DELETE /companies/1.xml
   def destroy
     @company = Company.find(params[:id])
-    @company.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(companies_url) }
-      format.xml  { head :ok }
+    if @company.destroy
+      respond_to do |format|
+        format.html { redirect_to(companies_url) }
+        format.xml  { head :ok }
+      end
+    else
+      respond_to do |format|
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @company.errors, :status => :unprocessable_entity }
+      end
     end
   end
 

@@ -53,6 +53,7 @@ class Company < ActiveRecord::Base
   belongs_to :region
 
   before_save :proper_website_url
+  before_destroy :check_for_reservations
 
   def country
     region.country unless region.nil?
@@ -88,6 +89,13 @@ class Company < ActiveRecord::Base
   def after_initialize
     if new_record?
       self.kind ||= Company.kinds[0]
+    end
+  end
+
+  def check_for_reservations
+    unless reservations.empty?
+      errors.add_to_base('cannot delete company with existing reservations')
+      return false
     end
   end
 end
