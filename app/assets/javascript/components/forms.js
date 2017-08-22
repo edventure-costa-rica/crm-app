@@ -338,6 +338,7 @@ var PriceField = React.createClass({
   render: function() {
     var range = _.pick(this.props, ['min', 'max', 'step']);
     range.min = range.min || 0;
+    range.step = range.step || '0.01';
 
     var events = _.pick(this.props, 'onBlur onFocus onChange'.split(' '));
 
