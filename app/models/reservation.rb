@@ -39,6 +39,10 @@ class Reservation < ActiveRecord::Base
     self.company.city if self.company
   end
 
+  def event_title
+    [company.name, client].join(': ')
+  end
+
   def pax
     num_people
   end

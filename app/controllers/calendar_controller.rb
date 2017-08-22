@@ -1,7 +1,7 @@
 class CalendarController < ApplicationController
   def view
     reservation_range
-    render_calendar
+    render_calendar(:event_title)
   end
 
   def transfers
@@ -21,22 +21,36 @@ class CalendarController < ApplicationController
 
     ).sort_by! { |r| [r.arrival, r.services] }
 
-    render_calendar
+    title_method =
+        if @company
+          :client
+        else
+          :event_title
+        end
+
+    render_calendar(title_method)
   end
 
   def company
     @company = Company.find(params[:id])
     reservation_range('companies.id = ?', @company.id)
 
-    render_calendar
+    render_calendar(:client)
   end
 
   private
 
-  def render_calendar
+  def render_calendar(title_method=nil)
     respond_to do |format|
       format.html
-      format.json { render json: @reservations.map { |r| @template.reservation_event(r) } }
+      format.json do
+        events = @reservations.map do |r|
+          title = [if title_method then r.send(title_method) end].compact
+          @template.reservation_event(r, *title)
+        end
+
+        render json: events
+      end
     end
   end
 

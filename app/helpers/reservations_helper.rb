@@ -1,9 +1,9 @@
 module ReservationsHelper
 
-  def reservation_event(res)
+  def reservation_event(res, title=res.company.name)
     {
         id: res.id,
-        title: res.company.name,
+        title: title.to_s,
         allDay: true,
         start: res.arrival,
         end: res.departure + 1,
@@ -12,6 +12,7 @@ module ReservationsHelper
         update_json: reservation_url(res, format: :json),
         confirm_url: confirm_reservation_url(res),
         mail_url: confirmation_reservation_url(res),
+        trip_url: trip_url(res.trip),
         model: res
     }
   end
