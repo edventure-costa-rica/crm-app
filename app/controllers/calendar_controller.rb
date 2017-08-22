@@ -16,8 +16,8 @@ class CalendarController < ApplicationController
       end
 
     reservation_range(
-      'companies.kind = ? AND reservations.services LIKE ? ' + select_company.to_s,
-      'transport', '%transfer%', *[company].compact
+      'companies.kind = ?' + select_company.to_s,
+      'transport', *[company].compact
 
     ).sort_by! { |r| [r.arrival, r.services] }
 
