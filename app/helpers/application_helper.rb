@@ -1,6 +1,12 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
+  def git_version
+    @@git_version ||= %x(git rev-parse HEAD).strip
+  rescue
+    'unknown'
+  end
+
   def item_link_with_active(*args, &blk)
     if block_given?
       contents = capture(&blk)
