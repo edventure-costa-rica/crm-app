@@ -9,7 +9,8 @@ if ($calendarMount.length) {
       React.createElement(FullCalendar, {
         eventSources: $calendarMount.data('events'),
         defaultDate: $calendarMount.data('date'),
-        pageLoadDate: $calendarMount.data('page-load-date')
+        pageLoadDate: $calendarMount.data('page-load-date'),
+        eventClick: (r) => { if (r.click_url) window.location = r.click_url }
       }),
       $calendarMount.get(0)
   );

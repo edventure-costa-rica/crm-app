@@ -1,6 +1,13 @@
 module ReservationsHelper
 
   def reservation_event(res, title=res.company.name)
+    click_url =
+        if res.trip.pending?
+          pending_trip_reservations_url(res.trip)
+        else
+          confirmed_trip_reservations_url(res.trip)
+        end
+
     {
         id: res.id,
         title: title.to_s,
@@ -12,7 +19,7 @@ module ReservationsHelper
         update_json: reservation_url(res, format: :json),
         confirm_url: confirm_reservation_url(res),
         mail_url: confirmation_reservation_url(res),
-        trip_url: trip_url(res.trip),
+        click_url: click_url,
         model: res
     }
   end
