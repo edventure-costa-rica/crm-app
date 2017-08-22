@@ -201,6 +201,13 @@ var Form = React.createClass({
           </div>
 
           <div className="col-xs-12">
+            <Forms.TextArea value={this.linkState('notes')}
+                            id="reservation-notes"
+                            name="reservation[notes]"
+                            title="Voucher Notes" />
+          </div>
+
+          <div className="col-xs-12">
             <div className="btn-toolbar">
               <div className="btn-group">
                 <button className="btn btn-primary" type="submit">
@@ -270,7 +277,7 @@ var Prices = React.createClass({
               <Forms.TextArea value={this.linkState('notes')}
                               id="reservation-notes"
                               name="reservation[notes]"
-                              title="Private Notes" />
+                              title="Voucher Notes" />
             </div>
           </div>
 
@@ -334,7 +341,7 @@ var Confirmation = React.createClass({
 
 
             <div className="col-xs-12">
-              <Forms.TextArea title="Private Notes"
+              <Forms.TextArea title="Voucher Notes"
                               value={this.linkState('notes')}
                               name="reservation[notes]"
                               id="reservation-notes" />
@@ -395,7 +402,7 @@ var Payment = React.createClass({
             </div>
 
             <div className="col-xs-12">
-              <Forms.TextArea title="Private Notes"
+              <Forms.TextArea title="Voucher Notes"
                               value={this.linkState('notes')}
                               name="reservation[notes]"
                               id="reservation-notes" />
@@ -484,7 +491,7 @@ var View = React.createClass({
             </div>
 
             <div className="col-xs-12">
-              <Forms.StaticField title="Private Notes" value={res.notes} />
+              <Forms.StaticField title="Voucher Notes" value={res.notes} />
             </div>
 
             <div className="col-xs-12 text-right">
