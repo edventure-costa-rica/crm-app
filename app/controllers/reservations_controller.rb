@@ -153,6 +153,8 @@ class ReservationsController < ApplicationController
         mail = ReservationMailer.deliver_confirmation_email(@reservation, overrides)
         flash[:notice] = "Sent confirmation email to #{mail['to']}"
 
+        logger.debug "Sent email: #{mail}"
+
       rescue RuntimeError => ex
         flash[:notice] = "Failed to send email: #{ex.message}"
       end
