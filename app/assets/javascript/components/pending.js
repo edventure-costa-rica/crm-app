@@ -662,7 +662,8 @@ var ConfirmationForm = React.createClass({
   onSubmit() {
     $('<form method="post"/>')
         .attr('action', this.props.action)
-        .append($('<input name="body" />').attr('value', this.state.body))
+        .attr('enctype', 'multipart/form-data')
+        .append($('<textarea name="body"></textarea>').val(this.state.body))
         .appendTo(document.body)
         .submit()
   }

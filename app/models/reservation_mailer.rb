@@ -29,6 +29,7 @@ class ReservationMailer < ActionMailer::Base
     recipients    rcpt_address
     from          "#{signature} <#{from_address}>"
     bcc           from_address
+    content_type  'text/plain'
     subject       "Reservación Fam. #{res.client.family_name}"
     body          content
   end
