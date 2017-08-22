@@ -15,6 +15,10 @@ Número de personas: <%= @reservation.num_people %>
 <% end %>
 
 Servicio: <%= @reservation.services %>
+<% if @reservation.notes && @reservation.notes.size > 0 %>
+Notas: <%= @reservation.notes %>
+<% end %>
+
 
 <% if @reservation.nights > 0 %>
 Ingreso: <%= l @reservation.arrival, format: :long %>
@@ -22,9 +26,9 @@ Salida: <%= l @reservation.departure, format: :long %>
   <%= pluralize @reservation.nights, 'noche' %>
 <% else %>
 Fecha: <%= l @reservation.arrival, format: :long %>
-<% if @reservation.pick_up %>Ingreso: <%= @reservation.pick_up %><% end %>
-<% if @reservation.drop_off %>Salida: <%= @reservation.drop_off %><% end %>
 <% end %>
+<% if @reservation.pick_up %>Pick Up: <%= @reservation.pick_up %><% end %>
+<% if @reservation.drop_off %>Drop Off: <%= @reservation.drop_off %><% end %>
 
 *** Nota ***
 
