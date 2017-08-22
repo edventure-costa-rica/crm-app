@@ -20,6 +20,10 @@ Servicio: <%= @reservation.services %>
 Ingreso: <%= l @reservation.arrival, format: :long %>
 Salida: <%= l @reservation.departure, format: :long %>
   <%= pluralize @reservation.nights, 'noche' %>
+<% else %>
+Fecha: <%= l @reservation.arrival, format: :long %>
+Ingreso: <%= @reservation.pick_up %>
+Salida: <%= @reservation.drop_off %>
 <% end %>
 
 *** Nota ***
