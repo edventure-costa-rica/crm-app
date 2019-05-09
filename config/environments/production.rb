@@ -4,11 +4,13 @@ config.action_mailer.perform_deliveries = true
 config.action_mailer.delivery_method = :smtp
 
 config.action_mailer.smtp_settings = {
-  address: 'mail.edventure.biz',
+  address: 'mail.edventure-reizen.nl',
   port: 25,
   domain: 'edventure.biz',
-  user_name: 'reservations@edventure.biz',
-  password: 'uLCyyIxG1',
+  user_name: 'reservations@edventure-reizen.nl',
+  password: 'EdV3ntuR3#Reservations',
+  #user_name: 'reservations@edventure.biz',
+  #password: 'uLCyyIxG1',
   authentication: :plain
 }
 
@@ -23,7 +25,7 @@ config.action_controller.perform_caching             = true
 config.action_view.cache_template_loading            = true
 
 # See everything in the log (default is :info)
-# config.log_level = :debug
+#config.log_level = :debug
 
 # Use a different logger for distributed setups
 # config.logger = SyslogLogger.new
