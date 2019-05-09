@@ -118,7 +118,7 @@ class VoucherReport < Prawn::Document
         font "Courier" do
             text_box sprintf('V%05d', reservation.id),
                 :size  => 17,
-                :at    => [108.0.mm, bounds.height - 31.0.mm],
+                :at    => [108.0.mm, bounds.height - 33.0.mm],
                 :style => :bold
         end
         fill_color orig
